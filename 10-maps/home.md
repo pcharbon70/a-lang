@@ -35,6 +35,14 @@ See the [archive guide](../README.md) for its structure and conventions.
 - [Task languages for LLM agents: a deep dive](../20-notes/llm-agent-task-languages-deep-dive.md)
 - [UCAN capabilities for A-Lang: a deep dive](../20-notes/ucan-capabilities-for-agent-language.md)
 
+## Implementation planning
+
+- [A-Lang minimal proof-of-concept plan](../60-planning/01-minimal-proof-of-concept/README.md)
+  — an eight-phase path from a frozen language contract through native
+  compilation, BEAM execution, durable effects, UCAN authorization, bounded
+  LLM and child-task execution, adversarial validation, and a final
+  architecture decision.
+
 ## Unsettled threads
 
 - Whether BEAM's concurrency advantages remain material after durable effect

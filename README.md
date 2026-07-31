@@ -20,6 +20,8 @@ Repository-wide authoring and maintenance conventions are defined in
   workbenches
 - [`50-journal/`](50-journal/README.md) — dated observations and exploratory
   writing
+- [`60-planning/`](60-planning/README.md) — numbered implementation roadmaps,
+  phased tasks, and completion evidence
 - [`90-archive/`](90-archive/README.md) — inactive or superseded material worth
   retaining
 - [`assets/`](assets/README.md) — images, PDFs, diagrams, and other attachments

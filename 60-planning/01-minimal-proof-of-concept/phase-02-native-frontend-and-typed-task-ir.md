@@ -1,0 +1,312 @@
+---
+title: "Phase 2: Native Frontend and Typed Task IR"
+kind: note
+created: 2026-07-31
+maturity: developing
+tags:
+  - categorical-semantics
+  - compiler-design
+  - effect-system
+  - implementation-planning
+aliases: []
+---
+
+# Phase 2: Native Frontend and Typed Task IR
+
+**Description:** This phase implements the canonical JSON input, a small native
+textual frontend, source-oriented resolution and type-and-effect checking, a
+normalized A-Lang-owned task IR, capability-requirement inference, and
+independent reference, simulation, trace, and manifest interpreters.
+
+**Status:** Planned.
+
+**Dependencies:** Phase 1 complete with the executable feature ledger,
+canonical fixtures, diagnostic taxonomy, normalized observations, and pinned
+native toolchain accepted.
+
+## Section 2.1: Canonical and Textual Frontends
+
+**Description:** Accept one familiar canonical representation and one minimal
+human-facing syntax that produce the same untyped AST with complete source
+origins.
+
+- [ ] **Section 2.1 Complete**
+
+### Task 2.1.1: Implement the Canonical JSON Frontend
+
+**Description:** Decode and validate the versioned canonical source schema as
+the stable fixture and tooling input for the PoC language.
+
+- [ ] **Task 2.1.1 Complete**
+
+#### Subtask 2.1.1.1: Decode the Complete Planned Surface
+
+**Description:** Decode modules, type declarations, functions, tasks, records,
+results, expressions, effects, requirements, completion predicates, and source
+origins without silently accepting unknown constructs.
+
+- [ ] **Subtask 2.1.1.1 Complete**
+
+#### Subtask 2.1.1.2: Reject Schema and Version Violations
+
+**Description:** Produce stable diagnostics for missing fields, unknown tags,
+invalid identifiers, oversized inputs, unsupported versions, and malformed
+source locations.
+
+- [ ] **Subtask 2.1.1.2 Complete**
+
+### Task 2.1.2: Implement the Native Textual Lexer and Parser
+
+**Description:** Build the minimal human-facing A-Lang frontend in Rust and
+lower its parse tree to the same AST used by canonical JSON fixtures.
+
+- [ ] **Task 2.1.2 Complete**
+
+#### Subtask 2.1.2.1: Implement Tokens, Grammar, and Precedence
+
+**Description:** Recognize the frozen keywords, identifiers, literals,
+delimiters, type forms, declarations, expressions, `effect`, `requires`,
+`perform`, `ensures`, and sequential composition with no speculative syntax.
+
+- [ ] **Subtask 2.1.2.1 Complete**
+
+#### Subtask 2.1.2.2: Preserve Locations and Recover Diagnostics
+
+**Description:** Preserve byte spans and line-column locations through every
+AST node and recover far enough from common delimiter or declaration errors to
+report multiple independent issues without inventing nodes.
+
+- [ ] **Subtask 2.1.2.2 Complete**
+
+## Section 2.2: Resolution and Data Typing
+
+**Description:** Resolve every name and assign ordinary data types before
+effects, requirements, or backend concerns enter the semantic judgment.
+
+- [ ] **Section 2.2 Complete**
+
+### Task 2.2.1: Implement Modules, Scopes, and Symbol Resolution
+
+**Description:** Bind module, type, constructor, field, parameter, function,
+task, effect, operation, resource, and verifier names into stable semantic
+identities.
+
+- [ ] **Task 2.2.1 Complete**
+
+#### Subtask 2.2.1.1: Build Scope and Definition Tables
+
+**Description:** Detect duplicates, shadowing outside the accepted rule,
+unknown names, wrong namespaces, and arity mismatches while preserving the
+origin of each definition and use.
+
+- [ ] **Subtask 2.2.1.1 Complete**
+
+#### Subtask 2.2.1.2: Normalize Resource and Operation Identities
+
+**Description:** Assign stable identifiers to `Model.complete`,
+`Workspace.write`, `Trace.emit`, resource parameters, and completion
+predicates so later manifests and runtime messages do not depend on spelling.
+
+- [ ] **Subtask 2.2.1.2 Complete**
+
+### Task 2.2.2: Implement the Minimal Data Type Checker
+
+**Description:** Check primitives, opaque identifiers, records, products,
+results, functions, tasks, applications, `let`, and exhaustive result matches
+without introducing deferred polymorphism.
+
+- [ ] **Task 2.2.2 Complete**
+
+#### Subtask 2.2.2.1: Check Expressions and Composition
+
+**Description:** Enforce input-output compatibility, field and constructor
+typing, branch agreement, function arity, and typed sequential composition
+with source-local expected-versus-actual diagnostics.
+
+- [ ] **Subtask 2.2.2.1 Complete**
+
+#### Subtask 2.2.2.2: Check Exhaustiveness and Opaque Boundaries
+
+**Description:** Reject missing result alternatives, impossible constructor
+uses, implicit coercions, and construction or inspection of opaque runtime
+identifiers outside their approved operations.
+
+- [ ] **Subtask 2.2.2.2 Complete**
+
+## Section 2.3: Effects and Capability Requirements
+
+**Description:** Distinguish what a task may do from what authority it
+requires, and calculate both as deterministic semantic artifacts independent
+of UCAN or any one runtime backend.
+
+- [ ] **Section 2.3 Complete**
+
+### Task 2.3.1: Implement Closed Effect Checking
+
+**Description:** Infer and check closed monomorphic effect sets for functions,
+tasks, operations, calls, branches, and sequential composition.
+
+- [ ] **Task 2.3.1 Complete**
+
+#### Subtask 2.3.1.1: Propagate Declared Operations
+
+**Description:** Make `perform` introduce its named effect, pure functions
+retain the empty effect set, composition combine effect sets by union, and
+annotations reject missing or unexpected effects.
+
+- [ ] **Subtask 2.3.1.1 Complete**
+
+#### Subtask 2.3.1.2: Reject Effect Escapes
+
+**Description:** Reject undeclared operations, model or workspace calls from
+pure functions, unsupported handlers, and any construct whose effects cannot
+be represented in the closed PoC effect system.
+
+- [ ] **Subtask 2.3.1.2 Complete**
+
+### Task 2.3.2: Normalize Capability Requirements
+
+**Description:** Compile each `requires` clause into an A-Lang-owned typed
+authority predicate and prove that every effect operation is covered by a
+requirement independent of any runtime grant.
+
+- [ ] **Task 2.3.2 Complete**
+
+#### Subtask 2.3.2.1: Define Requirement Algebra and Canonical Form
+
+**Description:** Define resource identity, operation, typed constraints,
+deadline, call and byte budgets, union, equality, subsumption, and deterministic
+serialization for the minimal requirement domain.
+
+- [ ] **Subtask 2.3.2.1 Complete**
+
+#### Subtask 2.3.2.2: Check Effect-to-Requirement Coverage
+
+**Description:** Require each `Model.complete` and `Workspace.write` site to
+fall within the task's declared requirement and report the smallest uncovered
+operation or widened argument constraint.
+
+- [ ] **Subtask 2.3.2.2 Complete**
+
+## Section 2.4: Typed IR and Independent Interpreters
+
+**Description:** Lower checked source into a small categorical task IR and
+give the IR several explicit interpretations before BEAM code generation is
+allowed to define behavior accidentally.
+
+- [ ] **Section 2.4 Complete**
+
+### Task 2.4.1: Define and Construct the Typed Task IR
+
+**Description:** Represent typed values, pure arrows, products, results,
+sequential tasks, effect requests, requirements, verifier nodes, and source
+origins in a normalized, backend-independent form.
+
+- [ ] **Task 2.4.1 Complete**
+
+#### Subtask 2.4.1.1: Normalize Source Sugar and Identities
+
+**Description:** Resolve names, make evaluation order explicit, assign stable
+node and operation identifiers, retain effect and requirement annotations, and
+eliminate only source constructs with a specified semantics-preserving rule.
+
+- [ ] **Subtask 2.4.1.1 Complete**
+
+#### Subtask 2.4.1.2: Validate IR Invariants
+
+**Description:** Reject dangling identities, ill-typed edges, incomplete
+branches, undeclared operations, missing verifier nodes, and noncanonical
+requirements before any interpreter receives the IR.
+
+- [ ] **Subtask 2.4.1.2 Complete**
+
+### Task 2.4.2: Implement Reference, Simulation, Trace, and Manifest Views
+
+**Description:** Interpret the same checked IR as pure evaluation with injected
+effect responses, a no-effect simulation, a normalized trace, and a capability
+manifest.
+
+- [ ] **Task 2.4.2 Complete**
+
+#### Subtask 2.4.2.1: Implement the Deterministic Reference Evaluator
+
+**Description:** Execute pure nodes and consume fixture-provided effect results
+with explicit state transitions, stable observations, bounded steps, and no
+host filesystem or network access.
+
+- [ ] **Subtask 2.4.2.1 Complete**
+
+#### Subtask 2.4.2.2: Implement Nonexecuting Interpreters
+
+**Description:** Produce dry-run plans, trace skeletons, capability manifests,
+completion checklists, and human-readable explanations from the same IR and
+verify that each interpreter covers every primitive node.
+
+- [ ] **Subtask 2.4.2.2 Complete**
+
+## Section 2.5: Phase 2 Integration Tests
+
+**Description:** Prove that both frontends converge on one checked IR, that
+invalid programs fail before backend work, and that the reference and
+nonexecuting interpretations agree on declared structure.
+
+- [ ] **Section 2.5 Complete**
+
+### Task 2.5.1: Validate Frontend and Semantic Agreement
+
+**Description:** Run paired textual and canonical JSON programs through
+parsing, resolution, typing, effect checking, requirement normalization, and
+IR validation and compare canonical outputs.
+
+- [ ] **Task 2.5.1 Complete**
+
+#### Subtask 2.5.1.1: Execute Positive Paired Fixtures
+
+**Description:** Verify the final demo program and focused programs for every
+promoted type, expression, effect, requirement, and verifier construct produce
+the expected identical typed IR.
+
+- [ ] **Subtask 2.5.1.1 Complete**
+
+#### Subtask 2.5.1.2: Execute Negative Semantic Fixtures
+
+**Description:** Verify malformed syntax, unknown symbols, type mismatches,
+nonexhaustive results, undeclared effects, missing requirements, and deferred
+features fail with stable source-oriented diagnostics.
+
+- [ ] **Subtask 2.5.1.2 Complete**
+
+### Task 2.5.2: Validate Interpreter Coherence
+
+**Description:** Compare reference results, dry-run plans, trace skeletons,
+capability manifests, and completion checklists for every canonical fixture.
+
+- [ ] **Task 2.5.2 Complete**
+
+#### Subtask 2.5.2.1: Assert Structural Coverage and Determinism
+
+**Description:** Confirm every IR node is handled explicitly, repeated
+interpretation is deterministic, and source-order variations with identical
+meaning normalize to identical semantic artifacts.
+
+- [ ] **Subtask 2.5.2.1 Complete**
+
+#### Subtask 2.5.2.2: Run Phase Completion Gates
+
+**Description:** Run frontend, semantic, schema, snapshot, fuzz-smoke, and
+complete repository suites and publish fixture counts and diagnostic coverage.
+
+- [ ] **Subtask 2.5.2.2 Complete**
+
+### Phase 2 Completion Evidence
+
+**Description:** Record the evidence that authorizes Phase 3 to implement a
+BEAM interpretation of already frozen checked semantics.
+
+- [ ] Textual and canonical JSON frontends produce identical checked IR
+- [ ] Resolution, data typing, effects, and requirements fail closed
+- [ ] Capability manifests remain independent of UCAN wire concepts
+- [ ] Reference, simulation, trace, and manifest interpreters cover all IR
+      primitives
+- [ ] Positive and negative fixtures pass with stable diagnostics
+- [ ] Frontend fuzz-smoke and complete repository gates pass
