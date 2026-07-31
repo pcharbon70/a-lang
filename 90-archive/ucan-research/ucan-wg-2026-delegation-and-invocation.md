@@ -22,6 +22,10 @@ aliases:
 
 # UCAN Delegation and Invocation Specifications
 
+> **Archived 2026-07-31:** UCAN was removed from the active A-Lang
+> architecture and proof-of-concept scope. This source note is retained only
+> as provenance for the paused research.
+
 ## Reference
 
 UCAN Working Group. “UCAN Delegation Specification.” Version 1.0.0 on
@@ -130,5 +134,5 @@ effect boundary, provided A-Lang adds result journaling and deduplication.
 
 ## Derived notes
 
-- [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md)
-- [Can UCAN enforce A-Lang agent capabilities?](../40-inquiries/can-ucan-enforce-a-lang-agent-capabilities.md)
+- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
+- [Can UCAN enforce A-Lang agent capabilities?](can-ucan-enforce-a-lang-agent-capabilities.md)

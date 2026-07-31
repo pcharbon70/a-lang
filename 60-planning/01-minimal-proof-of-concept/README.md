@@ -3,11 +3,9 @@ title: "A-Lang Minimal Proof-of-Concept Plan"
 kind: map
 created: 2026-07-31
 tags:
-  - agent-programming
   - beam
   - implementation-planning
   - proof-of-concept
-  - ucan
 aliases:
   - "A-Lang PoC roadmap"
 ---
@@ -16,187 +14,174 @@ aliases:
 
 ## Purpose
 
-This planning stream turns the current A-Lang research into the smallest
-credible source-to-effect vertical slice. It starts by freezing meaning and
-toolchain boundaries, then builds a native frontend, typed task IR, BEAM
-backend, durable effect broker, UCAN authorization profile, bounded LLM loop,
-law and fault harness, and final end-to-end evaluation.
+This directory defines the first end-to-end implementation roadmap for
+A-Lang. Its purpose is to test one architectural claim: a new agent language
+can own its syntax and typed semantic IR while its programs execute directly
+as supervised BEAM processes on ERTS.
 
-The roadmap is a proof-of-concept plan, not a production backlog. Each phase
-must produce evidence that either strengthens the architecture or exposes a
-reason to stop, simplify, or change direction.
+The plan is BEAM-first. Phase 1 must produce a generated `.beam` artifact,
+load it into an isolated ERTS node, spawn it as a process, exchange the closed
+runtime messages, and observe its result and termination. A host-language AST
+or IR evaluator, Erlang source evaluator, simulator, or mocked execution path
+cannot satisfy that gate.
 
 ## What belongs here
 
-- The ordered phase documents for this proof of concept.
-- Scope, dependency, and completion rules shared by all phases.
-- Links from implementation gates to the research claims they test.
+- Ordered implementation phases for the minimal BEAM-executed vertical slice.
+- Sections, tasks, subtasks, dependencies, and observable completion evidence.
+- Explicit language, compiler, runtime, capability, durability, model, tool,
+  child-task, validation, and decision boundaries.
+- Links to the research claims and inquiries that implementation must test.
 
-Implementation results, source code, fixtures, and generated artifacts will
-live in the code and test directories established during Phase 1. This
-directory remains the planning authority and evidence index.
+Production code belongs in [`src`](../../src/README.md). Reproducible evidence
+belongs with the phase or test suite that produces it. Broader feature ideas,
+portable delegation protocols, distribution, and production hardening remain
+outside this proof of concept.
 
-## Status rules
+## Architectural contract
 
-- Planned phases, sections, tasks, and subtasks use unchecked boxes.
-- Every phase, section, task, and subtask begins with a description of its
-  purpose and observable result.
-- A task is complete only when its implementation, focused tests,
-  documentation, diagnostics, and failure behavior are reviewable together.
-- A section is complete only when every task is complete and all earlier phase
-  gates remain green.
-- Every phase ends with a numbered integration-test section and a completion
-  evidence checklist.
-- A phase is complete only when the checked evidence is reproducible from a
-  clean checkout with the pinned toolchain.
-- A parsed or lowered form is not executable-language evidence until the
-  generated module passes OTP validation, loads, and produces the specified
-  observation on ERTS.
-- A model response never counts as a successful effect until it passes typed
-  decoding, policy enforcement, durable recording, execution, and result
-  verification.
-- A UCAN token never counts as authority until the pinned profile, proof path,
-  resource semantics, replay state, and execution-time policy all validate.
-- A property suite must demonstrate sensitivity by detecting deliberately
-  seeded law, backend, authorization, or recovery defects.
+The following statements are non-negotiable for this roadmap:
 
-## Starting baseline
+1. A-Lang programs execute as BEAM modules and ERTS processes.
+2. The source language, static semantics, typed IR, and runtime-visible
+   behavior belong to A-Lang rather than Erlang, Elixir, Gleam, or another
+   BEAM language.
+3. The supported production compiler boundary is Erlang Abstract Format plus
+   the pinned OTP compiler; Core Erlang and direct BEAM emission are research
+   paths only.
+4. Existing BEAM-language support code may bootstrap the OTP adapter and
+   runtime ABI, but it may not interpret A-Lang programs.
+5. Any independent evaluator is a test oracle only. It cannot be deployed as
+   the execution engine or used to satisfy an end-to-end phase gate.
+6. Generated code reaches models, tools, storage, and the filesystem only
+   through a closed, typed, supervised runtime ABI.
+7. Capability references are opaque and local to the issuing BEAM runtime.
+   Portable signed delegation is not part of this proof of concept.
+8. BEAM supervision provides fault topology, not durable progress or exactly
+   once effects; checkpoints, journals, idempotency, and recovery stay
+   explicit.
+9. BEAM process isolation is not a security sandbox. Untrusted tools, model
+   services, and foreign code remain behind OS-bounded ports or sidecars.
+10. Completion means reproducible evidence against stated gates, not a stub,
+    successful compilation alone, or a happy-path demonstration.
 
-The repository currently contains a connected research archive and no
-promoted A-Lang implementation. The relevant conclusions are:
+## Research baseline
 
-- [Task-language research](../../20-notes/llm-agent-task-languages-deep-dive.md)
-  recommends a typed declarative task representation, bounded model judgments,
-  deterministic orchestration, runtime enforcement, and completion evidence.
-- [Categorical research](../../20-notes/set-and-category-principles-for-agent-programming-language.md)
-  recommends ordinary data types, typed task arrows, products, coproducts,
-  explicit effects, lawful interpreters, and observationally tested
-  composition without categorical surface jargon.
-- [BEAM research](../../20-notes/beam-runtime-for-native-agent-language.md)
-  recommends a native frontend and A-Lang-owned IR lowered through OTP's
-  supported Erlang Abstract Format, with ports or sidecars for external work
-  and no existing BEAM language as the main interpreter.
-- [UCAN research](../../20-notes/ucan-capabilities-for-agent-language.md)
-  recommends a version-pinned Delegation and Invocation profile behind an
-  A-Lang broker, while leaving resource semantics, stateful policy, replay,
-  durability, and isolation to the runtime.
+- [BEAM runtime synthesis](../../20-notes/beam-runtime-for-native-agent-language.md)
+  defines the compiler boundary, ERTS execution model, runtime ABI, security
+  limits, and PropEr-based validation strategy.
+- [BEAM feasibility inquiry](../../40-inquiries/can-beam-support-a-native-agent-language.md)
+  supplies compatibility, correctness, durability, performance, and isolation
+  falsification criteria.
+- [Set and category principles](../../20-notes/set-and-category-principles-for-agent-programming-language.md)
+  defines the typed composition, effect, capability, state, and law-testing
+  hypotheses.
+- [Categorical feasibility inquiry](../../40-inquiries/can-categorical-semantics-improve-agent-language.md)
+  requires comparison against a conventional typed IR rather than assuming
+  category-specific value.
+- [LLM task-language synthesis](../../20-notes/llm-agent-task-languages-deep-dive.md)
+  motivates separating declarative intent, deterministic control, model
+  judgment, effects, and completion evidence.
+- [Task-language feasibility inquiry](../../40-inquiries/can-a-task-language-improve-llm-agents.md)
+  supplies semantic-fidelity and runtime-enforcement comparisons.
 
-The open
-[task-language](../../40-inquiries/can-a-task-language-improve-llm-agents.md),
-[categorical](../../40-inquiries/can-categorical-semantics-improve-agent-language.md),
-[BEAM](../../40-inquiries/can-beam-support-a-native-agent-language.md), and
-[UCAN](../../40-inquiries/can-ucan-enforce-a-lang-agent-capabilities.md)
-inquiries supply the falsification criteria used in later phases.
+## Minimal end-to-end result
 
-## Proof-of-concept thesis
+The final demonstrator compiles one A-Lang task into a validated `.beam`
+artifact and runs it as a supervised ERTS process. The task:
 
-The PoC tests this claim:
+1. receives typed input through the versioned BEAM runtime ABI;
+2. requests one bounded model completion through an isolated adapter;
+3. decodes and validates the model output into a closed result type;
+4. may spawn one more-restricted child A-Lang task as a supervised BEAM
+   process;
+5. requests one workspace write through an opaque local capability reference;
+6. records effect intent, result, checkpoint, and completion evidence;
+7. survives injected process, adapter, and node failure without duplicating
+   the logical workspace effect; and
+8. returns a typed result, artifact digest, and auditable normalized trace.
 
-> A small A-Lang program can be parsed and checked by a native compiler,
-> compiled through Erlang Abstract Format into a validated BEAM module, run as
-> an ERTS process, make one bounded LLM judgment, and perform one durable
-> workspace effect only through a least-authority UCAN-backed broker, while a
-> reference evaluator, law tests, fault injection, and an audit trace make the
-> result independently inspectable.
+The model never selects arbitrary functions, sees a capability reference, or
+controls a module, atom, filesystem path root, budget counter, process address,
+or completion decision.
 
-## Target demonstration
-
-A successful final demonstration performs this sequence from a clean checkout:
-
-1. `alangc check` parses an A-Lang example and displays its typed IR, closed
-   effect set, normalized capability requirement, and completion predicate.
-2. `alangc build` lowers the same IR to Erlang Abstract Format, invokes a
-   pinned OTP compiler bridge with strong validation, and emits a deterministic
-   `.beam` artifact plus source and capability metadata.
-3. A launcher loads the artifact and starts one supervised task process on
-   ERTS; no Erlang, Elixir, Gleam, or other BEAM-language interpreter evaluates
-   the A-Lang program.
-4. The task requests a bounded `Model.complete` effect through a typed message
-   ABI. A deterministic mock provider is mandatory; a live provider is an
-   optional adapter using the same contract.
-5. The task requests `Workspace.write` under a fixed output directory. It
-   holds only an opaque `CapabilityRef`; signing keys and raw authority remain
-   in the broker and isolated UCAN service.
-6. The broker derives a short-lived session Delegation, creates a signed
-   Invocation with canonical arguments, validates it at execution time,
-   applies local policy and budget state, and records durable intent.
-7. The workspace adapter writes by canonical path relative to an already
-   opened workspace root, records the result, and returns an `ArtifactRef`.
-8. The verifier checks the artifact, associates evidence with the declared
-   completion predicate, and emits a provenance trace covering source,
-   artifact, principal, grant, invocation, intent, effect, and result.
-9. Replaying the invocation or killing the task around the effect boundary
-   does not duplicate the acknowledged write.
-
-## Minimal language boundary
-
-The promoted PoC surface is deliberately small:
-
-- primitive `Unit`, `Bool`, `Int`, `Text`, `Bytes`, and opaque identifier
-  types;
-- records, products, and `Result[Error, Value]` coproducts;
-- modules, typed pure functions, and typed tasks;
-- `let`, function application, sequential composition, and exhaustive result
-  matching;
-- declarations for effects, capability requirements, and mechanically
-  checkable completion predicates;
-- closed, monomorphic effect sets;
-- `Model.complete`, `Workspace.write`, and `Trace.emit` runtime operations;
-- one supervised task process and one mechanically attenuated child task in
-  the final delegation test.
-
-The following remain out of scope unless a phase explicitly promotes them:
-
-- general recursion, effect polymorphism, higher-kinded types, or a broad
-  standard library;
-- user-authored supervision trees, arbitrary actor messaging, distribution,
-  hot upgrade, or dynamic code loading;
-- parallel task composition before noninterference is defined;
-- general shell, arbitrary network, payment, secret, or messaging effects;
-- direct Core Erlang or BEAM assembly as the production backend;
-- a NIF-based validator, in-process model server, or untrusted code on the
-  ERTS node;
-- UCAN Powerline, `/` commands, non-expiring grants, Promise, Receipt, or RC
-  Revocation as workflow foundations;
-- claims of exactly-once effects, formal proof, or production security.
-
-## Bootstrap implementation boundary
-
-The roadmap assumes a Rust native compiler and reference evaluator, a small
-Rust UCAN signer/validator sidecar, and narrowly scoped Erlang support modules
-for the OTP compilation bridge and runtime ABI. Phase 1 must record or revise
-this choice before code expands.
-
-The Erlang modules are support code, not the A-Lang interpreter. A-Lang source
-is evaluated only by the independent reference evaluator for comparison or by
-compiled BEAM modules on ERTS. The production path never emits Erlang source
-and never hands A-Lang source to an `eval` loop.
-
-## Planned architecture
+## Compiler and runtime shape
 
 ```text
-A-Lang source + canonical JSON fixtures
-    │
-    ▼
-Rust lexer/parser/resolver/type-effect checker
-    │
-    ▼
-A-Lang-owned typed task IR
-    ├──────────────► reference evaluator / simulator / trace interpreter
-    │
-    ▼
-Erlang Abstract Format encoder
-    │ pinned OTP compile bridge + strong validation
-    ▼
-BEAM artifact + source map + capability manifest
-    │
-    ▼
-ERTS task process ──typed ABI──► effect gateway
-                                  ├─ capability broker / policy / budgets
-                                  ├─ UCAN signer-validator port
-                                  ├─ intent-result journal
-                                  └─ isolated model and workspace adapters
+A-Lang source
+  -> native lexer, parser, resolver, and type/effect checker
+  -> small A-Lang-owned typed task IR
+  -> actor, state-machine, and runtime-operation lowering
+  -> pinned Erlang Abstract Format adapter
+  -> OTP strong validation and deterministic compilation
+  -> inspected and manifested .beam artifact
+  -> ERTS load and supervised BEAM process execution
+
+session supervisor
+  ├─ generated A-Lang coordinator process
+  ├─ bounded inbox and admission process
+  ├─ local capability and effect broker
+  ├─ trace and provenance process
+  ├─ checkpoint and journal adapter
+  └─ OS-bounded model, tool, and workspace adapters
 ```
+
+Core Erlang may inform the language IR or support experiments, but it is not
+the production compiler ABI. Direct BEAM assembly and hand-written `.beam`
+files are outside the minimal implementation path.
+
+## Scope boundaries
+
+### Included
+
+- one pinned OTP compiler and ERTS runtime pair;
+- a small native A-Lang frontend and typed task IR;
+- products, coproducts, results, pure arrows, sequential tasks, closed effects,
+  local capability requirements, and one coalgebraic agent loop;
+- Abstract Format lowering, artifact validation, manifests, loading, and
+  source-level diagnostics;
+- generated BEAM coordinators and a supervised runtime ABI;
+- one opaque local capability broker and one workspace effect;
+- explicit intent/result journaling, checkpointing, recovery, and idempotency;
+- one mock-first bounded model adapter and one more-restricted child task;
+- differential, property, state-machine, security, fault, and performance
+  evidence; and
+- one final accept, revise, or reject decision for each major architectural
+  hypothesis.
+
+### Excluded
+
+- an Erlang, Elixir, Gleam, or other BEAM-language interpreter for A-Lang;
+- Core Erlang or raw BEAM emission as the production compiler boundary;
+- portable authorization, signed delegation, distributed proof chains, or
+  cross-trust-domain identity;
+- arbitrary user module calls, dynamic apply, unbounded atom creation, NIFs,
+  and in-process untrusted code;
+- transparent Erlang distribution as a security boundary;
+- parallel composition before non-interference semantics are validated;
+- recursive or general-purpose language features not required by the slice;
+- live-provider reliability claims based only on mock fixtures;
+- hot upgrade, multi-node scheduling, package management, self-hosting, and
+  production release engineering; and
+- claims that property tests constitute formal proof.
+
+## Status and evidence rules
+
+- Every phase, section, task, and subtask starts as planned and unchecked.
+- Complete subtasks only with reviewable implementation and reproducible test
+  or inspection evidence.
+- Complete a task only when all subtasks and the task's stated observable
+  result pass.
+- Complete a section only when its integration claim survives negative tests.
+- Complete a phase only when its final numbered integration-test section and
+  phase evidence checklist pass from a clean checkout.
+- A host evaluator may support differential testing but can never substitute
+  for BEAM execution evidence.
+- A process restart does not count as durable recovery unless persisted state
+  and uncertain effects reconcile under the declared semantics.
+- A generated artifact does not count as safe merely because OTP accepts it;
+  imports, manifests, ABI versions, resource limits, and isolation must also
+  pass.
 
 ## Index
 
@@ -206,98 +191,68 @@ ERTS task process ──typed ABI──► effect gateway
 
 ### Documents
 
-- [Phase 1 — Executable contract and toolchain foundation](phase-01-executable-contract-and-toolchain-foundation.md)
-  — freezes the PoC surface, repository layout, toolchain, semantic oracle,
-  diagnostics, and clean-build gates.
+- [Phase 1 — BEAM-executable vertical slice](phase-01-beam-executable-vertical-slice.md)
+  — proves the architecture immediately by compiling, loading, spawning, and
+  observing a generated A-Lang program on ERTS with no interpreter substitute.
 - [Phase 2 — Native frontend and typed task IR](phase-02-native-frontend-and-typed-task-ir.md)
-  — implements the canonical JSON form, native textual frontend, name and type
-  checking, effects, capability requirements, and independent IR interpreters.
+  — implements A-Lang syntax and static semantics and connects them to the
+  already-proven BEAM artifact path.
 - [Phase 3 — Erlang Abstract Format and BEAM runtime kernel](phase-03-erlang-abstract-format-and-beam-runtime-kernel.md)
-  — lowers typed IR through OTP's supported boundary into validated BEAM and
-  establishes the closed runtime ABI and supervised process model.
-- [Phase 4 — Capability broker and durable effects](phase-04-capability-broker-and-durable-effects.md)
-  — adds opaque local authority, canonical effect schemas, a journal, budgets,
-  workspace isolation, replay protection, and recovery.
-- [Phase 5 — UCAN profile and portable authorization](phase-05-ucan-profile-and-portable-authorization.md)
-  — pins an interoperable UCAN subset, isolates signing keys, and maps typed
-  requirements into Delegations and concrete Invocations.
+  — generalizes lowering, artifact validation, actor semantics, supervision,
+  bounded messaging, cancellation, and diagnostics.
+- [Phase 4 — Local capability broker and effect boundary](phase-04-local-capability-broker-and-effect-boundary.md)
+  — adds closed effects, opaque runtime-local grants, a supervised BEAM
+  reference monitor, and one OS-bounded workspace adapter.
+- [Phase 5 — Durable BEAM sessions and recovery](phase-05-durable-beam-sessions-and-recovery.md)
+  — adds explicit state versions, intent/result journaling, checkpoints,
+  generation fencing, local grant restoration, and crash recovery.
 - [Phase 6 — Bounded LLM task and subagent execution](phase-06-bounded-llm-task-and-subagent-execution.md)
-  — integrates deterministic and optional live model adapters, bounded repair,
-  verification, context slicing, and one attenuated child task.
+  — adds typed model judgments, repair limits, context projection, one
+  more-restricted child BEAM process, and verifier-backed completion.
 - [Phase 7 — Law, security, fault, and performance validation](phase-07-law-security-fault-and-performance-validation.md)
-  — exercises composition, attenuation, semantic preservation, adversarial
-  inputs, crash recovery, and resource behavior.
+  — tests categorical and local capability laws, differential semantics,
+  adversarial inputs, fault matrices, resource bounds, and seeded mutations.
 - [Phase 8 — End-to-end demonstration and PoC decision](phase-08-end-to-end-demonstration-and-poc-decision.md)
-  — packages a reproducible demo, compares baselines, evaluates falsification
-  criteria, and records the promote, revise, or stop decision.
+  — runs the complete BEAM-native scenario, compares simpler baselines, and
+  records evidence-backed accept, revise, or reject decisions.
 
-## Dependency graph
+## Dependency sequence
 
 ```text
-Phase 1: contract and toolchain
-    -> Phase 2: frontend and typed IR
-        -> Phase 3: Abstract Format and BEAM kernel
-            -> Phase 4: broker and durable effects
-                -> Phase 5: UCAN authorization
-                    -> Phase 6: LLM and child task
-                        -> Phase 7: laws, attacks, faults, performance
-                            -> Phase 8: reproducible demo and decision
+Phase 1: prove execution on BEAM
+    -> Phase 2: source and typed IR feed that path
+        -> Phase 3: generalize BEAM lowering and runtime
+            -> Phase 4: local capabilities and effects
+                -> Phase 5: durable sessions and recovery
+                    -> Phase 6: model and child-task execution
+                        -> Phase 7: adversarial validation
+                            -> Phase 8: demonstration and decision
 ```
 
-Phase 7 test scaffolding may begin earlier, but its acceptance evidence depends
-on the complete Phase 6 vertical slice. Phase 8 documentation may evolve
-throughout the work, but no architecture is promoted before its final gates.
-
-## Research-to-phase traceability
-
-| Research conclusion | Implementation phases |
-| --- | --- |
-| typed declarative tasks and explicit completion evidence | 1, 2, 6, 8 |
-| familiar source plus typed semantic IR | 1, 2 |
-| products, coproducts, typed composition, and lawful interpreters | 2, 7 |
-| explicit effects outside unrestricted model control | 2, 4, 6 |
-| native frontend and A-Lang-owned IR | 1, 2 |
-| Erlang Abstract Format rather than Core or assembly | 1, 3 |
-| ERTS processes for bounded I/O-oriented control | 3, 4, 7 |
-| ports or sidecars for model, tools, and authorization | 3–6 |
-| durable intent/result records instead of supervision-only retry | 4, 7 |
-| declarative requirement distinct from grant and decision | 2, 4, 5 |
-| short, attenuated UCAN Delegations and concrete Invocations | 5, 6 |
-| broker key custody for model-controlled non-redelegation | 5, 6 |
-| property, differential, adversarial, and fault evidence | 7, 8 |
+No phase may move BEAM execution later in the sequence. Later phases extend
+the path proven in Phase 1; they do not replace it with a host runtime.
 
 ## Roadmap completion gate
 
-- [ ] A clean checkout builds with pinned Rust and OTP toolchains
-- [ ] One A-Lang source program parses, resolves, type-checks, and produces a
-      normalized capability manifest and completion predicate
-- [ ] The program executes both in the reference evaluator and as an
-      OTP-validated loaded BEAM module with equivalent normalized observations
-- [ ] No existing BEAM-language interpreter evaluates A-Lang source at runtime
-- [ ] Every external effect crosses the typed runtime ABI and reference monitor
-- [ ] The task process holds only an opaque `CapabilityRef`; model-visible data
-      contains no signing key or general delegation primitive
-- [ ] A pinned UCAN profile produces and independently validates a short-lived
-      workspace Delegation and signed Invocation
-- [ ] Canonical path policy, local budget state, and replay protection deny the
-      specified negative cases
-- [ ] Killing the task and effect workers at every journal transition does not
-      duplicate an acknowledged workspace write
-- [ ] Property suites detect seeded composition, backend, attenuation, and
-      recovery defects and shrink them to actionable counterexamples
-- [ ] The deterministic mock-model demonstration is reproducible without
-      network access or secrets
-- [ ] Optional live-model execution uses the same typed boundary and is
-      reported separately from deterministic acceptance evidence
-- [ ] The final comparison records task correctness, unauthorized effects,
-      recovery, latency, resource use, trace clarity, and implementation cost
-- [ ] A written decision promotes, revises, narrows, or stops the architecture
-      without treating a running demo as sufficient evidence
+The roadmap is complete only when all eight phase evidence checklists pass and
+a clean checkout can reproduce all of the following:
+
+- [ ] An A-Lang source program compiles into an inspected `.beam` artifact
+- [ ] The artifact loads and runs as supervised BEAM processes on pinned ERTS
+- [ ] No host-language or existing BEAM-language interpreter executes the task
+- [ ] Static types, effects, capability requirements, and runtime manifests agree
+- [ ] Opaque local grants and the broker prevent undeclared or out-of-scope effects
+- [ ] Model, tool, storage, and workspace boundaries remain typed and OS-bounded
+- [ ] Process, adapter, and node failure do not duplicate the logical effect
+- [ ] Completion requires the declared typed result and evidence digest
+- [ ] Property and mutation suites detect seeded semantic and enforcement defects
+- [ ] Performance and resource results are reported against declared baselines
+- [ ] BEAM, categorical IR, and agent-language hypotheses receive explicit decisions
 
 ## Maintaining this index
 
-Keep phase links, status boxes, dependencies, and completion evidence aligned
-with the phase files. Do not mark a phase complete because implementation
-began or because a focused happy-path test passed. Add newly discovered work
-to the earliest phase whose contract it changes, and keep intentionally
-deferred features visible rather than silently expanding the PoC.
+Keep phase filenames and numbers stable after implementation evidence links to
+them. Update status and evidence in the phase documents rather than renumbering
+the roadmap. Add a new numbered planning stream under `60-planning` if later
+work materially changes the architecture or scope instead of silently
+rewriting completed evidence.

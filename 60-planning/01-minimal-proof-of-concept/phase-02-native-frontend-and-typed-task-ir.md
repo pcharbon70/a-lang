@@ -16,13 +16,15 @@ aliases: []
 **Description:** This phase implements the canonical JSON input, a small native
 textual frontend, source-oriented resolution and type-and-effect checking, a
 normalized A-Lang-owned task IR, capability-requirement inference, and
-independent reference, simulation, trace, and manifest interpreters.
+independent test-only reference, simulation, trace, and manifest views. The
+phase ends by compiling source through the Phase 1 path and executing it on
+ERTS.
 
 **Status:** Planned.
 
-**Dependencies:** Phase 1 complete with the executable feature ledger,
-canonical fixtures, diagnostic taxonomy, normalized observations, and pinned
-native toolchain accepted.
+**Dependencies:** Phase 1 complete with a generated artifact compiled through
+the pinned OTP boundary, inspected, loaded, spawned, and observed as a BEAM
+process with the no-interpreter gate accepted.
 
 ## Section 2.1: Canonical and Textual Frontends
 
@@ -57,8 +59,10 @@ source locations.
 
 ### Task 2.1.2: Implement the Native Textual Lexer and Parser
 
-**Description:** Build the minimal human-facing A-Lang frontend in Rust and
-lower its parse tree to the same AST used by canonical JSON fixtures.
+**Description:** Build the minimal human-facing A-Lang frontend in the selected
+native compiler implementation and lower its parse tree to the same AST used
+by canonical JSON fixtures. The host implementation is a compiler, not an
+A-Lang runtime.
 
 - [ ] **Task 2.1.2 Complete**
 
@@ -137,7 +141,7 @@ identifiers outside their approved operations.
 
 **Description:** Distinguish what a task may do from what authority it
 requires, and calculate both as deterministic semantic artifacts independent
-of UCAN or any one runtime backend.
+of any portable authorization protocol or concrete runtime grant.
 
 - [ ] **Section 2.3 Complete**
 
@@ -188,11 +192,11 @@ operation or widened argument constraint.
 
 - [ ] **Subtask 2.3.2.2 Complete**
 
-## Section 2.4: Typed IR and Independent Interpreters
+## Section 2.4: Typed IR and Test-Only Semantic Views
 
 **Description:** Lower checked source into a small categorical task IR and
-give the IR several explicit interpretations before BEAM code generation is
-allowed to define behavior accidentally.
+give the IR several explicit test views while preserving compiled BEAM as the
+only execution path accepted by the proof of concept.
 
 - [ ] **Section 2.4 Complete**
 
@@ -220,11 +224,11 @@ requirements before any interpreter receives the IR.
 
 - [ ] **Subtask 2.4.1.2 Complete**
 
-### Task 2.4.2: Implement Reference, Simulation, Trace, and Manifest Views
+### Task 2.4.2: Implement Test-Only Reference, Simulation, Trace, and Manifest Views
 
-**Description:** Interpret the same checked IR as pure evaluation with injected
-effect responses, a no-effect simulation, a normalized trace, and a capability
-manifest.
+**Description:** Evaluate the same checked IR against fixture-provided values
+and derive simulation, normalized trace, and capability-manifest views solely
+for tests, diagnostics, and differential comparison.
 
 - [ ] **Task 2.4.2 Complete**
 
@@ -232,7 +236,8 @@ manifest.
 
 **Description:** Execute pure nodes and consume fixture-provided effect results
 with explicit state transitions, stable observations, bounded steps, and no
-host filesystem or network access.
+host filesystem or network access. Mark the evaluator as nondeployable and
+incapable of satisfying a runtime phase gate.
 
 - [ ] **Subtask 2.4.2.1 Complete**
 
@@ -246,9 +251,9 @@ verify that each interpreter covers every primitive node.
 
 ## Section 2.5: Phase 2 Integration Tests
 
-**Description:** Prove that both frontends converge on one checked IR, that
-invalid programs fail before backend work, and that the reference and
-nonexecuting interpretations agree on declared structure.
+**Description:** Prove that both frontends converge on one checked IR, invalid
+programs fail before backend work, and accepted source feeds the already-proven
+BEAM compiler and ERTS execution path.
 
 - [ ] **Section 2.5 Complete**
 
@@ -276,37 +281,41 @@ features fail with stable source-oriented diagnostics.
 
 - [ ] **Subtask 2.5.1.2 Complete**
 
-### Task 2.5.2: Validate Interpreter Coherence
+### Task 2.5.2: Execute Frontend Programs on BEAM
 
-**Description:** Compare reference results, dry-run plans, trace skeletons,
-capability manifests, and completion checklists for every canonical fixture.
+**Description:** Lower checked IR through the Phase 1 Abstract Format adapter,
+compile and inspect the artifact, run it as a BEAM process, and compare its
+normalized observation with the test-only views.
 
 - [ ] **Task 2.5.2 Complete**
 
-#### Subtask 2.5.2.1: Assert Structural Coverage and Determinism
+#### Subtask 2.5.2.1: Assert BEAM and Test-View Agreement
 
-**Description:** Confirm every IR node is handled explicitly, repeated
-interpretation is deterministic, and source-order variations with identical
-meaning normalize to identical semantic artifacts.
+**Description:** Confirm every promoted IR node lowers explicitly and that
+compiled BEAM observations agree with the bounded reference result, trace
+skeleton, effect manifest, and completion checklist within defined equality.
 
 - [ ] **Subtask 2.5.2.1 Complete**
 
-#### Subtask 2.5.2.2: Run Phase Completion Gates
+#### Subtask 2.5.2.2: Reassert the No-Interpreter Gate
 
-**Description:** Run frontend, semantic, schema, snapshot, fuzz-smoke, and
-complete repository suites and publish fixture counts and diagnostic coverage.
+**Description:** Run frontend, semantic, schema, snapshot, fuzz-smoke, artifact,
+and isolated ERTS suites and prove that all successful A-Lang executions came
+from loaded BEAM modules rather than the test evaluator.
 
 - [ ] **Subtask 2.5.2.2 Complete**
 
-### Phase 2 Completion Evidence
+## Phase 2 Completion Evidence
 
-**Description:** Record the evidence that authorizes Phase 3 to implement a
-BEAM interpretation of already frozen checked semantics.
+**Description:** Record the evidence that authorizes Phase 3 to generalize the
+already-working BEAM lowering and runtime semantics.
 
 - [ ] Textual and canonical JSON frontends produce identical checked IR
 - [ ] Resolution, data typing, effects, and requirements fail closed
-- [ ] Capability manifests remain independent of UCAN wire concepts
-- [ ] Reference, simulation, trace, and manifest interpreters cover all IR
+- [ ] Capability manifests remain independent of portable protocol concepts
+- [ ] Reference, simulation, trace, and manifest views cover all IR
       primitives
+- [ ] Accepted source compiles and executes as an isolated BEAM process
+- [ ] Test-only evaluation is absent from the accepted runtime path
 - [ ] Positive and negative fixtures pass with stable diagnostics
 - [ ] Frontend fuzz-smoke and complete repository gates pass

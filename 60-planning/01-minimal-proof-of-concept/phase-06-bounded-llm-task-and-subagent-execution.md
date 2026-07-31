@@ -17,13 +17,13 @@ aliases: []
 executes deterministic orchestration and limited repair around it, verifies
 completion evidence, slices model context, and adds one child task whose
 authority is mechanically attenuated without exposing a signing or delegation
-primitive.
+primitive. Parent and child both execute as supervised BEAM processes.
 
 **Status:** Planned.
 
-**Dependencies:** Phase 5 complete with the pinned UCAN profile, isolated
-session keys, subset-preserving Delegations, signed Invocations, dynamic
-policy, durable effects, and cross-validator evidence accepted.
+**Dependencies:** Phase 5 complete with versioned durable state,
+intent-and-result journaling, generation fencing, subset-preserving local grant
+restoration, idempotent effect recovery, and the crash matrix accepted.
 
 ## Section 6.1: Provider-Neutral Model Boundary
 
@@ -129,9 +129,9 @@ history, and preserve provenance for every included fragment.
 
 #### Subtask 6.2.2.2: Prevent Authority and Instruction Leakage
 
-**Description:** Exclude private keys, raw grants, proof chains, opaque handles,
-adapter credentials, unredacted traces, and retrieved text with undeclared
-instruction authority from model-visible context.
+**Description:** Exclude opaque capability references, broker state, adapter
+credentials, unredacted traces, runtime addresses, and retrieved text with
+undeclared instruction authority from model-visible context.
 
 - [ ] **Subtask 6.2.2.2 Complete**
 
@@ -195,7 +195,7 @@ incomplete status.
 
 **Description:** Demonstrate one parent-to-child task boundary with typed
 inputs, reduced context, a narrower capability requirement, an ephemeral
-principal, and broker-enforced non-redelegation.
+runtime identity, and broker-enforced inability to create or transfer grants.
 
 - [ ] **Section 6.4 Complete**
 
@@ -216,40 +216,41 @@ exclude unrelated parent state and proof material.
 
 #### Subtask 6.4.1.2: Create and Supervise the Child Session
 
-**Description:** Allocate a child task ID and ephemeral DID, monitor lifecycle,
-propagate deadline and cancellation, correlate the typed result, and discard
-late or wrong-session replies.
+**Description:** Allocate a child task ID and runtime identity, spawn and
+monitor its BEAM process, propagate deadline and cancellation, correlate the
+typed result, and discard late or wrong-session replies.
 
 - [ ] **Subtask 6.4.1.2 Complete**
 
 ### Task 6.4.2: Attenuate and Constrain Child Authority
 
 **Description:** Derive the child's grant as a subset of both the parent grant
-and child requirement and prevent model-controlled redelegation through signer
-custody.
+and child requirement and prevent model-controlled authority creation or
+transfer through the broker API.
 
 - [ ] **Task 6.4.2 Complete**
 
-#### Subtask 6.4.2.1: Issue the Narrow Child Delegation
+#### Subtask 6.4.2.1: Issue the Narrow Child Local Grant
 
-**Description:** Narrow operation, resource, arguments, audience, budget, and
-expiry; reject any widening; and retain the proof path outside child context.
+**Description:** Narrow operation, resource, arguments, owning session, budget,
+and expiry; reject any widening; and issue a fresh opaque reference bound to
+the child BEAM process lineage.
 
 - [ ] **Subtask 6.4.2.1 Complete**
 
-#### Subtask 6.4.2.2: Deny Arbitrary Subdelegation
+#### Subtask 6.4.2.2: Deny Grant Creation and Transfer
 
-**Description:** Expose typed effect invocation only, provide no sign or
-delegate operation, and document that this is broker-enforced confinement and
-not a protocol guarantee for external key holders.
+**Description:** Expose typed effect invocation only, provide no issue, clone,
+export, or delegate operation, and reject use of the child reference by the
+parent, sibling, adapter, model, or another runtime generation.
 
 - [ ] **Subtask 6.4.2.2 Complete**
 
 ## Section 6.5: Phase 6 Integration Tests
 
 **Description:** Execute the full deterministic parent-and-child model workflow
-through compiled BEAM, UCAN authorization, durable effects, repair, artifact
-verification, and completion evidence.
+through compiled BEAM, local broker authorization, durable effects, repair,
+artifact verification, and completion evidence.
 
 - [ ] **Section 6.5 Complete**
 
@@ -264,16 +265,16 @@ output control orchestration or authority.
 #### Subtask 6.5.1.1: Run Positive Parent and Child Scenarios
 
 **Description:** Produce the expected artifact and completion witness through
-the mock provider, child task, broker, UCAN port, journal, workspace adapter,
-and verifier with a causally connected trace.
+the mock provider, child BEAM process, local broker, journal, workspace
+adapter, and verifier with a causally connected trace.
 
 - [ ] **Subtask 6.5.1.1 Complete**
 
 #### Subtask 6.5.1.2: Run Negative Model and Delegation Scenarios
 
 **Description:** Cover malformed output, exhausted repair, prompt injection in
-data, deadline, cancellation, widened child requirement, wrong audience,
-attempted redelegation, forged child reply, and failed completion predicate.
+data, deadline, cancellation, widened child requirement, wrong session,
+attempted grant export, forged child reply, and failed completion predicate.
 
 - [ ] **Subtask 6.5.1.2 Complete**
 
@@ -301,7 +302,7 @@ publish exact step, token, and effect counts.
 
 - [ ] **Subtask 6.5.2.2 Complete**
 
-### Phase 6 Completion Evidence
+## Phase 6 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 7 to evaluate the
 complete PoC rather than isolated compiler or runtime pieces.
@@ -310,5 +311,6 @@ complete PoC rather than isolated compiler or runtime pieces.
 - [ ] Workflow control, budgets, and repair limits remain runtime-owned
 - [ ] Completion depends on verified evidence, not model or process assertion
 - [ ] Parent and child context snapshots satisfy declared minimization rules
-- [ ] Child authority is mechanically attenuated and cannot sign delegations
+- [ ] Child authority is mechanically restricted and cannot create or transfer grants
+- [ ] Parent and child execute as supervised BEAM processes
 - [ ] The full deterministic parent-child artifact scenario passes

@@ -34,6 +34,7 @@ use these conventions for every document and organizational change.
 60-planning/    Numbered implementation roadmaps and phase evidence
 90-archive/     Inactive or superseded material worth retaining
 assets/         Images, PDFs, diagrams, datasets, and attachments
+src/            A-Lang compiler, runtime, and supporting implementation source
 templates/      Starting points for each document kind
 ```
 

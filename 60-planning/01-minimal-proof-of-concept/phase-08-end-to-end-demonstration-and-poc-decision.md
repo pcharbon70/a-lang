@@ -15,9 +15,9 @@ aliases: []
 
 **Description:** This phase packages the complete deterministic PoC, publishes
 inspectable artifacts and traces, compares the categorical IR, BEAM runtime,
-local broker, and UCAN layers against simpler baselines, applies the original
-falsification criteria, and records a promote, revise, narrow, or stop decision
-with an explicit deferred-work ledger.
+local broker, and durability layers against simpler baselines, applies the
+original falsification criteria, and records a promote, revise, narrow, or stop
+decision with an explicit deferred-work ledger.
 
 **Status:** Planned.
 
@@ -45,7 +45,7 @@ a stable status.
 #### Subtask 8.1.1.1: Freeze Example Inputs and Expected Outputs
 
 **Description:** Version the A-Lang source, canonical JSON, model fixtures,
-deployment authority, expected manifest, BEAM metadata, artifact digest,
+local grant fixture, expected manifest, BEAM metadata, artifact digest,
 normalized trace, and completion witness.
 
 - [ ] **Subtask 8.1.1.1 Complete**
@@ -61,7 +61,7 @@ clean only disposable outputs explicitly owned by the run.
 ### Task 8.1.2: Publish Inspection and Explanation Tools
 
 **Description:** Let a reviewer inspect source, typed IR, effect and capability
-manifest, artifact provenance, runtime trace, authorization chain, journal,
+manifest, artifact provenance, runtime trace, broker decisions, journal,
 artifact result, and completion witness without reading internal databases.
 
 - [ ] **Task 8.1.2 Complete**
@@ -70,14 +70,15 @@ artifact result, and completion witness without reading internal databases.
 
 **Description:** Emit versioned canonical records with digests and references
 that allow automated verification of the complete causal path while keeping
-keys and sensitive content excluded.
+opaque capability references, adapter credentials, and sensitive content
+excluded.
 
 - [ ] **Subtask 8.1.2.1 Complete**
 
 #### Subtask 8.1.2.2: Produce Human-Readable Explanations
 
-**Description:** Explain the task, inferred effects, required authority,
-issued grant, concrete invocation, policy decision, effect state, verifier
+**Description:** Explain the task, inferred effects, required authority, local
+grant scope, typed effect request, broker decision, effect state, verifier
 result, and any uncertainty in A-Lang vocabulary.
 
 - [ ] **Subtask 8.1.2.2 Complete**
@@ -85,8 +86,8 @@ result, and any uncertainty in A-Lang vocabulary.
 ## Section 8.2: Controlled Baseline and Ablation Comparison
 
 **Description:** Determine which layers contribute measurable correctness,
-portability, recovery, or cost rather than attributing every benefit to the
-new language as a whole.
+least-authority enforcement, recovery, or cost rather than attributing every
+benefit to the new language as a whole.
 
 - [ ] **Section 8.2 Complete**
 
@@ -100,17 +101,17 @@ outputs, budgets, and success criteria as far as possible.
 
 #### Subtask 8.2.1.1: Compare Execution Interpretations
 
-**Description:** Compare the reference evaluator with compiled BEAM and compare
-the law-declared typed IR with a minimal conventional typed pipeline that has
-the same operations and runtime enforcement.
+**Description:** Use the bounded reference evaluator only as a semantic oracle,
+compare compiled BEAM execution with a minimal conventional typed runtime, and
+compare the law-declared IR with a conventional typed IR under matched effects.
 
 - [ ] **Subtask 8.2.1.1 Complete**
 
-#### Subtask 8.2.1.2: Compare Authorization Paths
+#### Subtask 8.2.1.2: Compare Local Enforcement Paths
 
-**Description:** Compare broker-only opaque handles with UCAN-backed portable
-proof while holding resource semantics, budgets, journal, adapter, verifier,
-and effect result constant.
+**Description:** Compare opaque broker-enforced local grants with a direct
+runtime-handler baseline while holding resource semantics, budgets, journal,
+adapter, verifier, and effect result constant.
 
 - [ ] **Subtask 8.2.1.2 Complete**
 
@@ -148,17 +149,18 @@ commitment.
 
 ### Task 8.3.1: Evaluate Each Research Hypothesis
 
-**Description:** Review task-language value, categorical value, BEAM fit, and
-UCAN fit independently using the Phase 7 evidence and Phase 8 comparisons.
+**Description:** Review task-language value, categorical value, BEAM fit,
+local capability enforcement, and explicit durability independently using the
+Phase 7 evidence and Phase 8 comparisons.
 
 - [ ] **Task 8.3.1 Complete**
 
 #### Subtask 8.3.1.1: Apply Positive Resolution Criteria
 
-**Description:** Check semantic fidelity, compiler enforcement, backend
-agreement, bounded runtime behavior, durable recovery, attenuation, key
-isolation, validator interoperability, completion evidence, and portability
-benefit.
+**Description:** Check semantic fidelity, compiled BEAM execution, compiler
+enforcement, backend agreement, bounded runtime behavior, durable recovery,
+local authority restriction, process and adapter isolation, and completion
+evidence.
 
 - [ ] **Subtask 8.3.1.1 Complete**
 
@@ -166,8 +168,8 @@ benefit.
 
 **Description:** Check whether structured syntax adds only translation cost,
 categorical machinery ties a conventional IR, BEAM or durability complexity
-erases runtime benefit, or UCAN adds no value over local handles or cannot
-interoperate safely.
+erases runtime benefit, or a simpler closed handler matches the local broker's
+enforcement with less complexity.
 
 - [ ] **Subtask 8.3.1.2 Complete**
 
@@ -205,7 +207,7 @@ evidence, then run the complete demonstration and acceptance campaign.
 ### Task 8.4.1: Publish the Implementation and Risk Record
 
 **Description:** Document supported syntax and semantics, compiler and runtime
-architecture, profile and ABI versions, operational commands, evidence,
+architecture, artifact and ABI versions, operational commands, evidence,
 limitations, and known security assumptions.
 
 - [ ] **Task 8.4.1 Complete**
@@ -221,8 +223,8 @@ internal module is mistaken for a promoted language feature.
 #### Subtask 8.4.1.2: Publish the Deferred-Work Ledger
 
 **Description:** Preserve recursion, polymorphism, parallelism, distribution,
-hot upgrades, additional effects, live-provider hardening, advanced UCAN
-lifecycle, formal proof, audit, and production operations as explicitly
+hot upgrades, additional effects, live-provider hardening, portable delegation
+protocols, formal proof, audit, and production operations as explicitly
 unimplemented work with reasons.
 
 - [ ] **Subtask 8.4.1.2 Complete**
@@ -251,14 +253,15 @@ unchecked with its blocker.
 
 - [ ] **Subtask 8.4.2.2 Complete**
 
-### Phase 8 Completion Evidence
+## Phase 8 Completion Evidence
 
 **Description:** Record the final evidence and decision that completes the PoC
 roadmap without implying production readiness.
 
 - [ ] Offline one-command source-to-verified-artifact demo passes
 - [ ] Machine- and human-readable evidence bundles are complete and redacted
-- [ ] Reference, BEAM, conventional-IR, local-handle, and UCAN comparisons run
+- [ ] Semantic-oracle, compiled-BEAM, conventional-runtime, conventional-IR,
+      and local-enforcement comparisons run
 - [ ] Original positive and negative research criteria are evaluated
 - [ ] Supported, partial, rejected, and deferred ledgers are reconciled
 - [ ] Architecture decision and next boundary are accepted

@@ -602,13 +602,12 @@ dynamic atom construction, arbitrary module application, unrestricted ports,
 or NIF loading. A user-visible capability must be unforgeable and revocable;
 an ordinary tuple containing a capability name is not enough.
 
-[UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
-provides a concrete cross-boundary grant design. A BEAM task receives only an
-opaque `CapabilityRef`; an isolated broker retains the session key and proof
-store, issues short attenuated Delegations, and signs concrete Invocations
-after typed argument checks. The first validator should run behind a port or
-sidecar rather than a NIF, and UCAN validation must precede the broker's
-stateful budget, replay, ownership, and durable-effect checks.
+The proof of concept deliberately stops at a local grant design. A BEAM task
+receives only an opaque `CapabilityRef`; the trusted broker retains the typed
+resource scope, budget, deadline, revocation state, ownership rules, and
+durable-effect checks. References are valid only inside the issuing runtime,
+are never derived from untrusted text, and convey no portable delegation
+semantics.
 
 ## 8. Versioning and operational discipline
 
@@ -755,9 +754,6 @@ existing BEAM language as the agent language itself.
   turns the recommendation into a falsifiable engineering inquiry.
 - [BEAM runtime for agent languages](../10-maps/beam-runtime-for-agent-languages.md)
   provides the short path through the underlying sources.
-- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
-  specifies the portable delegation and invocation layer behind the runtime's
-  opaque capability reference.
 
 ## Sources
 

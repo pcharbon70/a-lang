@@ -45,9 +45,9 @@ Phase numbering restarts inside each planning stream.
 ### Subdirectories
 
 - [01 — Minimal proof of concept](01-minimal-proof-of-concept/README.md) — an
-  eight-phase roadmap from frozen semantics and a native compiler skeleton to
-  an end-to-end BEAM agent demonstration with typed effects, durable brokering,
-  UCAN authorization, a bounded LLM loop, and falsifiable evaluation.
+  eight-phase BEAM-first roadmap from a directly executing ERTS vertical slice
+  through the native frontend, typed effects, local capability brokering,
+  durable recovery, a bounded LLM loop, and falsifiable evaluation.
 
 ### Documents
 

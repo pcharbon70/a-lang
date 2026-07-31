@@ -21,6 +21,10 @@ aliases:
 
 # UCAN Implementations and Transport Container
 
+> **Archived 2026-07-31:** UCAN was removed from the active A-Lang
+> architecture and proof-of-concept scope. This source note is retained only
+> as provenance for the paused research.
+
 ## Reference
 
 UCAN Working Group. Official implementation and transport repositories,
@@ -118,5 +122,5 @@ cross-checked against shared fixtures and an independent validator.
 
 ## Derived notes
 
-- [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md)
-- [BEAM as the runtime for a native agent language](../20-notes/beam-runtime-for-native-agent-language.md)
+- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
+- [BEAM as the runtime for a native agent language](../../20-notes/beam-runtime-for-native-agent-language.md)

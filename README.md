@@ -25,6 +25,8 @@ Repository-wide authoring and maintenance conventions are defined in
 - [`90-archive/`](90-archive/README.md) — inactive or superseded material worth
   retaining
 - [`assets/`](assets/README.md) — images, PDFs, diagrams, and other attachments
+- [`src/`](src/README.md) — A-Lang compiler, runtime, and supporting
+  implementation source
 - [`templates/`](templates/README.md) — starting points for each document kind
 
 Each top-level directory contains a `README.md` that describes its purpose and

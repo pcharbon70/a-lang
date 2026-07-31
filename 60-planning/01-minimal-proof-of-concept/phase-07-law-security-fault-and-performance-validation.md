@@ -14,14 +14,15 @@ aliases: []
 # Phase 7: Law, Security, Fault, and Performance Validation
 
 **Description:** This phase tests the complete PoC through generated
-composition and attenuation laws, reference-to-BEAM and cross-validator
+composition and local capability-restriction laws, test-view-to-BEAM
 differential checks, malformed and hostile inputs, complete effect-transition
-fault injection, scheduler and resource pressure, and seeded-defect sensitivity.
+fault injection, scheduler and resource pressure, and seeded-defect
+sensitivity.
 
 **Status:** Planned.
 
 **Dependencies:** Phase 6 complete with a deterministic compiled parent-child
-agent workflow, typed model boundary, UCAN-backed authority, durable effects,
+BEAM workflow, typed model boundary, opaque local authority, durable effects,
 context minimization, and completion witnesses accepted.
 
 ## Section 7.1: Typed Generators and Law Definitions
@@ -81,32 +82,33 @@ composition, serialization, and reference-to-BEAM observational agreement.
 
 ## Section 7.2: Authorization and Runtime State Properties
 
-**Description:** Generate authority graphs, proof chains, policies, runtime
+**Description:** Generate local grants, restrictions, policies, runtime
 messages, journal histories, failures, and recovery actions and check their
 monotonic or state-machine invariants.
 
 - [ ] **Section 7.2 Complete**
 
-### Task 7.2.1: Implement UCAN Attenuation Properties
+### Task 7.2.1: Implement Local Capability Restriction Properties
 
-**Description:** Interpret grants as finite sets of accepted typed invocations
-and test that every child, policy, and time change preserves subset authority.
+**Description:** Interpret broker-held grants as finite sets of accepted typed
+invocations and test that every child, policy, budget, and time change
+preserves or reduces authority.
 
 - [ ] **Task 7.2.1 Complete**
 
 #### Subtask 7.2.1.1: Test Restriction and Composition Laws
 
-**Description:** Test command reflexivity and transitivity, identity
-delegation, policy conjunction, validity intersection, chain composition, and
-independent authority union under the pinned profile.
+**Description:** Test subset reflexivity and transitivity, identity
+restriction, policy conjunction, resource and validity intersection, child
+restriction, and policy-controlled union of independent local grants.
 
 - [ ] **Subtask 7.2.1.1 Complete**
 
-#### Subtask 7.2.1.2: Test Encoding and Validator Agreement
+#### Subtask 7.2.1.2: Test Reference Lifecycle and Broker Agreement
 
-**Description:** Generate canonical round trips, byte mutations, proof-order
-variants, unsupported algorithms, missing proofs, signatures, and policies and
-compare Rust, Go, and gateway decisions.
+**Description:** Generate issuance, lookup, restriction, expiry, revocation,
+restart, wrong-session, wrong-generation, forged-reference, and deletion cases
+and compare the finite-set authority model with BEAM broker decisions.
 
 - [ ] **Subtask 7.2.1.2 Complete**
 
@@ -137,7 +139,7 @@ automatic retry after an ambiguous submission.
 ## Section 7.3: Adversarial Boundary Testing
 
 **Description:** Attack every parser, serializer, loader, message, policy,
-proof, resource, model, and logging boundary with malformed and hostile inputs
+capability, resource, model, and logging boundary with malformed and hostile inputs
 under explicit resource limits.
 
 - [ ] **Section 7.3 Complete**
@@ -173,36 +175,36 @@ and disclosure attacks against the complete effect path.
 
 - [ ] **Task 7.3.2 Complete**
 
-#### Subtask 7.3.2.1: Attack Proof and Resource Semantics
+#### Subtask 7.3.2.1: Attack Grant and Resource Semantics
 
-**Description:** Cover forged and altered tokens, decompression limits, proof
-depth, selector complexity, clock skew, missing CIDs, wrong ownership,
-traversal, normalization collisions, symlinks, races, and alternate proof
-paths where implemented.
+**Description:** Cover guessed and altered references, wrong session and
+generation, stale grants, scope and budget widening, clock skew, wrong
+ownership, traversal, normalization collisions, symlinks, races, and direct
+adapter bypass attempts.
 
 - [ ] **Subtask 7.3.2.1 Complete**
 
 #### Subtask 7.3.2.2: Attack Context and Secret Boundaries
 
 **Description:** Insert prompt-injection text in task data, attempt tool and
-signing escalation through model output, inspect logs and crash reports, and
-scan every model-visible or persisted surface for credentials and authority
-material.
+grant-management escalation through model output, inspect logs and crash
+reports, and scan every model-visible or persisted surface for credentials,
+opaque references, and broker state.
 
 - [ ] **Subtask 7.3.2.2 Complete**
 
 ## Section 7.4: Fault and Performance Characterization
 
 **Description:** Measure how the PoC behaves under BEAM process, port, storage,
-and load failures and compare its control-plane costs with the simpler
-reference and local-handle paths.
+and load failures and compare its control-plane costs with a conventional
+typed control-flow baseline under the same external adapters.
 
 - [ ] **Section 7.4 Complete**
 
 ### Task 7.4.1: Execute the Complete Fault Matrix
 
-**Description:** Kill or disconnect each task, supervisor child, gateway,
-UCAN port, model adapter, workspace adapter, and journal boundary at every
+**Description:** Kill or disconnect each task, supervisor child, capability
+broker, model adapter, workspace adapter, and journal boundary at every
 meaningful transition.
 
 - [ ] **Task 7.4.1 Complete**
@@ -210,8 +212,8 @@ meaningful transition.
 #### Subtask 7.4.1.1: Verify Process and Port Recovery
 
 **Description:** Confirm local failure containment, restart policy, stale reply
-handling, session and key cleanup, proof-store retention, deadline behavior,
-and explicit uncertain outcomes.
+handling, session and capability cleanup, grant restoration, deadline
+behavior, and explicit uncertain outcomes.
 
 - [ ] **Subtask 7.4.1.1 Complete**
 
@@ -226,7 +228,7 @@ reconciled rather than retried blindly.
 ### Task 7.4.2: Measure Runtime and Authorization Costs
 
 **Description:** Characterize throughput, tail latency, memory, mailbox,
-scheduler, validation, proof, journal, and recovery costs under bounded
+scheduler, broker decision, journal, and recovery costs under bounded
 representative loads.
 
 - [ ] **Task 7.4.2 Complete**
@@ -234,15 +236,15 @@ representative loads.
 #### Subtask 7.4.2.1: Benchmark Control-Plane Operations
 
 **Description:** Measure compile and load time, task start, message round trip,
-effect decision, signing, validation, proof resolution, journal transition,
-adapter execution, and completion verification at p50, p95, and p99.
+grant resolution, effect decision, journal transition, adapter execution,
+recovery, and completion verification at p50, p95, and p99.
 
 - [ ] **Subtask 7.4.2.1 Complete**
 
 #### Subtask 7.4.2.2: Exercise Resource Pressure and Backpressure
 
 **Description:** Vary running and waiting sessions, slow consumers, mailbox
-load, port failure, proof depth, binary size, scheduler load, and storage delay
+load, port failure, grant count, binary size, scheduler load, and storage delay
 and verify admission and bounded-failure behavior.
 
 - [ ] **Subtask 7.4.2.2 Complete**
@@ -273,9 +275,9 @@ mapping and confirm targeted detection.
 
 #### Subtask 7.5.1.2: Seed Authorization and Recovery Defects
 
-**Description:** Break attenuation, policy accumulation, expiry, audience,
-replay, budget atomicity, path containment, journal ordering, and crash retry
-and confirm targeted detection.
+**Description:** Break subset restriction, policy accumulation, expiry,
+session and generation binding, revocation, budget atomicity, path containment,
+journal ordering, and crash retry and confirm targeted detection.
 
 - [ ] **Subtask 7.5.1.2 Complete**
 
@@ -303,15 +305,16 @@ and runtime versions with the results.
 
 - [ ] **Subtask 7.5.2.2 Complete**
 
-### Phase 7 Completion Evidence
+## Phase 7 Completion Evidence
 
 **Description:** Record the complete evidence package that authorizes Phase 8
 to judge the architecture against its research hypotheses.
 
 - [ ] Well-typed generators and semantic shrinkers cover the promoted IR
-- [ ] Composition, interpreter, attenuation, and state-machine properties pass
+- [ ] Composition, test-view, local restriction, and state-machine properties pass
 - [ ] Seeded defects are detected by the intended tests
-- [ ] Reference, BEAM, and UCAN validators agree within defined observations
+- [ ] Finite-set authority model and BEAM broker decisions agree
+- [ ] Test-only semantic views and compiled BEAM agree within defined observations
 - [ ] Adversarial inputs fail closed within declared resource bounds
 - [ ] Complete transition fault matrix preserves durable safety invariants
 - [ ] Performance and resource results include tails, pressure, and uncertainty

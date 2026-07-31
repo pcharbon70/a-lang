@@ -13,17 +13,17 @@ aliases: []
 
 # Phase 3: Erlang Abstract Format and BEAM Runtime Kernel
 
-**Description:** This phase implements the A-Lang IR-to-Erlang-Abstract-Format
-backend, a pinned OTP compilation bridge, deterministic and inspectable BEAM
-artifacts, a closed versioned runtime ABI, and the supervised task-process
-kernel needed to execute compiled A-Lang without an existing BEAM-language
-interpreter.
+**Description:** This phase generalizes the Phase 1
+A-Lang-IR-to-Erlang-Abstract-Format path, deterministic artifact checks, and
+ERTS execution into a complete minimal backend, closed versioned runtime ABI,
+and supervised task-process kernel without introducing an existing
+BEAM-language interpreter.
 
 **Status:** Planned.
 
-**Dependencies:** Phase 2 complete with a validated typed IR, normalized
-observations, reference evaluator, capability manifest, and fail-closed
-semantic fixtures accepted.
+**Dependencies:** Phase 2 complete with source-derived typed IR, normalized
+observations, test-only reference views, capability manifests, fail-closed
+semantic fixtures, and successful compiled BEAM execution accepted.
 
 ## Section 3.1: Backend Representation Contract
 
@@ -299,10 +299,10 @@ pinned OTP release.
 
 - [ ] **Subtask 3.5.2.2 Complete**
 
-### Phase 3 Completion Evidence
+## Phase 3 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 4 to replace
-fixture-backed effects with a real broker and durable adapters.
+fixture-backed effects with a local capability broker and bounded adapter.
 
 - [ ] Every promoted typed IR node lowers through the frozen Abstract Format
       subset

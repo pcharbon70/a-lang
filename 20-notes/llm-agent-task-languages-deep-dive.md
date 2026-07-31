@@ -455,11 +455,10 @@ Represents what the agent can change:
 These are three separate semantic objects. An **effect** names the observable
 operation family; a **capability requirement** is the task's declarative upper
 bound; and a **runtime grant** proves that a particular principal holds enough
-authority. [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
-develops one concrete grant backend: the broker issues a signed, attenuated
-Delegation and turns a concrete typed effect call into a signed Invocation.
-The execution-time reference monitor still owns stateful policy and resource
-semantics.
+authority. For the first proof of concept, the grant is an opaque local
+reference issued by a trusted BEAM broker. The execution-time reference monitor
+owns scope, budget, deadline, revocation, stateful policy, and resource
+semantics; portable signed delegation is outside the active design.
 
 #### Workflow layer
 
@@ -794,9 +793,6 @@ The hypothesis should be rejected or narrowed if:
   develops one candidate semantic foundation for the typed task IR.
 - [Categorical foundations for agent languages](../10-maps/categorical-foundations-for-agent-languages.md)
   maps the supporting programming-language and applied-category literature.
-- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
-  maps the declarative capability layer to portable signed grants and
-  execution-time invocations without exposing signing authority to the LLM.
 
 ## Status of the thesis
 

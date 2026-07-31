@@ -62,23 +62,6 @@ interpretation.
 - [SatLM](ye-et-al-2023-satlm.md) — declarative constraints paired with
   satisfiability solving.
 
-#### Authorization and capability systems
-
-- [SPKI Certificate Theory](ellison-et-al-1999-spki-certificate-theory.md) —
-  authorization certificates, delegated authority, and tuple reduction by
-  authorization and validity intersection.
-- [UCAN Revocation](ucan-wg-2025-revocation.md) — immutable, path-specific,
-  potentially eventually consistent invalidation of Delegation proofs.
-- [UCAN Delegation and Invocation](ucan-wg-2026-delegation-and-invocation.md) —
-  the required version-1 formats for transferring attenuated authority and
-  requesting its concrete exercise.
-- [UCAN implementations and container](ucan-wg-2026-implementations-and-container.md)
-  — current compatibility, audit, transport, implementation, and BEAM
-  integration evidence.
-- [UCAN specification](ucan-wg-2026-ucan-specification.md) — the current
-  high-level certificate-capability, proof-chain, and execution-time
-  validation model.
-
 #### BEAM runtime and language implementation
 
 - [A Formalisation of Core Erlang, a Concurrent Actor Language](bereczky-et-al-2024-formalisation-concurrent-core-erlang.md)

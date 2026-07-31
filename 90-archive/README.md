@@ -30,11 +30,13 @@ replacement when one exists.
 
 ### Subdirectories
 
-- None yet.
+- [UCAN research](ucan-research/README.md) — the paused UCAN protocol,
+  delegation, invocation, revocation, implementation, and A-Lang integration
+  study removed from the active architecture on 2026-07-31.
 
 ### Documents
 
-- No archived documents yet.
+- No documents at this level yet.
 
 ## Maintaining this index
 
