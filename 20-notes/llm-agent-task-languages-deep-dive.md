@@ -781,6 +781,10 @@ The hypothesis should be rejected or narrowed if:
 
 - [Can a task language improve LLM agents?](../40-inquiries/can-a-task-language-improve-llm-agents.md)
 - [LLM agent task languages](../10-maps/llm-agent-task-languages.md)
+- [Set and category principles for an agent programming language](set-and-category-principles-for-agent-programming-language.md)
+  develops one candidate semantic foundation for the typed task IR.
+- [Categorical foundations for agent languages](../10-maps/categorical-foundations-for-agent-languages.md)
+  maps the supporting programming-language and applied-category literature.
 
 ## Status of the thesis
 
