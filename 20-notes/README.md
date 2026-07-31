@@ -35,6 +35,10 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
 
 ### Documents
 
+- [Set and category principles for an agent programming language](set-and-category-principles-for-agent-programming-language.md)
+  — an evidence-bounded design study of categorical composition, effects,
+  state, protocols, uncertainty, interpreters, and evaluation criteria for an
+  agent DSL.
 - [Task languages for LLM agents: a deep dive](llm-agent-task-languages-deep-dive.md)
   — a synthesis of transformer behavior, task representation, agent
   programming, formal reasoning, and language-design implications.

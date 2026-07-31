@@ -35,6 +35,9 @@ inquiry as the final synthesis.
 
 ### Documents
 
+- [Can categorical semantics materially improve an agent language?](can-categorical-semantics-improve-agent-language.md)
+  — an open comparison of categorical IRs with conventional typed agent
+  languages.
 - [Can a task language improve LLM agents?](can-a-task-language-improve-llm-agents.md)
   — an open inquiry into whether structured task representations improve
   understanding, reliability, and execution.

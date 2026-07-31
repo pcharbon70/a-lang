@@ -52,6 +52,18 @@ LLM-agent execution.
 - [AgentSPEX](../30-sources/wang-et-al-2026-agentspex.md) — interpreted YAML
   workflows with explicit state and context.
 
+## Categorical semantic foundations
+
+- [Set and category principles for an agent programming language](../20-notes/set-and-category-principles-for-agent-programming-language.md)
+  — a layered semantic proposal covering pure data, effects, state,
+  interaction, uncertainty, and structure-preserving interpreters.
+- [Categorical foundations for agent languages](categorical-foundations-for-agent-languages.md)
+  — the research trail through the relevant programming-language and applied
+  category theory.
+- [Open empirical inquiry](../40-inquiries/can-categorical-semantics-improve-agent-language.md)
+  — asks whether categorical structure adds measurable value beyond a strong
+  conventional typed DSL.
+
 ## Task-specific and enforced languages
 
 - [TALAR](../30-sources/pang-et-al-2023-task-related-language.md) — a learned,

@@ -36,6 +36,9 @@ links belong together, not merely repeat a file listing.
 
 - [A-Lang](home.md) — the selective home map and starting point for the
   archive.
+- [Categorical foundations for agent languages](categorical-foundations-for-agent-languages.md)
+  — paths through compositional semantics, effects, state, interaction,
+  uncertainty, and categorical agent-language design.
 - [LLM agent task languages](llm-agent-task-languages.md) — paths through the
   transformer, task-representation, agent-language, and runtime-enforcement
   research.
