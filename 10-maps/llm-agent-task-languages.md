@@ -64,6 +64,19 @@ LLM-agent execution.
   — asks whether categorical structure adds measurable value beyond a strong
   conventional typed DSL.
 
+## BEAM execution substrate
+
+- [BEAM as the runtime for a native agent language](../20-notes/beam-runtime-for-native-agent-language.md)
+  — proposes a native frontend and categorical IR compiled through OTP's
+  supported Abstract Format, without an existing BEAM language as the main
+  interpreter.
+- [BEAM runtime map](beam-runtime-for-agent-languages.md) — connects Core
+  Erlang, compiler boundaries, ERTS processes, supervision, ports, security,
+  and property-based testing.
+- [BEAM feasibility inquiry](../40-inquiries/can-beam-support-a-native-agent-language.md)
+  — defines the compatibility, correctness, performance, durability, and
+  isolation gates the runtime must pass.
+
 ## Task-specific and enforced languages
 
 - [TALAR](../30-sources/pang-et-al-2023-task-related-language.md) — a learned,
@@ -82,6 +95,10 @@ The most promising language is layered:
 5. deterministic control flow, capabilities, and runtime monitors;
 6. verifier-backed evidence of completion.
 
+BEAM is now the leading candidate for the concurrent execution layer, provided
+the language retains its own IR and treats durable effects and hostile-code
+isolation as separate responsibilities.
+
 The unresolved question is how much of this should be one language, and how
 much should be a family of interoperating representations with a common task
 model.
@@ -95,3 +112,5 @@ model.
 - Can semantic translation be tested without recreating the whole task?
 - What representation best supports clarification and negotiated intent?
 - When does a compact DSL help enough to offset its learning and authoring cost?
+- Can a BEAM backend preserve this task model across supported OTP releases
+  without making OTP compiler internals part of the language semantics?
