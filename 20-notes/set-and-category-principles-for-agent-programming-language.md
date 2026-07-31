@@ -339,6 +339,14 @@ Agent operations such as `search`, `write`, `send`, `spend`, `ask_human`, and
 A capability layer decides whether the operation is available to this task.
 Handlers can add sandboxing, approval, rollback, and provenance.
 
+[UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md) gives
+that layer a concrete certificate backend without identifying the certificate
+with the effect. If `I` is the set of well-typed invocations, a UCAN grant `c`
+denotes `⟦c⟧ ⊆ I`; attenuation is subset inclusion. Command narrowing, added
+policy predicates, and validity intersection restrict one proof chain, while
+independent valid grants combine by union. The external handler still decides
+resource ownership and stateful constraints that a signed predicate cannot.
+
 This architecture connects to current agent evidence. [AgentSpec](../30-sources/wang-et-al-2026-agentspec.md)
 ([paper](https://arxiv.org/abs/2503.18666)) reports that event-intercepting
 runtime rules can prevent classes of unsafe actions more reliably than prompt
@@ -978,6 +986,9 @@ the LLM remembering an informal convention.
 - [BEAM as the runtime for a native agent language](beam-runtime-for-native-agent-language.md)
   examines one concrete execution substrate and defines how its backend and
   property-testing layers could preserve these laws.
+- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
+  instantiates capability attenuation as set inclusion and signed proof-chain
+  validation while preserving the separation between effects and authority.
 
 ## Status of the thesis
 

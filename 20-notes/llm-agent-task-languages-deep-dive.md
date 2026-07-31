@@ -452,6 +452,15 @@ Represents what the agent can change:
 - reversibility and idempotence;
 - authorization requirements.
 
+These are three separate semantic objects. An **effect** names the observable
+operation family; a **capability requirement** is the task's declarative upper
+bound; and a **runtime grant** proves that a particular principal holds enough
+authority. [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
+develops one concrete grant backend: the broker issues a signed, attenuated
+Delegation and turns a concrete typed effect call into a signed Invocation.
+The execution-time reference monitor still owns stateful policy and resource
+semantics.
+
 #### Workflow layer
 
 Represents deterministic orchestration:
@@ -785,6 +794,9 @@ The hypothesis should be rejected or narrowed if:
   develops one candidate semantic foundation for the typed task IR.
 - [Categorical foundations for agent languages](../10-maps/categorical-foundations-for-agent-languages.md)
   maps the supporting programming-language and applied-category literature.
+- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
+  maps the declarative capability layer to portable signed grants and
+  execution-time invocations without exposing signing authority to the LLM.
 
 ## Status of the thesis
 

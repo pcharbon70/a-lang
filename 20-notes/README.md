@@ -46,6 +46,10 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
 - [Task languages for LLM agents: a deep dive](llm-agent-task-languages-deep-dive.md)
   — a synthesis of transformer behavior, task representation, agent
   programming, formal reasoning, and language-design implications.
+- [UCAN capabilities for A-Lang: a deep dive](ucan-capabilities-for-agent-language.md)
+  — a protocol and security study mapping signed, attenuated UCAN Delegations
+  and Invocations onto A-Lang's declarative effects, BEAM broker, durable
+  execution, and set-theoretic laws.
 
 ## Maintaining this index
 

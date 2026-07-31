@@ -84,6 +84,17 @@ LLM-agent execution.
 - [AgentSpec](../30-sources/wang-et-al-2026-agentspec.md) — a runtime-enforced
   DSL for safety constraints.
 
+## Portable capability enforcement
+
+- [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md)
+  separates the declarative authority requirement from a signed grant, a
+  concrete invocation, and the execution-time decision.
+- [UCAN and delegated agent authority](ucan-and-delegated-agent-authority.md)
+  is the evidence path through the protocol, categorical attenuation, BEAM
+  broker, and open security questions.
+- [UCAN feasibility inquiry](../40-inquiries/can-ucan-enforce-a-lang-agent-capabilities.md)
+  asks whether portable proofs add enough value over opaque broker handles.
+
 ## Emerging design thesis
 
 The most promising language is layered:
@@ -114,3 +125,5 @@ model.
 - When does a compact DSL help enough to offset its learning and authoring cost?
 - Can a BEAM backend preserve this task model across supported OTP releases
   without making OTP compiler internals part of the language semantics?
+- Can UCAN carry the runtime grant across heterogeneous executors without
+  leaking signing authority or weakening A-Lang's typed resource semantics?

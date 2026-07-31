@@ -55,6 +55,10 @@ by ERTS.
 - [Interoperability and secure coding](../30-sources/erlang-otp-2026-interoperability-and-security.md)
   places model servers and untrusted tools behind ports or sidecars and rejects
   same-node process isolation as a security sandbox.
+- [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md)
+  gives the broker-held `CapabilityRef` a concrete portable representation:
+  keys remain in an isolated signer, while typed effects become short-lived
+  signed invocations at execution boundaries.
 
 ## Laws and validation
 
@@ -92,3 +96,5 @@ by ERTS.
   atoms?
 - Where is the correct trust boundary between signed BEAM artifacts and
   OS-sandboxed execution?
+- Can a port-isolated UCAN validator remain version-compatible, bounded under
+  hostile proof input, and consistent with the broker's typed resource model?
