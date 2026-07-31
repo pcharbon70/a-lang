@@ -44,10 +44,6 @@ inquiry as the final synthesis.
 - [Can a task language improve LLM agents?](can-a-task-language-improve-llm-agents.md)
   — an open inquiry into whether structured task representations improve
   understanding, reliability, and execution.
-- [Can UCAN enforce A-Lang agent capabilities?](can-ucan-enforce-a-lang-agent-capabilities.md)
-  — an open protocol and runtime evaluation of portable delegation,
-  attenuation, key isolation, validator agreement, revocation, replay, and
-  resource semantics.
 
 ## Maintaining this index
 

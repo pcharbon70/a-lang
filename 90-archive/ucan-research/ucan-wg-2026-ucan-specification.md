@@ -24,6 +24,10 @@ aliases:
 
 # User Controlled Authorization Network (UCAN) Specification
 
+> **Archived 2026-07-31:** UCAN was removed from the active A-Lang
+> architecture and proof-of-concept scope. This source note is retained only
+> as provenance for the paused research.
+
 ## Reference
 
 Irakli Gozalishvili, Daniel Holmgren, Philipp Krüger, and Brooklyn Zelenka.
@@ -116,6 +120,6 @@ proofs remain outside model-visible context.
 
 ## Derived notes
 
-- [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md)
-- [Can UCAN enforce A-Lang agent capabilities?](../40-inquiries/can-ucan-enforce-a-lang-agent-capabilities.md)
-- [UCAN and delegated agent authority](../10-maps/ucan-and-delegated-agent-authority.md)
+- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
+- [Can UCAN enforce A-Lang agent capabilities?](can-ucan-enforce-a-lang-agent-capabilities.md)
+- [UCAN and delegated agent authority](ucan-and-delegated-agent-authority.md)

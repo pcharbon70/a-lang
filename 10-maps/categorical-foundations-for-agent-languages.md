@@ -56,17 +56,14 @@ good conventional typed DSL.
 - [Categories of Optics](../30-sources/riley-2018-categories-of-optics.md)
   offers lawful constructions for focused views and updates.
 
-## Capability attenuation
+## Capability restriction
 
-- [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md)
-  interprets each grant as a subset of well-typed invocations. Restrictions
-  intersect along a proof chain, independent grants unite, and delegation
-  should preserve authority inclusion.
-- [SPKI Certificate Theory](../30-sources/ellison-et-al-1999-spki-certificate-theory.md)
-  supplies the precedent for composing authorization and validity through
-  intersection.
-- [UCAN and delegated agent authority](ucan-and-delegated-agent-authority.md)
-  connects those laws to signed runtime proofs and the BEAM broker.
+For the proof of concept, a runtime grant denotes a broker-held subset of the
+well-typed effect invocations available to one session. Narrowing must preserve
+subset inclusion, independent local grants may combine by union only when the
+broker permits it, and opaque references carry no authority outside the
+issuing BEAM runtime. These are proposed local enforcement laws, not claims
+about a portable certificate protocol.
 
 ## Uncertainty, data, and interpretation
 
@@ -143,5 +140,6 @@ language should own its IR and lower through a supported compiler boundary.
   runtime enforcement?
 - Which categorical equivalences remain observable and testable under BEAM
   scheduling, failure, messaging, and resource limits?
-- Can the subset semantics of a useful UCAN policy profile be made precise
-  enough for generated law tests and, later, mechanized proof?
+- Can local capability restriction be specified precisely enough for generated
+  law tests and, later, mechanized proof without binding the semantics to an
+  external authorization protocol?

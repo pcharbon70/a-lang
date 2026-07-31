@@ -16,6 +16,10 @@ aliases:
 
 # UCAN capabilities for A-Lang: a deep dive
 
+> **Archived 2026-07-31:** UCAN was removed from the active A-Lang
+> architecture and proof-of-concept scope. This synthesis is retained only as
+> a reversible record and is not part of the current implementation plan.
+
 ## Executive conclusion
 
 UCAN is a strong candidate for A-Lang's **portable delegation and invocation
@@ -61,9 +65,9 @@ semantic truth.**
 
 This study asks whether the current UCAN protocol can turn the declarative
 capability ideas in the
-[task-language synthesis](llm-agent-task-languages-deep-dive.md), the
-[categorical design](set-and-category-principles-for-agent-programming-language.md),
-and the [BEAM runtime proposal](beam-runtime-for-native-agent-language.md)
+[task-language synthesis](../../20-notes/llm-agent-task-languages-deep-dive.md), the
+[categorical design](../../20-notes/set-and-category-principles-for-agent-programming-language.md),
+and the [BEAM runtime proposal](../../20-notes/beam-runtime-for-native-agent-language.md)
 into enforceable runtime authority.
 
 “Fits” means more than being able to serialize a permission. A suitable layer
@@ -89,7 +93,7 @@ Version precision is mandatory. The table below compares the official
 [specification](https://github.com/ucan-wg/spec),
 [sub-specifications](https://github.com/ucan-wg), and implementation
 repositories as read on 2026-07-31; the detailed evidence is preserved in the
-[implementation source note](../30-sources/ucan-wg-2026-implementations-and-container.md).
+[implementation source note](ucan-wg-2026-implementations-and-container.md).
 
 | Component | Repository state | Role in this design |
 | --- | --- | --- |
@@ -968,26 +972,26 @@ prototype gate rather than being hidden behind the word “capability.”
 
 ## Connections
 
-- [UCAN and delegated agent authority](../10-maps/ucan-and-delegated-agent-authority.md)
+- [UCAN and delegated agent authority](ucan-and-delegated-agent-authority.md)
   gives the shortest path through this research.
-- [Can UCAN enforce A-Lang agent capabilities?](../40-inquiries/can-ucan-enforce-a-lang-agent-capabilities.md)
+- [Can UCAN enforce A-Lang agent capabilities?](can-ucan-enforce-a-lang-agent-capabilities.md)
   keeps the engineering and security hypotheses open.
-- [Task languages for LLM agents](llm-agent-task-languages-deep-dive.md)
+- [Task languages for LLM agents](../../20-notes/llm-agent-task-languages-deep-dive.md)
   defines the declarative effect and requirement layers that UCAN can realize.
-- [Set and category principles](set-and-category-principles-for-agent-programming-language.md)
+- [Set and category principles](../../20-notes/set-and-category-principles-for-agent-programming-language.md)
   supplies the subset and composition semantics for attenuation.
-- [BEAM runtime](beam-runtime-for-native-agent-language.md) supplies the
+- [BEAM runtime](../../20-notes/beam-runtime-for-native-agent-language.md) supplies the
   process, port, supervision, durability, and isolation architecture.
 
 ## Sources
 
-- [UCAN specification](../30-sources/ucan-wg-2026-ucan-specification.md) — the
+- [UCAN specification](ucan-wg-2026-ucan-specification.md) — the
   current high-level certificate-capability and security model.
-- [UCAN Delegation and Invocation](../30-sources/ucan-wg-2026-delegation-and-invocation.md)
+- [UCAN Delegation and Invocation](ucan-wg-2026-delegation-and-invocation.md)
   — the required authority-transfer and effect-request formats.
-- [UCAN Revocation](../30-sources/ucan-wg-2025-revocation.md) — the monotonic,
+- [UCAN Revocation](ucan-wg-2025-revocation.md) — the monotonic,
   potentially eventually consistent proof-invalidation mechanism.
-- [UCAN implementations and container](../30-sources/ucan-wg-2026-implementations-and-container.md)
+- [UCAN implementations and container](ucan-wg-2026-implementations-and-container.md)
   — compatibility, audit, transport, and BEAM-integration evidence.
-- [SPKI Certificate Theory](../30-sources/ellison-et-al-1999-spki-certificate-theory.md)
+- [SPKI Certificate Theory](ellison-et-al-1999-spki-certificate-theory.md)
   — the authorization-chain precedent and delegation-control comparison.

@@ -31,8 +31,10 @@ use these conventions for every document and organizational change.
 30-sources/     Reading notes and bibliographic records
 40-inquiries/   Active questions and research workbenches
 50-journal/     Dated observations and exploratory writing
+60-planning/    Numbered implementation roadmaps and phase evidence
 90-archive/     Inactive or superseded material worth retaining
 assets/         Images, PDFs, diagrams, datasets, and attachments
+src/            A-Lang compiler, runtime, and supporting implementation source
 templates/      Starting points for each document kind
 ```
 
@@ -160,6 +162,10 @@ Copy the closest template, replace every placeholder, and extend its headings
 only as the material requires. Do not edit a template merely to customize one
 new document.
 
+Implementation phase documents are the exception to the usual `20-notes/`
+destination for `kind: note`: they live inside their numbered planning stream
+under `60-planning/` and follow the planning conventions below.
+
 If a metadata field or document kind changes:
 
 1. update `frontmatter.schema.json` first;
@@ -170,6 +176,52 @@ If a metadata field or document kind changes:
 
 Do not add a new document kind when an existing kind plus links or tags can
 express the same role.
+
+## Producing implementation plans
+
+Implementation roadmaps live in `60-planning/`. Each planning stream uses the
+next unused two-digit directory prefix so the order in which plans were
+introduced remains visible. Never renumber an existing stream or reuse an
+archived stream's number.
+
+Each planning-stream directory must contain:
+
+1. a `README.md` with `kind: map`, shared status rules, scope, dependencies,
+   phase index, and roadmap completion gate;
+2. one `kind: note` document per phase, normally with `maturity: developing`;
+3. links to the research notes and inquiries whose claims the plan tests;
+4. a completion-evidence section that remains unchecked until reproducible
+   implementation evidence exists.
+
+Use the Catena planning hierarchy consistently:
+
+```text
+# Phase N: Name
+**Description:** ...
+
+## Section N.M: Name
+**Description:** ...
+- [ ] **Section N.M Complete**
+
+### Task N.M.K: Name
+**Description:** ...
+- [ ] **Task N.M.K Complete**
+
+#### Subtask N.M.K.L: Name
+**Description:** ...
+- [ ] **Subtask N.M.K.L Complete**
+```
+
+Every phase ends with a numbered integration-test section and a phase
+completion evidence checklist. A task starts with a description of its purpose
+and observable result; a title or checkbox alone is not a sufficient task.
+Keep planned work unchecked. Do not mark research, a stub, a lowered artifact,
+or a happy-path demo as completed implementation evidence unless it satisfies
+the roadmap's stated gate.
+
+Name planning-stream directories `<NN>-<descriptive-name>` with a stable,
+zero-padded sequence number. Name their phase documents
+`phase-<NN>-<descriptive-name>.md`.
 
 ## Filenames and paths
 

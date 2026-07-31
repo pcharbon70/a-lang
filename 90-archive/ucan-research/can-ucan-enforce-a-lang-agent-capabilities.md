@@ -2,7 +2,7 @@
 title: "Can UCAN enforce A-Lang agent capabilities?"
 kind: inquiry
 created: 2026-07-31
-status: open
+status: paused
 tags:
   - agent-programming
   - authorization
@@ -14,6 +14,10 @@ aliases:
 ---
 
 # Can UCAN enforce A-Lang agent capabilities?
+
+> **Archived 2026-07-31:** UCAN was removed from the active A-Lang
+> architecture and proof-of-concept scope. This inquiry is retained only as a
+> reversible record of the paused research.
 
 ## Why this matters
 
@@ -143,9 +147,9 @@ remain the cheaper representation.
   ordering. A-Lang cannot freeze a profile until official fixtures or a
   clarification establish the intended canonical order.
 - The full synthesis is in
-  [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md),
+  [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md),
   and the selective evidence trail is in the
-  [UCAN map](../10-maps/ucan-and-delegated-agent-authority.md).
+  [UCAN map](ucan-and-delegated-agent-authority.md).
 
 ## Resolution criteria
 

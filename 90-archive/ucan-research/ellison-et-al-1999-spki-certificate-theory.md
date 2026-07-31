@@ -27,6 +27,10 @@ aliases:
 
 # SPKI Certificate Theory
 
+> **Archived 2026-07-31:** This source was collected solely for the paused
+> UCAN comparison. It is retained as provenance and is not part of the active
+> A-Lang proof-of-concept scope.
+
 ## Reference
 
 Carl M. Ellison, Bill Frantz, Butler Lampson, Ron Rivest, Brian Thomas, and
@@ -76,5 +80,5 @@ its key using UCAN alone.
 
 ## Derived notes
 
-- [UCAN capabilities for A-Lang](../20-notes/ucan-capabilities-for-agent-language.md)
-- [Set and category principles for an agent programming language](../20-notes/set-and-category-principles-for-agent-programming-language.md)
+- [UCAN capabilities for A-Lang](ucan-capabilities-for-agent-language.md)
+- [Set and category principles for an agent programming language](../../20-notes/set-and-category-principles-for-agent-programming-language.md)

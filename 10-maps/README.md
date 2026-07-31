@@ -46,9 +46,6 @@ links belong together, not merely repeat a file listing.
 - [LLM agent task languages](llm-agent-task-languages.md) — paths through the
   transformer, task-representation, agent-language, and runtime-enforcement
   research.
-- [UCAN and delegated agent authority](ucan-and-delegated-agent-authority.md) —
-  a path through portable grants, invocations, attenuation, revocation,
-  A-Lang semantics, and the BEAM capability broker.
 
 ## Maintaining this index
 
