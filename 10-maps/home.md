@@ -16,19 +16,23 @@ See the [archive guide](../README.md) for its structure and conventions.
 
 ## Active inquiries
 
+- [Can BEAM support a native agent language safely and maintainably?](../40-inquiries/can-beam-support-a-native-agent-language.md)
 - [Can categorical semantics materially improve an agent language?](../40-inquiries/can-categorical-semantics-improve-agent-language.md)
 - [Can a task language improve LLM agents?](../40-inquiries/can-a-task-language-improve-llm-agents.md)
 
 ## Maps
 
+- [BEAM runtime for agent languages](beam-runtime-for-agent-languages.md)
 - [Categorical foundations for agent languages](categorical-foundations-for-agent-languages.md)
 - [LLM agent task languages](llm-agent-task-languages.md)
 
 ## Recently developed
 
+- [BEAM as the runtime for a native agent language](../20-notes/beam-runtime-for-native-agent-language.md)
 - [Set and category principles for an agent programming language](../20-notes/set-and-category-principles-for-agent-programming-language.md)
 - [Task languages for LLM agents: a deep dive](../20-notes/llm-agent-task-languages-deep-dive.md)
 
 ## Unsettled threads
 
-<!-- Name promising clusters that do not yet deserve their own map. -->
+- Whether BEAM's concurrency advantages remain material after durable effect
+  brokering and OS-level sandboxing are included.

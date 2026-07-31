@@ -975,6 +975,9 @@ the LLM remembering an informal convention.
 - [Task languages for LLM agents](llm-agent-task-languages-deep-dive.md) provides
   the broader language and runtime context in which this categorical proposal
   belongs.
+- [BEAM as the runtime for a native agent language](beam-runtime-for-native-agent-language.md)
+  examines one concrete execution substrate and defines how its backend and
+  property-testing layers could preserve these laws.
 
 ## Status of the thesis
 

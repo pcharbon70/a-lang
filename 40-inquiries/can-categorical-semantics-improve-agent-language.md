@@ -113,6 +113,8 @@ that cost.
    authoring time, and law-test failures.
 8. Add coalgebraic, polynomial, optic, Markov, or open-game features only when
    a benchmark demands them.
+9. Run the laws through the proposed [BEAM backend](../20-notes/beam-runtime-for-native-agent-language.md),
+   comparing the IR evaluator with normalized observations from compiled code.
 
 Relevant foundations include:
 
@@ -135,6 +137,9 @@ Relevant foundations include:
   in an LLM-agent language.
 - `Set` is a viable data foundation but an inadequate model of effectful,
   resource-sensitive agent actions by itself.
+- BEAM and PropEr provide a concrete runtime and generative test harness, but
+  concurrent laws require observational equivalence and passing properties is
+  not a proof.
 
 ## Outcome
 

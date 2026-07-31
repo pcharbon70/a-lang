@@ -104,6 +104,19 @@ Use category theory below a familiar surface language:
 
 Add advanced structures only when a benchmark makes their value observable.
 
+## Candidate execution substrate
+
+- [BEAM runtime for agent languages](beam-runtime-for-agent-languages.md)
+  explores how lightweight processes, supervision, ports, and code loading can
+  realize the effectful and coalgebraic layers.
+- [PropEr](../30-sources/papadakis-sagonas-2011-proper.md) can execute
+  generative law and state-machine tests on the target VM.
+- [Concurrent Core Erlang formalisation](../30-sources/bereczky-et-al-2024-formalisation-concurrent-core-erlang.md)
+  motivates observational equivalence and bisimulation for concurrent laws.
+
+This is an implementation hypothesis, not a new categorical result. The
+language should own its IR and lower through a supported compiler boundary.
+
 ## Open questions
 
 - Which useful categorical laws survive nondeterministic LLM behavior?
@@ -116,3 +129,5 @@ Add advanced structures only when a benchmark makes their value observable.
   tool versions?
 - Does a categorical IR beat a conventional typed IR after controlling for
   runtime enforcement?
+- Which categorical equivalences remain observable and testable under BEAM
+  scheduling, failure, messaging, and resource limits?

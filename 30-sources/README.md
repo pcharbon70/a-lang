@@ -62,6 +62,36 @@ interpretation.
 - [SatLM](ye-et-al-2023-satlm.md) — declarative constraints paired with
   satisfiability solving.
 
+#### BEAM runtime and language implementation
+
+- [A Formalisation of Core Erlang, a Concurrent Actor Language](bereczky-et-al-2024-formalisation-concurrent-core-erlang.md)
+  — machine-checked concurrent semantics and observational equivalence for a
+  Core Erlang subset.
+- [Core Erlang 1.0.3 language specification](carlsson-et-al-2004-core-erlang-specification.md)
+  — the compact compiler IR used as a semantic reference rather than a stable
+  external backend contract.
+- [BEAM instructions, loading, JIT execution, and compatibility](erlang-otp-2026-beam-execution.md)
+  — current opcode evidence, BeamAsm execution, module loading, and artifact
+  metadata constraints.
+- [Erlang/OTP interoperability and secure coding](erlang-otp-2026-interoperability-and-security.md)
+  — ports, NIF risks, trusted distribution assumptions, and OS-level isolation
+  requirements.
+- [Erlang/OTP compiler guidance for language implementors](erlang-otp-2026-language-implementors.md)
+  — the case for Abstract Format and official warnings about Core Erlang and
+  BEAM assembly generation.
+- [Leex and Yecc parser tools](erlang-otp-2026-leex-and-yecc.md) — mature lexer
+  and parser generators that emit Erlang source and therefore serve best as
+  bootstrap or differential tools.
+- [Erlang runtime processes, signals, scheduling, and memory](erlang-otp-2026-process-runtime.md)
+  — ERTS concurrency strengths and its ordering, mailbox, memory, and atom
+  constraints.
+- [Erlang/OTP supervision and release handling](erlang-otp-2026-supervision-and-releases.md)
+  — fault topology and code-version mechanics, distinguished from durable retry
+  and state migration.
+- [PropEr types and property-based testing](papadakis-sagonas-2011-proper.md) —
+  open-source generative, shrinking, and state-machine testing for categorical
+  and runtime laws on BEAM.
+
 #### Categorical foundations and composition
 
 - [Towards Foundations of Categorical Cybernetics](capucci-et-al-2022-categorical-cybernetics.md)
