@@ -5,19 +5,29 @@ and develop without losing their provenance.
 
 Start at the [home map](10-maps/home.md).
 
+Repository-wide authoring and maintenance conventions are defined in
+[`AGENTS.md`](AGENTS.md).
+
 ## Structure
 
-```text
-00-inbox/       Unprocessed captures
-10-maps/        Curated paths through subjects and questions
-20-notes/       Ideas developed in the author's own words
-30-sources/     Reading notes and bibliographic records
-40-inquiries/   Active questions and research workbenches
-50-journal/     Dated observations and exploratory writing
-90-archive/     Inactive or superseded material worth retaining
-assets/         Images, PDFs, diagrams, and other attachments
-templates/      Starting points for each document kind
-```
+- [`00-inbox/`](00-inbox/README.md) — unprocessed captures
+- [`10-maps/`](10-maps/README.md) — curated paths through subjects and
+  questions
+- [`20-notes/`](20-notes/README.md) — ideas developed in the author's own words
+- [`30-sources/`](30-sources/README.md) — reading notes and bibliographic
+  records
+- [`40-inquiries/`](40-inquiries/README.md) — active questions and research
+  workbenches
+- [`50-journal/`](50-journal/README.md) — dated observations and exploratory
+  writing
+- [`90-archive/`](90-archive/README.md) — inactive or superseded material worth
+  retaining
+- [`assets/`](assets/README.md) — images, PDFs, diagrams, and other attachments
+- [`templates/`](templates/README.md) — starting points for each document kind
+
+Each top-level directory contains a `README.md` that describes its purpose and
+indexes its current subdirectories and documents. Keep those local indexes
+current as part of adding, moving, or archiving material.
 
 Folders describe what a document is doing. Links and maps describe what it is
 about. Subject folders should only be introduced when repeated use demonstrates
@@ -96,3 +106,10 @@ retain names that remain useful for search or link resolution.
 
 Templates contain `{placeholders}` that must be replaced when a document is
 created. They are examples rather than archive documents themselves.
+
+## Repository files
+
+- [`AGENTS.md`](AGENTS.md) — repository-wide instructions for creating,
+  organizing, researching, and validating archive material
+- [`frontmatter.schema.json`](frontmatter.schema.json) — the authoritative
+  machine-readable metadata contract
