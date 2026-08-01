@@ -30,14 +30,14 @@ treated as the A-Lang execution engine.
 **Description:** Freeze the boundary that distinguishes a language running on
 BEAM from a language merely using BEAM as a late export format.
 
-- [ ] **Section 1.1 Complete**
+- [x] **Section 1.1 Complete** — evidence: [normative runtime contract](../../src/phase-01/runtime-contract.md)
 
 ### Task 1.1.1: Publish the Runtime Invariants
 
 **Description:** Record the architectural statements that every later phase
 must preserve and that reviewers can test directly.
 
-- [ ] **Task 1.1.1 Complete**
+- [x] **Task 1.1.1 Complete** — evidence: [execution-engine and bootstrap invariants](../../src/phase-01/runtime-contract.md#execution-engine-invariant)
 
 #### Subtask 1.1.1.1: Define the Execution Engine
 
@@ -45,7 +45,7 @@ must preserve and that reviewers can test directly.
 BEAM modules and ERTS processes, use BEAM scheduling and process isolation, and
 do not execute through a host-language AST or IR interpreter.
 
-- [ ] **Subtask 1.1.1.1 Complete**
+- [x] **Subtask 1.1.1.1 Complete** — evidence: [execution-engine invariant](../../src/phase-01/runtime-contract.md#execution-engine-invariant)
 
 #### Subtask 1.1.1.2: Define Permitted Bootstrap Components
 
@@ -53,7 +53,7 @@ do not execute through a host-language AST or IR interpreter.
 or fixture generator only when it cannot execute an A-Lang task and is not
 present on the runtime path after a `.beam` artifact is accepted.
 
-- [ ] **Subtask 1.1.1.2 Complete**
+- [x] **Subtask 1.1.1.2 Complete** — evidence: [bootstrap boundary](../../src/phase-01/runtime-contract.md#bootstrap-boundary)
 
 ### Task 1.1.2: Freeze the First Observable Program
 
@@ -61,7 +61,7 @@ present on the runtime path after a `.beam` artifact is accepted.
 loading, process creation, message receipt, typed result emission, and normal
 or classified abnormal termination on ERTS.
 
-- [ ] **Task 1.1.2 Complete**
+- [x] **Task 1.1.2 Complete** — evidence: [first observable program](../../src/phase-01/runtime-contract.md#first-observable-program)
 
 #### Subtask 1.1.2.1: Define the Successful Trace
 
@@ -69,7 +69,7 @@ or classified abnormal termination on ERTS.
 transition, output envelope, trace event order, and terminal result expected
 from the first BEAM-executed program.
 
-- [ ] **Subtask 1.1.2.1 Complete**
+- [x] **Subtask 1.1.2.1 Complete** — evidence: [canonical successful observation](../../src/phase-01/runtime-contract.md#canonical-successful-observation)
 
 #### Subtask 1.1.2.2: Define the Failure Trace
 
@@ -77,7 +77,7 @@ from the first BEAM-executed program.
 unknown ABI version, invalid payload shape, unavailable runtime operation, and
 unexpected process exit.
 
-- [ ] **Subtask 1.1.2.2 Complete**
+- [x] **Subtask 1.1.2.2 Complete** — evidence: [canonical failure observations](../../src/phase-01/runtime-contract.md#canonical-failure-observations)
 
 ## Section 1.2: Pinned OTP Compilation Boundary
 
