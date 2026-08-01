@@ -85,7 +85,7 @@ unexpected process exit.
 to validated BEAM without making Core Erlang or raw BEAM assembly a production
 contract.
 
-- [ ] **Section 1.2 Complete**
+- [x] **Section 1.2 Complete** — evidence: [pinned compilation boundary](../../src/phase-01/abstract-format-subset.md)
 
 ### Task 1.2.1: Pin the OTP Build and Runtime Pair
 
@@ -93,7 +93,7 @@ contract.
 make its versions, flags, and artifact metadata reproducible from a clean
 checkout.
 
-- [ ] **Task 1.2.1 Complete**
+- [x] **Task 1.2.1 Complete** — evidence: [machine-readable toolchain contract](../../src/phase-01/toolchain.config)
 
 #### Subtask 1.2.1.1: Record Toolchain Constraints
 
@@ -101,7 +101,7 @@ checkout.
 compiler options, supported architecture assumptions, and a documented clean
 build command.
 
-- [ ] **Subtask 1.2.1.1 Complete**
+- [x] **Subtask 1.2.1.1 Complete** — evidence: [toolchain constraints](../../src/phase-01/toolchain.config) and [clean build commands](../../Makefile)
 
 #### Subtask 1.2.1.2: Reject Version Drift
 
@@ -109,14 +109,14 @@ build command.
 the pinned contract and print the detected and expected versions without
 silently continuing.
 
-- [ ] **Subtask 1.2.1.2 Complete**
+- [x] **Subtask 1.2.1.2 Complete** — evidence: [compiler boundary checks](../../src/phase-01/alang_phase1_compiler.erl) and [drift rejection test](../../src/phase-01/alang_phase1_compiler_tests.erl)
 
 ### Task 1.2.2: Define the Abstract Format Subset
 
 **Description:** Specify the smallest Erlang Abstract Format forms needed for
 the first process and make unsupported forms an explicit build error.
 
-- [ ] **Task 1.2.2 Complete**
+- [x] **Task 1.2.2 Complete** — evidence: [Abstract Format subset](../../src/phase-01/abstract-format-subset.md)
 
 #### Subtask 1.2.2.1: Enumerate Allowed Forms and Calls
 
@@ -124,14 +124,14 @@ the first process and make unsupported forms an explicit build error.
 tuples, binaries, integers, `case`, receive behavior through the runtime
 adapter, and the exact imports required by the vertical slice.
 
-- [ ] **Subtask 1.2.2.1 Complete**
+- [x] **Subtask 1.2.2.1 Complete** — evidence: [allowed forms and runtime calls](../../src/phase-01/abstract-format-subset.md#allowed-abstract-format)
 
 #### Subtask 1.2.2.2: Enforce Strong Validation and Inspection
 
 **Description:** Run OTP strong validation, deterministic compilation, BEAM
 chunk inspection, and import allowlisting before any artifact can be loaded.
 
-- [ ] **Subtask 1.2.2.2 Complete**
+- [x] **Subtask 1.2.2.2 Complete** — evidence: [strong validation and inspection](../../src/phase-01/alang_phase1_compiler.erl) and [boundary tests](../../src/phase-01/alang_phase1_compiler_tests.erl)
 
 ## Section 1.3: First A-Lang BEAM Artifact
 

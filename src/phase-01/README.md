@@ -42,8 +42,18 @@ ignored repository `build/` directory, not in source control.
 
 ### Files
 
+- [Abstract Format subset](abstract-format-subset.md) — the exact supported
+  forms, calls, validation order, import allowlist, and rejection behavior.
+- [`alang_phase1_compiler.erl`](alang_phase1_compiler.erl) — build-only OTP
+  version guard, Abstract Format validator, deterministic compiler bridge, and
+  BEAM inspection boundary.
+- [`alang_phase1_compiler_tests.erl`](alang_phase1_compiler_tests.erl) — EUnit
+  coverage for version rejection, subset enforcement, OTP strong validation,
+  deterministic emission, and import inspection.
 - [Runtime contract](runtime-contract.md) — normative execution-engine,
   bootstrap-boundary, ABI, success-trace, and failure-class requirements.
+- [`toolchain.config`](toolchain.config) — machine-readable OTP, ERTS,
+  architecture, validation, and compiler constraints.
 
 ## Maintaining this index
 
