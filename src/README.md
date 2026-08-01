@@ -48,7 +48,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 
 ### Subdirectories
 
-- None yet.
+- [Phase 1 BEAM vertical slice](phase-01/README.md) — the executable runtime
+  contract, pinned OTP compiler boundary, deterministic artifact builder, and
+  isolated ERTS validation harness for the first proof-of-concept phase.
 
 ### Files
 

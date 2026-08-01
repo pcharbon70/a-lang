@@ -19,7 +19,7 @@ lowered to Erlang Abstract Format, compiled by a pinned OTP compiler, loaded by
 ERTS, spawned as a BEAM process, driven through a closed message ABI, and
 observed through normal BEAM termination and trace events.
 
-**Status:** Planned.
+**Status:** Complete. Reproduce all evidence with `make test-phase-1`.
 
 **Dependencies:** The BEAM runtime synthesis and feasibility inquiry are the
 accepted baseline. No compiler, evaluator, broker, or other host runtime may be
@@ -30,14 +30,14 @@ treated as the A-Lang execution engine.
 **Description:** Freeze the boundary that distinguishes a language running on
 BEAM from a language merely using BEAM as a late export format.
 
-- [ ] **Section 1.1 Complete**
+- [x] **Section 1.1 Complete** — evidence: [normative runtime contract](../../src/phase-01/runtime-contract.md)
 
 ### Task 1.1.1: Publish the Runtime Invariants
 
 **Description:** Record the architectural statements that every later phase
 must preserve and that reviewers can test directly.
 
-- [ ] **Task 1.1.1 Complete**
+- [x] **Task 1.1.1 Complete** — evidence: [execution-engine and bootstrap invariants](../../src/phase-01/runtime-contract.md#execution-engine-invariant)
 
 #### Subtask 1.1.1.1: Define the Execution Engine
 
@@ -45,7 +45,7 @@ must preserve and that reviewers can test directly.
 BEAM modules and ERTS processes, use BEAM scheduling and process isolation, and
 do not execute through a host-language AST or IR interpreter.
 
-- [ ] **Subtask 1.1.1.1 Complete**
+- [x] **Subtask 1.1.1.1 Complete** — evidence: [execution-engine invariant](../../src/phase-01/runtime-contract.md#execution-engine-invariant)
 
 #### Subtask 1.1.1.2: Define Permitted Bootstrap Components
 
@@ -53,7 +53,7 @@ do not execute through a host-language AST or IR interpreter.
 or fixture generator only when it cannot execute an A-Lang task and is not
 present on the runtime path after a `.beam` artifact is accepted.
 
-- [ ] **Subtask 1.1.1.2 Complete**
+- [x] **Subtask 1.1.1.2 Complete** — evidence: [bootstrap boundary](../../src/phase-01/runtime-contract.md#bootstrap-boundary)
 
 ### Task 1.1.2: Freeze the First Observable Program
 
@@ -61,7 +61,7 @@ present on the runtime path after a `.beam` artifact is accepted.
 loading, process creation, message receipt, typed result emission, and normal
 or classified abnormal termination on ERTS.
 
-- [ ] **Task 1.1.2 Complete**
+- [x] **Task 1.1.2 Complete** — evidence: [first observable program](../../src/phase-01/runtime-contract.md#first-observable-program)
 
 #### Subtask 1.1.2.1: Define the Successful Trace
 
@@ -69,7 +69,7 @@ or classified abnormal termination on ERTS.
 transition, output envelope, trace event order, and terminal result expected
 from the first BEAM-executed program.
 
-- [ ] **Subtask 1.1.2.1 Complete**
+- [x] **Subtask 1.1.2.1 Complete** — evidence: [canonical successful observation](../../src/phase-01/runtime-contract.md#canonical-successful-observation)
 
 #### Subtask 1.1.2.2: Define the Failure Trace
 
@@ -77,7 +77,7 @@ from the first BEAM-executed program.
 unknown ABI version, invalid payload shape, unavailable runtime operation, and
 unexpected process exit.
 
-- [ ] **Subtask 1.1.2.2 Complete**
+- [x] **Subtask 1.1.2.2 Complete** — evidence: [canonical failure observations](../../src/phase-01/runtime-contract.md#canonical-failure-observations)
 
 ## Section 1.2: Pinned OTP Compilation Boundary
 
@@ -85,7 +85,7 @@ unexpected process exit.
 to validated BEAM without making Core Erlang or raw BEAM assembly a production
 contract.
 
-- [ ] **Section 1.2 Complete**
+- [x] **Section 1.2 Complete** — evidence: [pinned compilation boundary](../../src/phase-01/abstract-format-subset.md)
 
 ### Task 1.2.1: Pin the OTP Build and Runtime Pair
 
@@ -93,7 +93,7 @@ contract.
 make its versions, flags, and artifact metadata reproducible from a clean
 checkout.
 
-- [ ] **Task 1.2.1 Complete**
+- [x] **Task 1.2.1 Complete** — evidence: [machine-readable toolchain contract](../../src/phase-01/toolchain.config)
 
 #### Subtask 1.2.1.1: Record Toolchain Constraints
 
@@ -101,7 +101,7 @@ checkout.
 compiler options, supported architecture assumptions, and a documented clean
 build command.
 
-- [ ] **Subtask 1.2.1.1 Complete**
+- [x] **Subtask 1.2.1.1 Complete** — evidence: [toolchain constraints](../../src/phase-01/toolchain.config) and [clean build commands](../../Makefile)
 
 #### Subtask 1.2.1.2: Reject Version Drift
 
@@ -109,14 +109,14 @@ build command.
 the pinned contract and print the detected and expected versions without
 silently continuing.
 
-- [ ] **Subtask 1.2.1.2 Complete**
+- [x] **Subtask 1.2.1.2 Complete** — evidence: [compiler boundary checks](../../src/phase-01/alang_phase1_compiler.erl) and [drift rejection test](../../src/phase-01/alang_phase1_compiler_tests.erl)
 
 ### Task 1.2.2: Define the Abstract Format Subset
 
 **Description:** Specify the smallest Erlang Abstract Format forms needed for
 the first process and make unsupported forms an explicit build error.
 
-- [ ] **Task 1.2.2 Complete**
+- [x] **Task 1.2.2 Complete** — evidence: [Abstract Format subset](../../src/phase-01/abstract-format-subset.md)
 
 #### Subtask 1.2.2.1: Enumerate Allowed Forms and Calls
 
@@ -124,21 +124,21 @@ the first process and make unsupported forms an explicit build error.
 tuples, binaries, integers, `case`, receive behavior through the runtime
 adapter, and the exact imports required by the vertical slice.
 
-- [ ] **Subtask 1.2.2.1 Complete**
+- [x] **Subtask 1.2.2.1 Complete** — evidence: [allowed forms and runtime calls](../../src/phase-01/abstract-format-subset.md#allowed-abstract-format)
 
 #### Subtask 1.2.2.2: Enforce Strong Validation and Inspection
 
 **Description:** Run OTP strong validation, deterministic compilation, BEAM
 chunk inspection, and import allowlisting before any artifact can be loaded.
 
-- [ ] **Subtask 1.2.2.2 Complete**
+- [x] **Subtask 1.2.2.2 Complete** — evidence: [strong validation and inspection](../../src/phase-01/alang_phase1_compiler.erl) and [boundary tests](../../src/phase-01/alang_phase1_compiler_tests.erl)
 
 ## Section 1.3: First A-Lang BEAM Artifact
 
 **Description:** Produce a deterministic artifact from a language-owned
 semantic fixture and attach enough metadata to prove how it was built.
 
-- [ ] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete** — evidence: [typed semantic fixture](../../src/phase-01/semantic-fixture.md) and [artifact packager](../../src/phase-01/alang_phase1_package.erl)
 
 ### Task 1.3.1: Define the Minimal Semantic Fixture
 
@@ -146,14 +146,14 @@ semantic fixture and attach enough metadata to prove how it was built.
 owned by A-Lang rather than as Erlang source or an untyped code-generation
 template.
 
-- [ ] **Task 1.3.1 Complete**
+- [x] **Task 1.3.1 Complete** — evidence: [language-owned fixture](../../src/phase-01/semantic-fixture.config)
 
 #### Subtask 1.3.1.1: Model Input, State, and Result
 
 **Description:** Define closed input, state, result, and failure variants for a
 single deterministic state transition with no external effect or model call.
 
-- [ ] **Subtask 1.3.1.1 Complete**
+- [x] **Subtask 1.3.1.1 Complete** — evidence: [closed fixture types](../../src/phase-01/semantic-fixture.md#closed-types)
 
 #### Subtask 1.3.1.2: Model the Closed Runtime Operations
 
@@ -161,7 +161,7 @@ single deterministic state transition with no external effect or model call.
 one trace emission, one result reply, and termination as named runtime
 operations.
 
-- [ ] **Subtask 1.3.1.2 Complete**
+- [x] **Subtask 1.3.1.2 Complete** — evidence: [closed runtime operations](../../src/phase-01/semantic-fixture.md#closed-runtime-operations)
 
 ### Task 1.3.2: Lower and Package the Artifact
 
@@ -169,7 +169,7 @@ operations.
 subset, compile it, inspect it, and package it as a reproducible `.beam`
 artifact.
 
-- [ ] **Task 1.3.2 Complete**
+- [x] **Task 1.3.2 Complete** — evidence: [lowering pass](../../src/phase-01/alang_phase1_fixture.erl) and [artifact packager](../../src/phase-01/alang_phase1_package.erl)
 
 #### Subtask 1.3.2.1: Generate Deterministic Abstract Forms
 
@@ -177,7 +177,7 @@ artifact.
 normalized forms, stable source locations, bounded atoms, and reproducible
 diagnostics.
 
-- [ ] **Subtask 1.3.2.1 Complete**
+- [x] **Subtask 1.3.2.1 Complete** — evidence: [deterministic lowering](../../src/phase-01/semantic-fixture.md#deterministic-lowering) and [reproducibility tests](../../src/phase-01/alang_phase1_artifact_tests.erl)
 
 #### Subtask 1.3.2.2: Attach and Verify the Manifest
 
@@ -185,14 +185,14 @@ diagnostics.
 OTP target, compiler flags, imports, and artifact digest, then verify the
 manifest before loading.
 
-- [ ] **Subtask 1.3.2.2 Complete**
+- [x] **Subtask 1.3.2.2 Complete** — evidence: [manifest builder and verifier](../../src/phase-01/alang_phase1_package.erl) and [manifest tests](../../src/phase-01/alang_phase1_artifact_tests.erl)
 
 ## Section 1.4: BEAM Execution Integration Test
 
 **Description:** Prove end to end that the accepted artifact runs on ERTS as a
 BEAM process and that every non-BEAM substitute fails the phase gate.
 
-- [ ] **Section 1.4 Complete**
+- [x] **Section 1.4 Complete** — evidence: [named-node BEAM execution evidence](../../src/phase-01/beam-execution-evidence.md)
 
 ### Task 1.4.1: Execute the Successful Vertical Slice on ERTS
 
@@ -200,7 +200,7 @@ BEAM process and that every non-BEAM substitute fails the phase gate.
 entry process, send the canonical envelope, and collect its reply, trace, and
 termination evidence.
 
-- [ ] **Task 1.4.1 Complete**
+- [x] **Task 1.4.1 Complete** — evidence: [verified runtime loader and observer](../../src/phase-01/alang_phase1_runtime.erl)
 
 #### Subtask 1.4.1.1: Capture BEAM Process Evidence
 
@@ -208,7 +208,7 @@ termination evidence.
 execution, received and emitted envelopes, reductions, exit reason, and node
 and OTP versions.
 
-- [ ] **Subtask 1.4.1.1 Complete**
+- [x] **Subtask 1.4.1.1 Complete** — evidence: [captured process and scheduler fields](../../src/phase-01/beam-execution-evidence.md#canonical-normalized-trace)
 
 #### Subtask 1.4.1.2: Reproduce the Run from a Clean Checkout
 
@@ -216,7 +216,7 @@ and OTP versions.
 command and compare the artifact digest and normalized trace with the expected
 evidence.
 
-- [ ] **Subtask 1.4.1.2 Complete**
+- [x] **Subtask 1.4.1.2 Complete** — evidence: [one-command clean reproduction](../../src/phase-01/beam-execution-evidence.md#clean-reproduction)
 
 ### Task 1.4.2: Exercise Fail-Closed Runtime Boundaries
 
@@ -224,7 +224,7 @@ evidence.
 runtime versions are rejected before or during isolated BEAM execution with
 classified errors.
 
-- [ ] **Task 1.4.2 Complete**
+- [x] **Task 1.4.2 Complete** — evidence: [fail-closed integration suite](../../src/phase-01/alang_phase1_integration_tests.erl)
 
 #### Subtask 1.4.2.1: Run Artifact and ABI Rejection Cases
 
@@ -232,7 +232,7 @@ classified errors.
 Abstract Format, mismatched OTP targets, unknown message versions, and
 oversized payloads.
 
-- [ ] **Subtask 1.4.2.1 Complete**
+- [x] **Subtask 1.4.2.1 Complete** — evidence: [artifact and ABI rejection matrix](../../src/phase-01/beam-execution-evidence.md#fail-closed-matrix)
 
 #### Subtask 1.4.2.2: Prove the No-Interpreter Gate
 
@@ -240,17 +240,17 @@ oversized payloads.
 trace to show that the program result came from the loaded BEAM module rather
 than a host evaluator, Erlang source evaluator, or another language runtime.
 
-- [ ] **Subtask 1.4.2.2 Complete**
+- [x] **Subtask 1.4.2.2 Complete** — evidence: [execution topology and no-interpreter gate](../../src/phase-01/beam-execution-evidence.md#execution-topology-and-no-interpreter-gate)
 
 ## Phase 1 Completion Evidence
 
 **Description:** Phase 1 is complete only when the repository contains
 reproducible evidence for all items below.
 
-- [ ] OTP compiler and ERTS versions are pinned and enforced
-- [ ] The language-owned fixture lowers through the documented Abstract Format subset
-- [ ] The artifact passes validation, import inspection, and manifest verification
-- [ ] The artifact loads and runs as a spawned BEAM process on an isolated node
-- [ ] The canonical message, result, trace, and termination evidence match the contract
-- [ ] Negative artifact, ABI, payload, and version cases fail closed
-- [ ] No host-language or existing BEAM-language interpreter executes the A-Lang program
+- [x] OTP compiler and ERTS versions are pinned and enforced — [toolchain contract](../../src/phase-01/toolchain.config)
+- [x] The language-owned fixture lowers through the documented Abstract Format subset — [typed fixture](../../src/phase-01/semantic-fixture.md)
+- [x] The artifact passes validation, import inspection, and manifest verification — [artifact identity](../../src/phase-01/beam-execution-evidence.md#artifact-identity)
+- [x] The artifact loads and runs as a spawned BEAM process on an isolated node — [execution topology](../../src/phase-01/beam-execution-evidence.md#execution-topology-and-no-interpreter-gate)
+- [x] The canonical message, result, trace, and termination evidence match the contract — [normalized trace](../../src/phase-01/beam-execution-evidence.md#canonical-normalized-trace)
+- [x] Negative artifact, ABI, payload, and version cases fail closed — [rejection matrix](../../src/phase-01/beam-execution-evidence.md#fail-closed-matrix)
+- [x] No host-language or existing BEAM-language interpreter executes the A-Lang program — [no-interpreter gate](../../src/phase-01/beam-execution-evidence.md#execution-topology-and-no-interpreter-gate)
