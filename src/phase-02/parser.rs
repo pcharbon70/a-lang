@@ -561,7 +561,9 @@ impl Parser {
                 Origin::merge(start, &end.origin),
             ));
         }
-        if self.take(&TokenKind::LeftBrace).is_some() {
+        if name.chars().next().is_some_and(char::is_uppercase)
+            && self.take(&TokenKind::LeftBrace).is_some()
+        {
             let (fields, end) = self.parse_record_fields_after_open()?;
             return Some(Spanned::new(
                 ExpressionAst::Record {

@@ -58,8 +58,16 @@ execution evidence belong under the ignored repository `build/` directory.
 - [`lib.rs`](lib.rs) — crate boundary and public compiler frontend API.
 - [`parser.rs`](parser.rs) — handwritten recovering parser that constructs the
   common untyped AST.
+- [`resolver.rs`](resolver.rs) — namespaces, lexical scopes, stable semantic
+  identities, definition/use tables, and resolution diagnostics.
+- [`semantic.rs`](semantic.rs) — deterministic resolved and data-typed semantic
+  model shared by later compiler passes.
 - [`source.rs`](source.rs) — versioned source AST, declarations, types,
   requirements, expressions, identifiers, and complete origins.
+- [Static semantics](static-semantics.md) — normative resolution, identity,
+  scope, data-type, opaque-boundary, and failure contracts.
+- [`type_checker.rs`](type_checker.rs) — closed monomorphic data checker and
+  source-origin-indexed expression types.
 
 ## Maintaining this index
 

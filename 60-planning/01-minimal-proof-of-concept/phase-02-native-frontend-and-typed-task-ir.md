@@ -87,7 +87,7 @@ report multiple independent issues without inventing nodes.
 **Description:** Resolve every name and assign ordinary data types before
 effects, requirements, or backend concerns enter the semantic judgment.
 
-- [ ] **Section 2.2 Complete**
+- [x] **Section 2.2 Complete** — evidence: [static semantics](../../src/phase-02/static-semantics.md) and [Section 2.2 gate](../../Makefile)
 
 ### Task 2.2.1: Implement Modules, Scopes, and Symbol Resolution
 
@@ -95,7 +95,7 @@ effects, requirements, or backend concerns enter the semantic judgment.
 task, effect, operation, resource, and verifier names into stable semantic
 identities.
 
-- [ ] **Task 2.2.1 Complete**
+- [x] **Task 2.2.1 Complete** — evidence: [resolver](../../src/phase-02/resolver.rs) and [semantic identities](../../src/phase-02/static-semantics.md#stable-semantic-identities)
 
 #### Subtask 2.2.1.1: Build Scope and Definition Tables
 
@@ -103,7 +103,7 @@ identities.
 unknown names, wrong namespaces, and arity mismatches while preserving the
 origin of each definition and use.
 
-- [ ] **Subtask 2.2.1.1 Complete**
+- [x] **Subtask 2.2.1.1 Complete** — evidence: [scope and namespace rules](../../src/phase-02/static-semantics.md#scope-and-namespace-rules) and [resolution tests](../../src/phase-02/resolver.rs)
 
 #### Subtask 2.2.1.2: Normalize Resource and Operation Identities
 
@@ -111,7 +111,7 @@ origin of each definition and use.
 `Workspace.write`, `Trace.emit`, resource parameters, and completion
 predicates so later manifests and runtime messages do not depend on spelling.
 
-- [ ] **Subtask 2.2.1.2 Complete**
+- [x] **Subtask 2.2.1.2 Complete** — evidence: [canonical semantic identities](../../src/phase-02/semantic.rs)
 
 ### Task 2.2.2: Implement the Minimal Data Type Checker
 
@@ -119,7 +119,7 @@ predicates so later manifests and runtime messages do not depend on spelling.
 results, functions, tasks, applications, `let`, and exhaustive result matches
 without introducing deferred polymorphism.
 
-- [ ] **Task 2.2.2 Complete**
+- [x] **Task 2.2.2 Complete** — evidence: [minimal data checker](../../src/phase-02/type_checker.rs)
 
 #### Subtask 2.2.2.1: Check Expressions and Composition
 
@@ -127,7 +127,7 @@ without introducing deferred polymorphism.
 typing, branch agreement, function arity, and typed sequential composition
 with source-local expected-versus-actual diagnostics.
 
-- [ ] **Subtask 2.2.2.1 Complete**
+- [x] **Subtask 2.2.2.1 Complete** — evidence: [data-type contract](../../src/phase-02/static-semantics.md#minimal-data-types) and [composition tests](../../src/phase-02/type_checker.rs)
 
 #### Subtask 2.2.2.2: Check Exhaustiveness and Opaque Boundaries
 
@@ -135,7 +135,7 @@ with source-local expected-versus-actual diagnostics.
 uses, implicit coercions, and construction or inspection of opaque runtime
 identifiers outside their approved operations.
 
-- [ ] **Subtask 2.2.2.2 Complete**
+- [x] **Subtask 2.2.2.2 Complete** — evidence: [opaque and exhaustiveness tests](../../src/phase-02/type_checker.rs)
 
 ## Section 2.3: Effects and Capability Requirements
 
