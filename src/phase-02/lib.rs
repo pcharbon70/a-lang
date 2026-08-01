@@ -1,15 +1,19 @@
 pub mod diagnostic;
 pub mod effect_checker;
+pub mod ir;
 pub mod json_frontend;
 pub mod lexer;
 pub mod parser;
+pub mod reference;
 pub mod requirements;
 pub mod resolver;
 pub mod semantic;
 pub mod source;
 pub mod type_checker;
+pub mod views;
 
 use diagnostic::Diagnostic;
+use ir::TypedTaskIr;
 use semantic::{AuthorizedModule, CheckedModule};
 use source::ModuleAst;
 
@@ -52,4 +56,14 @@ pub fn analyze_data(module: &ModuleAst) -> Result<CheckedModule, Vec<Diagnostic>
 /// annotations, requirement normalization, or authority coverage.
 pub fn analyze(module: &ModuleAst) -> Result<AuthorizedModule, Vec<Diagnostic>> {
     effect_checker::check(analyze_data(module)?)
+}
+
+/// Compile parsed source through all static semantics into validated typed IR.
+///
+/// # Errors
+///
+/// Returns stable frontend-semantic or IR-invariant diagnostics. This function
+/// does not evaluate the program or perform backend work.
+pub fn compile_ir(module: &ModuleAst) -> Result<TypedTaskIr, Vec<Diagnostic>> {
+    ir::lower(&analyze(module)?)
 }

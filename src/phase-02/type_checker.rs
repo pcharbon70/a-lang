@@ -218,9 +218,13 @@ impl<'a> TypeChecker<'a> {
             ExpressionAst::Error { value } => {
                 self.constructor_type(expression, value, expected, false)
             }
-            ExpressionAst::Call { arguments, .. } | ExpressionAst::Perform { arguments, .. } => {
-                self.call_type(expression, arguments)
+            ExpressionAst::Call { arguments, .. } => {
+                self.call_type(expression, &expression.origin, arguments)
             }
+            ExpressionAst::Perform {
+                operation,
+                arguments,
+            } => self.call_type(expression, &operation.origin, arguments),
             ExpressionAst::Let { name, value, body } => {
                 let value_type = self.check_expression(value, None)?;
                 if let Some(definition_id) = self
@@ -231,9 +235,10 @@ impl<'a> TypeChecker<'a> {
                         .insert(definition_id.clone(), value_type.clone());
                     let result = self.check_expression(body, expected);
                     self.local_types.remove(&definition_id);
-                    return result;
+                    result
+                } else {
+                    None
                 }
-                None
             }
             ExpressionAst::MatchResult {
                 value,
@@ -402,9 +407,10 @@ impl<'a> TypeChecker<'a> {
     fn call_type(
         &mut self,
         expression: &Spanned<ExpressionAst>,
+        target_origin: &Origin,
         arguments: &[Spanned<ExpressionAst>],
     ) -> Option<ValueType> {
-        let id = self.use_id(&expression.origin)?;
+        let id = self.use_id(target_origin)?;
         let Some(signature) = self.signatures.get(&id).cloned() else {
             self.diagnostics.push(Diagnostic::error(
                 "TYPE_CALLABLE_SIGNATURE_MISSING",

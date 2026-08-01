@@ -56,6 +56,8 @@ execution evidence belong under the ignored repository `build/` directory.
   contracts.
 - [`json_frontend.rs`](json_frontend.rs) — bounded canonical JSON decoder and
   complete schema validation.
+- [`ir.rs`](ir.rs) — versioned flat typed task IR, stable preorder identities,
+  source lowering, and structural/type/effect invariant validation.
 - [Language surface](language-surface.md) — the normative Phase 2 canonical
   schema, textual grammar, precedence, limits, and recovery contract.
 - [`lexer.rs`](lexer.rs) — handwritten UTF-8 textual lexer with byte and
@@ -63,6 +65,8 @@ execution evidence belong under the ignored repository `build/` directory.
 - [`lib.rs`](lib.rs) — crate boundary and public compiler frontend API.
 - [`parser.rs`](parser.rs) — handwritten recovering parser that constructs the
   common untyped AST.
+- [`reference.rs`](reference.rs) — bounded, fixture-only, explicitly
+  nondeployable reference evaluation for tests and differential comparison.
 - [`resolver.rs`](resolver.rs) — namespaces, lexical scopes, stable semantic
   identities, definition/use tables, and resolution diagnostics.
 - [`requirements.rs`](requirements.rs) — typed requirement normalization,
@@ -75,6 +79,10 @@ execution evidence belong under the ignored repository `build/` directory.
   scope, data-type, opaque-boundary, and failure contracts.
 - [`type_checker.rs`](type_checker.rs) — closed monomorphic data checker and
   source-origin-indexed expression types.
+- [Typed task IR and views](typed-task-ir.md) — normative IR vocabulary,
+  validation boundary, test evaluator, and nonexecuting projection contracts.
+- [`views.rs`](views.rs) — deterministic dry-run, trace, capability-manifest,
+  completion-checklist, and explanation views with full node coverage.
 
 ## Maintaining this index
 

@@ -198,7 +198,7 @@ operation or widened argument constraint.
 give the IR several explicit test views while preserving compiled BEAM as the
 only execution path accepted by the proof of concept.
 
-- [ ] **Section 2.4 Complete**
+- [x] **Section 2.4 Complete** — evidence: [typed task IR and semantic views](../../src/phase-02/typed-task-ir.md) and [Section 2.4 gate](../../Makefile)
 
 ### Task 2.4.1: Define and Construct the Typed Task IR
 
@@ -206,7 +206,7 @@ only execution path accepted by the proof of concept.
 sequential tasks, effect requests, requirements, verifier nodes, and source
 origins in a normalized, backend-independent form.
 
-- [ ] **Task 2.4.1 Complete**
+- [x] **Task 2.4.1 Complete** — evidence: [typed IR implementation](../../src/phase-02/ir.rs)
 
 #### Subtask 2.4.1.1: Normalize Source Sugar and Identities
 
@@ -214,7 +214,7 @@ origins in a normalized, backend-independent form.
 node and operation identifiers, retain effect and requirement annotations, and
 eliminate only source constructs with a specified semantics-preserving rule.
 
-- [ ] **Subtask 2.4.1.1 Complete**
+- [x] **Subtask 2.4.1.1 Complete** — evidence: [module and callable form](../../src/phase-02/typed-task-ir.md#module-and-callable-form) and [promoted primitives](../../src/phase-02/typed-task-ir.md#promoted-primitives)
 
 #### Subtask 2.4.1.2: Validate IR Invariants
 
@@ -222,7 +222,7 @@ eliminate only source constructs with a specified semantics-preserving rule.
 branches, undeclared operations, missing verifier nodes, and noncanonical
 requirements before any interpreter receives the IR.
 
-- [ ] **Subtask 2.4.1.2 Complete**
+- [x] **Subtask 2.4.1.2 Complete** — evidence: [IR validation boundary](../../src/phase-02/typed-task-ir.md#validation-boundary) and [negative invariant tests](../../src/phase-02/ir.rs)
 
 ### Task 2.4.2: Implement Test-Only Reference, Simulation, Trace, and Manifest Views
 
@@ -230,7 +230,7 @@ requirements before any interpreter receives the IR.
 and derive simulation, normalized trace, and capability-manifest views solely
 for tests, diagnostics, and differential comparison.
 
-- [ ] **Task 2.4.2 Complete**
+- [x] **Task 2.4.2 Complete** — evidence: [reference evaluator](../../src/phase-02/reference.rs) and [semantic views](../../src/phase-02/views.rs)
 
 #### Subtask 2.4.2.1: Implement the Deterministic Reference Evaluator
 
@@ -239,7 +239,7 @@ with explicit state transitions, stable observations, bounded steps, and no
 host filesystem or network access. Mark the evaluator as nondeployable and
 incapable of satisfying a runtime phase gate.
 
-- [ ] **Subtask 2.4.2.1 Complete**
+- [x] **Subtask 2.4.2.1 Complete** — evidence: [test-only evaluator contract](../../src/phase-02/typed-task-ir.md#test-only-reference-evaluator) and [bounded evaluator tests](../../src/phase-02/reference.rs)
 
 #### Subtask 2.4.2.2: Implement Nonexecuting Interpreters
 
@@ -247,7 +247,7 @@ incapable of satisfying a runtime phase gate.
 completion checklists, and human-readable explanations from the same IR and
 verify that each interpreter covers every primitive node.
 
-- [ ] **Subtask 2.4.2.2 Complete**
+- [x] **Subtask 2.4.2.2 Complete** — evidence: [nonexecuting views contract](../../src/phase-02/typed-task-ir.md#nonexecuting-views) and [complete view coverage tests](../../src/phase-02/views.rs)
 
 ## Section 2.5: Phase 2 Integration Tests
 
