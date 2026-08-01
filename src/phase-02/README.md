@@ -1,106 +1,98 @@
 ---
-title: "Phase 2 Native Frontend and Typed Task IR"
+title: "Phase 2 BEAM-Resident Compiler and Typed Task IR"
 kind: map
 created: 2026-07-31
 tags:
+  - beam
   - compiler-implementation
   - directory-index
   - proof-of-concept
-  - rust
 aliases:
   - "Phase 2 implementation index"
+  - "Phase 2 native frontend"
 ---
 
-# Phase 2 Native Frontend and Typed Task IR (`src/phase-02`)
+# Phase 2 BEAM-Resident Compiler and Typed Task IR (`src/phase-02`)
 
 ## Purpose
 
-This directory implements the second A-Lang proof-of-concept phase. Its Rust
-compiler library owns the canonical JSON frontend, handwritten textual lexer
-and parser, source-oriented static semantics, typed task IR, and test-only
-semantic views. Accepted programs continue through the Phase 1 OTP 29
-Abstract Format boundary and execute only as loaded BEAM modules.
+This directory implements the second A-Lang proof-of-concept phase. Every
+trusted compiler component here—lexing, parsing, canonical decoding, static
+semantics, IR lowering, projections, bridge, and compiler command—is compiled
+to `.beam` and executed by OTP 29 ERTS. Erlang source bootstraps these compiler
+passes; it does not interpret A-Lang programs.
 
-Rust is a native compiler implementation language here, not an A-Lang
-runtime. Test-only evaluation is visibly separated from the production
-frontend-to-BEAM path and cannot satisfy an execution gate.
+The compiler accepts the deliberately small counter profile, produces a
+deterministic A-Lang-owned typed task IR, and feeds the exact Phase 1 semantic
+fixture into OTP's supported Abstract Format compiler boundary. The accepted
+program then runs as the separately loaded `phase1_counter_v1` BEAM module.
 
 ## What belongs here
 
-- The frozen Phase 2 source schema and textual grammar.
-- Native lexer, parser, resolver, type/effect checker, and IR implementation.
-- Requirement normalization and nondeployable semantic views.
-- Paired fixtures, negative diagnostics, fuzz-smoke tests, and BEAM bridge.
+- BEAM-resident compiler passes and their EUnit tests.
+- The frozen minimal source, semantic, IR, and authority contracts.
+- Deterministic ETF compiler interchange and reproducibility evidence.
+- An explicitly nondeployable BEAM reference oracle and semantic views.
+- The fail-closed counter bridge and isolated ERTS agreement harness.
 
-Cargo target output, generated fixtures, snapshots, BEAM artifacts, and
-execution evidence belong under the ignored repository `build/` directory.
+Generated ETF, fixtures, `.beam` files, artifacts, traces, and evidence belong
+under the ignored repository `build/` directory.
 
 ## Index
 
 ### Subdirectories
 
-- [Fixtures](fixtures/README.md) — durable textual programs used by paired
-  frontend, semantic, IR, bridge, and runtime integration tests.
+- [Fixtures](fixtures/README.md) — durable textual A-Lang programs used by the
+  frontend, semantic, IR, bridge, and runtime tests.
 
 ### Files
 
-- [`beam_bridge.rs`](beam_bridge.rs) — fail-closed lowering of the minimal
-  successor IR profile to the exact Phase 1 semantic fixture and OTP adapter.
-- [`alang_phase2_integration_tests.erl`](alang_phase2_integration_tests.erl) —
-  isolated ERTS agreement, adapter provenance, and no-interpreter tests.
+#### Compiler modules
+
+- [`alang_phase2_lexer.erl`](alang_phase2_lexer.erl) — bounded handwritten
+  lexer with byte and line-column origins.
+- [`alang_phase2_parser.erl`](alang_phase2_parser.erl) — parser for the frozen
+  counter grammar and shared source AST.
+- [`alang_phase2_canonical.erl`](alang_phase2_canonical.erl) — bounded,
+  safe-decoded, deterministic ETF canonical boundary.
+- [`alang_phase2_semantics.erl`](alang_phase2_semantics.erl) — name, type,
+  purity, and empty-authority checks with stable task identities.
+- [`alang_phase2_ir.erl`](alang_phase2_ir.erl) — typed task IR lowering,
+  structural validation, and small pure morphisms used by law tests.
+- [`alang_phase2_views.erl`](alang_phase2_views.erl) — deterministic dry-run,
+  trace, manifest, completion, and explanation projections.
+- [`alang_phase2_bridge.erl`](alang_phase2_bridge.erl) — fail-closed recognition
+  of the exact Phase 1 successor profile.
+- [`alang_phase2_compiler.erl`](alang_phase2_compiler.erl) — BEAM-resident
+  source-to-product command and compiler-residency evidence emitter.
+
+#### Test-only and runtime modules
+
+- [`alang_phase2_reference.erl`](alang_phase2_reference.erl) — bounded,
+  explicitly nondeployable BEAM test oracle.
+- [`alang_phase2_compiler_tests.erl`](alang_phase2_compiler_tests.erl) —
+  frontend, canonical, semantic, IR, category-law, oracle, bridge, robustness,
+  and whole-toolchain residency tests.
 - [`alang_phase2_runtime.erl`](alang_phase2_runtime.erl) — runtime-only wrapper
-  that compares generated reference evidence with the loaded BEAM observation.
-- [`Cargo.toml`](Cargo.toml) — pinned Rust crate metadata, dependencies, and
-  strict lint policy for the native compiler.
-- [`Cargo.lock`](Cargo.lock) — exact transitive dependency resolution for
-  reproducible native compiler builds.
-- [`diagnostic.rs`](diagnostic.rs) — stable source-oriented diagnostic codes,
-  severity, labels, and deterministic ordering.
-- [`effect_checker.rs`](effect_checker.rs) — closed effect inference, exact
-  annotation checks, and effect-to-requirement coverage.
-- [Effects and requirements](effects-and-requirements.md) — normative closed
-  effect, authority predicate, canonicalization, subsumption, and coverage
-  contracts.
-- [`json_frontend.rs`](json_frontend.rs) — bounded canonical JSON decoder and
-  complete schema validation.
-- [`ir.rs`](ir.rs) — versioned flat typed task IR, stable preorder identities,
-  source lowering, and structural/type/effect invariant validation.
-- [`integration.rs`](integration.rs) — paired frontend, negative semantic,
-  reference/view/bridge agreement, and deterministic fuzz-smoke tests.
-- [Language surface](language-surface.md) — the normative Phase 2 canonical
-  schema, textual grammar, precedence, limits, and recovery contract.
-- [`lexer.rs`](lexer.rs) — handwritten UTF-8 textual lexer with byte and
-  line-column spans.
-- [`lib.rs`](lib.rs) — crate boundary and public compiler frontend API.
-- [`main.rs`](main.rs) — native compiler command that emits canonical source,
-  checked IR, semantic views, reference comparison, and Phase 1 bridge input.
-- [`parser.rs`](parser.rs) — handwritten recovering parser that constructs the
-  common untyped AST.
-- [Phase 2 integration evidence](phase-02-integration-evidence.md) — paired
-  frontend agreement, negative/fuzz coverage, artifact identities, semantic
-  comparison, isolated ERTS trace, and no-interpreter proof.
-- [`reference.rs`](reference.rs) — bounded, fixture-only, explicitly
-  nondeployable reference evaluation for tests and differential comparison.
-- [`resolver.rs`](resolver.rs) — namespaces, lexical scopes, stable semantic
-  identities, definition/use tables, and resolution diagnostics.
-- [`requirements.rs`](requirements.rs) — typed requirement normalization,
-  union, equality, subsumption, and deterministic serialization.
-- [`semantic.rs`](semantic.rs) — deterministic resolved and data-typed semantic
-  model shared by later compiler passes.
-- [`source.rs`](source.rs) — versioned source AST, declarations, types,
-  requirements, expressions, identifiers, and complete origins.
-- [Static semantics](static-semantics.md) — normative resolution, identity,
-  scope, data-type, opaque-boundary, and failure contracts.
-- [`type_checker.rs`](type_checker.rs) — closed monomorphic data checker and
-  source-origin-indexed expression types.
-- [Typed task IR and views](typed-task-ir.md) — normative IR vocabulary,
-  validation boundary, test evaluator, and nonexecuting projection contracts.
-- [`views.rs`](views.rs) — deterministic dry-run, trace, capability-manifest,
-  completion-checklist, and explanation views with full node coverage.
+  comparing generated reference evidence with loaded BEAM observation.
+- [`alang_phase2_integration_tests.erl`](alang_phase2_integration_tests.erl) —
+  isolated ERTS compiler-residency, agreement, and no-interpreter tests.
+
+#### Contracts and evidence
+
+- [Language surface](language-surface.md) — textual grammar, canonical ETF,
+  limits, origins, and failure contract.
+- [Static semantics](static-semantics.md) — minimal resolution, identity, and
+  data-type judgments.
+- [Effects and requirements](effects-and-requirements.md) — the Phase 2 pure
+  boundary and the distinction between effects and declarative authority.
+- [Typed task IR and views](typed-task-ir.md) — promoted nodes, validation,
+  law checks, oracle, and projection contracts.
+- [Phase 2 integration evidence](phase-02-integration-evidence.md) — compiler
+  residency, deterministic products, artifact identity, and ERTS observation.
 
 ## Maintaining this index
 
-Index every direct compiler, fixture, specification, and test file. Keep Rust
-build output outside this directory, keep the native frontend independent of
-BEAM languages, and link completed plan claims to reproducible implementation
-evidence.
+Index every direct source, fixture, contract, and evidence file. A future
+compiler pass must run as BEAM code on ERTS; foreign executables may appear
+only as bounded runtime effect adapters outside the trusted compiler path.

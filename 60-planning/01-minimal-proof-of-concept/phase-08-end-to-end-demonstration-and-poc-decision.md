@@ -44,7 +44,7 @@ a stable status.
 
 #### Subtask 8.1.1.1: Freeze Example Inputs and Expected Outputs
 
-**Description:** Version the A-Lang source, canonical JSON, model fixtures,
+**Description:** Version the A-Lang source, deterministic canonical ETF, model fixtures,
 local grant fixture, expected manifest, BEAM metadata, artifact digest,
 normalized trace, and completion witness.
 

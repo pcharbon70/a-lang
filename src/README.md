@@ -15,10 +15,11 @@ aliases:
 ## Purpose
 
 This directory contains the executable implementation of A-Lang. It is the
-home for the native compiler, Abstract Format adapter, BEAM runtime kernel,
-and supporting code developed from the research archive and implementation
-plans. Accepted A-Lang programs execute as loaded BEAM modules and supervised
-ERTS processes; no host-language evaluator is an A-Lang runtime.
+home for the BEAM-resident compiler, Abstract Format adapter, BEAM runtime
+kernel, and supporting code developed from the research archive and
+implementation plans. Both trusted compiler passes and accepted A-Lang
+programs execute as loaded BEAM modules on ERTS; no host-language evaluator is
+an A-Lang runtime.
 
 Keeping implementation source here separates claims and proposed work from
 the code that tests them. Research belongs in the archive directories, while
@@ -26,7 +27,7 @@ ordered implementation work and its evidence remain under `60-planning`.
 
 ## What belongs here
 
-- Native lexer, parser, type checker, intermediate representation, and
+- BEAM-resident lexer, parser, type checker, intermediate representation, and
   build-time compiler pipeline source.
 - Erlang Abstract Format lowering, OTP compilation, artifact inspection, and
   loading components that produce executable BEAM modules.
@@ -51,9 +52,10 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 1 BEAM vertical slice](phase-01/README.md) — the executable runtime
   contract, pinned OTP compiler boundary, deterministic artifact builder, and
   isolated ERTS validation harness for the first proof-of-concept phase.
-- [Phase 2 native frontend and typed task IR](phase-02/README.md) — the native
-  Rust frontend, static semantics, normalized typed IR, test-only semantic
-  views, and bridge into the proven BEAM execution path.
+- [Phase 2 BEAM-resident compiler frontend and typed task IR](phase-02/README.md)
+  — the OTP 29 compiler modules, minimal static semantics, normalized typed IR,
+  test-only semantic views, and fail-closed bridge into the proven BEAM
+  execution path.
 
 ### Files
 

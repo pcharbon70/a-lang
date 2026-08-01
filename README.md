@@ -117,8 +117,6 @@ created. They are examples rather than archive documents themselves.
 - [`.tool-versions`](.tool-versions) — pins the project Erlang/OTP toolchain
 - [`Makefile`](Makefile) — exposes reproducible proof-of-concept build,
   execution, and validation commands
-- [`rust-toolchain.toml`](rust-toolchain.toml) — pins the native Phase 2 Rust
-  compiler, formatter, and linter toolchain
 - [`AGENTS.md`](AGENTS.md) — repository-wide instructions for creating,
   organizing, researching, and validating archive material
 - [`frontmatter.schema.json`](frontmatter.schema.json) — the authoritative

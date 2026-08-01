@@ -1,5 +1,5 @@
 ---
-title: "Phase 2 Native Frontend to BEAM Integration Evidence"
+title: "Phase 2 BEAM-Resident Compiler to BEAM Runtime Evidence"
 kind: note
 created: 2026-07-31
 maturity: stable
@@ -12,80 +12,107 @@ aliases:
   - "Phase 2 completion evidence"
 ---
 
-# Phase 2 Native Frontend to BEAM Integration Evidence
+# Phase 2 BEAM-Resident Compiler to BEAM Runtime Evidence
 
 ## Accepted pipeline
 
-The completed Phase 2 path is:
-
 ```text
 counter.alang
-  -> native Rust lexer/parser
-  -> resolution, data typing, effects, requirements
-  -> validated alang-task-ir-v1
-  -> closed counter-profile bridge
+  -> BEAM-resident lexer and parser
+  -> deterministic, bounded canonical ETF round-trip
+  -> BEAM-resident name and data checks
+  -> validated alang_typed_task_ir_v1
+  -> BEAM-resident reference/view comparison (test only)
+  -> fail-closed counter-profile bridge
   -> Phase 1 typed semantic fixture
   -> OTP 29 Abstract Format validation and compile:forms/2
-  -> inspected, manifested .beam artifact
+  -> inspected and manifested .beam artifact
   -> code:load_binary/3
   -> spawn phase1_counter_v1:start/1 on an isolated ERTS node
 ```
 
-The native compiler emits the origin-preserving canonical JSON partner,
-validated IR, semantic views, reference outcome, bridge manifest, Phase 1
-fixture, and a small agreement record under `build/phase-02/frontend/`. The
-bridge fixture is byte-for-byte equal to the Phase 1 fixture already covered by
-the Abstract Format and artifact suites.
+All source-to-fixture compiler stages are Erlang-bootstrap modules compiled to
+`.beam` and invoked by `erl`. There is no Rust/Cargo toolchain or foreign
+compiler executable. Erlang source defines compiler passes, but accepted
+A-Lang is not translated to Erlang source and no Erlang evaluator executes its
+AST or IR.
 
-The bridge is deliberately fail closed. Phase 2 promotes `constant`, `input`,
-`add`, `equal`, and `verify` into the current runtime counter profile, and all
-nine instances in the demo graph receive an explicit lowering entry. Any
-additional callable, node, effect, requirement, signature, or verifier shape is
-rejected before fixture output. The other typed IR primitives are complete
-semantic/test-view commitments whose generalized BEAM lowering remains Phase 3
-work.
+## Whole-toolchain BEAM residency
 
-## Frontend and semantic agreement
+The compiler evidence record names the loaded file for these modules:
 
-The paired-fixture suite parses [`counter.alang`](fixtures/counter.alang),
-serializes its origin-bearing AST into canonical JSON, decodes that JSON through
-the independent bounded frontend, and asserts equality after every subsequent
-judgment. Both paths produce byte-identical canonical serialized IR.
+- `alang_phase2_lexer`
+- `alang_phase2_parser`
+- `alang_phase2_canonical`
+- `alang_phase2_semantics`
+- `alang_phase2_ir`
+- `alang_phase2_reference`
+- `alang_phase2_views`
+- `alang_phase2_bridge`
+- `alang_phase2_compiler`
+- Phase 1 `alang_phase1_compiler`, `alang_phase1_fixture`, and
+  `alang_phase1_package` backend modules
+- OTP `compile` and `beam_lib` services
 
-Focused accepted tests cover all 14 typed IR primitives, records and products,
-structural results, functions, tasks, lexical binding, exhaustive matches,
-effects, normalized requirements, and verifiers. Negative tests reject malformed
-syntax, incomplete canonical result matches, unknown names, type mismatches,
-annotation drift, missing requirements, recursion, opaque-boundary violations,
-invalid IR, and bridge-profile drift with stable codes before backend work.
+Every path ends in `.beam`; `engine` is `beam`, `vm` is `BEAM`, the OTP release
+is `29`, `all_compiler_modules_are_beam` is `true`, and
+`foreign_compiler_executables` is empty. EUnit also asserts that no Phase 2
+Rust source, Cargo manifest, or repository Rust toolchain pin exists.
 
-The deterministic fuzz-smoke suite performs 256 reproducible mutations against
-each frontend. Every input returns the same accepted AST or ordered diagnostic
-set on two runs, and neither frontend panics.
+The reference module is included because it participates in differential
+testing before bridge output. Its result is marked `deployable => false` and
+`engine => beam_test_oracle`; it cannot satisfy the runtime gate.
+
+## Frontend and semantic evidence
+
+[`counter.alang`](fixtures/counter.alang) parses to an origin-bearing AST,
+encodes with deterministic ETF, safely decodes with exact byte consumption,
+and returns the identical AST. The compiler rejects trailing ETF bytes,
+unsupported versions, unsafe or malformed terms, nonempty effect or
+requirement lists, duplicate declarations, unresolved names, ill-typed
+arithmetic or equality, result mismatch, and non-Boolean completion.
+
+The deterministic malformed-input smoke test exercises every one-byte input
+plus focused truncated and invalid programs. All return an ordinary compiler
+result rather than crashing the BEAM compiler process.
+
+## Typed IR and law evidence
+
+The counter lowers to stable input, literal, addition, result, equality, and
+verify nodes. Repeated lowering produces equal maps and the first node identity
+is `node:task:Counter.successor/1:0000`. Structural validation rejects invalid
+identities, dangling edges, and invalid task roots.
+
+EUnit exhaustively checks left identity, right identity, and associativity for
+three small pure transformations over integers `-32..32`. These checks execute
+on ERTS and are deliberately described as bounded validation, not proof.
 
 ## Defined semantic equality
 
-The test evaluator and production runtime have intentionally different trace
-vocabularies, so the comparison uses a documented semantic projection rather
-than byte equality:
-
-| Projection | Test-only view | Loaded BEAM observation |
+| Projection | Nondeployable BEAM oracle | Loaded generated BEAM module |
 | --- | --- | --- |
-| Input | integer `41` | `{input, 41}` envelope payload |
+| Input | binary-keyed value `41` | `{input, 41}` envelope payload |
 | Result | integer `42` | `{ok, 42}` result message |
-| Completion | verifier is `true` | classification `ok` and exit `normal` |
-| Effects | empty reference observations and manifest | no operation request |
-| Order | typed graph requires input, add, verify | received, transition, result, down |
+| Completion | verifier returns `true` | classification `ok`, exit `normal` |
+| Effects | empty observation and manifest | no operation request |
+| Order | typed body then verifier | received, transition, result, down |
 
-The static trace skeleton covers every IR node but is not presented as an ERTS
-event log. The runtime trace is evidence about scheduling, messaging, loading,
-and termination. The table above is the equality relation between their shared
-semantic claims.
+The static trace skeleton is a compiler projection, not an ERTS event log. The
+runtime trace is evidence about loading, scheduling, messaging, and process
+termination.
 
 ## Reproduced artifact and observation
 
-On the pinned local toolchain—OTP `29.0.4`, ERTS `17.0.4`, and Rust `1.92.0`—the
-clean Phase 2 artifact reported:
+On OTP `29.0.4` and ERTS `17.0.4`, the compiler reported:
+
+```text
+engine=beam
+canonical_encoding=deterministic_etf
+canonical_sha256=0ac9fab3031c93311ae0e42f9f494c17797d2b05662443c281b2b6f7af781d28
+ir_sha256=075a861db01759a6b2b99f456ae54677456537ce93036b7a66dfdbd95a16cc64
+```
+
+The Phase 1 artifact identity remained:
 
 ```text
 module=phase1_counter_v1
@@ -107,31 +134,30 @@ phase_2_agreement_ok reference_result=42 beam_result=42 no_interpreter=true
 
 ## No-interpreter evidence
 
-The only successful production result above came after manifest verification,
+The successful production result occurred only after manifest verification,
 BEAM inspection, `code:load_binary/3`, and spawning the generated module. The
-observed current function was `phase1_counter_v1:start/1`; generated imports and
-the live stack contained none of `erl_eval`, Elixir, or Gleam; scheduler events
-showed the generated function running; and the process terminated normally.
+observed function was `phase1_counter_v1:start/1`; the live stack and imports
+contained no evaluator; scheduler tracing observed generated code; and the
+process terminated normally.
 
-The Rust reference evaluator is marked nondeployable in code and outcome data,
-has only bounded fixture inputs, and is absent from the ERTS command. It writes
-comparison data before artifact compilation but cannot load a module, spawn an
-A-Lang process, or satisfy this gate.
+The build ERTS node and runtime ERTS node are separate invocations. The first
+creates products and exits. The second loads the validated program artifact.
+The test oracle cannot load an A-Lang artifact, spawn the generated task, or
+satisfy this gate.
 
 ## Reproduction
-
-From a clean checkout with the pinned toolchains available:
 
 ```console
 make test
 ```
 
-`make test-phase-2` may be used for the Phase 2-only gate. Generated compiler
-outputs, artifact manifests, BEAM files, reference data, normalized runtime
-traces, and EUnit evidence remain under the ignored `build/` directory.
+`make test-phase-2` runs the Phase 2 gate alone. Compiler products, `.beam`
+files, manifests, reference data, and runtime traces remain under ignored
+`build/` paths.
 
 ## Connections
 
 - [Phase 2 implementation plan](../../60-planning/01-minimal-proof-of-concept/phase-02-native-frontend-and-typed-task-ir.md)
 - [Typed task IR and semantic views](typed-task-ir.md)
 - [Phase 1 BEAM execution evidence](../phase-01/beam-execution-evidence.md)
+- [BEAM compiler-host research](../../20-notes/beam-runtime-for-native-agent-language.md)

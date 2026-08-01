@@ -6,6 +6,7 @@
 
 -define(GENERATED_FIXTURE, "build/phase-02/frontend/phase1-semantic-fixture.config").
 -define(PHASE1_FIXTURE, "src/phase-01/semantic-fixture.config").
+-define(COMPILER_EVIDENCE, "build/phase-02/frontend/compiler-evidence.config").
 
 main() ->
     case eunit:test(?MODULE, [verbose]) of
@@ -16,10 +17,17 @@ main() ->
 isolated_named_node_test() ->
     ?assertNotEqual(nonode@nohost, node()).
 
-native_frontend_feeds_the_proven_phase1_adapter_test() ->
+beam_resident_compiler_feeds_the_proven_phase1_adapter_test() ->
     {ok, GeneratedFixture} = file:read_file(?GENERATED_FIXTURE),
     {ok, Phase1Fixture} = file:read_file(?PHASE1_FIXTURE),
     ?assertEqual(Phase1Fixture, GeneratedFixture).
+
+compiler_toolchain_runs_on_beam_test() ->
+    {ok, [Evidence]} = file:consult(?COMPILER_EVIDENCE),
+    ?assertEqual(beam, maps:get(engine, Evidence)),
+    ?assertEqual(true, maps:get(all_compiler_modules_are_beam, Evidence)),
+    ?assertEqual([], maps:get(foreign_compiler_executables, Evidence)),
+    ?assertEqual(deterministic_etf, maps:get(canonical_encoding, Evidence)).
 
 compiled_beam_agrees_with_reference_views_test() ->
     {ok, Evidence} = alang_phase2_runtime:run(),

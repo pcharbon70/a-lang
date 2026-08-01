@@ -1,321 +1,310 @@
 ---
-title: "Phase 2: Native Frontend and Typed Task IR"
+title: "Phase 2: BEAM-Resident Compiler Frontend and Typed Task IR"
 kind: note
 created: 2026-07-31
 maturity: developing
 tags:
+  - beam
   - categorical-semantics
   - compiler-design
-  - effect-system
   - implementation-planning
-aliases: []
+aliases:
+  - "Phase 2 native frontend"
 ---
 
-# Phase 2: Native Frontend and Typed Task IR
+# Phase 2: BEAM-Resident Compiler Frontend and Typed Task IR
 
-**Description:** This phase implements the canonical JSON input, a small native
-textual frontend, source-oriented resolution and type-and-effect checking, a
-normalized A-Lang-owned task IR, capability-requirement inference, and
-independent test-only reference, simulation, trace, and manifest views. The
-phase ends by compiling source through the Phase 1 path and executing it on
-ERTS.
+**Description:** This phase replaces the initial foreign-toolchain approach
+with a compiler whose lexer, parser, canonical decoder, semantic checker,
+typed IR lowering, views, bridge, and command driver are all `.beam` modules
+executed by ERTS. Erlang source bootstraps the compiler modules; it does not
+interpret A-Lang programs. The intentionally narrow counter profile then feeds
+the Phase 1 OTP 29 Abstract Format path and executes as a separate BEAM module.
 
-**Status:** Complete — evidence: [Phase 2 integration evidence](../../src/phase-02/phase-02-integration-evidence.md).
+**Status:** Complete for the minimal counter profile — evidence: [Phase 2
+integration evidence](../../src/phase-02/phase-02-integration-evidence.md).
 
 **Dependencies:** Phase 1 complete with a generated artifact compiled through
 the pinned OTP boundary, inspected, loaded, spawned, and observed as a BEAM
 process with the no-interpreter gate accepted.
 
-## Section 2.1: Canonical and Textual Frontends
+## Section 2.1: BEAM-Resident Source Frontend
 
-**Description:** Accept one familiar canonical representation and one minimal
-human-facing syntax that produce the same untyped AST with complete source
-origins.
+**Description:** Accept the minimal textual language and deterministic
+canonical form entirely through compiler passes loaded into an OTP 29 ERTS
+node.
 
-- [x] **Section 2.1 Complete** — evidence: [frozen source surface](../../src/phase-02/language-surface.md) and [frontend tests](../../src/phase-02/parser.rs)
+- [x] **Section 2.1 Complete** — evidence: [language surface](../../src/phase-02/language-surface.md), [lexer](../../src/phase-02/alang_phase2_lexer.erl), and [parser](../../src/phase-02/alang_phase2_parser.erl)
 
-### Task 2.1.1: Implement the Canonical JSON Frontend
+### Task 2.1.1: Enforce Compiler Residency
 
-**Description:** Decode and validate the versioned canonical source schema as
-the stable fixture and tooling input for the PoC language.
+**Description:** Compile every trusted Phase 2 source-to-artifact component to
+BEAM, invoke the compiler driver with `erl`, and reject Rust, Cargo, or any
+other foreign executable from the compiler dependency graph.
 
-- [x] **Task 2.1.1 Complete** — evidence: [canonical JSON decoder](../../src/phase-02/json_frontend.rs)
+- [x] **Task 2.1.1 Complete** — evidence: [compiler driver](../../src/phase-02/alang_phase2_compiler.erl) and [residency test](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.1.1.1: Decode the Complete Planned Surface
+#### Subtask 2.1.1.1: Bootstrap Compiler Modules on OTP 29
 
-**Description:** Decode modules, type declarations, functions, tasks, records,
-results, expressions, effects, requirements, completion predicates, and source
-origins without silently accepting unknown constructs.
+**Description:** Build deterministic `.beam` files for the lexer, parser,
+semantic checker, typed IR, projections, bridge, and command driver under the
+pinned OTP release.
 
-- [x] **Subtask 2.1.1.1 Complete** — evidence: [complete declared surface](../../src/phase-02/language-surface.md#complete-declared-surface) and [source AST](../../src/phase-02/source.rs)
+- [x] **Subtask 2.1.1.1 Complete** — evidence: [`compile-phase-2-toolchain`](../../Makefile)
 
-#### Subtask 2.1.1.2: Reject Schema and Version Violations
+#### Subtask 2.1.1.2: Record Machine-Checkable Residency Evidence
 
-**Description:** Produce stable diagnostics for missing fields, unknown tags,
-invalid identifiers, oversized inputs, unsupported versions, and malformed
-source locations.
+**Description:** Record the loaded file of each compiler module, the OTP and
+ERTS identity, and the empty list of foreign compiler executables in each
+generated compiler evidence record.
 
-- [x] **Subtask 2.1.1.2 Complete** — evidence: [schema and boundary diagnostics](../../src/phase-02/json_frontend.rs)
+- [x] **Subtask 2.1.1.2 Complete** — evidence: [compiler evidence implementation](../../src/phase-02/alang_phase2_compiler.erl)
 
-### Task 2.1.2: Implement the Native Textual Lexer and Parser
+### Task 2.1.2: Implement Textual and Canonical Frontends
 
-**Description:** Build the minimal human-facing A-Lang frontend in the selected
-native compiler implementation and lower its parse tree to the same AST used
-by canonical JSON fixtures. The host implementation is a compiler, not an
-A-Lang runtime.
+**Description:** Parse the counter profile with stable byte/line/column
+origins and encode the same AST as bounded deterministic Erlang External Term
+Format for internal compiler interchange.
 
-- [x] **Task 2.1.2 Complete** — evidence: [native lexer](../../src/phase-02/lexer.rs) and [native parser](../../src/phase-02/parser.rs)
+- [x] **Task 2.1.2 Complete** — evidence: [lexer](../../src/phase-02/alang_phase2_lexer.erl), [parser](../../src/phase-02/alang_phase2_parser.erl), and [canonical ETF boundary](../../src/phase-02/alang_phase2_canonical.erl)
 
-#### Subtask 2.1.2.1: Implement Tokens, Grammar, and Precedence
+#### Subtask 2.1.2.1: Parse the Frozen Counter Grammar
 
-**Description:** Recognize the frozen keywords, identifiers, literals,
-delimiters, type forms, declarations, expressions, `effect`, `requires`,
-`perform`, `ensures`, and sequential composition with no speculative syntax.
+**Description:** Recognize module and task declarations, `Int` and `Bool`,
+parameters, pure effect and requirement lists, integer addition, equality, and
+completion predicates with deterministic precedence.
 
-- [x] **Subtask 2.1.2.1 Complete** — evidence: [grammar and precedence](../../src/phase-02/language-surface.md#textual-grammar)
+- [x] **Subtask 2.1.2.1 Complete** — evidence: [textual grammar](../../src/phase-02/language-surface.md#textual-grammar)
 
-#### Subtask 2.1.2.2: Preserve Locations and Recover Diagnostics
+#### Subtask 2.1.2.2: Bound and Validate Canonical ETF
 
-**Description:** Preserve byte spans and line-column locations through every
-AST node and recover far enough from common delimiter or declaration errors to
-report multiple independent issues without inventing nodes.
+**Description:** Reject oversized, malformed, unsafe, trailing, unsupported,
+or semantically invalid terms and require byte-identical deterministic
+round-trips.
 
-- [x] **Subtask 2.1.2.2 Complete** — evidence: [source locations and recovery contract](../../src/phase-02/language-surface.md#diagnostics-and-recovery) and [recovering parser tests](../../src/phase-02/parser.rs)
+- [x] **Subtask 2.1.2.2 Complete** — evidence: [canonical tests](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-## Section 2.2: Resolution and Data Typing
+## Section 2.2: Minimal Static Semantics
 
-**Description:** Resolve every name and assign ordinary data types before
-effects, requirements, or backend concerns enter the semantic judgment.
+**Description:** Resolve names and check the deliberately closed pure counter
+profile before any backend work begins.
 
-- [x] **Section 2.2 Complete** — evidence: [static semantics](../../src/phase-02/static-semantics.md) and [Section 2.2 gate](../../Makefile)
+- [x] **Section 2.2 Complete** — evidence: [static semantics](../../src/phase-02/static-semantics.md) and [semantic checker](../../src/phase-02/alang_phase2_semantics.erl)
 
-### Task 2.2.1: Implement Modules, Scopes, and Symbol Resolution
+### Task 2.2.1: Resolve Stable Task and Parameter Identities
 
-**Description:** Bind module, type, constructor, field, parameter, function,
-task, effect, operation, resource, and verifier names into stable semantic
-identities.
+**Description:** Detect duplicate tasks and parameters, reject unresolved
+variables, and assign stable task identities without creating atoms from
+source-controlled identifiers.
 
-- [x] **Task 2.2.1 Complete** — evidence: [resolver](../../src/phase-02/resolver.rs) and [semantic identities](../../src/phase-02/static-semantics.md#stable-semantic-identities)
+- [x] **Task 2.2.1 Complete** — evidence: [semantic checker](../../src/phase-02/alang_phase2_semantics.erl)
 
-#### Subtask 2.2.1.1: Build Scope and Definition Tables
+#### Subtask 2.2.1.1: Preserve Source Origins in Diagnostics
 
-**Description:** Detect duplicates, shadowing outside the accepted rule,
-unknown names, wrong namespaces, and arity mismatches while preserving the
-origin of each definition and use.
+**Description:** Carry source locations into duplicate, unresolved-name,
+version, literal-range, and type diagnostics.
 
-- [x] **Subtask 2.2.1.1 Complete** — evidence: [scope and namespace rules](../../src/phase-02/static-semantics.md#scope-and-namespace-rules) and [resolution tests](../../src/phase-02/resolver.rs)
+- [x] **Subtask 2.2.1.1 Complete** — evidence: [semantic tests](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.2.1.2: Normalize Resource and Operation Identities
+#### Subtask 2.2.1.2: Assign Stable Callable Identities
 
-**Description:** Assign stable identifiers to `Model.complete`,
-`Workspace.write`, `Trace.emit`, resource parameters, and completion
-predicates so later manifests and runtime messages do not depend on spelling.
+**Description:** Derive `task:<module>.<name>/<arity>` identities from checked
+binary names so later IR nodes and observations do not depend on process or VM
+identity.
 
-- [x] **Subtask 2.2.1.2 Complete** — evidence: [canonical semantic identities](../../src/phase-02/semantic.rs)
+- [x] **Subtask 2.2.1.2 Complete** — evidence: [identity construction](../../src/phase-02/alang_phase2_semantics.erl)
 
-### Task 2.2.2: Implement the Minimal Data Type Checker
+### Task 2.2.2: Check the Minimal Data and Authority Profile
 
-**Description:** Check primitives, opaque identifiers, records, products,
-results, functions, tasks, applications, `let`, and exhaustive result matches
-without introducing deferred polymorphism.
+**Description:** Type `Int`, `Bool`, addition, equality, task results, and
+completion predicates while requiring empty effect and capability-requirement
+sets in this first frontend slice.
 
-- [x] **Task 2.2.2 Complete** — evidence: [minimal data checker](../../src/phase-02/type_checker.rs)
+- [x] **Task 2.2.2 Complete** — evidence: [data and authority contract](../../src/phase-02/effects-and-requirements.md)
 
-#### Subtask 2.2.2.1: Check Expressions and Composition
+#### Subtask 2.2.2.1: Reject Type and Name Errors
 
-**Description:** Enforce input-output compatibility, field and constructor
-typing, branch agreement, function arity, and typed sequential composition
-with source-local expected-versus-actual diagnostics.
+**Description:** Fail closed on unresolved variables, invalid arithmetic,
+incomparable equality operands, result mismatch, and non-Boolean completion.
 
-- [x] **Subtask 2.2.2.1 Complete** — evidence: [data-type contract](../../src/phase-02/static-semantics.md#minimal-data-types) and [composition tests](../../src/phase-02/type_checker.rs)
+- [x] **Subtask 2.2.2.1 Complete** — evidence: [negative semantic tests](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.2.2.2: Check Exhaustiveness and Opaque Boundaries
+#### Subtask 2.2.2.2: Freeze the Pure Authority Boundary
 
-**Description:** Reject missing result alternatives, impossible constructor
-uses, implicit coercions, and construction or inspection of opaque runtime
-identifiers outside their approved operations.
+**Description:** Reject nonempty `effect` and `requires` lists until Phase 4
+introduces the runtime broker and an enforceable typed authority domain.
 
-- [x] **Subtask 2.2.2.2 Complete** — evidence: [opaque and exhaustiveness tests](../../src/phase-02/type_checker.rs)
+- [x] **Subtask 2.2.2.2 Complete** — evidence: [parser and semantic rejection paths](../../src/phase-02/alang_phase2_parser.erl)
 
-## Section 2.3: Effects and Capability Requirements
+## Section 2.3: Typed IR, Laws, and Test Views
 
-**Description:** Distinguish what a task may do from what authority it
-requires, and calculate both as deterministic semantic artifacts independent
-of any portable authorization protocol or concrete runtime grant.
+**Description:** Lower checked source to stable A-Lang-owned IR and validate
+its structural and categorical obligations on the same ERTS VM.
 
-- [x] **Section 2.3 Complete** — evidence: [effect and requirement semantics](../../src/phase-02/effects-and-requirements.md) and [Section 2.3 gate](../../Makefile)
+- [x] **Section 2.3 Complete** — evidence: [typed task IR](../../src/phase-02/typed-task-ir.md) and [IR implementation](../../src/phase-02/alang_phase2_ir.erl)
 
-### Task 2.3.1: Implement Closed Effect Checking
+### Task 2.3.1: Construct and Validate the Counter IR
 
-**Description:** Infer and check closed monomorphic effect sets for functions,
-tasks, operations, calls, branches, and sequential composition.
+**Description:** Lower input, literal, addition, result, equality, and verifier
+nodes with deterministic preorder identities and fail on duplicate or dangling
+references and invalid roots.
 
-- [x] **Task 2.3.1 Complete** — evidence: [closed effect checker](../../src/phase-02/effect_checker.rs)
+- [x] **Task 2.3.1 Complete** — evidence: [IR lowering and validation](../../src/phase-02/alang_phase2_ir.erl)
 
-#### Subtask 2.3.1.1: Propagate Declared Operations
+#### Subtask 2.3.1.1: Stabilize Node Identity
 
-**Description:** Make `perform` introduce its named effect, pure functions
-retain the empty effect set, composition combine effect sets by union, and
-annotations reject missing or unexpected effects.
+**Description:** Generate reproducible `node:<task-id>:<preorder>` identities
+and deterministic ETF artifacts from identical checked source.
 
-- [x] **Subtask 2.3.1.1 Complete** — evidence: [closed effect judgment](../../src/phase-02/effects-and-requirements.md#closed-effect-judgment) and [effect propagation tests](../../src/phase-02/effect_checker.rs)
+- [x] **Subtask 2.3.1.1 Complete** — evidence: [stability test](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.3.1.2: Reject Effect Escapes
+#### Subtask 2.3.1.2: Execute Initial Category-Law Tests on ERTS
 
-**Description:** Reject undeclared operations, model or workspace calls from
-pure functions, unsupported handlers, and any construct whose effects cannot
-be represented in the closed PoC effect system.
+**Description:** Exhaustively test left identity, right identity, and
+associativity for the small pure transformation family on a bounded integer
+domain. Treat these as executable checks, not universal proof.
 
-- [x] **Subtask 2.3.1.2 Complete** — evidence: [escape and recursion rejection](../../src/phase-02/effect_checker.rs)
+- [x] **Subtask 2.3.1.2 Complete** — evidence: [EUnit law tests](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-### Task 2.3.2: Normalize Capability Requirements
+### Task 2.3.2: Implement Nondeployable Reference and Semantic Views
 
-**Description:** Compile each `requires` clause into an A-Lang-owned typed
-authority predicate and prove that every effect operation is covered by a
-requirement independent of any runtime grant.
+**Description:** Evaluate the fixture under a bounded BEAM test oracle and
+derive dry-run, trace, manifest, completion, and explanation projections
+without allowing either path to satisfy runtime execution.
 
-- [x] **Task 2.3.2 Complete** — evidence: [requirement normalizer](../../src/phase-02/requirements.rs)
+- [x] **Task 2.3.2 Complete** — evidence: [reference oracle](../../src/phase-02/alang_phase2_reference.erl) and [semantic views](../../src/phase-02/alang_phase2_views.erl)
 
-#### Subtask 2.3.2.1: Define Requirement Algebra and Canonical Form
+#### Subtask 2.3.2.1: Bound and Label the Reference Oracle
 
-**Description:** Define resource identity, operation, typed constraints,
-deadline, call and byte budgets, union, equality, subsumption, and deterministic
-serialization for the minimal requirement domain.
+**Description:** Limit evaluation steps, deny filesystem and network effects,
+and emit `deployable => false` with `engine => beam_test_oracle`.
 
-- [x] **Subtask 2.3.2.1 Complete** — evidence: [requirement domain](../../src/phase-02/effects-and-requirements.md#requirement-domain) and [algebra tests](../../src/phase-02/requirements.rs)
+- [x] **Subtask 2.3.2.1 Complete** — evidence: [oracle result contract](../../src/phase-02/typed-task-ir.md#test-only-reference-oracle)
 
-#### Subtask 2.3.2.2: Check Effect-to-Requirement Coverage
+#### Subtask 2.3.2.2: Cover Every Promoted Node in Views
 
-**Description:** Require each `Model.complete` and `Workspace.write` site to
-fall within the task's declared requirement and report the smallest uncovered
-operation or widened argument constraint.
+**Description:** Project every node identity into the trace skeleton and every
+task completion root into the completion checklist.
 
-- [x] **Subtask 2.3.2.2 Complete** — evidence: [coverage judgment](../../src/phase-02/effects-and-requirements.md#coverage-judgment) and [coverage tests](../../src/phase-02/effect_checker.rs)
+- [x] **Subtask 2.3.2.2 Complete** — evidence: [view coverage tests](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-## Section 2.4: Typed IR and Test-Only Semantic Views
+## Section 2.4: BEAM Compiler Driver and OTP Bridge
 
-**Description:** Lower checked source into a small categorical task IR and
-give the IR several explicit test views while preserving compiled BEAM as the
-only execution path accepted by the proof of concept.
+**Description:** Run the complete source-to-fixture command as BEAM code and
+connect the checked counter profile to the proven Phase 1 artifact builder.
 
-- [x] **Section 2.4 Complete** — evidence: [typed task IR and semantic views](../../src/phase-02/typed-task-ir.md) and [Section 2.4 gate](../../Makefile)
+- [x] **Section 2.4 Complete** — evidence: [compiler driver](../../src/phase-02/alang_phase2_compiler.erl) and [bridge](../../src/phase-02/alang_phase2_bridge.erl)
 
-### Task 2.4.1: Define and Construct the Typed Task IR
+### Task 2.4.1: Emit Deterministic Compiler Products
 
-**Description:** Represent typed values, pure arrows, products, results,
-sequential tasks, effect requests, requirements, verifier nodes, and source
-origins in a normalized, backend-independent form.
+**Description:** Write canonical AST, typed IR, semantic views, reference
+observation, agreement, bridge input, and compiler residency evidence from one
+BEAM-resident command.
 
-- [x] **Task 2.4.1 Complete** — evidence: [typed IR implementation](../../src/phase-02/ir.rs)
+- [x] **Task 2.4.1 Complete** — evidence: [`compile-phase-2-source`](../../Makefile)
 
-#### Subtask 2.4.1.1: Normalize Source Sugar and Identities
+#### Subtask 2.4.1.1: Hash Canonical and IR Products
 
-**Description:** Resolve names, make evaluation order explicit, assign stable
-node and operation identifiers, retain effect and requirement annotations, and
-eliminate only source constructs with a specified semantics-preserving rule.
+**Description:** Record SHA-256 identities over deterministic ETF so repeated
+compiler runs can be compared without depending on presentation text.
 
-- [x] **Subtask 2.4.1.1 Complete** — evidence: [module and callable form](../../src/phase-02/typed-task-ir.md#module-and-callable-form) and [promoted primitives](../../src/phase-02/typed-task-ir.md#promoted-primitives)
+- [x] **Subtask 2.4.1.1 Complete** — evidence: [evidence record](../../src/phase-02/alang_phase2_compiler.erl)
 
-#### Subtask 2.4.1.2: Validate IR Invariants
+#### Subtask 2.4.1.2: Keep Compiler and Program Processes Distinct
 
-**Description:** Reject dangling identities, ill-typed edges, incomplete
-branches, undeclared operations, missing verifier nodes, and noncanonical
-requirements before any interpreter receives the IR.
+**Description:** Terminate the build ERTS invocation after artifact creation,
+then load and spawn the generated program in the isolated runtime ERTS node.
 
-- [x] **Subtask 2.4.1.2 Complete** — evidence: [IR validation boundary](../../src/phase-02/typed-task-ir.md#validation-boundary) and [negative invariant tests](../../src/phase-02/ir.rs)
+- [x] **Subtask 2.4.1.2 Complete** — evidence: [Makefile execution boundary](../../Makefile)
 
-### Task 2.4.2: Implement Test-Only Reference, Simulation, Trace, and Manifest Views
+### Task 2.4.2: Bridge Only the Proven Counter Profile
 
-**Description:** Evaluate the same checked IR against fixture-provided values
-and derive simulation, normalized trace, and capability-manifest views solely
-for tests, diagnostics, and differential comparison.
+**Description:** Recognize the exact checked successor graph and emit the
+Phase 1 semantic fixture; reject every other IR shape until Phase 3 implements
+general Abstract Format lowering.
 
-- [x] **Task 2.4.2 Complete** — evidence: [reference evaluator](../../src/phase-02/reference.rs) and [semantic views](../../src/phase-02/views.rs)
+- [x] **Task 2.4.2 Complete** — evidence: [fail-closed bridge](../../src/phase-02/alang_phase2_bridge.erl)
 
-#### Subtask 2.4.2.1: Implement the Deterministic Reference Evaluator
+#### Subtask 2.4.2.1: Compare the Golden Semantic Fixture
 
-**Description:** Execute pure nodes and consume fixture-provided effect results
-with explicit state transitions, stable observations, bounded steps, and no
-host filesystem or network access. Mark the evaluator as nondeployable and
-incapable of satisfying a runtime phase gate.
+**Description:** Require the generated bridge input to be byte-identical to
+the fixture already validated by Phase 1.
 
-- [x] **Subtask 2.4.2.1 Complete** — evidence: [test-only evaluator contract](../../src/phase-02/typed-task-ir.md#test-only-reference-evaluator) and [bounded evaluator tests](../../src/phase-02/reference.rs)
+- [x] **Subtask 2.4.2.1 Complete** — evidence: [bridge test](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.4.2.2: Implement Nonexecuting Interpreters
+#### Subtask 2.4.2.2: Reject Unsupported IR
 
-**Description:** Produce dry-run plans, trace skeletons, capability manifests,
-completion checklists, and human-readable explanations from the same IR and
-verify that each interpreter covers every primitive node.
+**Description:** Return a closed error for a different module, task, type,
+effect, requirement, or expression graph instead of guessing a lowering.
 
-- [x] **Subtask 2.4.2.2 Complete** — evidence: [nonexecuting views contract](../../src/phase-02/typed-task-ir.md#nonexecuting-views) and [complete view coverage tests](../../src/phase-02/views.rs)
+- [x] **Subtask 2.4.2.2 Complete** — evidence: [negative bridge test](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
 ## Section 2.5: Phase 2 Integration Tests
 
-**Description:** Prove that both frontends converge on one checked IR, invalid
-programs fail before backend work, and accepted source feeds the already-proven
-BEAM compiler and ERTS execution path.
+**Description:** Prove that the BEAM-resident compiler produces the proven
+artifact and that only the loaded generated BEAM module satisfies the runtime
+gate.
 
-- [x] **Section 2.5 Complete** — evidence: [Phase 2 integration evidence](../../src/phase-02/phase-02-integration-evidence.md) and [complete Phase 2 gate](../../Makefile)
+- [x] **Section 2.5 Complete** — evidence: [integration evidence](../../src/phase-02/phase-02-integration-evidence.md) and [complete Phase 2 gate](../../Makefile)
 
-### Task 2.5.1: Validate Frontend and Semantic Agreement
+### Task 2.5.1: Run Compiler and Robustness Suites on ERTS
 
-**Description:** Run paired textual and canonical JSON programs through
-parsing, resolution, typing, effect checking, requirement normalization, and
-IR validation and compare canonical outputs.
+**Description:** Execute frontend, canonical, semantic, IR, law, oracle, view,
+bridge, residency, and deterministic malformed-input tests as EUnit code on
+the pinned VM.
 
-- [x] **Task 2.5.1 Complete** — evidence: [paired frontend integration tests](../../src/phase-02/integration.rs)
+- [x] **Task 2.5.1 Complete** — evidence: [compiler tests](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.5.1.1: Execute Positive Paired Fixtures
+#### Subtask 2.5.1.1: Reject Malformed and Oversized Inputs
 
-**Description:** Verify the final demo program and focused programs for every
-promoted type, expression, effect, requirement, and verifier construct produce
-the expected identical typed IR.
+**Description:** Exercise all one-byte inputs plus focused truncated and
+invalid programs without compiler crashes or atom creation from identifiers.
 
-- [x] **Subtask 2.5.1.1 Complete** — evidence: [counter fixture](../../src/phase-02/fixtures/counter.alang), [paired frontend test](../../src/phase-02/integration.rs), and [all-node IR fixture](../../src/phase-02/ir.rs)
+- [x] **Subtask 2.5.1.1 Complete** — evidence: [malformed-input smoke test](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.5.1.2: Execute Negative Semantic Fixtures
+#### Subtask 2.5.1.2: Reproduce Deterministic Products
 
-**Description:** Verify malformed syntax, unknown symbols, type mismatches,
-nonexhaustive results, undeclared effects, missing requirements, and deferred
-features fail with stable source-oriented diagnostics.
+**Description:** Re-run the compiler and confirm stable canonical and IR
+digests and the Phase 1 artifact identity.
 
-- [x] **Subtask 2.5.1.2 Complete** — evidence: [negative semantic and fuzz-smoke matrix](../../src/phase-02/integration.rs)
+- [x] **Subtask 2.5.1.2 Complete** — evidence: [reproduced identities](../../src/phase-02/phase-02-integration-evidence.md#reproduced-artifact-and-observation)
 
-### Task 2.5.2: Execute Frontend Programs on BEAM
+### Task 2.5.2: Reassert Both Residency and No-Interpreter Gates
 
-**Description:** Lower checked IR through the Phase 1 Abstract Format adapter,
-compile and inspect the artifact, run it as a BEAM process, and compare its
-normalized observation with the test-only views.
+**Description:** Consult compiler evidence showing a wholly BEAM-resident
+toolchain, then run the generated module on a named ERTS node and compare its
+public result with the nondeployable oracle.
 
-- [x] **Task 2.5.2 Complete** — evidence: [BEAM bridge](../../src/phase-02/beam_bridge.rs), [ERTS runtime wrapper](../../src/phase-02/alang_phase2_runtime.erl), and [runtime evidence](../../src/phase-02/phase-02-integration-evidence.md#reproduced-artifact-and-observation)
+- [x] **Task 2.5.2 Complete** — evidence: [ERTS integration tests](../../src/phase-02/alang_phase2_integration_tests.erl)
 
-#### Subtask 2.5.2.1: Assert BEAM and Test-View Agreement
+#### Subtask 2.5.2.1: Assert Compiler Residency
 
-**Description:** Confirm every promoted IR node lowers explicitly and that
-compiled BEAM observations agree with the bounded reference result, trace
-skeleton, effect manifest, and completion checklist within defined equality.
+**Description:** Require all compiler module paths to end in `.beam`, the
+foreign compiler executable list to be empty, and Rust/Cargo artifacts to be
+absent from the repository compiler path.
 
-- [x] **Subtask 2.5.2.1 Complete** — evidence: [defined semantic equality](../../src/phase-02/phase-02-integration-evidence.md#defined-semantic-equality) and [cross-runtime agreement tests](../../src/phase-02/alang_phase2_integration_tests.erl)
+- [x] **Subtask 2.5.2.1 Complete** — evidence: [residency assertions](../../src/phase-02/alang_phase2_compiler_tests.erl)
 
-#### Subtask 2.5.2.2: Reassert the No-Interpreter Gate
+#### Subtask 2.5.2.2: Assert Generated BEAM Execution
 
-**Description:** Run frontend, semantic, schema, snapshot, fuzz-smoke, artifact,
-and isolated ERTS suites and prove that all successful A-Lang executions came
-from loaded BEAM modules rather than the test evaluator.
+**Description:** Require the observed result `42`, normal process termination,
+loaded module `phase1_counter_v1`, scheduler-visible execution, and the Phase 1
+no-interpreter proof.
 
-- [x] **Subtask 2.5.2.2 Complete** — evidence: [no-interpreter evidence](../../src/phase-02/phase-02-integration-evidence.md#no-interpreter-evidence) and [complete repository gate](../../Makefile)
+- [x] **Subtask 2.5.2.2 Complete** — evidence: [runtime agreement test](../../src/phase-02/alang_phase2_integration_tests.erl)
 
 ## Phase 2 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 3 to generalize the
-already-working BEAM lowering and runtime semantics.
+already-working BEAM-resident compiler and runtime semantics.
 
-- [x] Textual and canonical JSON frontends produce identical checked IR
-- [x] Resolution, data typing, effects, and requirements fail closed
-- [x] Capability manifests remain independent of portable protocol concepts
-- [x] Reference, simulation, trace, and manifest views cover all IR
-      primitives
-- [x] Accepted source compiles and executes as an isolated BEAM process
-- [x] Test-only evaluation is absent from the accepted runtime path
-- [x] Positive and negative fixtures pass with stable diagnostics
-- [x] Frontend fuzz-smoke and complete repository gates pass
+- [x] The complete trusted compiler path executes as `.beam` modules on ERTS
+- [x] No Rust, Cargo, or other foreign executable participates in compilation
+- [x] Erlang bootstrap modules compile A-Lang; they never interpret it
+- [x] Textual source and deterministic canonical ETF produce identical AST
+- [x] Minimal name, data, effect, and requirement checks fail closed
+- [x] Typed IR identities and deterministic digests are reproducible
+- [x] Initial identity and associativity checks execute on the pinned ERTS VM
+- [x] Reference and semantic views are explicitly nondeployable
+- [x] The bridge accepts only the exact proven counter profile
+- [x] Accepted source executes as an isolated generated BEAM process

@@ -45,10 +45,11 @@ The validation modes check compiler input without emitting executable code.
 
 ## Finding
 
-Abstract Format is the most suitable supported boundary for a new native agent
-language. It avoids generating an Erlang text program while retaining the OTP
-compiler's supported validation, optimization, BEAM emission, and compatibility
-work.
+Abstract Format is the most suitable supported boundary for the new A-Lang
+compiler. The BEAM-resident compiler can construct forms in memory and call
+OTP services on ERTS. This avoids generating an Erlang text program while
+retaining the OTP compiler's supported validation, optimization, BEAM emission,
+and compatibility work.
 
 The same documentation cautions that direct Core Erlang can create forms the
 normal compiler pipeline never produces. Core `primop` details may change at a

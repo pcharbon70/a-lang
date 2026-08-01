@@ -36,8 +36,9 @@ inquiry as the final synthesis.
 ### Documents
 
 - [Can BEAM support a native agent language safely and maintainably?](can-beam-support-a-native-agent-language.md)
-  — an open prototype and evaluation program for compiler compatibility,
-  semantic preservation, fault recovery, resource bounds, and isolation.
+  — an open prototype and evaluation program for whole-toolchain BEAM
+  residency, compiler compatibility, semantic preservation, fault recovery,
+  resource bounds, and isolation.
 - [Can categorical semantics materially improve an agent language?](can-categorical-semantics-improve-agent-language.md)
   — an open comparison of categorical IRs with conventional typed agent
   languages.

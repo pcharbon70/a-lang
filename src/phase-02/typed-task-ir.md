@@ -1,9 +1,10 @@
 ---
-title: "Phase 2 Typed Task IR and Semantic Views"
+title: "Phase 2 Minimal Typed Task IR and Semantic Views"
 kind: note
 created: 2026-07-31
 maturity: developing
 tags:
+  - beam
   - categorical-semantics
   - compiler-implementation
   - intermediate-representation
@@ -12,103 +13,76 @@ aliases:
   - "Phase 2 task IR"
 ---
 
-# Phase 2 Typed Task IR and Semantic Views
+# Phase 2 Minimal Typed Task IR and Semantic Views
 
 ## Purpose
 
-This document freezes the normalized backend-independent representation that
-connects authorized A-Lang source to later BEAM lowering. It also defines the
-nondeployable semantic views used for tests and explanations. The IR is owned
-by A-Lang; neither its Rust data representation nor its reference evaluator is
-an accepted production runtime.
+`alang_typed_task_ir_v1` is the A-Lang-owned representation connecting checked
+counter source to later general BEAM lowering. The representation, lowerer,
+validator, law harness, reference oracle, and projections all run as ordinary
+BEAM modules on ERTS. Only the generated program module can satisfy the runtime
+execution gate.
 
-## Module and callable form
+## Module and task form
 
-`alang-task-ir-v1` is a flat graph of typed nodes. A module records its stable
-module identity, an ordered callable map, and an ordered node map. Each
-callable is either a pure arrow or a task and contains:
+An IR module records its binary module name, ordered task list, and flat ordered
+node list. Each task contains:
 
-- stable parameter identities and types;
-- one result type and root node;
-- its closed effect set and normalized requirements;
-- for tasks, the verifier identity, verifier node, and reserved result binding;
-- source origin; and
-- no host-language closure or callback.
+- `task:<module>.<name>/<arity>` identity;
+- typed parameters and result;
+- explicit empty effects and requirements;
+- body and completion root identities; and
+- source origin.
 
-Node identities have the form `node:<callable-id>:<four-digit-preorder>`. The
-lowerer reserves each parent before lowering its children, and child vectors
-preserve source evaluation order. Thus names, effects, requirements, verifier
-links, and left-to-right evaluation are explicit and deterministic.
+Node identities have `node:<task-id>:<four-digit-preorder>` form. A parent
+reserves its number before its children, preserving deterministic source
+evaluation order and producing stable deterministic ETF digests.
 
 ## Promoted primitives
 
-The complete Phase 2 node vocabulary is:
-
 | IR node | Meaning |
 | --- | --- |
-| `constant` | Primitive typed value |
-| `input` | Parameter, lexical, branch, or task-result binding read |
-| `record_product` | Typed finite product construction |
-| `project` | Typed product field projection |
-| `ok`, `error` | Result coproduct injections |
-| `apply` | Application of a resolved pure arrow or task |
-| `bind` | Explicit lexical value-to-body composition |
-| `match_result` | Exhaustive two-alternative result elimination |
-| `effect_request` | Typed request for a stable declared operation |
-| `sequence` | Explicit left-to-right computation composition |
-| `add`, `equal` | Closed primitive data operations |
-| `verify` | Boolean task completion predicate |
+| `input` | Read one binary-named task parameter |
+| `result` | Read the completed task result inside `ensures` |
+| `literal` | Typed `Int` or `Bool` value |
+| `add` | Add two typed integer children |
+| `equal` | Compare two same-typed children |
+| `verify` | Evaluate the Boolean completion child |
 
-Source `let` becomes `bind`; result matches always retain both branches;
-operation and callable spellings become stable identities; and every node
-retains its result type, callable owner, and source origin. No optimization is
-performed in this phase.
+The validator rejects duplicate or nonbinary identities, dangling child
+references, missing body roots, and absent or ill-typed verifier roots. The
+Phase 2 bridge performs a stricter shape check for the exact successor graph.
 
-## Validation boundary
+## Executable category-law checks
 
-Validation rejects unsupported versions, mismatched map keys, noncanonical or
-noncontiguous identities, unknown owners, dangling or cross-owner edges,
-incorrect primitive and child types, incomplete products, non-result matches,
-call and operation signature mismatches, effect escapes, effect requests
-outside the owner annotation, noncanonical or uncovered requirements, and
-missing or malformed task verifiers. Backend work may consume only a validated
-graph.
+The BEAM-resident EUnit suite exhaustively checks left identity, right identity,
+and associativity over `increment`, `double`, and `negate` transformations for
+integers from `-32` through `32`. This establishes that the implementation
+detects violations on the bounded profile; it is not a universal proof.
 
-## Test-only reference evaluator
+PropEr remains the planned library for broader generated and state-machine law
+tests after its dependency is pinned. The compiler does not depend on PropEr to
+build or execute this slice.
 
-The reference evaluator is marked nondeployable in its module and result. Its
-only inputs are validated IR, explicit task values, per-node fixture effect
-results, and a bounded step count. It has no filesystem, network, process,
-clock, randomness, dynamic loading, or host callback interface.
+## Test-only reference oracle
 
-It evaluates nodes deterministically, consumes effect results in fixture order,
-records effect and completion observations, detects integer overflow, validates
-input/result types, and rejects missing fixtures or exhausted steps. These
-outcomes support semantic comparison but cannot satisfy a BEAM execution gate.
+The reference oracle consumes only validated IR, an explicit binary-keyed
+input map, and a maximum of 256 node steps. It returns
+`deployable => false` and `engine => beam_test_oracle`. It exposes no external
+effects and cannot satisfy a phase gate.
 
 ## Nonexecuting views
 
-One traversal derives five ordered projections:
+One BEAM compiler pass derives:
 
-- a dry-run plan describing each node without running it;
-- a normalized trace skeleton with one event category per node;
-- per-task capability manifests containing effects, requirements, and direct
-  effect sites;
-- completion checklists linking task, verifier, predicate, and result binding;
-- human-readable explanations of every node.
+- task/body dry-run entries;
+- a complete ordered node trace skeleton;
+- an empty effect and requirement capability manifest;
+- task completion roots; and
+- counts plus an explicit full-node-coverage marker.
 
-Every projection records the complete node set it inspected. Their exhaustive
-matches over the node enum make a newly added primitive a compile-time coverage
-obligation, and tests assert deterministic equality and full instance coverage.
-
-## Reproducible evidence
-
-Run the Section 2.4 gate from the repository root:
+Run the reproducible gate from the repository root:
 
 ```console
 make test-section-2-4
 ```
-
-The gate checks deterministic lowering across all 14 node kinds, negative IR
-invariants, bounded fixture evaluation, stable observations, and complete
-coverage by all semantic projections.

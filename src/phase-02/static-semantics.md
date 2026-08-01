@@ -1,5 +1,5 @@
 ---
-title: "Phase 2 Resolution and Data Typing"
+title: "Phase 2 Minimal Resolution and Data Typing"
 kind: note
 created: 2026-07-31
 maturity: developing
@@ -12,93 +12,55 @@ aliases:
   - "Phase 2 static semantics"
 ---
 
-# Phase 2 Resolution and Data Typing
+# Phase 2 Minimal Resolution and Data Typing
 
 ## Purpose
 
-This document freezes the source-oriented resolution and ordinary data-typing
-contract that precedes effect checking, capability requirements, IR lowering,
-and BEAM code generation. A module must pass both judgments before any later
-phase may consume it.
+This document freezes the implemented static semantics of the Phase 2 counter
+profile. The checker is a BEAM-resident compiler pass. It consumes an A-Lang
+AST and returns checked compiler data; it never evaluates an A-Lang program.
 
 ## Stable semantic identities
 
-The resolver assigns identities from declaration ownership rather than source
-offsets. Source origins remain attached to definitions and uses for diagnostics.
+Tasks receive `task:<module>.<name>/<arity>`. Module, task, parameter, and
+variable names remain binaries, so source-controlled names do not enter the
+VM's permanent atom table. Source origins remain attached to declarations and
+expressions for diagnostics.
 
-| Definition | Identity form |
-| --- | --- |
-| Module | `module:<module>` |
-| Named type | `type:<module>.<type>` |
-| Record field | `field:<type-id>.<field>` |
-| Function | `function:<module>.<name>/<arity>` |
-| Task | `task:<module>.<name>/<arity>` |
-| Effect | `effect:<effect>` |
-| Parameter/local | `<owner-id>:parameter|local:<name>[:<index>]` |
-| Completion predicate | `verifier:<task-id>` |
+The checker rejects duplicate task names, duplicate parameters, and unresolved
+variables. Parameters form the body environment. The completion environment
+adds the reserved binary name `result`, bound to the task result type.
 
-The PoC reserves versioned identities for the promoted effect boundary:
+## Minimal data judgment
 
-- `resource:model/v1` and `operation:model.complete/v1`
-- `resource:workspace/v1` and `operation:workspace.write/v1`
-- `resource:trace/v1` and `operation:trace.emit/v1`
+The closed monomorphic type set is `Int | Bool`:
 
-Other declared effects and operations receive deterministic lowercase fallback
-identities. This permits source experimentation without treating those fallback
-identities as promoted runtime contracts.
+- an in-range integer literal has type `Int`;
+- `true` and `false` have type `Bool`;
+- a variable has its environment type;
+- addition requires two `Int` values and returns `Int`;
+- equality requires equal operand types and returns `Bool`;
+- a task body must match its declared result type; and
+- `ensures` must return `Bool`.
 
-## Scope and namespace rules
-
-Modules have separate type, callable, effect, operation, field, and local value
-namespaces. Top-level definitions are collected before bodies are resolved, so
-declaration order does not affect identity or visibility. Function and task
-names share the callable namespace.
-
-Parameters and lexical `let` bindings form nested value scopes. Shadowing is
-rejected in the PoC, including collision with the task completion predicate's
-reserved `result` value. Duplicate definitions, unknown names, wrong-namespace
-uses, and arity mismatches are errors. Every accepted use is recorded by its
-source-origin key and stable target identity.
-
-## Minimal data types
-
-The data checker is closed and monomorphic. It admits:
-
-- `Int`, `Bool`, and `String` primitives;
-- named opaque, record, and result types;
-- structural product types;
-- structural `Result<ok, error>` expression types;
-- fixed function, task, and operation signatures.
-
-It checks literals, variables, complete record construction, field access,
-result constructors, calls, effect-operation arguments and results, `let`,
-exhaustive `ok`/`error` matches, sequencing, integer addition, equality, task
-result types, and Boolean completion predicates. Each accepted expression is
-indexed by source origin with its inferred type.
-
-There are no implicit coercions, inferred polymorphism, subtyping, overloaded
-operations, or partial result matches. Result branches must agree. A named
-opaque value cannot be constructed as a record or inspected through field
-access; later runtime operations are the only intended authority boundary for
-creating or consuming opaque identifiers.
+There are no coercions, subtyping, inferred polymorphism, functions, records,
+results, branches, or user operations in this vertical slice.
 
 ## Failure and determinism contract
 
-Resolution and typing collect independent source-local diagnostics where
-possible, then sort them deterministically. Later semantic phases receive no
-partially resolved or partially typed module. Symbol maps, shapes, signatures,
-uses, and expression types use ordered collections so serialization and tests
-do not depend on host hash order.
+Unsupported versions, malformed AST shapes, duplicate names, unresolved
+variables, out-of-range literals, and type mismatches return diagnostic lists
+before IR lowering. Identical accepted ASTs produce identical checked maps and
+stable callable identities under deterministic term encoding.
 
 ## Reproducible evidence
 
-Run the Section 2.2 gate from the repository root:
+From the repository root:
 
 ```console
 make test-section-2-2
 ```
 
-The resolver tests cover stable identities, definition/use tables, duplicate
-and shadowing failures, unknown and wrong-namespace names, and arity checks. The
-data-typing tests cover records, functions, tasks, results, lexical composition,
-exhaustiveness, mismatches, and opaque-boundary failures.
+The gate executes the Phase 2 EUnit suite on ERTS, including positive counter
+typing, unresolved-name rejection, deterministic IR construction, and compiler
+residency assertions.
