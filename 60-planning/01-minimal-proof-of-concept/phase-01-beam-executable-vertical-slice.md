@@ -138,7 +138,7 @@ chunk inspection, and import allowlisting before any artifact can be loaded.
 **Description:** Produce a deterministic artifact from a language-owned
 semantic fixture and attach enough metadata to prove how it was built.
 
-- [ ] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete** — evidence: [typed semantic fixture](../../src/phase-01/semantic-fixture.md) and [artifact packager](../../src/phase-01/alang_phase1_package.erl)
 
 ### Task 1.3.1: Define the Minimal Semantic Fixture
 
@@ -146,14 +146,14 @@ semantic fixture and attach enough metadata to prove how it was built.
 owned by A-Lang rather than as Erlang source or an untyped code-generation
 template.
 
-- [ ] **Task 1.3.1 Complete**
+- [x] **Task 1.3.1 Complete** — evidence: [language-owned fixture](../../src/phase-01/semantic-fixture.config)
 
 #### Subtask 1.3.1.1: Model Input, State, and Result
 
 **Description:** Define closed input, state, result, and failure variants for a
 single deterministic state transition with no external effect or model call.
 
-- [ ] **Subtask 1.3.1.1 Complete**
+- [x] **Subtask 1.3.1.1 Complete** — evidence: [closed fixture types](../../src/phase-01/semantic-fixture.md#closed-types)
 
 #### Subtask 1.3.1.2: Model the Closed Runtime Operations
 
@@ -161,7 +161,7 @@ single deterministic state transition with no external effect or model call.
 one trace emission, one result reply, and termination as named runtime
 operations.
 
-- [ ] **Subtask 1.3.1.2 Complete**
+- [x] **Subtask 1.3.1.2 Complete** — evidence: [closed runtime operations](../../src/phase-01/semantic-fixture.md#closed-runtime-operations)
 
 ### Task 1.3.2: Lower and Package the Artifact
 
@@ -169,7 +169,7 @@ operations.
 subset, compile it, inspect it, and package it as a reproducible `.beam`
 artifact.
 
-- [ ] **Task 1.3.2 Complete**
+- [x] **Task 1.3.2 Complete** — evidence: [lowering pass](../../src/phase-01/alang_phase1_fixture.erl) and [artifact packager](../../src/phase-01/alang_phase1_package.erl)
 
 #### Subtask 1.3.2.1: Generate Deterministic Abstract Forms
 
@@ -177,7 +177,7 @@ artifact.
 normalized forms, stable source locations, bounded atoms, and reproducible
 diagnostics.
 
-- [ ] **Subtask 1.3.2.1 Complete**
+- [x] **Subtask 1.3.2.1 Complete** — evidence: [deterministic lowering](../../src/phase-01/semantic-fixture.md#deterministic-lowering) and [reproducibility tests](../../src/phase-01/alang_phase1_artifact_tests.erl)
 
 #### Subtask 1.3.2.2: Attach and Verify the Manifest
 
@@ -185,7 +185,7 @@ diagnostics.
 OTP target, compiler flags, imports, and artifact digest, then verify the
 manifest before loading.
 
-- [ ] **Subtask 1.3.2.2 Complete**
+- [x] **Subtask 1.3.2.2 Complete** — evidence: [manifest builder and verifier](../../src/phase-01/alang_phase1_package.erl) and [manifest tests](../../src/phase-01/alang_phase1_artifact_tests.erl)
 
 ## Section 1.4: BEAM Execution Integration Test
 

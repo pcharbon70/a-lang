@@ -415,7 +415,12 @@ validate_variable(Line, Name) ->
         'Successor',
         'Other',
         'Abi',
-        'Reason'
+        'Reason',
+        '_Abi',
+        '_Correlation',
+        '_Payload',
+        '_ReplyTo',
+        '_'
     ],
     case is_atom(Name) andalso lists:member(Name, Allowed) of
         true -> with_valid_line(Line, fun() -> ok end);
@@ -445,6 +450,7 @@ validate_atom(Line, Value) ->
         payload_too_large,
         unavailable_operation,
         unexpected_process_exit,
+        rejected,
         normal,
         true,
         false

@@ -50,8 +50,19 @@ ignored repository `build/` directory, not in source control.
 - [`alang_phase1_compiler_tests.erl`](alang_phase1_compiler_tests.erl) — EUnit
   coverage for version rejection, subset enforcement, OTP strong validation,
   deterministic emission, and import inspection.
+- [`alang_phase1_fixture.erl`](alang_phase1_fixture.erl) — exact typed-fixture
+  validator and direct, deterministic Abstract Format lowering pass.
+- [`alang_phase1_package.erl`](alang_phase1_package.erl) — reproducible BEAM
+  artifact packager and fail-closed sidecar-manifest verifier.
+- [`alang_phase1_artifact_tests.erl`](alang_phase1_artifact_tests.erl) — EUnit
+  coverage for typed fixture rejection, stable forms, byte-identical builds,
+  manifest contents, and artifact tampering.
 - [Runtime contract](runtime-contract.md) — normative execution-engine,
   bootstrap-boundary, ABI, success-trace, and failure-class requirements.
+- [`semantic-fixture.config`](semantic-fixture.config) — the fixed,
+  machine-readable Phase 1 A-Lang semantic program.
+- [Typed semantic fixture](semantic-fixture.md) — the fixture's closed types,
+  transition, operation model, and deterministic lowering contract.
 - [`toolchain.config`](toolchain.config) — machine-readable OTP, ERTS,
   architecture, validation, and compiler constraints.
 
