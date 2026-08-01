@@ -1034,10 +1034,7 @@ pub(crate) mod tests {
     use super::{IrNodeKind, lower, validate};
     use crate::{analyze, parse_text};
 
-    pub(crate) fn complete_ir() -> super::TypedTaskIr {
-        let module = parse_text(
-            "ir.alang",
-            r#"
+    pub(crate) const COMPLETE_SOURCE: &str = r#"
 module IrDemo version "alang-source-v1" {
   record Pair { left: Int, right: Int }
   effect Trace { operation emit(message: String) -> Bool; }
@@ -1050,9 +1047,10 @@ module IrDemo version "alang-source-v1" {
     = perform Trace.emit("start") >> let pair = Pair { left: value, right: 1 }; match classify(pair.left) { ok(number) => number + pair.right, error(reason) => 0 }
     ensures result == value + 1;
 }
-"#,
-        )
-        .expect("source must parse");
+"#;
+
+    pub(crate) fn complete_ir() -> super::TypedTaskIr {
+        let module = parse_text("ir.alang", COMPLETE_SOURCE).expect("source must parse");
         let authorized = analyze(&module).expect("source must be authorized");
         lower(&authorized).expect("IR must lower")
     }

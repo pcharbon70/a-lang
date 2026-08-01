@@ -7,6 +7,10 @@ publish = false
 [lib]
 path = "lib.rs"
 
+[[bin]]
+name = "alang-phase2c"
+path = "main.rs"
+
 [dependencies]
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = "=1.0.151"

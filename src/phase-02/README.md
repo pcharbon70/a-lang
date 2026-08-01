@@ -39,10 +39,17 @@ execution evidence belong under the ignored repository `build/` directory.
 
 ### Subdirectories
 
-- None yet.
+- [Fixtures](fixtures/README.md) — durable textual programs used by paired
+  frontend, semantic, IR, bridge, and runtime integration tests.
 
 ### Files
 
+- [`beam_bridge.rs`](beam_bridge.rs) — fail-closed lowering of the minimal
+  successor IR profile to the exact Phase 1 semantic fixture and OTP adapter.
+- [`alang_phase2_integration_tests.erl`](alang_phase2_integration_tests.erl) —
+  isolated ERTS agreement, adapter provenance, and no-interpreter tests.
+- [`alang_phase2_runtime.erl`](alang_phase2_runtime.erl) — runtime-only wrapper
+  that compares generated reference evidence with the loaded BEAM observation.
 - [`Cargo.toml`](Cargo.toml) — pinned Rust crate metadata, dependencies, and
   strict lint policy for the native compiler.
 - [`Cargo.lock`](Cargo.lock) — exact transitive dependency resolution for
@@ -58,13 +65,20 @@ execution evidence belong under the ignored repository `build/` directory.
   complete schema validation.
 - [`ir.rs`](ir.rs) — versioned flat typed task IR, stable preorder identities,
   source lowering, and structural/type/effect invariant validation.
+- [`integration.rs`](integration.rs) — paired frontend, negative semantic,
+  reference/view/bridge agreement, and deterministic fuzz-smoke tests.
 - [Language surface](language-surface.md) — the normative Phase 2 canonical
   schema, textual grammar, precedence, limits, and recovery contract.
 - [`lexer.rs`](lexer.rs) — handwritten UTF-8 textual lexer with byte and
   line-column spans.
 - [`lib.rs`](lib.rs) — crate boundary and public compiler frontend API.
+- [`main.rs`](main.rs) — native compiler command that emits canonical source,
+  checked IR, semantic views, reference comparison, and Phase 1 bridge input.
 - [`parser.rs`](parser.rs) — handwritten recovering parser that constructs the
   common untyped AST.
+- [Phase 2 integration evidence](phase-02-integration-evidence.md) — paired
+  frontend agreement, negative/fuzz coverage, artifact identities, semantic
+  comparison, isolated ERTS trace, and no-interpreter proof.
 - [`reference.rs`](reference.rs) — bounded, fixture-only, explicitly
   nondeployable reference evaluation for tests and differential comparison.
 - [`resolver.rs`](resolver.rs) — namespaces, lexical scopes, stable semantic

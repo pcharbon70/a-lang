@@ -1,6 +1,6 @@
 ---
 title: "Phase 2 Effects and Capability Requirements"
-kind: specification
+kind: note
 created: 2026-07-31
 maturity: developing
 tags:

@@ -1,5 +1,7 @@
+pub mod beam_bridge;
 pub mod diagnostic;
 pub mod effect_checker;
+mod integration;
 pub mod ir;
 pub mod json_frontend;
 pub mod lexer;

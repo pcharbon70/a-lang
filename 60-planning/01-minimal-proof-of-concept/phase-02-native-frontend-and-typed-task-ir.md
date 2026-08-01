@@ -20,7 +20,7 @@ independent test-only reference, simulation, trace, and manifest views. The
 phase ends by compiling source through the Phase 1 path and executing it on
 ERTS.
 
-**Status:** Planned.
+**Status:** Complete — evidence: [Phase 2 integration evidence](../../src/phase-02/phase-02-integration-evidence.md).
 
 **Dependencies:** Phase 1 complete with a generated artifact compiled through
 the pinned OTP boundary, inspected, loaded, spawned, and observed as a BEAM
@@ -255,7 +255,7 @@ verify that each interpreter covers every primitive node.
 programs fail before backend work, and accepted source feeds the already-proven
 BEAM compiler and ERTS execution path.
 
-- [ ] **Section 2.5 Complete**
+- [x] **Section 2.5 Complete** — evidence: [Phase 2 integration evidence](../../src/phase-02/phase-02-integration-evidence.md) and [complete Phase 2 gate](../../Makefile)
 
 ### Task 2.5.1: Validate Frontend and Semantic Agreement
 
@@ -263,7 +263,7 @@ BEAM compiler and ERTS execution path.
 parsing, resolution, typing, effect checking, requirement normalization, and
 IR validation and compare canonical outputs.
 
-- [ ] **Task 2.5.1 Complete**
+- [x] **Task 2.5.1 Complete** — evidence: [paired frontend integration tests](../../src/phase-02/integration.rs)
 
 #### Subtask 2.5.1.1: Execute Positive Paired Fixtures
 
@@ -271,7 +271,7 @@ IR validation and compare canonical outputs.
 promoted type, expression, effect, requirement, and verifier construct produce
 the expected identical typed IR.
 
-- [ ] **Subtask 2.5.1.1 Complete**
+- [x] **Subtask 2.5.1.1 Complete** — evidence: [counter fixture](../../src/phase-02/fixtures/counter.alang), [paired frontend test](../../src/phase-02/integration.rs), and [all-node IR fixture](../../src/phase-02/ir.rs)
 
 #### Subtask 2.5.1.2: Execute Negative Semantic Fixtures
 
@@ -279,7 +279,7 @@ the expected identical typed IR.
 nonexhaustive results, undeclared effects, missing requirements, and deferred
 features fail with stable source-oriented diagnostics.
 
-- [ ] **Subtask 2.5.1.2 Complete**
+- [x] **Subtask 2.5.1.2 Complete** — evidence: [negative semantic and fuzz-smoke matrix](../../src/phase-02/integration.rs)
 
 ### Task 2.5.2: Execute Frontend Programs on BEAM
 
@@ -287,7 +287,7 @@ features fail with stable source-oriented diagnostics.
 compile and inspect the artifact, run it as a BEAM process, and compare its
 normalized observation with the test-only views.
 
-- [ ] **Task 2.5.2 Complete**
+- [x] **Task 2.5.2 Complete** — evidence: [BEAM bridge](../../src/phase-02/beam_bridge.rs), [ERTS runtime wrapper](../../src/phase-02/alang_phase2_runtime.erl), and [runtime evidence](../../src/phase-02/phase-02-integration-evidence.md#reproduced-artifact-and-observation)
 
 #### Subtask 2.5.2.1: Assert BEAM and Test-View Agreement
 
@@ -295,7 +295,7 @@ normalized observation with the test-only views.
 compiled BEAM observations agree with the bounded reference result, trace
 skeleton, effect manifest, and completion checklist within defined equality.
 
-- [ ] **Subtask 2.5.2.1 Complete**
+- [x] **Subtask 2.5.2.1 Complete** — evidence: [defined semantic equality](../../src/phase-02/phase-02-integration-evidence.md#defined-semantic-equality) and [cross-runtime agreement tests](../../src/phase-02/alang_phase2_integration_tests.erl)
 
 #### Subtask 2.5.2.2: Reassert the No-Interpreter Gate
 
@@ -303,19 +303,19 @@ skeleton, effect manifest, and completion checklist within defined equality.
 and isolated ERTS suites and prove that all successful A-Lang executions came
 from loaded BEAM modules rather than the test evaluator.
 
-- [ ] **Subtask 2.5.2.2 Complete**
+- [x] **Subtask 2.5.2.2 Complete** — evidence: [no-interpreter evidence](../../src/phase-02/phase-02-integration-evidence.md#no-interpreter-evidence) and [complete repository gate](../../Makefile)
 
 ## Phase 2 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 3 to generalize the
 already-working BEAM lowering and runtime semantics.
 
-- [ ] Textual and canonical JSON frontends produce identical checked IR
-- [ ] Resolution, data typing, effects, and requirements fail closed
-- [ ] Capability manifests remain independent of portable protocol concepts
-- [ ] Reference, simulation, trace, and manifest views cover all IR
+- [x] Textual and canonical JSON frontends produce identical checked IR
+- [x] Resolution, data typing, effects, and requirements fail closed
+- [x] Capability manifests remain independent of portable protocol concepts
+- [x] Reference, simulation, trace, and manifest views cover all IR
       primitives
-- [ ] Accepted source compiles and executes as an isolated BEAM process
-- [ ] Test-only evaluation is absent from the accepted runtime path
-- [ ] Positive and negative fixtures pass with stable diagnostics
-- [ ] Frontend fuzz-smoke and complete repository gates pass
+- [x] Accepted source compiles and executes as an isolated BEAM process
+- [x] Test-only evaluation is absent from the accepted runtime path
+- [x] Positive and negative fixtures pass with stable diagnostics
+- [x] Frontend fuzz-smoke and complete repository gates pass
