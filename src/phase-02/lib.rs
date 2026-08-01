@@ -1,14 +1,16 @@
 pub mod diagnostic;
+pub mod effect_checker;
 pub mod json_frontend;
 pub mod lexer;
 pub mod parser;
+pub mod requirements;
 pub mod resolver;
 pub mod semantic;
 pub mod source;
 pub mod type_checker;
 
 use diagnostic::Diagnostic;
-use semantic::CheckedModule;
+use semantic::{AuthorizedModule, CheckedModule};
 use source::ModuleAst;
 
 /// Decode the canonical JSON source representation.
@@ -40,4 +42,14 @@ pub fn parse_text(source_name: &str, text: &str) -> Result<ModuleAst, Vec<Diagno
 pub fn analyze_data(module: &ModuleAst) -> Result<CheckedModule, Vec<Diagnostic>> {
     let resolved = resolver::resolve(module)?;
     type_checker::check(resolved)
+}
+
+/// Run all source static semantics through effects and requirements.
+///
+/// # Errors
+///
+/// Returns stable diagnostics from resolution, data typing, effect inference,
+/// annotations, requirement normalization, or authority coverage.
+pub fn analyze(module: &ModuleAst) -> Result<AuthorizedModule, Vec<Diagnostic>> {
+    effect_checker::check(analyze_data(module)?)
 }

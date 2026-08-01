@@ -49,6 +49,11 @@ execution evidence belong under the ignored repository `build/` directory.
   reproducible native compiler builds.
 - [`diagnostic.rs`](diagnostic.rs) — stable source-oriented diagnostic codes,
   severity, labels, and deterministic ordering.
+- [`effect_checker.rs`](effect_checker.rs) — closed effect inference, exact
+  annotation checks, and effect-to-requirement coverage.
+- [Effects and requirements](effects-and-requirements.md) — normative closed
+  effect, authority predicate, canonicalization, subsumption, and coverage
+  contracts.
 - [`json_frontend.rs`](json_frontend.rs) — bounded canonical JSON decoder and
   complete schema validation.
 - [Language surface](language-surface.md) — the normative Phase 2 canonical
@@ -60,6 +65,8 @@ execution evidence belong under the ignored repository `build/` directory.
   common untyped AST.
 - [`resolver.rs`](resolver.rs) — namespaces, lexical scopes, stable semantic
   identities, definition/use tables, and resolution diagnostics.
+- [`requirements.rs`](requirements.rs) — typed requirement normalization,
+  union, equality, subsumption, and deterministic serialization.
 - [`semantic.rs`](semantic.rs) — deterministic resolved and data-typed semantic
   model shared by later compiler passes.
 - [`source.rs`](source.rs) — versioned source AST, declarations, types,

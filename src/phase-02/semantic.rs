@@ -1,6 +1,6 @@
 use crate::source::{ModuleAst, Origin};
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 #[derive(Clone, Debug, Deserialize, Eq, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct SymbolId(pub String);
@@ -107,6 +107,43 @@ pub struct CheckedModule {
     pub ast: ModuleAst,
     pub symbols: SymbolTable,
     pub types: TypeEnvironment,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Ord, PartialEq, PartialOrd, Serialize)]
+#[serde(tag = "kind", rename_all = "snake_case")]
+pub enum RequirementConstraint {
+    EqualsString { key: String, value: String },
+    EqualsInteger { key: String, value: i64 },
+    Prefix { key: String, value: String },
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Ord, PartialEq, PartialOrd, Serialize)]
+pub struct NormalizedRequirement {
+    pub resource: SymbolId,
+    pub operation: SymbolId,
+    pub constraints: BTreeSet<RequirementConstraint>,
+    pub deadline_ms: Option<u64>,
+    pub max_calls: Option<u32>,
+    pub max_bytes: Option<u64>,
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Eq, PartialEq, Serialize)]
+pub struct RequirementSet {
+    pub entries: BTreeSet<NormalizedRequirement>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
+pub struct EffectEnvironment {
+    pub callable_effects: BTreeMap<SymbolId, BTreeSet<SymbolId>>,
+    pub task_requirements: BTreeMap<SymbolId, RequirementSet>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
+pub struct AuthorizedModule {
+    pub ast: ModuleAst,
+    pub symbols: SymbolTable,
+    pub types: TypeEnvironment,
+    pub effects: EffectEnvironment,
 }
 
 #[must_use]

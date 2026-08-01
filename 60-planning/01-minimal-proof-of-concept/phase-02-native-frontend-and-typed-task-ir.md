@@ -143,14 +143,14 @@ identifiers outside their approved operations.
 requires, and calculate both as deterministic semantic artifacts independent
 of any portable authorization protocol or concrete runtime grant.
 
-- [ ] **Section 2.3 Complete**
+- [x] **Section 2.3 Complete** — evidence: [effect and requirement semantics](../../src/phase-02/effects-and-requirements.md) and [Section 2.3 gate](../../Makefile)
 
 ### Task 2.3.1: Implement Closed Effect Checking
 
 **Description:** Infer and check closed monomorphic effect sets for functions,
 tasks, operations, calls, branches, and sequential composition.
 
-- [ ] **Task 2.3.1 Complete**
+- [x] **Task 2.3.1 Complete** — evidence: [closed effect checker](../../src/phase-02/effect_checker.rs)
 
 #### Subtask 2.3.1.1: Propagate Declared Operations
 
@@ -158,7 +158,7 @@ tasks, operations, calls, branches, and sequential composition.
 retain the empty effect set, composition combine effect sets by union, and
 annotations reject missing or unexpected effects.
 
-- [ ] **Subtask 2.3.1.1 Complete**
+- [x] **Subtask 2.3.1.1 Complete** — evidence: [closed effect judgment](../../src/phase-02/effects-and-requirements.md#closed-effect-judgment) and [effect propagation tests](../../src/phase-02/effect_checker.rs)
 
 #### Subtask 2.3.1.2: Reject Effect Escapes
 
@@ -166,7 +166,7 @@ annotations reject missing or unexpected effects.
 pure functions, unsupported handlers, and any construct whose effects cannot
 be represented in the closed PoC effect system.
 
-- [ ] **Subtask 2.3.1.2 Complete**
+- [x] **Subtask 2.3.1.2 Complete** — evidence: [escape and recursion rejection](../../src/phase-02/effect_checker.rs)
 
 ### Task 2.3.2: Normalize Capability Requirements
 
@@ -174,7 +174,7 @@ be represented in the closed PoC effect system.
 authority predicate and prove that every effect operation is covered by a
 requirement independent of any runtime grant.
 
-- [ ] **Task 2.3.2 Complete**
+- [x] **Task 2.3.2 Complete** — evidence: [requirement normalizer](../../src/phase-02/requirements.rs)
 
 #### Subtask 2.3.2.1: Define Requirement Algebra and Canonical Form
 
@@ -182,7 +182,7 @@ requirement independent of any runtime grant.
 deadline, call and byte budgets, union, equality, subsumption, and deterministic
 serialization for the minimal requirement domain.
 
-- [ ] **Subtask 2.3.2.1 Complete**
+- [x] **Subtask 2.3.2.1 Complete** — evidence: [requirement domain](../../src/phase-02/effects-and-requirements.md#requirement-domain) and [algebra tests](../../src/phase-02/requirements.rs)
 
 #### Subtask 2.3.2.2: Check Effect-to-Requirement Coverage
 
@@ -190,7 +190,7 @@ serialization for the minimal requirement domain.
 fall within the task's declared requirement and report the smallest uncovered
 operation or widened argument constraint.
 
-- [ ] **Subtask 2.3.2.2 Complete**
+- [x] **Subtask 2.3.2.2 Complete** — evidence: [coverage judgment](../../src/phase-02/effects-and-requirements.md#coverage-judgment) and [coverage tests](../../src/phase-02/effect_checker.rs)
 
 ## Section 2.4: Typed IR and Test-Only Semantic Views
 

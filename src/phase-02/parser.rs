@@ -524,6 +524,9 @@ impl Parser {
                 token.origin,
             )),
             TokenKind::Identifier(name) => self.parse_identifier_expression(&token.origin, name),
+            TokenKind::Result => {
+                self.parse_identifier_expression(&token.origin, "result".to_owned())
+            }
             TokenKind::Ok => self.parse_result_constructor(&token.origin, true),
             TokenKind::Error => self.parse_result_constructor(&token.origin, false),
             TokenKind::Let => self.parse_let(&token.origin),
