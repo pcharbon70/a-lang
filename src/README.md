@@ -51,6 +51,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 1 BEAM vertical slice](phase-01/README.md) — the executable runtime
   contract, pinned OTP compiler boundary, deterministic artifact builder, and
   isolated ERTS validation harness for the first proof-of-concept phase.
+- [Phase 2 native frontend and typed task IR](phase-02/README.md) — the native
+  Rust frontend, static semantics, normalized typed IR, test-only semantic
+  views, and bridge into the proven BEAM execution path.
 
 ### Files
 

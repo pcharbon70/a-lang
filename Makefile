@@ -1,5 +1,6 @@
 ERL := erl
 ERLC := erlc
+CARGO := cargo
 PHASE1_DIR := src/phase-01
 PHASE1_BUILD := build/phase-01/bootstrap
 TOOLCHAIN_CONFIG := $(PHASE1_DIR)/toolchain.config
@@ -12,8 +13,10 @@ RUNTIME_MODULE := $(PHASE1_BUILD)/alang_phase1_runtime.beam
 INTEGRATION_TEST_MODULE := $(PHASE1_BUILD)/alang_phase1_integration_tests.beam
 PHASE1_ARTIFACT := build/phase-01/artifact
 SEMANTIC_FIXTURE := $(PHASE1_DIR)/semantic-fixture.config
+PHASE2_MANIFEST := src/phase-02/Cargo.toml
+PHASE2_TARGET := build/phase-02/target
 
-.PHONY: build-phase-1-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime run-phase-1 test-phase-1 test-section-1-2 test-section-1-3 test-section-1-4
+.PHONY: build-phase-1-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime run-phase-1 test-phase-1 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -38,6 +41,11 @@ run-phase-1: build-phase-1-artifact compile-phase-1-runtime
 	$(ERL) -noshell -sname alang_phase1_run_$$$$ -setcookie alang_phase1_local_test -pa $(PHASE1_BUILD) -s alang_phase1_runtime main
 
 test-phase-1: test-section-1-4 run-phase-1
+
+test-section-2-1:
+	CARGO_TARGET_DIR=$(PHASE2_TARGET) $(CARGO) fmt --manifest-path $(PHASE2_MANIFEST) -- --check
+	CARGO_TARGET_DIR=$(PHASE2_TARGET) $(CARGO) clippy --manifest-path $(PHASE2_MANIFEST) --all-targets -- -D warnings
+	CARGO_TARGET_DIR=$(PHASE2_TARGET) $(CARGO) test --manifest-path $(PHASE2_MANIFEST) frontend_
 
 $(PHASE1_BUILD):
 	mkdir -p $(PHASE1_BUILD)

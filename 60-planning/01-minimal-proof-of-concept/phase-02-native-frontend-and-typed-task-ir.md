@@ -32,14 +32,14 @@ process with the no-interpreter gate accepted.
 human-facing syntax that produce the same untyped AST with complete source
 origins.
 
-- [ ] **Section 2.1 Complete**
+- [x] **Section 2.1 Complete** — evidence: [frozen source surface](../../src/phase-02/language-surface.md) and [frontend tests](../../src/phase-02/parser.rs)
 
 ### Task 2.1.1: Implement the Canonical JSON Frontend
 
 **Description:** Decode and validate the versioned canonical source schema as
 the stable fixture and tooling input for the PoC language.
 
-- [ ] **Task 2.1.1 Complete**
+- [x] **Task 2.1.1 Complete** — evidence: [canonical JSON decoder](../../src/phase-02/json_frontend.rs)
 
 #### Subtask 2.1.1.1: Decode the Complete Planned Surface
 
@@ -47,7 +47,7 @@ the stable fixture and tooling input for the PoC language.
 results, expressions, effects, requirements, completion predicates, and source
 origins without silently accepting unknown constructs.
 
-- [ ] **Subtask 2.1.1.1 Complete**
+- [x] **Subtask 2.1.1.1 Complete** — evidence: [complete declared surface](../../src/phase-02/language-surface.md#complete-declared-surface) and [source AST](../../src/phase-02/source.rs)
 
 #### Subtask 2.1.1.2: Reject Schema and Version Violations
 
@@ -55,7 +55,7 @@ origins without silently accepting unknown constructs.
 invalid identifiers, oversized inputs, unsupported versions, and malformed
 source locations.
 
-- [ ] **Subtask 2.1.1.2 Complete**
+- [x] **Subtask 2.1.1.2 Complete** — evidence: [schema and boundary diagnostics](../../src/phase-02/json_frontend.rs)
 
 ### Task 2.1.2: Implement the Native Textual Lexer and Parser
 
@@ -64,7 +64,7 @@ native compiler implementation and lower its parse tree to the same AST used
 by canonical JSON fixtures. The host implementation is a compiler, not an
 A-Lang runtime.
 
-- [ ] **Task 2.1.2 Complete**
+- [x] **Task 2.1.2 Complete** — evidence: [native lexer](../../src/phase-02/lexer.rs) and [native parser](../../src/phase-02/parser.rs)
 
 #### Subtask 2.1.2.1: Implement Tokens, Grammar, and Precedence
 
@@ -72,7 +72,7 @@ A-Lang runtime.
 delimiters, type forms, declarations, expressions, `effect`, `requires`,
 `perform`, `ensures`, and sequential composition with no speculative syntax.
 
-- [ ] **Subtask 2.1.2.1 Complete**
+- [x] **Subtask 2.1.2.1 Complete** — evidence: [grammar and precedence](../../src/phase-02/language-surface.md#textual-grammar)
 
 #### Subtask 2.1.2.2: Preserve Locations and Recover Diagnostics
 
@@ -80,7 +80,7 @@ delimiters, type forms, declarations, expressions, `effect`, `requires`,
 AST node and recover far enough from common delimiter or declaration errors to
 report multiple independent issues without inventing nodes.
 
-- [ ] **Subtask 2.1.2.2 Complete**
+- [x] **Subtask 2.1.2.2 Complete** — evidence: [source locations and recovery contract](../../src/phase-02/language-surface.md#diagnostics-and-recovery) and [recovering parser tests](../../src/phase-02/parser.rs)
 
 ## Section 2.2: Resolution and Data Typing
 
