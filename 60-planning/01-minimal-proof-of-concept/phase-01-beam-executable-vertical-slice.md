@@ -19,7 +19,7 @@ lowered to Erlang Abstract Format, compiled by a pinned OTP compiler, loaded by
 ERTS, spawned as a BEAM process, driven through a closed message ABI, and
 observed through normal BEAM termination and trace events.
 
-**Status:** Planned.
+**Status:** Complete. Reproduce all evidence with `make test-phase-1`.
 
 **Dependencies:** The BEAM runtime synthesis and feasibility inquiry are the
 accepted baseline. No compiler, evaluator, broker, or other host runtime may be
@@ -192,7 +192,7 @@ manifest before loading.
 **Description:** Prove end to end that the accepted artifact runs on ERTS as a
 BEAM process and that every non-BEAM substitute fails the phase gate.
 
-- [ ] **Section 1.4 Complete**
+- [x] **Section 1.4 Complete** — evidence: [named-node BEAM execution evidence](../../src/phase-01/beam-execution-evidence.md)
 
 ### Task 1.4.1: Execute the Successful Vertical Slice on ERTS
 
@@ -200,7 +200,7 @@ BEAM process and that every non-BEAM substitute fails the phase gate.
 entry process, send the canonical envelope, and collect its reply, trace, and
 termination evidence.
 
-- [ ] **Task 1.4.1 Complete**
+- [x] **Task 1.4.1 Complete** — evidence: [verified runtime loader and observer](../../src/phase-01/alang_phase1_runtime.erl)
 
 #### Subtask 1.4.1.1: Capture BEAM Process Evidence
 
@@ -208,7 +208,7 @@ termination evidence.
 execution, received and emitted envelopes, reductions, exit reason, and node
 and OTP versions.
 
-- [ ] **Subtask 1.4.1.1 Complete**
+- [x] **Subtask 1.4.1.1 Complete** — evidence: [captured process and scheduler fields](../../src/phase-01/beam-execution-evidence.md#canonical-normalized-trace)
 
 #### Subtask 1.4.1.2: Reproduce the Run from a Clean Checkout
 
@@ -216,7 +216,7 @@ and OTP versions.
 command and compare the artifact digest and normalized trace with the expected
 evidence.
 
-- [ ] **Subtask 1.4.1.2 Complete**
+- [x] **Subtask 1.4.1.2 Complete** — evidence: [one-command clean reproduction](../../src/phase-01/beam-execution-evidence.md#clean-reproduction)
 
 ### Task 1.4.2: Exercise Fail-Closed Runtime Boundaries
 
@@ -224,7 +224,7 @@ evidence.
 runtime versions are rejected before or during isolated BEAM execution with
 classified errors.
 
-- [ ] **Task 1.4.2 Complete**
+- [x] **Task 1.4.2 Complete** — evidence: [fail-closed integration suite](../../src/phase-01/alang_phase1_integration_tests.erl)
 
 #### Subtask 1.4.2.1: Run Artifact and ABI Rejection Cases
 
@@ -232,7 +232,7 @@ classified errors.
 Abstract Format, mismatched OTP targets, unknown message versions, and
 oversized payloads.
 
-- [ ] **Subtask 1.4.2.1 Complete**
+- [x] **Subtask 1.4.2.1 Complete** — evidence: [artifact and ABI rejection matrix](../../src/phase-01/beam-execution-evidence.md#fail-closed-matrix)
 
 #### Subtask 1.4.2.2: Prove the No-Interpreter Gate
 
@@ -240,17 +240,17 @@ oversized payloads.
 trace to show that the program result came from the loaded BEAM module rather
 than a host evaluator, Erlang source evaluator, or another language runtime.
 
-- [ ] **Subtask 1.4.2.2 Complete**
+- [x] **Subtask 1.4.2.2 Complete** — evidence: [execution topology and no-interpreter gate](../../src/phase-01/beam-execution-evidence.md#execution-topology-and-no-interpreter-gate)
 
 ## Phase 1 Completion Evidence
 
 **Description:** Phase 1 is complete only when the repository contains
 reproducible evidence for all items below.
 
-- [ ] OTP compiler and ERTS versions are pinned and enforced
-- [ ] The language-owned fixture lowers through the documented Abstract Format subset
-- [ ] The artifact passes validation, import inspection, and manifest verification
-- [ ] The artifact loads and runs as a spawned BEAM process on an isolated node
-- [ ] The canonical message, result, trace, and termination evidence match the contract
-- [ ] Negative artifact, ABI, payload, and version cases fail closed
-- [ ] No host-language or existing BEAM-language interpreter executes the A-Lang program
+- [x] OTP compiler and ERTS versions are pinned and enforced — [toolchain contract](../../src/phase-01/toolchain.config)
+- [x] The language-owned fixture lowers through the documented Abstract Format subset — [typed fixture](../../src/phase-01/semantic-fixture.md)
+- [x] The artifact passes validation, import inspection, and manifest verification — [artifact identity](../../src/phase-01/beam-execution-evidence.md#artifact-identity)
+- [x] The artifact loads and runs as a spawned BEAM process on an isolated node — [execution topology](../../src/phase-01/beam-execution-evidence.md#execution-topology-and-no-interpreter-gate)
+- [x] The canonical message, result, trace, and termination evidence match the contract — [normalized trace](../../src/phase-01/beam-execution-evidence.md#canonical-normalized-trace)
+- [x] Negative artifact, ABI, payload, and version cases fail closed — [rejection matrix](../../src/phase-01/beam-execution-evidence.md#fail-closed-matrix)
+- [x] No host-language or existing BEAM-language interpreter executes the A-Lang program — [no-interpreter gate](../../src/phase-01/beam-execution-evidence.md#execution-topology-and-no-interpreter-gate)

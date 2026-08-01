@@ -44,6 +44,9 @@ ignored repository `build/` directory, not in source control.
 
 - [Abstract Format subset](abstract-format-subset.md) — the exact supported
   forms, calls, validation order, import allowlist, and rejection behavior.
+- [BEAM execution evidence](beam-execution-evidence.md) — clean reproduction,
+  artifact identities, canonical trace, ERTS process observations, rejection
+  matrix, and no-interpreter proof.
 - [`alang_phase1_compiler.erl`](alang_phase1_compiler.erl) — build-only OTP
   version guard, Abstract Format validator, deterministic compiler bridge, and
   BEAM inspection boundary.
@@ -52,8 +55,14 @@ ignored repository `build/` directory, not in source control.
   deterministic emission, and import inspection.
 - [`alang_phase1_fixture.erl`](alang_phase1_fixture.erl) — exact typed-fixture
   validator and direct, deterministic Abstract Format lowering pass.
+- [`alang_phase1_integration_tests.erl`](alang_phase1_integration_tests.erl) —
+  named-node end-to-end coverage for canonical execution, fail-closed
+  boundaries, process termination, and the no-interpreter gate.
 - [`alang_phase1_package.erl`](alang_phase1_package.erl) — reproducible BEAM
   artifact packager and fail-closed sidecar-manifest verifier.
+- [`alang_phase1_runtime.erl`](alang_phase1_runtime.erl) — verified loader,
+  spawned-process observer, ABI driver, scheduler tracer, monitor, evidence
+  writer, and canonical runtime entrypoint.
 - [`alang_phase1_artifact_tests.erl`](alang_phase1_artifact_tests.erl) — EUnit
   coverage for typed fixture rejection, stable forms, byte-identical builds,
   manifest contents, and artifact tampering.

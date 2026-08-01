@@ -98,17 +98,17 @@ verify_loaded_package(
     ManifestPath,
     ManifestBytes
 ) ->
-    case decode_manifest(ManifestBytes) of
-        {ok, ActualManifest} ->
-            case verification_context(ToolchainPath, Beam) of
-                {ok, Toolchain, Config, Inspection} ->
-                    Compilation = #{
-                        beam => Beam,
-                        compiler_options => maps:get(compiler_options, Config),
-                        inspection => Inspection,
-                        toolchain => Toolchain
-                    },
-                    ExpectedManifest = manifest(Fixture, FixtureBytes, Forms, Compilation),
+    case verification_context(ToolchainPath, Beam) of
+        {ok, Toolchain, Config, Inspection} ->
+            Compilation = #{
+                beam => Beam,
+                compiler_options => maps:get(compiler_options, Config),
+                inspection => Inspection,
+                toolchain => Toolchain
+            },
+            ExpectedManifest = manifest(Fixture, FixtureBytes, Forms, Compilation),
+            case decode_manifest(ManifestBytes) of
+                {ok, ActualManifest} ->
                     case ActualManifest =:= ExpectedManifest of
                         true ->
                             {ok, #{

@@ -8,15 +8,19 @@ COMPILER_TEST_MODULE := $(PHASE1_BUILD)/alang_phase1_compiler_tests.beam
 FIXTURE_MODULE := $(PHASE1_BUILD)/alang_phase1_fixture.beam
 PACKAGE_MODULE := $(PHASE1_BUILD)/alang_phase1_package.beam
 ARTIFACT_TEST_MODULE := $(PHASE1_BUILD)/alang_phase1_artifact_tests.beam
+RUNTIME_MODULE := $(PHASE1_BUILD)/alang_phase1_runtime.beam
+INTEGRATION_TEST_MODULE := $(PHASE1_BUILD)/alang_phase1_integration_tests.beam
 PHASE1_ARTIFACT := build/phase-01/artifact
 SEMANTIC_FIXTURE := $(PHASE1_DIR)/semantic-fixture.config
 
-.PHONY: build-phase-1-artifact check-toolchain compile-phase-1-bootstrap test-section-1-2 test-section-1-3
+.PHONY: build-phase-1-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime run-phase-1 test-phase-1 test-section-1-2 test-section-1-3 test-section-1-4
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
 
 compile-phase-1-bootstrap: $(COMPILER_MODULE) $(COMPILER_TEST_MODULE) $(FIXTURE_MODULE) $(PACKAGE_MODULE) $(ARTIFACT_TEST_MODULE)
+
+compile-phase-1-runtime: compile-phase-1-bootstrap $(RUNTIME_MODULE) $(INTEGRATION_TEST_MODULE)
 
 test-section-1-2: check-toolchain compile-phase-1-bootstrap
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case eunit:test(alang_phase1_compiler_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
@@ -26,6 +30,14 @@ build-phase-1-artifact: check-toolchain compile-phase-1-bootstrap
 
 test-section-1-3: test-section-1-2 build-phase-1-artifact
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case eunit:test(alang_phase1_artifact_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-section-1-4: test-section-1-3 compile-phase-1-runtime
+	$(ERL) -noshell -sname alang_phase1_test_$$$$ -setcookie alang_phase1_local_test -pa $(PHASE1_BUILD) -s alang_phase1_integration_tests main
+
+run-phase-1: build-phase-1-artifact compile-phase-1-runtime
+	$(ERL) -noshell -sname alang_phase1_run_$$$$ -setcookie alang_phase1_local_test -pa $(PHASE1_BUILD) -s alang_phase1_runtime main
+
+test-phase-1: test-section-1-4 run-phase-1
 
 $(PHASE1_BUILD):
 	mkdir -p $(PHASE1_BUILD)
@@ -43,4 +55,10 @@ $(PACKAGE_MODULE): $(PHASE1_DIR)/alang_phase1_package.erl $(COMPILER_MODULE) $(F
 	$(ERLC) -Werror +deterministic -o $(PHASE1_BUILD) $<
 
 $(ARTIFACT_TEST_MODULE): $(PHASE1_DIR)/alang_phase1_artifact_tests.erl $(COMPILER_MODULE) $(FIXTURE_MODULE) $(PACKAGE_MODULE) | $(PHASE1_BUILD)
+	$(ERLC) -Werror +deterministic -o $(PHASE1_BUILD) $<
+
+$(RUNTIME_MODULE): $(PHASE1_DIR)/alang_phase1_runtime.erl $(PACKAGE_MODULE) | $(PHASE1_BUILD)
+	$(ERLC) -Werror +deterministic -o $(PHASE1_BUILD) $<
+
+$(INTEGRATION_TEST_MODULE): $(PHASE1_DIR)/alang_phase1_integration_tests.erl $(COMPILER_MODULE) $(PACKAGE_MODULE) $(RUNTIME_MODULE) | $(PHASE1_BUILD)
 	$(ERLC) -Werror +deterministic -o $(PHASE1_BUILD) $<
