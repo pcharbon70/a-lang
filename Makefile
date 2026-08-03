@@ -63,10 +63,13 @@ PHASE4_SOURCES := \
 	$(PHASE4_DIR)/alang_phase4_effect_registry.erl \
 	$(PHASE4_DIR)/alang_phase4_effect_registry_tests.erl \
 	$(PHASE4_DIR)/alang_phase4_grants.erl \
-	$(PHASE4_DIR)/alang_phase4_grants_tests.erl
+	$(PHASE4_DIR)/alang_phase4_grants_tests.erl \
+	$(PHASE4_DIR)/alang_phase4_broker.erl \
+	$(PHASE4_DIR)/alang_phase4_broker_sup.erl \
+	$(PHASE4_DIR)/alang_phase4_broker_tests.erl
 PHASE4_COMPILER_STAMP := $(PHASE4_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2
+.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -165,7 +168,10 @@ test-section-4-1: compile-phase-4-runtime
 test-section-4-2: test-section-4-1
 	$(ERL) -noshell -pa $(PHASE4_BUILD) -eval 'case eunit:test(alang_phase4_grants_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
-test-phase-4: test-section-4-2
+test-section-4-3: test-section-4-2
+	$(ERL) -noshell -pa $(PHASE4_BUILD) -eval 'case eunit:test(alang_phase4_broker_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-phase-4: test-section-4-3
 
 test: test-phase-1 test-phase-2 test-phase-3 test-phase-4
 

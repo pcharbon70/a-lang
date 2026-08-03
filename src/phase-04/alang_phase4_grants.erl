@@ -8,8 +8,10 @@
     describe/2,
     issue/3,
     new_store/1,
+    remaining/3,
     remove_owner/2,
     resolve/4,
+    resolve_bound/3,
     restrict/4,
     revoke/2,
     runtime_context/1
@@ -117,6 +119,22 @@ resolve(#{format := alang_grant_store_v1} = Store, Opaque, Context, Now) when
     end;
 resolve(Store, _Opaque, _Context, _Now) -> {error, unknown_grant, Store}.
 
+-spec resolve_bound(map(), term(), map()) ->
+    {ok, map(), map()} | {error, atom(), map()}.
+resolve_bound(#{format := alang_grant_store_v1, grants := Grants} = Store, Opaque, Context) when
+    is_map(Context)
+->
+    case opaque_reference(Opaque) of
+        {ok, Reference} ->
+            case maps:find(Reference, Grants) of
+                error -> {error, unknown_grant, Store};
+                {ok, #{status := revoked}} -> {error, revoked_grant, Store};
+                {ok, Grant} -> resolve_binding(Store, Reference, Grant, Context)
+            end;
+        error -> {error, unknown_grant, Store}
+    end;
+resolve_bound(Store, _Opaque, _Context) -> {error, unknown_grant, Store}.
+
 -spec allows(map(), map()) -> boolean().
 allows(#{invocations := Invocations}, #{operation := Operation, resource := Resource}) ->
     lists:any(fun(Invocation) -> invocation_allows(Invocation, Operation, Resource) end, Invocations);
@@ -136,6 +154,25 @@ consume(#{format := alang_grant_store_v1, grants := Grants} = Store, Opaque, Ope
         error -> {error, unknown_grant}
     end;
 consume(_Store, _Opaque, _Operation) -> {error, invalid_grant_store}.
+
+-spec remaining(map(), term(), binary()) -> {ok, non_neg_integer()} | {error, atom()}.
+remaining(#{format := alang_grant_store_v1, grants := Grants} = Store, Opaque, Operation) when
+    is_binary(Operation)
+->
+    case opaque_reference(Opaque) of
+        {ok, Reference} ->
+            case maps:find(Reference, Grants) of
+                {ok, #{status := active} = Grant} ->
+                    case maps:is_key(Operation, maps:get(budgets, Grant)) of
+                        true -> {ok, effective_budget(Store, Grant, Operation)};
+                        false -> {error, scope_mismatch}
+                    end;
+                {ok, _Grant} -> {error, revoked_grant};
+                error -> {error, unknown_grant}
+            end;
+        error -> {error, unknown_grant}
+    end;
+remaining(_Store, _Opaque, _Operation) -> {error, invalid_grant_store}.
 
 -spec describe(map(), term()) -> {ok, map()} | {error, atom()}.
 describe(#{format := alang_grant_store_v1, grants := Grants} = Store, Opaque) ->

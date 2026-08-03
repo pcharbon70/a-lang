@@ -19,7 +19,7 @@ statically declared operations; a supervised BEAM broker resolves opaque local
 references, validates typed arguments and dynamic policy, and calls one
 OS-bounded adapter without portable delegation or ambient authority.
 
-**Status:** In progress — Sections 4.1–4.2 have reproducible implementation evidence.
+**Status:** In progress — Sections 4.1–4.3 have reproducible implementation evidence.
 
 **Dependencies:** Phase 3 complete with generated A-Lang modules executing as
 supervised BEAM processes through a versioned runtime ABI, bounded mailboxes,
@@ -138,7 +138,7 @@ owner terminates or their deadline expires.
 process boundary with bounded requests, observable decisions, and fail-closed
 restart behavior.
 
-- [ ] **Section 4.3 Complete**
+- [x] **Section 4.3 Complete** — evidence: [BEAM reference monitor](../../src/phase-04/alang_phase4_broker.erl), [one-for-one supervisor](../../src/phase-04/alang_phase4_broker_sup.erl), and [broker lifecycle tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 ### Task 4.3.1: Implement the Broker Decision Pipeline
 
@@ -146,7 +146,7 @@ restart behavior.
 resolution, ownership, resource scope, budget, deadline, cancellation, and
 policy in a fixed order before dispatch.
 
-- [ ] **Task 4.3.1 Complete**
+- [x] **Task 4.3.1 Complete** — evidence: [fixed authorization pipeline](../../src/phase-04/alang_phase4_broker.erl)
 
 #### Subtask 4.3.1.1: Return Typed Decision Reasons
 
@@ -154,7 +154,7 @@ policy in a fixed order before dispatch.
 input, undeclared effect, unknown grant, scope mismatch, exhausted budget,
 expired deadline, cancellation, and policy failure.
 
-- [ ] **Subtask 4.3.1.1 Complete**
+- [x] **Subtask 4.3.1.1 Complete** — evidence: [stable decision-reason tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 #### Subtask 4.3.1.2: Emit Redacted Authorization Events
 
@@ -162,7 +162,7 @@ expired deadline, cancellation, and policy failure.
 resource, decision class, policy version, and remaining budget without logging
 secrets, raw capability references, or prompt content.
 
-- [ ] **Subtask 4.3.1.2 Complete**
+- [x] **Subtask 4.3.1.2 Complete** — evidence: [redacted bounded audit-event tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 ### Task 4.3.2: Supervise and Bound the Broker
 
@@ -170,7 +170,7 @@ secrets, raw capability references, or prompt content.
 limits, timeouts, overload behavior, and restart contract that cannot widen
 authority after failure.
 
-- [ ] **Task 4.3.2 Complete**
+- [x] **Task 4.3.2 Complete** — evidence: [bounded broker state and supervision](../../src/phase-04/alang_phase4_broker.erl)
 
 #### Subtask 4.3.2.1: Enforce Admission and Backpressure
 
@@ -178,7 +178,7 @@ authority after failure.
 globally, reject excess work predictably, and keep one tenant from starving
 unrelated BEAM processes.
 
-- [ ] **Subtask 4.3.2.1 Complete**
+- [x] **Subtask 4.3.2.1 Complete** — evidence: [per-session and global pending-authorization tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 #### Subtask 4.3.2.2: Fail Closed Across Broker Restarts
 
@@ -186,7 +186,7 @@ unrelated BEAM processes.
 explicit state restoration in Phase 5, and classify in-flight requests as
 unknown rather than replaying them automatically.
 
-- [ ] **Subtask 4.3.2.2 Complete**
+- [x] **Subtask 4.3.2.2 Complete** — evidence: [empty-store restart and unknown-outcome no-replay tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 ## Section 4.4: Isolated Effect Adapter
 
