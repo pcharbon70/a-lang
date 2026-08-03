@@ -65,6 +65,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 5 durable BEAM sessions and recovery](phase-05/README.md) — the
   versioned semantic state, integrity journal, supervised resume protocol,
   authority restoration, and crash-recovery evidence.
+- [Phase 6 bounded LLM task and subagent execution](phase-06/README.md) — the
+  typed model boundary, deterministic task control, structured repair,
+  completion verification, and mechanically attenuated child-task runtime.
 
 ### Files
 

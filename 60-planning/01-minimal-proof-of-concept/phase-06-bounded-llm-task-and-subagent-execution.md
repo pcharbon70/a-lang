@@ -19,7 +19,7 @@ completion evidence, slices model context, and adds one child task whose
 authority is mechanically attenuated without exposing a signing or delegation
 primitive. Parent and child both execute as supervised BEAM processes.
 
-**Status:** Planned.
+**Status:** In progress — Section 6.1 complete.
 
 **Dependencies:** Phase 5 complete with versioned durable state,
 intent-and-result journaling, generation fencing, subset-preserving local grant
@@ -30,7 +30,10 @@ restoration, idempotent effect recovery, and the crash matrix accepted.
 **Description:** Define one typed, bounded request and response protocol used
 by the deterministic fixture adapter and any optional live model provider.
 
-- [ ] **Section 6.1 Complete**
+- [x] **Section 6.1 Complete** — implemented by the
+  [provider-neutral model contract](../../src/phase-06/model-boundary-contract.md),
+  [closed model protocol](../../src/phase-06/alang_phase6_model_protocol.erl),
+  and [deterministic mock adapter](../../src/phase-06/alang_phase6_mock_model.erl).
 
 ### Task 6.1.1: Define Model Profiles and Structured Results
 
@@ -38,7 +41,7 @@ by the deterministic fixture adapter and any optional live model provider.
 input context, requested output schema, provenance, and typed result without
 allowing arbitrary provider fields into A-Lang semantics.
 
-- [ ] **Task 6.1.1 Complete**
+- [x] **Task 6.1.1 Complete**
 
 #### Subtask 6.1.1.1: Define the Bounded Completion Request
 
@@ -46,7 +49,7 @@ allowing arbitrary provider fields into A-Lang semantics.
 output schema, maximum input and output size, deadline, retry class, and
 redaction policy with deterministic canonical encoding.
 
-- [ ] **Subtask 6.1.1.1 Complete**
+- [x] **Subtask 6.1.1.1 Complete**
 
 #### Subtask 6.1.1.2: Define Typed Success and Failure Results
 
@@ -54,14 +57,14 @@ redaction policy with deterministic canonical encoding.
 failure, content-policy denial, timeout, provider error, budget exhaustion,
 and uncertain transport outcome with retained provider metadata.
 
-- [ ] **Subtask 6.1.1.2 Complete**
+- [x] **Subtask 6.1.1.2 Complete**
 
 ### Task 6.1.2: Implement Mock and Optional Live Provider Adapters
 
 **Description:** Make offline deterministic fixtures the acceptance path and
 place any live provider behind the identical isolated adapter contract.
 
-- [ ] **Task 6.1.2 Complete**
+- [x] **Task 6.1.2 Complete**
 
 #### Subtask 6.1.2.1: Complete the Deterministic Mock Provider
 
@@ -69,7 +72,7 @@ place any live provider behind the identical isolated adapter contract.
 usage and provenance, and cover valid, malformed, timeout, transient,
 permanent, and uncertain cases without network or secrets.
 
-- [ ] **Subtask 6.1.2.1 Complete**
+- [x] **Subtask 6.1.2.1 Complete**
 
 #### Subtask 6.1.2.2: Add a Feature-Gated Live Provider
 
@@ -77,7 +80,9 @@ permanent, and uncertain cases without network or secrets.
 enforce the model profile, redact traces, support no arbitrary URL or model
 selection, and exclude live nondeterminism from mandatory phase acceptance.
 
-- [ ] **Subtask 6.1.2.2 Complete**
+- [x] **Subtask 6.1.2.2 Complete** — the optional live integration is an
+  explicit `live_provider_disabled` feature gate; it is not part of mandatory
+  acceptance and no credentials or network path are present.
 
 ## Section 6.2: Deterministic Task Orchestration and Context Slicing
 
