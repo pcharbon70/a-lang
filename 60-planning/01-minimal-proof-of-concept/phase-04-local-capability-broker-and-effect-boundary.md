@@ -19,7 +19,7 @@ statically declared operations; a supervised BEAM broker resolves opaque local
 references, validates typed arguments and dynamic policy, and calls one
 OS-bounded adapter without portable delegation or ambient authority.
 
-**Status:** Planned.
+**Status:** Complete — all five sections and the Phase 4 completion gates have reproducible evidence.
 
 **Dependencies:** Phase 3 complete with generated A-Lang modules executing as
 supervised BEAM processes through a versioned runtime ABI, bounded mailboxes,
@@ -31,7 +31,7 @@ classified failures, and inspected artifact imports.
 typed arguments, required authority, runtime operations, adapters, and
 observable results.
 
-- [ ] **Section 4.1 Complete**
+- [x] **Section 4.1 Complete** — evidence: [closed effect registry](../../src/phase-04/alang_phase4_effect_registry.erl) and [registry contract tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 ### Task 4.1.1: Define Stable Effect Identities
 
@@ -39,7 +39,7 @@ observable results.
 in the proof of concept so generated code never selects arbitrary modules or
 functions.
 
-- [ ] **Task 4.1.1 Complete**
+- [x] **Task 4.1.1 Complete** — evidence: [stable registry identities and schemas](../../src/phase-04/alang_phase4_effect_registry.erl)
 
 #### Subtask 4.1.1.1: Register the Initial Operations
 
@@ -47,21 +47,21 @@ functions.
 with closed request, success, denial, timeout, cancellation, and failure
 variants.
 
-- [ ] **Subtask 4.1.1.1 Complete**
+- [x] **Subtask 4.1.1.1 Complete** — evidence: model completion and workspace write definitions in the [closed registry](../../src/phase-04/alang_phase4_effect_registry.erl)
 
 #### Subtask 4.1.1.2: Generate Compiler and Runtime Views
 
 **Description:** Derive type-checker signatures, manifest declarations, broker
 decoders, adapter dispatch, and trace names from the same registry definition.
 
-- [ ] **Subtask 4.1.1.2 Complete**
+- [x] **Subtask 4.1.1.2 Complete** — evidence: [derived-view consistency tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 ### Task 4.1.2: Enforce Typed Effect Requests
 
 **Description:** Make every request a versioned value whose resource and
 arguments are decoded before policy evaluation or adapter dispatch.
 
-- [ ] **Task 4.1.2 Complete**
+- [x] **Task 4.1.2 Complete** — evidence: [versioned request decoder and manifest binder](../../src/phase-04/alang_phase4_effect_registry.erl)
 
 #### Subtask 4.1.2.1: Reject Dynamic Dispatch Inputs
 
@@ -69,14 +69,14 @@ arguments are decoded before policy evaluation or adapter dispatch.
 adapter identifiers, unknown fields, oversized binaries, and schema versions
 outside the registry.
 
-- [ ] **Subtask 4.1.2.1 Complete**
+- [x] **Subtask 4.1.2.1 Complete** — evidence: [dynamic-dispatch, schema, bounds, and atom-safety tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 #### Subtask 4.1.2.2: Bind Requests to Artifact Manifests
 
 **Description:** Deny any operation absent from the loaded artifact's effect
 manifest even when a session happens to hold a broader runtime grant.
 
-- [ ] **Subtask 4.1.2.2 Complete**
+- [x] **Subtask 4.1.2.2 Complete** — evidence: [independent artifact-manifest upper-bound tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 ## Section 4.2: Opaque Local Capability References
 
@@ -84,14 +84,14 @@ manifest even when a session happens to hold a broader runtime grant.
 unforgeable, process-local references with no portable or self-certifying wire
 meaning.
 
-- [ ] **Section 4.2 Complete**
+- [x] **Section 4.2 Complete** — evidence: [opaque grant store](../../src/phase-04/alang_phase4_grants.erl) and [grant law and lifetime tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 ### Task 4.2.1: Define Grant State and Restriction Laws
 
 **Description:** Model each grant as a set of permitted typed invocations plus
 resource scope, budgets, deadlines, owner, lifecycle, and revocation state.
 
-- [ ] **Task 4.2.1 Complete**
+- [x] **Task 4.2.1 Complete** — evidence: [structural invocation sets, shared budgets, and restriction laws](../../src/phase-04/alang_phase4_grants.erl)
 
 #### Subtask 4.2.1.1: Specify Local Least Authority
 
@@ -99,7 +99,7 @@ resource scope, budgets, deadlines, owner, lifecycle, and revocation state.
 session authority and make every narrowing operation monotonically reduce or
 preserve that set.
 
-- [ ] **Subtask 4.2.1.1 Complete**
+- [x] **Subtask 4.2.1.1 Complete** — evidence: [generated monotone-restriction tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 #### Subtask 4.2.1.2: Specify Combination and Revocation
 
@@ -107,14 +107,14 @@ preserve that set.
 how revocation invalidates descendants, and how stale references fail without
 revealing broker state.
 
-- [ ] **Subtask 4.2.1.2 Complete**
+- [x] **Subtask 4.2.1.2 Complete** — evidence: [policy-gated intersection, shared-budget, and descendant-revocation tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 ### Task 4.2.2: Issue and Resolve Opaque References
 
 **Description:** Create high-entropy references inside the trusted broker and
 bind them to one session, artifact, process lineage, and runtime instance.
 
-- [ ] **Task 4.2.2 Complete**
+- [x] **Task 4.2.2 Complete** — evidence: [broker-local opaque reference issuance and resolution](../../src/phase-04/alang_phase4_grants.erl)
 
 #### Subtask 4.2.2.1: Prevent Reference Forgery and Leakage
 
@@ -122,7 +122,7 @@ bind them to one session, artifact, process lineage, and runtime instance.
 responses, logs, traces, artifacts, and external adapter payloads; expose only
 redacted reference identifiers where correlation is necessary.
 
-- [ ] **Subtask 4.2.2.1 Complete**
+- [x] **Subtask 4.2.2.1 Complete** — evidence: [unique-reference and redacted-description tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 #### Subtask 4.2.2.2: Bind References to Runtime Lifetimes
 
@@ -130,7 +130,7 @@ redacted reference identifiers where correlation is necessary.
 artifact, process lineage, or runtime generation and remove them when their
 owner terminates or their deadline expires.
 
-- [ ] **Subtask 4.2.2.2 Complete**
+- [x] **Subtask 4.2.2.2 Complete** — evidence: [node, runtime, generation, session, artifact, owner, task, presenter, expiry, and owner-removal checks](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 ## Section 4.3: Supervised BEAM Reference Monitor
 
@@ -138,7 +138,7 @@ owner terminates or their deadline expires.
 process boundary with bounded requests, observable decisions, and fail-closed
 restart behavior.
 
-- [ ] **Section 4.3 Complete**
+- [x] **Section 4.3 Complete** — evidence: [BEAM reference monitor](../../src/phase-04/alang_phase4_broker.erl), [one-for-one supervisor](../../src/phase-04/alang_phase4_broker_sup.erl), and [broker lifecycle tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 ### Task 4.3.1: Implement the Broker Decision Pipeline
 
@@ -146,7 +146,7 @@ restart behavior.
 resolution, ownership, resource scope, budget, deadline, cancellation, and
 policy in a fixed order before dispatch.
 
-- [ ] **Task 4.3.1 Complete**
+- [x] **Task 4.3.1 Complete** — evidence: [fixed authorization pipeline](../../src/phase-04/alang_phase4_broker.erl)
 
 #### Subtask 4.3.1.1: Return Typed Decision Reasons
 
@@ -154,7 +154,7 @@ policy in a fixed order before dispatch.
 input, undeclared effect, unknown grant, scope mismatch, exhausted budget,
 expired deadline, cancellation, and policy failure.
 
-- [ ] **Subtask 4.3.1.1 Complete**
+- [x] **Subtask 4.3.1.1 Complete** — evidence: [stable decision-reason tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 #### Subtask 4.3.1.2: Emit Redacted Authorization Events
 
@@ -162,7 +162,7 @@ expired deadline, cancellation, and policy failure.
 resource, decision class, policy version, and remaining budget without logging
 secrets, raw capability references, or prompt content.
 
-- [ ] **Subtask 4.3.1.2 Complete**
+- [x] **Subtask 4.3.1.2 Complete** — evidence: [redacted bounded audit-event tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 ### Task 4.3.2: Supervise and Bound the Broker
 
@@ -170,7 +170,7 @@ secrets, raw capability references, or prompt content.
 limits, timeouts, overload behavior, and restart contract that cannot widen
 authority after failure.
 
-- [ ] **Task 4.3.2 Complete**
+- [x] **Task 4.3.2 Complete** — evidence: [bounded broker state and supervision](../../src/phase-04/alang_phase4_broker.erl)
 
 #### Subtask 4.3.2.1: Enforce Admission and Backpressure
 
@@ -178,7 +178,7 @@ authority after failure.
 globally, reject excess work predictably, and keep one tenant from starving
 unrelated BEAM processes.
 
-- [ ] **Subtask 4.3.2.1 Complete**
+- [x] **Subtask 4.3.2.1 Complete** — evidence: [per-session and global pending-authorization tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 #### Subtask 4.3.2.2: Fail Closed Across Broker Restarts
 
@@ -186,7 +186,7 @@ unrelated BEAM processes.
 explicit state restoration in Phase 5, and classify in-flight requests as
 unknown rather than replaying them automatically.
 
-- [ ] **Subtask 4.3.2.2 Complete**
+- [x] **Subtask 4.3.2.2 Complete** — evidence: [empty-store restart and unknown-outcome no-replay tests](../../src/phase-04/alang_phase4_broker_tests.erl)
 
 ## Section 4.4: Isolated Effect Adapter
 
@@ -194,7 +194,7 @@ unknown rather than replaying them automatically.
 boundary while treating BEAM process isolation as orchestration rather than a
 security sandbox.
 
-- [ ] **Section 4.4 Complete**
+- [x] **Section 4.4 Complete** — evidence: [workspace adapter contract](../../src/phase-04/workspace-adapter-contract.md), [sealed BEAM adapter manager](../../src/phase-04/alang_phase4_workspace_adapter.erl), [fixed BEAM sidecar](../../src/phase-04/alang_phase4_workspace_sidecar.erl), and [adapter isolation tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 ### Task 4.4.1: Implement the Workspace Adapter Contract
 
@@ -202,7 +202,7 @@ security sandbox.
 segments, bounded bytes, an operation identifier, and a deadline, and return a
 typed result with an artifact digest.
 
-- [ ] **Task 4.4.1 Complete**
+- [x] **Task 4.4.1 Complete** — evidence: [typed workspace protocol and implementation](../../src/phase-04/workspace-adapter-contract.md)
 
 #### Subtask 4.4.1.1: Enforce Filesystem Scope
 
@@ -210,7 +210,7 @@ typed result with an artifact digest.
 workspace identity, oversized content, special files, and destinations outside
 the broker-authorized root.
 
-- [ ] **Subtask 4.4.1.1 Complete**
+- [x] **Subtask 4.4.1.1 Complete** — evidence: [workspace, traversal, symlink, special-target, and content-bound tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 #### Subtask 4.4.1.2: Define Idempotent Operation Identity
 
@@ -218,14 +218,14 @@ the broker-authorized root.
 with the same identifier and payload observable as the same logical attempt,
 without yet claiming crash-safe durability.
 
-- [ ] **Subtask 4.4.1.2 Complete**
+- [x] **Subtask 4.4.1.2 Complete** — evidence: [created, replayed, and conflicting operation-identity tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 ### Task 4.4.2: Isolate Adapter Failure and Resource Use
 
 **Description:** Run the adapter through the narrowest practical OS boundary
 with explicit CPU, memory, filesystem, output, and time limits.
 
-- [ ] **Task 4.4.2 Complete**
+- [x] **Task 4.4.2 Complete** — evidence: [Bubblewrap, `prlimit`, BEAM heap, frame, output, and deadline isolation profile](../../src/phase-04/workspace-adapter-contract.md#isolation-profile)
 
 #### Subtask 4.4.2.1: Frame and Validate Adapter Messages
 
@@ -233,7 +233,7 @@ with explicit CPU, memory, filesystem, output, and time limits.
 adapter exits to typed failures, and prevent protocol desynchronization from
 corrupting the broker mailbox.
 
-- [ ] **Subtask 4.4.2.1 Complete**
+- [x] **Subtask 4.4.2.1 Complete** — evidence: [bounded packet framing and malformed-response tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 #### Subtask 4.4.2.2: Contain Crashes and Timeouts
 
@@ -241,7 +241,7 @@ corrupting the broker mailbox.
 session coordinator or treating an unknown external outcome as a successful
 effect.
 
-- [ ] **Subtask 4.4.2.2 Complete**
+- [x] **Subtask 4.4.2.2 Complete** — evidence: [crash, timeout, unknown-outcome, and replacement tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 ## Section 4.5: Capability and Effect Integration Test
 
@@ -249,7 +249,7 @@ effect.
 authorized workspace effect through the BEAM broker and cannot bypass or widen
 that authority.
 
-- [ ] **Section 4.5 Complete**
+- [x] **Section 4.5 Complete** — evidence: [capability and effect integration suite](../../src/phase-04/alang_phase4_integration_tests.erl) and [reproducible evidence narrative](../../src/phase-04/phase-04-integration-evidence.md)
 
 ### Task 4.5.1: Run the Authorized Effect Path
 
@@ -257,7 +257,7 @@ that authority.
 the typed effect request, authorize it in the broker, execute the adapter, and
 return the artifact digest to the originating BEAM process.
 
-- [ ] **Task 4.5.1 Complete**
+- [x] **Task 4.5.1 Complete** — evidence: [loaded generated-BEAM authorized path](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.1.1: Verify the Successful Trace
 
@@ -265,7 +265,7 @@ return the artifact digest to the originating BEAM process.
 and process events and prove that the output exists only at the authorized
 workspace path.
 
-- [ ] **Subtask 4.5.1.1 Complete**
+- [x] **Subtask 4.5.1.1 Complete** — evidence: [correlated runtime, broker, adapter, digest, budget, and output assertions](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.1.2: Verify BEAM Ownership and Dispatch
 
@@ -273,7 +273,7 @@ workspace path.
 and broker are BEAM processes and that no host interpreter or direct generated
 module call performs the external effect.
 
-- [ ] **Subtask 4.5.1.2 Complete**
+- [x] **Subtask 4.5.1.2 Complete** — evidence: [ERTS process snapshots, BEAM module paths, artifact imports, and fixed sidecar status](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 ### Task 4.5.2: Run Least-Authority Rejection Cases
 
@@ -281,14 +281,14 @@ module call performs the external effect.
 expired, revoked, and undeclared requests plus direct adapter and module-call
 bypass attempts.
 
-- [ ] **Task 4.5.2 Complete**
+- [x] **Task 4.5.2 Complete** — evidence: [least-authority denial matrix](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.2.1: Assert No Unauthorized Side Effect
 
 **Description:** Verify the workspace and adapter logs remain unchanged for
 every denied request and that retries cannot turn a denial into execution.
 
-- [ ] **Subtask 4.5.2.1 Complete**
+- [x] **Subtask 4.5.2.1 Complete** — evidence: [unchanged adapter event counts, budgets, and workspace paths for denied requests](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.2.2: Assert Stable Failure Evidence
 
@@ -296,18 +296,18 @@ every denied request and that retries cannot turn a denial into execution.
 redacted audit event, unchanged budget where appropriate, and healthy BEAM
 supervision tree.
 
-- [ ] **Subtask 4.5.2.2 Complete**
+- [x] **Subtask 4.5.2.2 Complete** — evidence: [typed denial, redacted audit, stale-generation, supervision-health, seal-bypass, and import-rejection assertions](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 ## Phase 4 Completion Evidence
 
 **Description:** Phase 4 is complete only when the repository contains
 reproducible evidence for all items below.
 
-- [ ] The effect registry generates consistent compiler, manifest, broker, and adapter views
-- [ ] Generated BEAM code can request only manifest-declared operations through the ABI
-- [ ] Opaque grants are local, unforgeable, scoped, bounded, expiring, and revocable
-- [ ] Broker decisions are typed, ordered, redacted, supervised, and fail closed
-- [ ] The workspace adapter enforces path and resource isolation
-- [ ] The authorized end-to-end effect succeeds only through the BEAM broker
-- [ ] Forgery, scope escape, exhaustion, expiry, revocation, and bypass cases cause no effect
-- [ ] No portable authorization protocol is required or implemented
+- [x] The effect registry generates consistent compiler, manifest, broker, and adapter views
+- [x] Generated BEAM code can request only manifest-declared operations through the ABI
+- [x] Opaque grants are local, unforgeable, scoped, bounded, expiring, and revocable
+- [x] Broker decisions are typed, ordered, redacted, supervised, and fail closed
+- [x] The workspace adapter enforces path and resource isolation
+- [x] The authorized end-to-end effect succeeds only through the BEAM broker
+- [x] Forgery, scope escape, exhaustion, expiry, revocation, and bypass cases cause no effect
+- [x] No portable authorization protocol is required or implemented
