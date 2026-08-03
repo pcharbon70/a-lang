@@ -19,7 +19,7 @@ completion evidence, slices model context, and adds one child task whose
 authority is mechanically attenuated without exposing a signing or delegation
 primitive. Parent and child both execute as supervised BEAM processes.
 
-**Status:** In progress — Section 6.1 complete.
+**Status:** In progress — Sections 6.1–6.2 complete.
 
 **Dependencies:** Phase 5 complete with versioned durable state,
 intent-and-result journaling, generation fencing, subset-preserving local grant
@@ -90,7 +90,10 @@ selection, and exclude live nondeterminism from mandatory phase acceptance.
 compiled runtime while giving the model only the smallest context needed for
 one declared judgment.
 
-- [ ] **Section 6.2 Complete**
+- [x] **Section 6.2 Complete** — implemented by the
+  [runtime task machine](../../src/phase-06/alang_phase6_task.erl),
+  [context slicer](../../src/phase-06/alang_phase6_context.erl), and
+  [orchestration contract](../../src/phase-06/task-orchestration-and-context.md).
 
 ### Task 6.2.1: Implement the Minimal Task State Machine
 
@@ -98,7 +101,7 @@ one declared judgment.
 request-write, verify-artifact, complete, fail, and cancel states as explicit
 compiled transitions.
 
-- [ ] **Task 6.2.1 Complete**
+- [x] **Task 6.2.1 Complete**
 
 #### Subtask 6.2.1.1: Bind State Transitions to Typed Results
 
@@ -106,7 +109,7 @@ compiled transitions.
 variant, reject unexpected replies, persist checkpoints before consequential
 effects, and preserve the original goal independently from the current plan.
 
-- [ ] **Subtask 6.2.1.1 Complete**
+- [x] **Subtask 6.2.1.1 Complete**
 
 #### Subtask 6.2.1.2: Enforce Bounds and Stop Conditions
 
@@ -114,7 +117,7 @@ effects, and preserve the original goal independently from the current plan.
 elapsed time, context bytes, output bytes, and effect count and terminate with
 a typed incomplete result when a bound is exhausted.
 
-- [ ] **Subtask 6.2.1.2 Complete**
+- [x] **Subtask 6.2.1.2 Complete**
 
 ### Task 6.2.2: Implement Capability-Aware Context Slicing
 
@@ -122,7 +125,7 @@ a typed incomplete result when a bound is exhausted.
 relevant typed inputs, allowed action summaries, evidence, and diagnostics
 without copying the full proof or runtime state.
 
-- [ ] **Task 6.2.2 Complete**
+- [x] **Task 6.2.2 Complete**
 
 #### Subtask 6.2.2.1: Define Context Selection Rules
 
@@ -130,7 +133,7 @@ without copying the full proof or runtime state.
 available effects and constraints, exclude private state and irrelevant
 history, and preserve provenance for every included fragment.
 
-- [ ] **Subtask 6.2.2.1 Complete**
+- [x] **Subtask 6.2.2.1 Complete**
 
 #### Subtask 6.2.2.2: Prevent Authority and Instruction Leakage
 
@@ -138,7 +141,7 @@ history, and preserve provenance for every included fragment.
 credentials, unredacted traces, runtime addresses, and retrieved text with
 undeclared instruction authority from model-visible context.
 
-- [ ] **Subtask 6.2.2.2 Complete**
+- [x] **Subtask 6.2.2.2 Complete**
 
 ## Section 6.3: Structured Repair and Completion Verification
 

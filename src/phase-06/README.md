@@ -52,6 +52,18 @@ the ignored repository `build/` directory.
 - [Provider-neutral model boundary](model-boundary-contract.md) — the semantic
   request and result contract, retry classification, deterministic acceptance
   adapter, and explicitly deferred live integration.
+- [`alang_phase6_context.erl`](alang_phase6_context.erl) — capability-aware
+  selection of ordered provenance-bearing fragments, redacted action
+  summaries, exclusion snapshots, and recursive nonexposure checks.
+- [`alang_phase6_task.erl`](alang_phase6_task.erl) — the deterministic task
+  transition system, immutable goal, checkpoint gates, runtime counters,
+  bounds, and typed terminal results.
+- [`alang_phase6_task_tests.erl`](alang_phase6_task_tests.erl) — context
+  minimality, prompt-injection demotion, authority nonexposure, transition
+  ordering, checkpoint, cancellation, and exhaustion evidence.
+- [Deterministic task orchestration and context slicing](task-orchestration-and-context.md)
+  — the runtime-owned control model, stop semantics, context rules, and
+  instruction-authority boundary.
 
 ## Maintaining this index
 
