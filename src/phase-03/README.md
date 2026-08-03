@@ -70,10 +70,16 @@ ignored repository `build/` directory.
 - [`alang_phase3_runtime_tests.erl`](alang_phase3_runtime_tests.erl) — ABI,
   atom-safety, supervision, overload, gateway-death, deadline, cancellation,
   trace-bound, and no-retry evidence.
+- [`alang_phase3_artifact.erl`](alang_phase3_artifact.erl) — metadata, chunk,
+  import, export, compiler, toolchain, size, load, and soft-purge policy.
+- [`alang_phase3_artifact_tests.erl`](alang_phase3_artifact_tests.erl) —
+  pre-load rejection and inspected load-execute-purge lifecycle evidence.
 - [Backend representation contract](backend-representation-contract.md) —
   value encodings, failure domains, evaluation order, and supported IR nodes.
 - [Erlang Abstract Format contract](abstract-format-contract.md) — supported
   forms, calls, compiler-owned atoms, bounds, and diagnostic rules.
+- [BEAM artifact and loading contract](artifact-contract.md) — metadata
+  placement, digest scopes, inspection gates, and code lifecycle rules.
 
 ## Maintaining this index
 

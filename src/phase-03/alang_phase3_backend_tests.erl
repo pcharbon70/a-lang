@@ -28,7 +28,10 @@ pure_data_and_control_vocabulary_lowers_test() ->
     ?assert(term_contains(Forms, {remote, 10, {atom, 10, erlang}, {atom, 10, element}})).
 
 effect_requests_lower_only_through_runtime_abi_test() ->
-    {ok, Lowered} = alang_phase3_lowering:lower(effect_ir(), default_context()),
+    Context = (default_context())#{
+        capability_manifest := #{effects => [<<"fixture.increment">>], requirements => []}
+    },
+    {ok, Lowered} = alang_phase3_lowering:lower(effect_ir(), Context),
     Forms = maps:get(forms, Lowered),
     ?assertEqual(ok, alang_phase3_forms:validate(Forms)),
     ?assert(term_contains(
@@ -168,8 +171,19 @@ origin() -> #{byte => 90, line => 10, column => 4}.
 forbidden_forms() ->
     Metadata = #{
         format => alang_backend_metadata_v1,
+        module => alang_phase3_program_v1,
         abi => alang_runtime_v1,
         ir_format => alang_typed_task_ir_v1,
+        compiler => #{
+            format => alang_phase3_compiler_v1,
+            module => alang_phase3_backend,
+            engine => beam
+        },
+        toolchain => alang_phase1_compiler:current_toolchain(),
+        reproducibility => #{
+            forms_encoding => deterministic_etf,
+            compiler_profile => alang_phase3_otp29_v1
+        },
         source_sha256 => <<"source">>,
         ir_sha256 => <<"ir">>,
         capability_manifest => #{effects => [], requirements => []},

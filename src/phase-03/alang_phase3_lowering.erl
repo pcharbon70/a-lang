@@ -21,17 +21,29 @@ lower(_Ir, _Context) ->
 lower_valid_ir(#{tasks := Tasks, nodes := Nodes} = Ir, Context) ->
     NodeMap = maps:from_list([{maps:get(id, Node), Node} || Node <- Nodes]),
     CallableMap = callable_map(Tasks, 0, #{}),
+    CapabilityManifest = capability_manifest(Tasks, Context),
     SourceMap = [
         {maps:get(id, Node), origin_tuple(maps:get(origin, Node))}
      || Node <- Nodes
     ],
     Metadata = #{
         format => alang_backend_metadata_v1,
+        module => ?GENERATED_MODULE,
         abi => alang_runtime_v1,
         ir_format => alang_typed_task_ir_v1,
+        compiler => #{
+            format => alang_phase3_compiler_v1,
+            module => alang_phase3_backend,
+            engine => beam
+        },
+        toolchain => maps:get(toolchain, Context, alang_phase1_compiler:current_toolchain()),
+        reproducibility => #{
+            forms_encoding => deterministic_etf,
+            compiler_profile => alang_phase3_otp29_v1
+        },
         source_sha256 => maps:get(source_sha256, Context, <<>>),
         ir_sha256 => maps:get(ir_sha256, Context, hex(crypto:hash(sha256, term_to_binary(Ir, [deterministic])))),
-        capability_manifest => maps:get(capability_manifest, Context, #{effects => [], requirements => []}),
+        capability_manifest => CapabilityManifest,
         source_map => SourceMap
     },
     Execute = execute_function(Tasks, CallableMap),
@@ -50,6 +62,16 @@ lower_valid_ir(#{tasks := Tasks, nodes := Nodes} = Ir, Context) ->
         source_map => SourceMap,
         callable_map => CallableMap
     }.
+
+capability_manifest(Tasks, Context) ->
+    Derived = #{
+        effects => lists:usort(lists:append([maps:get(effects, Task) || Task <- Tasks])),
+        requirements => lists:usort(lists:append([maps:get(requirements, Task) || Task <- Tasks]))
+    },
+    case maps:get(capability_manifest, Context, Derived) of
+        Derived -> Derived;
+        _Other -> fail(capability_manifest_mismatch, <<"module">>, default_origin())
+    end.
 
 execute_function(Tasks, CallableMap) ->
     TaskIdVariable = {var, 1, 'ALANG_TASK_ID'},

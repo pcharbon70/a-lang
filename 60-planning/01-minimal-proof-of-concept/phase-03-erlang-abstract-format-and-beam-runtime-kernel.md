@@ -19,7 +19,7 @@ ERTS execution into a complete minimal backend, closed versioned runtime ABI,
 and supervised task-process kernel without introducing an existing
 BEAM-language interpreter.
 
-**Status:** In progress — Sections 3.1 through 3.3 complete.
+**Status:** In progress — Sections 3.1 through 3.4 complete.
 
 **Dependencies:** Phase 2 complete with source-derived typed IR, normalized
 observations, test-only reference views, capability manifests, fail-closed
@@ -195,7 +195,7 @@ timeouts do not convert an uncertain effect into an automatic retry.
 **Description:** Ensure that only approved compiler artifacts with a closed
 import and metadata surface can load on the PoC node.
 
-- [ ] **Section 3.4 Complete**
+- [x] **Section 3.4 Complete** — evidence: [artifact and loading contract](../../src/phase-03/artifact-contract.md), [artifact inspector and loader](../../src/phase-03/alang_phase3_artifact.erl), and [pre-load and lifecycle tests](../../src/phase-03/alang_phase3_artifact_tests.erl)
 
 ### Task 3.4.1: Emit A-Lang Artifact Metadata
 
@@ -203,7 +203,7 @@ import and metadata surface can load on the PoC node.
 OTP versions, ABI version, capability manifest, source map, and reproducibility
 data.
 
-- [ ] **Task 3.4.1 Complete**
+- [x] **Task 3.4.1 Complete** — evidence: [artifact metadata contract](../../src/phase-03/artifact-contract.md#metadata-placement) and [metadata emission](../../src/phase-03/alang_phase3_lowering.erl)
 
 #### Subtask 3.4.1.1: Define Metadata Placement and Digest Scope
 
@@ -211,7 +211,7 @@ data.
 bytes each digest covers, and prevent mutable build details from undermining
 deterministic comparison.
 
-- [ ] **Subtask 3.4.1.1 Complete**
+- [x] **Subtask 3.4.1.1 Complete** — evidence: [metadata placement and digest scope](../../src/phase-03/artifact-contract.md#metadata-placement)
 
 #### Subtask 3.4.1.2: Implement Metadata Inspection
 
@@ -219,14 +219,14 @@ deterministic comparison.
 versions, imports, capability requirements, and load policy without executing
 the module.
 
-- [ ] **Subtask 3.4.1.2 Complete**
+- [x] **Subtask 3.4.1.2 Complete** — evidence: [nonexecuting artifact inspection](../../src/phase-03/alang_phase3_artifact.erl)
 
 ### Task 3.4.2: Enforce the Approved Load Policy
 
 **Description:** Inspect module identity, imports, attributes, chunks, size,
 compiler provenance, and ABI compatibility before isolated loading.
 
-- [ ] **Task 3.4.2 Complete**
+- [x] **Task 3.4.2 Complete** — evidence: [approved load policy](../../src/phase-03/alang_phase3_artifact.erl)
 
 #### Subtask 3.4.2.1: Restrict Imports and Dynamic Behavior
 
@@ -234,7 +234,7 @@ compiler provenance, and ABI compatibility before isolated loading.
 pure BIFs, and reject arbitrary module application, ports, NIF loading,
 unsafe term decoding, and unbounded dynamic module or atom creation.
 
-- [ ] **Subtask 3.4.2.1 Complete**
+- [x] **Subtask 3.4.2.1 Complete** — evidence: [closed BEAM import and container tests](../../src/phase-03/alang_phase3_artifact_tests.erl)
 
 #### Subtask 3.4.2.2: Load, Execute, and Purge Safely
 
@@ -242,7 +242,7 @@ unsafe term decoding, and unbounded dynamic module or atom creation.
 the runtime launcher, terminate all owning tasks before purge, and report code
 lifecycle failures without hot-upgrade semantics.
 
-- [ ] **Subtask 3.4.2.2 Complete**
+- [x] **Subtask 3.4.2.2 Complete** — evidence: [inspected load-execute-soft-purge test](../../src/phase-03/alang_phase3_artifact_tests.erl)
 
 ## Section 3.5: Phase 3 Integration Tests
 

@@ -54,8 +54,9 @@ Backend errors use
 `{alang_compile_error_v1, Code, NodeId, {source, Byte, Line, Column}}`.
 Unsupported nodes, dangling references, invalid types, illegal identities,
 unresolved calls, unavailable compiler atoms, disallowed forms, OTP validation
-errors, and warnings all fail the build. Later sections add the exact OTP and
-artifact evidence without weakening this contract.
+errors, and warnings all fail the build. The [artifact and loading
+contract](artifact-contract.md) adds exact OTP, metadata, import, and code
+lifecycle evidence without weakening this contract.
 
 ## Connections
 

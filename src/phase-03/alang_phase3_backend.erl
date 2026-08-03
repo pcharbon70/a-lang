@@ -6,9 +6,15 @@
 
 -spec compile_ir(map(), map(), file:filename()) -> {ok, map()} | {error, term()}.
 compile_ir(Ir, Context, ToolchainPath) ->
-    case alang_phase3_lowering:lower(Ir, Context) of
+    case alang_phase1_compiler:check_toolchain(ToolchainPath) of
+        {ok, Toolchain} -> compile_ir_with_toolchain(Ir, Context, Toolchain);
+        {error, _} = Error -> Error
+    end.
+
+compile_ir_with_toolchain(Ir, Context, Toolchain) ->
+    case alang_phase3_lowering:lower(Ir, Context#{toolchain => Toolchain}) of
         {ok, Lowered} ->
-            case compile_forms(maps:get(forms, Lowered), ToolchainPath) of
+            case validate_and_emit(maps:get(forms, Lowered), Toolchain) of
                 {ok, Compilation} -> {ok, maps:merge(Lowered, Compilation)};
                 {error, _} = Error -> Error
             end;

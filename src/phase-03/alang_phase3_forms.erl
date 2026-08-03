@@ -1,6 +1,6 @@
 -module(alang_phase3_forms).
 
--export([validate/1]).
+-export([validate/1, validate_metadata/1]).
 
 -define(GENERATED_MODULE, alang_phase3_program_v1).
 -define(MAX_FORMS, 40).
@@ -31,8 +31,24 @@ validate(_) ->
 
 validate_metadata(#{
     format := alang_backend_metadata_v1,
+    module := ?GENERATED_MODULE,
     abi := alang_runtime_v1,
     ir_format := alang_typed_task_ir_v1,
+    compiler := #{
+        format := alang_phase3_compiler_v1,
+        module := alang_phase3_backend,
+        engine := beam
+    },
+    toolchain := #{
+        otp_version := OtpVersion,
+        otp_release := OtpRelease,
+        erts_version := ErtsVersion,
+        system_architecture := SystemArchitecture
+    },
+    reproducibility := #{
+        forms_encoding := deterministic_etf,
+        compiler_profile := alang_phase3_otp29_v1
+    },
     source_sha256 := SourceDigest,
     ir_sha256 := IrDigest,
     capability_manifest := #{effects := Effects, requirements := Requirements},
@@ -42,6 +58,10 @@ validate_metadata(#{
     byte_size(SourceDigest) =< 64,
     is_binary(IrDigest),
     byte_size(IrDigest) =< 64,
+    is_binary(OtpVersion),
+    is_binary(OtpRelease),
+    is_binary(ErtsVersion),
+    is_binary(SystemArchitecture),
     is_list(Effects),
     length(Effects) =< 32,
     is_list(Requirements),

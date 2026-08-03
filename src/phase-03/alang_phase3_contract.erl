@@ -2,6 +2,7 @@
 
 -export([
     allowed_abstract_forms/0,
+    allowed_beam_imports/0,
     allowed_node_kinds/0,
     allowed_runtime_calls/0,
     compile_error/3,
@@ -74,6 +75,13 @@ allowed_runtime_calls() ->
         {erlang, map_get, 2},
         {erlang, self, 0}
     ].
+
+-spec allowed_beam_imports() -> [{module(), atom(), arity()}].
+allowed_beam_imports() ->
+    lists:usort(allowed_runtime_calls() ++ [
+        {erlang, get_module_info, 1},
+        {erlang, get_module_info, 2}
+    ]).
 
 -spec evaluation_order() -> [atom()].
 evaluation_order() ->

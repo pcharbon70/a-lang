@@ -48,10 +48,12 @@ PHASE3_SOURCES := \
 	$(PHASE3_DIR)/alang_phase3_session_sup.erl \
 	$(PHASE3_DIR)/alang_phase3_launcher.erl \
 	$(PHASE3_DIR)/alang_phase3_runtime_fixture.erl \
-	$(PHASE3_DIR)/alang_phase3_runtime_tests.erl
+	$(PHASE3_DIR)/alang_phase3_runtime_tests.erl \
+	$(PHASE3_DIR)/alang_phase3_artifact.erl \
+	$(PHASE3_DIR)/alang_phase3_artifact_tests.erl
 PHASE3_COMPILER_STAMP := $(PHASE3_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3
+.PHONY: build-phase-1-artifact build-phase-2-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -125,6 +127,9 @@ test-section-3-2: test-section-3-1
 
 test-section-3-3: test-section-3-2
 	$(ERL) -noshell -pa $(PHASE3_BUILD) -eval 'case eunit:test(alang_phase3_runtime_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-section-3-4: test-section-3-3
+	$(ERL) -noshell -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -eval 'case eunit:test(alang_phase3_artifact_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
 test: test-phase-1 test-phase-2
 
