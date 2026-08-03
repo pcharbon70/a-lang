@@ -19,7 +19,7 @@ ERTS execution into a complete minimal backend, closed versioned runtime ABI,
 and supervised task-process kernel without introducing an existing
 BEAM-language interpreter.
 
-**Status:** Planned.
+**Status:** In progress — Section 3.1 complete.
 
 **Dependencies:** Phase 2 complete with source-derived typed IR, normalized
 observations, test-only reference views, capability manifests, fail-closed
@@ -30,7 +30,7 @@ semantic fixtures, and successful compiled BEAM execution accepted.
 **Description:** Define the exact runtime representations and supported
 Abstract Format subset before emitting code.
 
-- [ ] **Section 3.1 Complete**
+- [x] **Section 3.1 Complete** — evidence: [backend representation contract](../../src/phase-03/backend-representation-contract.md), [Abstract Format contract](../../src/phase-03/abstract-format-contract.md), and [executable contract tests](../../src/phase-03/alang_phase3_contract_tests.erl)
 
 ### Task 3.1.1: Map Typed IR Values and Control to BEAM Terms
 
@@ -38,7 +38,7 @@ Abstract Format subset before emitting code.
 opaque identifiers, records, products, results, functions, tasks, sequential
 composition, effect requests, and verifier results.
 
-- [ ] **Task 3.1.1 Complete**
+- [x] **Task 3.1.1 Complete** — evidence: [closed value and failure encodings](../../src/phase-03/alang_phase3_contract.erl)
 
 #### Subtask 3.1.1.1: Define Value and Error Encodings
 
@@ -46,7 +46,7 @@ composition, effect requests, and verifier results.
 errors from runtime protocol errors, and prohibit representation collisions
 with user data.
 
-- [ ] **Subtask 3.1.1.1 Complete**
+- [x] **Subtask 3.1.1.1 Complete** — evidence: [value representation contract](../../src/phase-03/backend-representation-contract.md#values)
 
 #### Subtask 3.1.1.2: Define Evaluation and Failure Order
 
@@ -54,14 +54,14 @@ with user data.
 exception containment, effect suspension, deadline observation, and verifier
 execution in terms that both the evaluator and compiled backend can observe.
 
-- [ ] **Subtask 3.1.1.2 Complete**
+- [x] **Subtask 3.1.1.2 Complete** — evidence: [evaluation and failure order](../../src/phase-03/backend-representation-contract.md#evaluation-and-failure-order)
 
 ### Task 3.1.2: Freeze the Abstract Format Subset
 
 **Description:** Enumerate the smallest OTP-supported Abstract Format forms and
 runtime calls required by the PoC and reject every other backend shape.
 
-- [ ] **Task 3.1.2 Complete**
+- [x] **Task 3.1.2 Complete** — evidence: [closed Abstract Format surface](../../src/phase-03/abstract-format-contract.md)
 
 #### Subtask 3.1.2.1: Classify Required Forms and Calls
 
@@ -69,7 +69,7 @@ runtime calls required by the PoC and reject every other backend shape.
 literals, tuples, maps where justified, calls, cases, receives, timeouts, and
 the fixed A-Lang runtime ABI without relying on Core Erlang or BEAM assembly.
 
-- [ ] **Subtask 3.1.2.1 Complete**
+- [x] **Subtask 3.1.2.1 Complete** — evidence: [allowed forms and calls](../../src/phase-03/alang_phase3_contract.erl)
 
 #### Subtask 3.1.2.2: Define Fail-Closed Backend Diagnostics
 
@@ -77,7 +77,7 @@ the fixed A-Lang runtime ABI without relying on Core Erlang or BEAM assembly.
 unresolved runtime call, illegal atom source, and OTP rejection back to the
 original A-Lang node and source span.
 
-- [ ] **Subtask 3.1.2.2 Complete**
+- [x] **Subtask 3.1.2.2 Complete** — evidence: [source-oriented rejection tests](../../src/phase-03/alang_phase3_contract_tests.erl)
 
 ## Section 3.2: Abstract Format Lowering and OTP Compilation
 
