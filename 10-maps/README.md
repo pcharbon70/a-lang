@@ -37,9 +37,8 @@ links belong together, not merely repeat a file listing.
 - [A-Lang](home.md) — the selective home map and starting point for the
   archive.
 - [BEAM runtime for agent languages](beam-runtime-for-agent-languages.md) — a
-  path through compiler boundaries, ERTS process semantics, security,
-  supervision, parsing, and property-based validation for a native agent
-  language.
+  path through the whole-toolchain BEAM boundary, ERTS process semantics,
+  security, supervision, parsing, and property-based validation for A-Lang.
 - [Categorical foundations for agent languages](categorical-foundations-for-agent-languages.md)
   — paths through compositional semantics, effects, state, interaction,
   uncertainty, and categorical agent-language design.

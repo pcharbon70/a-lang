@@ -67,9 +67,9 @@ LLM-agent execution.
 ## BEAM execution substrate
 
 - [BEAM as the runtime for a native agent language](../20-notes/beam-runtime-for-native-agent-language.md)
-  — proposes a native frontend and categorical IR compiled through OTP's
-  supported Abstract Format, without an existing BEAM language as the main
-  interpreter.
+  — proposes a wholly BEAM-resident compiler toolchain and categorical IR
+  compiled through OTP's supported Abstract Format, without an existing BEAM
+  language as the interpreter for A-Lang programs.
 - [BEAM runtime map](beam-runtime-for-agent-languages.md) — connects Core
   Erlang, compiler boundaries, ERTS processes, supervision, ports, security,
   and property-based testing.
@@ -103,9 +103,9 @@ The most promising language is layered:
 5. deterministic control flow, capabilities, and runtime monitors;
 6. verifier-backed evidence of completion.
 
-BEAM is now the leading candidate for the concurrent execution layer, provided
-the language retains its own IR and treats durable effects and hostile-code
-isolation as separate responsibilities.
+BEAM is now the leading candidate for both the trusted compiler host and the
+concurrent execution layer, provided the language retains its own IR and
+treats durable effects and hostile-code isolation as separate responsibilities.
 
 The unresolved question is how much of this should be one language, and how
 much should be a family of interoperating representations with a common task

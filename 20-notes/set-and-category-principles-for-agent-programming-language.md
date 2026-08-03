@@ -789,11 +789,20 @@ The first prototype should be intentionally modest.
 
 ### Implementation path
 
-Build the IR and interpreters as a library in a mature typed language first.
-Use familiar YAML, JSON, or a small textual syntax as the source form. Generate
-a visual wiring diagram from the IR rather than making diagrams the only source
-of truth. Once composition and effect semantics stabilize, a dedicated parser
-can target the same IR.
+Build the IR, law harness, and nondeployable reference semantics as
+BEAM-resident compiler/test modules first. Bootstrap them from Erlang source on
+the pinned OTP release, while keeping A-Lang's syntax, types, identities, and
+semantics language-owned. Use a small textual syntax plus deterministic ETF at
+the internal compiler boundary. Generate a visual wiring diagram from the IR
+rather than making diagrams the only source of truth. Once composition and
+effect semantics stabilize, a self-hosted A-Lang compiler may replace
+bootstrap modules, but every trusted compiler stage must continue to execute
+as BEAM code on ERTS.
+
+The categorical law harness should likewise run on ERTS. The minimal slice can
+exhaustively enumerate small domains with EUnit; broader algebraic and
+state-machine properties should use PropEr once its dependency is pinned.
+Neither harness is the deployable A-Lang execution engine.
 
 This mirrors the pragmatic lesson of [Catlab](../30-sources/halter-et-al-2020-compositional-scientific-computing.md):
 categorical models can be operationalized within an existing language and

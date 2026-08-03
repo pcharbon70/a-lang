@@ -1,0 +1,7 @@
+module Counter version "alang-source-v1" {
+  task successor(value: Int) -> Int
+    effect []
+    requires []
+    = value + 1
+    ensures result == value + 1;
+}

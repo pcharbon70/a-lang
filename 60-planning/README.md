@@ -46,7 +46,7 @@ Phase numbering restarts inside each planning stream.
 
 - [01 — Minimal proof of concept](01-minimal-proof-of-concept/README.md) — an
   eight-phase BEAM-first roadmap from a directly executing ERTS vertical slice
-  through the native frontend, typed effects, local capability brokering,
+  through the BEAM-resident compiler frontend, typed effects, local capability brokering,
   durable recovery, a bounded LLM loop, and falsifiable evaluation.
 
 ### Documents

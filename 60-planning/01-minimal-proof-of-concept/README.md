@@ -16,8 +16,8 @@ aliases:
 
 This directory defines the first end-to-end implementation roadmap for
 A-Lang. Its purpose is to test one architectural claim: a new agent language
-can own its syntax and typed semantic IR while its programs execute directly
-as supervised BEAM processes on ERTS.
+can own its syntax and typed semantic IR while both its trusted compiler
+toolchain and generated programs execute directly as BEAM code on ERTS.
 
 The plan is BEAM-first. Phase 1 must produce a generated `.beam` artifact,
 load it into an isolated ERTS node, spawn it as a process, exchange the closed
@@ -42,27 +42,33 @@ outside this proof of concept.
 
 The following statements are non-negotiable for this roadmap:
 
-1. A-Lang programs execute as BEAM modules and ERTS processes.
-2. The source language, static semantics, typed IR, and runtime-visible
+1. The entire trusted A-Lang compiler toolchain—lexer, parser, resolver,
+   checker, IR passes, backend adapter, command driver, and validators—executes
+   as BEAM modules on ERTS.
+2. A-Lang programs execute as separate BEAM modules and ERTS processes.
+3. The source language, static semantics, typed IR, and runtime-visible
    behavior belong to A-Lang rather than Erlang, Elixir, Gleam, or another
    BEAM language.
-3. The supported production compiler boundary is Erlang Abstract Format plus
+4. The supported production compiler boundary is Erlang Abstract Format plus
    the pinned OTP compiler; Core Erlang and direct BEAM emission are research
    paths only.
-4. Existing BEAM-language support code may bootstrap the OTP adapter and
-   runtime ABI, but it may not interpret A-Lang programs.
-5. Any independent evaluator is a test oracle only. It cannot be deployed as
+5. Erlang source may bootstrap A-Lang compiler and runtime modules, but it may
+   not be generated from accepted A-Lang source or interpret A-Lang AST/IR.
+6. A Rust, C, C++, Zig, Go, or other foreign executable may not own a trusted
+   compiler pass. Ports and sidecars remain allowed only for bounded external
+   runtime effects outside the compiler path.
+7. Any independent evaluator is a test oracle only. It cannot be deployed as
    the execution engine or used to satisfy an end-to-end phase gate.
-6. Generated code reaches models, tools, storage, and the filesystem only
+8. Generated code reaches models, tools, storage, and the filesystem only
    through a closed, typed, supervised runtime ABI.
-7. Capability references are opaque and local to the issuing BEAM runtime.
+9. Capability references are opaque and local to the issuing BEAM runtime.
    Portable signed delegation is not part of this proof of concept.
-8. BEAM supervision provides fault topology, not durable progress or exactly
+10. BEAM supervision provides fault topology, not durable progress or exactly
    once effects; checkpoints, journals, idempotency, and recovery stay
    explicit.
-9. BEAM process isolation is not a security sandbox. Untrusted tools, model
+11. BEAM process isolation is not a security sandbox. Untrusted tools, model
    services, and foreign code remain behind OS-bounded ports or sidecars.
-10. Completion means reproducible evidence against stated gates, not a stub,
+12. Completion means reproducible evidence against stated gates, not a stub,
     successful compilation alone, or a happy-path demonstration.
 
 ## Research baseline
@@ -109,10 +115,10 @@ or completion decision.
 
 ```text
 A-Lang source
-  -> native lexer, parser, resolver, and type/effect checker
+  -> BEAM-resident lexer, parser, resolver, and type/effect checker
   -> small A-Lang-owned typed task IR
-  -> actor, state-machine, and runtime-operation lowering
-  -> pinned Erlang Abstract Format adapter
+  -> BEAM-resident actor, state-machine, and runtime-operation lowering
+  -> BEAM-resident pinned Erlang Abstract Format adapter
   -> OTP strong validation and deterministic compilation
   -> inspected and manifested .beam artifact
   -> ERTS load and supervised BEAM process execution
@@ -135,7 +141,7 @@ files are outside the minimal implementation path.
 ### Included
 
 - one pinned OTP compiler and ERTS runtime pair;
-- a small native A-Lang frontend and typed task IR;
+- a small BEAM-resident A-Lang compiler frontend and typed task IR;
 - products, coproducts, results, pure arrows, sequential tasks, closed effects,
   local capability requirements, and one coalgebraic agent loop;
 - Abstract Format lowering, artifact validation, manifests, loading, and
@@ -194,9 +200,9 @@ files are outside the minimal implementation path.
 - [Phase 1 — BEAM-executable vertical slice](phase-01-beam-executable-vertical-slice.md)
   — proves the architecture immediately by compiling, loading, spawning, and
   observing a generated A-Lang program on ERTS with no interpreter substitute.
-- [Phase 2 — Native frontend and typed task IR](phase-02-native-frontend-and-typed-task-ir.md)
-  — implements A-Lang syntax and static semantics and connects them to the
-  already-proven BEAM artifact path.
+- [Phase 2 — BEAM-resident compiler frontend and typed task IR](phase-02-native-frontend-and-typed-task-ir.md)
+  — implements A-Lang syntax and static semantics as BEAM compiler modules and
+  connects them to the already-proven BEAM artifact path.
 - [Phase 3 — Erlang Abstract Format and BEAM runtime kernel](phase-03-erlang-abstract-format-and-beam-runtime-kernel.md)
   — generalizes lowering, artifact validation, actor semantics, supervision,
   bounded messaging, cancellation, and diagnostics.
@@ -220,7 +226,7 @@ files are outside the minimal implementation path.
 
 ```text
 Phase 1: prove execution on BEAM
-    -> Phase 2: source and typed IR feed that path
+    -> Phase 2: BEAM-resident source compiler and typed IR feed that path
         -> Phase 3: generalize BEAM lowering and runtime
             -> Phase 4: local capabilities and effects
                 -> Phase 5: durable sessions and recovery

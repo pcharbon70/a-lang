@@ -44,12 +44,13 @@ generated artifact is Erlang source and is then compiled normally.
 
 ## Relevance
 
-If the project interprets “no Erlang as the main interpreter” narrowly, a
-Leex/Yecc reference frontend remains compatible: it is a build-time compiler
-component, not a runtime interpreter for agent programs. If the stronger goal
-is a fully native, self-contained frontend with no existing BEAM language at
-its implementation boundary, use a handwritten or host-language parser and
-retain Leex/Yecc only as a differential oracle during bootstrapping.
+The project now requires the compiler toolchain itself to run on BEAM. A
+Leex/Yecc frontend is compatible because its generated module executes on ERTS
+as a compiler pass, not as an interpreter for agent programs. A handwritten
+Erlang-bootstrap parser is equally compatible. A foreign host-language parser
+is not: it would move a trusted compiler pass outside the whole-toolchain BEAM
+boundary. Leex/Yecc can still serve as a differential oracle during
+bootstrapping.
 
 The declarative grammar files are still valuable test assets. The same token
 and parse corpora can be run against both frontends to detect divergence.
@@ -58,8 +59,9 @@ and parse corpora can be run against both frontends to detect divergence.
 
 Leex and Yecc do not provide incremental parsing, generalized ambiguity
 handling, error recovery suited to every interactive language, or a security
-boundary. Choosing them solely because the target VM is BEAM conflates the
-compiler's host language with the program's execution target.
+boundary. Their use must be justified by grammar and diagnostics needs; the
+whole-toolchain decision already establishes ERTS as both compiler host and
+program execution target.
 
 ## Derived notes
 

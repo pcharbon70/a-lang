@@ -23,15 +23,18 @@ effects, defensible security isolation, controllable dynamic code, and evidence
 that its categorical laws survive compilation and concurrency.
 
 The [BEAM runtime deep dive](../20-notes/beam-runtime-for-native-agent-language.md)
-recommends a native frontend and language-owned IR lowered through OTP's Erlang
-Abstract Format. This inquiry asks whether that design survives implementation,
-version changes, adversarial workloads, and comparison with simpler runtimes.
+now requires a BEAM-resident frontend and language-owned IR lowered through
+OTP's Erlang Abstract Format. “Runs on BEAM” covers the trusted compiler
+toolchain as well as generated programs. This inquiry asks whether that design
+survives implementation, version changes, adversarial workloads, and
+comparison with simpler runtimes.
 
 ## Operational question
 
-Can a compiler that does not use Erlang, Elixir, Gleam, or another BEAM
-language as its main interpreter produce safe and maintainable BEAM artifacts
-that:
+Can a compiler whose lexer, parser, semantic passes, IR transformations,
+backend adapter, command driver, and validators all execute as BEAM modules
+produce safe and maintainable BEAM artifacts—without using Erlang, Elixir,
+Gleam, or another language to interpret A-Lang programs—that:
 
 - preserve the source language's types, effects, capabilities, and
   observational laws;
@@ -45,11 +48,19 @@ that:
 
 ## Provisional answer
 
-Probably, if BEAM is used as a process runtime and OTP's compiler is used as a
-versioned backend service. The answer becomes doubtful if direct Core Erlang or
-BEAM emission is required, if high-churn programs create unbounded module
-atoms, or if in-memory process recovery is expected to substitute for durable
-workflow and effect semantics.
+Probably, if ERTS hosts both the trusted A-Lang compiler application and the
+generated process runtime, and OTP's compiler is used as a versioned in-VM
+backend service. The answer becomes doubtful if a foreign executable owns a
+trusted compiler pass, if direct Core Erlang or BEAM emission is required, if
+high-churn programs create unbounded module atoms, or if in-memory process
+recovery is expected to substitute for durable workflow and effect semantics.
+
+### H0 — whole-toolchain residency
+
+Every trusted source-to-artifact component can run as a `.beam` module on ERTS.
+Bootstrap Erlang source is permitted, but an Erlang AST evaluator, generated
+Erlang source program, foreign compiler executable, or deployable IR evaluator
+cannot satisfy the compiler or runtime gate.
 
 ## Working hypotheses
 
@@ -97,8 +108,9 @@ will fail this requirement.
 
 ## Paths to explore
 
-1. Build the smallest native compiler spike that creates Abstract Format terms
-   without generating Erlang source.
+1. Build the smallest BEAM-resident compiler spike that creates Abstract
+   Format terms without generating Erlang source or invoking a foreign
+   compiler executable.
 2. Compile on OTP 29 with `strong_validation` and deterministic output; inspect
    imports and custom chunks before isolated loading.
 3. Implement one pure evaluator, one deterministic effect handler, and one
@@ -133,6 +145,11 @@ will fail this requirement.
   VM-provided neutral frontend.
 - PropEr can test law implementations on VM, but proof and observational
   semantics remain necessary for universal or concurrent claims.
+- The Phase 2 counter compiler now provides initial evidence for H0: its
+  handwritten lexer and parser, canonical ETF boundary, semantic checker,
+  typed IR lowering, projections, test oracle, bridge, and compiler driver are
+  Erlang-bootstrap modules compiled to `.beam` and run by OTP 29 ERTS. This is
+  feasibility evidence for the narrow slice, not yet a general compiler.
 
 ## Resolution criteria
 
@@ -140,6 +157,8 @@ Resolve positively only after the prototype passes all of these gates:
 
 - compiler validation and differential semantics across the supported OTP
   matrix;
+- machine-checkable evidence that every trusted compiler component was loaded
+  as a BEAM module and that no foreign compiler executable participated;
 - no unbounded atom or dynamic-module path under load;
 - bounded mailbox behavior and acceptable tail latency;
 - correct durable effect recovery under fault injection;

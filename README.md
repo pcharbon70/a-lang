@@ -115,8 +115,8 @@ created. They are examples rather than archive documents themselves.
 
 - [`.gitignore`](.gitignore) — excludes generated build and evidence output
 - [`.tool-versions`](.tool-versions) — pins the project Erlang/OTP toolchain
-- [`Makefile`](Makefile) — exposes reproducible Phase 1 build and validation
-  commands
+- [`Makefile`](Makefile) — exposes reproducible proof-of-concept build,
+  execution, and validation commands
 - [`AGENTS.md`](AGENTS.md) — repository-wide instructions for creating,
   organizing, researching, and validating archive material
 - [`frontmatter.schema.json`](frontmatter.schema.json) — the authoritative

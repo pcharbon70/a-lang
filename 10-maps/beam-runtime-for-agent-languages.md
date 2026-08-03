@@ -15,14 +15,15 @@ aliases:
 
 ## Scope
 
-This map covers using ERTS and BEAM as the execution substrate for a new native
-agent language. It separates the language's own syntax and categorical IR from
-Core Erlang, supported OTP compiler interfaces, BEAM instructions, and the
-runtime's process model.
+This map covers using ERTS and BEAM as both the compiler host and execution
+substrate for a new agent language. It separates the language's own syntax and
+categorical IR from Core Erlang, supported OTP compiler interfaces, BEAM
+instructions, and the runtime's process model.
 
 The design explicitly excludes Erlang, Elixir, Gleam, or another BEAM language
-as the main interpreter. Programs are compiled into BEAM modules and executed
-by ERTS.
+as the main interpreter. Every trusted compiler pass is itself a BEAM module;
+programs are compiled into separate BEAM modules and executed by ERTS. Erlang
+may bootstrap compiler modules, but A-Lang programs are never Erlang programs.
 
 ## Start here
 
@@ -73,13 +74,15 @@ by ERTS.
 ## Recommended path
 
 1. Own a small typed, effect-aware categorical IR.
-2. Implement the source frontend outside existing BEAM languages.
+2. Implement the source frontend, semantic passes, IR lowering, compiler
+   command, and validators as BEAM-resident modules.
 3. Lower to a deliberately small Erlang Abstract Format subset.
 4. Validate and compile through a pinned OTP toolchain.
-5. run generated modules against a closed, capability-aware runtime ABI.
-6. use ports or sidecars for inference, tools, and untrusted code.
-7. make durability, deduplication, backpressure, and state migration explicit.
-8. combine proof of the semantic core with property and model testing of the
+5. Record evidence that no foreign compiler executable participated.
+6. Run generated modules against a closed, capability-aware runtime ABI.
+7. Use ports or sidecars for inference, tools, and untrusted code.
+8. Make durability, deduplication, backpressure, and state migration explicit.
+9. Combine proof of the semantic core with property and model testing of the
    BEAM realization.
 
 ## Open questions

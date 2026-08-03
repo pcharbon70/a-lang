@@ -36,7 +36,7 @@ See the [archive guide](../README.md) for its structure and conventions.
 
 - [A-Lang minimal proof-of-concept plan](../60-planning/01-minimal-proof-of-concept/README.md)
   — a BEAM-first, eight-phase path that proves direct ERTS execution before
-  adding the native frontend, supervised runtime, local capability broker,
+  adding the BEAM-resident compiler frontend, supervised runtime, local capability broker,
   durable effects, bounded model and child-task execution, adversarial
   validation, and a final architecture decision.
 

@@ -42,6 +42,18 @@ Do not add or rename a top-level directory unless the user asks for it or a
 repeated, demonstrated need makes the existing structure inadequate. Add
 subject organization through tags, links, and maps first.
 
+## A-Lang implementation invariant
+
+“Runs on BEAM” covers the trusted compiler toolchain as well as generated
+programs. Lexer, parser, resolver, static checker, IR passes, backend adapter,
+compiler command, and validators must compile to `.beam` and execute on ERTS.
+Erlang source may bootstrap those modules, but accepted A-Lang source must not
+be translated to Erlang source or interpreted as Erlang AST/IR. Do not add
+Rust, Cargo, C, C++, Zig, Go, or another foreign executable to the trusted
+compiler path. Ports and sidecars are reserved for bounded external runtime
+effects. Test-only evaluators must be explicitly nondeployable and cannot
+satisfy an execution gate.
+
 ## Sources of truth
 
 Use these files for different kinds of decisions:

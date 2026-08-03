@@ -45,7 +45,7 @@ nodes with shrinkers that preserve validity.
 
 **Description:** Separate total pure terms from fixture-backed effectful terms,
 control size and depth, retain source origins, and produce both textual and
-canonical JSON forms where possible.
+deterministic canonical ETF forms where possible.
 
 - [ ] **Subtask 7.1.1.1 Complete**
 

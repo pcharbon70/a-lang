@@ -1,5 +1,5 @@
 ---
-title: "BEAM as the runtime for a native agent language: a deep dive"
+title: "BEAM as the runtime and compiler host for an agent language: a deep dive"
 kind: note
 created: 2026-07-31
 maturity: developing
@@ -14,7 +14,7 @@ aliases:
   - "Native agent language on BEAM"
 ---
 
-# BEAM as the runtime for a native agent language: a deep dive
+# BEAM as the runtime and compiler host for an agent language: a deep dive
 
 ## Executive conclusion
 
@@ -25,24 +25,30 @@ supervision conventions, code loading, and external-process ports align well
 with long-lived agents that spend much of their time waiting for models, tools,
 humans, and other agents.
 
-The new language does not need to be interpreted by Erlang, Elixir, Gleam, or
-another BEAM language. The recommended architecture is:
+“Runs on BEAM” applies to the whole trusted language path, not only generated
+programs. The lexer, parser, resolver, type/effect checker, IR passes, backend
+adapter, compiler command, validation tooling, and runtime kernel all execute
+as BEAM modules on ERTS. The proof of concept may bootstrap those modules from
+Erlang source, but Erlang is an implementation notation for compiler passes;
+it is never the source language emitted by A-Lang or an interpreter for
+A-Lang programs. The recommended architecture is:
 
 ```text
 agent-language source
-  -> native lexer, parser, resolver, and type/effect checker
+  -> BEAM-resident lexer, parser, resolver, and type/effect checker
   -> small typed categorical IR owned by the language
   -> actor/effect lowering
-  -> Erlang Abstract Format adapter pinned to an OTP release
+  -> BEAM-resident Erlang Abstract Format adapter pinned to an OTP release
   -> OTP compiler validation and BEAM emission
   -> signed .beam artifacts plus language metadata
   -> ERTS / BeamAsm execution
 ```
 
-The generated module is native BEAM program code. There is no `eval` loop and
-no translation to an existing surface language at runtime. On supported
-architectures BeamAsm further translates loaded BEAM instructions to native
-machine code while retaining BEAM semantics.
+Both the compiler and the generated module are BEAM program code. There is no
+`eval` loop and no translation of A-Lang programs to an existing surface
+language at build time or runtime. On supported architectures BeamAsm further
+translates loaded BEAM instructions to native machine code while retaining
+BEAM semantics.
 
 There is one important correction to the initial premise. Core Erlang has a
 small, explicit grammar, but it is a compiler intermediate language, not the
@@ -71,8 +77,9 @@ concurrent laws require observational or trace equivalence.
 
 The recommendation is therefore conditional but positive:
 
-> Use BEAM as the concurrent execution substrate, use a native compiler and an
-> A-Lang-owned categorical IR, lower through OTP's supported Abstract Format,
+> Use BEAM as both the compiler host and concurrent execution substrate. Keep
+> every trusted compiler pass BEAM-resident, own the categorical IR, lower
+> through OTP's supported Abstract Format,
 > and treat Core Erlang and direct BEAM emission as research backends. Put
 > external effects behind a durable capability broker, and never confuse BEAM
 > process isolation, supervision, or messaging with a security sandbox,
@@ -80,9 +87,10 @@ The recommendation is therefore conditional but positive:
 
 ## Scope and decision criteria
 
-This study asks whether BEAM should run programs in a new agent-specific
-language. It does not ask whether an agent framework should be authored in
-Erlang or whether the new language should copy Erlang syntax.
+This study asks whether BEAM should run both the trusted compiler toolchain and
+programs in a new agent-specific language. It does not ask whether an agent
+framework should expose Erlang or whether the new language should copy Erlang
+syntax.
 
 The language is assumed to need:
 
@@ -100,8 +108,28 @@ language to inherit unstable compiler internals or unsafe runtime assumptions.
 
 “Native agent language” means that its compiler, static semantics, module
 system, effect system, and runtime-visible behavior belong to the new language.
-It does not mean reimplementing the BEAM loader, garbage collector, scheduler,
-or OTP compiler. Reusing those components is the reason to target the VM.
+It does not mean a non-BEAM native executable. For A-Lang, the compiler itself
+is a BEAM application. Nor does it mean reimplementing the BEAM loader, garbage
+collector, scheduler, or OTP compiler. Reusing those components is the reason
+to target the VM.
+
+### Whole-toolchain invariant
+
+The trusted path is deliberately closed:
+
+- every source-to-artifact pass is compiled to `.beam` and invoked on ERTS;
+- the build coordinator calls OTP compiler services from a BEAM process;
+- generated A-Lang code is validated, loaded, and executed by ERTS;
+- Erlang bootstrap source may define compiler modules, but no accepted A-Lang
+  program is evaluated as Erlang terms, Erlang source, Core Erlang, or an AST;
+- a reference evaluator is nondeployable test code and cannot satisfy an
+  execution gate; and
+- ports and sidecars may implement bounded external effects, but no foreign
+  executable may own parsing, static semantics, IR lowering, or code emission.
+
+This is stronger than merely targeting BEAM. It makes ERTS part of the
+compiler's reproducibility, isolation, tracing, scheduling, and law-validation
+story as well as the program runtime.
 
 ## 1. Separate four levels that are easily conflated
 
@@ -316,9 +344,10 @@ third-party guidance.
 ### 4.1 Why Abstract Format wins
 
 Abstract Format is an Erlang-term representation of syntax, not Erlang source
-text. A native compiler can construct those terms using the external term
-format or a small versioned compiler service. `compile:forms/2` can validate and
-emit a BEAM binary. This retains OTP's optimizer and loader invariants.
+text. The BEAM-resident A-Lang compiler constructs those terms in memory and
+calls `compile:forms/2` from its build ERTS node. This retains OTP's optimizer
+and loader invariants without introducing a foreign compiler process or an
+existing-language execution path.
 
 The compiler should target a deliberately small subset:
 
@@ -361,18 +390,13 @@ format or assume that Core `primop` names remain fixed.
 and LALR-1 parser generators, but they generate Erlang source. The BEAM VM does
 not itself offer a language-neutral parser frontend.
 
-Three coherent choices exist:
-
-1. implement the production frontend in a non-BEAM host language and emit the
-   IR or Abstract Format;
-2. bootstrap a reference parser with Leex/Yecc, then replace it during
-   self-hosting;
-3. keep Leex/Yecc only as a differential parser oracle.
-
-The first choice most directly meets the requirement. Rust, Zig, C++, or
-another implementation language could host the compiler; that choice should
-be based on parser, type-system, packaging, and FFI needs rather than BEAM
-affinity.
+The A-Lang choice is explicit: the production frontend is a BEAM-resident
+compiler pass. It can begin as handwritten Erlang or generated Leex/Yecc
+modules and may later become self-hosted A-Lang, provided every stage still
+compiles to and runs as BEAM code. Leex and Yecc are optional generators, not
+interpreters and not a requirement. A second parser may be retained as a
+differential test oracle, but a Rust, Zig, C++, Go, or other foreign executable
+is outside the trusted compiler path.
 
 ## 5. Proposed runtime architecture
 
@@ -394,10 +418,10 @@ source
        └─ isolated load smoke test
 ```
 
-The OTP compiler can run as a tightly scoped build service or subprocess. It
-is a code generator, not the main interpreter. Production agent nodes should
-load only artifacts created by an approved compiler version and accepted by a
-policy verifier.
+The OTP compiler runs inside a tightly scoped build ERTS node and is called by
+the BEAM-resident A-Lang compiler. It is a code generator, not an interpreter.
+Production agent nodes should load only artifacts created by an approved
+compiler version and accepted by a policy verifier.
 
 ### 5.2 A session is a supervision subtree
 
@@ -542,7 +566,7 @@ A test observer should:
 ### 6.4 Use PropEr without making Erlang the language
 
 PropEr properties are normally authored as Erlang modules, but they can sit in
-the conformance harness rather than the production language. The native
+the conformance harness rather than the production language. The BEAM-resident
 compiler can emit small test adapters with a stable ABI:
 
 ```text
@@ -553,10 +577,10 @@ compare(law, left_observation, right_observation) -> pass | counterexample
 ```
 
 The adapter can be generated through Abstract Format or maintained as a small
-trusted BEAM test component. An equivalent host-language property engine can
-test parser and IR passes before BEAM emission. Framework-neutral encoded
-generators and observations allow PropEr, commercial QuickCheck, and future
-tools to share a conformance corpus.
+trusted BEAM test component. Parser and IR properties also run on ERTS so the
+validation path exercises the actual compiler representation. Framework-neutral
+encoded generators and observations allow PropEr, commercial QuickCheck, and
+future BEAM-resident tools to share a conformance corpus.
 
 ### 6.5 A validation ladder
 
@@ -611,8 +635,9 @@ semantics.
 
 ## 8. Versioning and operational discipline
 
-Pin the native compiler to an OTP backend version. Record both versions in the
-artifact and runtime trace. For each supported OTP release:
+Pin the BEAM-resident A-Lang compiler to an OTP backend version. Record the
+A-Lang compiler, OTP, and ERTS versions in the artifact and runtime trace. For
+each supported OTP release:
 
 - regenerate or compile through that release's Abstract Format adapter;
 - run validation and the full conformance suite;
@@ -646,9 +671,11 @@ testable compatibility declaration.
 Exit criterion: the compiler can produce inspectable, reproducible, safe-load
 artifacts through a documented interface.
 
-### Phase 1 — native frontend and semantic core
+### Phase 1 — BEAM-resident frontend and semantic core
 
-- Implement the lexer and parser outside an existing BEAM language.
+- Implement the lexer, parser, semantic passes, IR, and compiler driver as
+  modules that run on ERTS; bootstrap them from Erlang source without using an
+  Erlang evaluator for A-Lang.
 - Define products, coproducts, pure arrows, tasks, effects, capabilities, and
   coalgebraic state machines.
 - Write a deterministic IR evaluator as an oracle.
@@ -737,10 +764,11 @@ compiler control, and categorical reasoning while allowing OTP to own the
 moving code-generation and VM invariants.
 
 The resulting system is not an Erlang interpreter wearing a new syntax. It is
-a native agent compiler whose programs execute as BEAM modules, use ERTS as
-their process machine, and interact with a small capability-aware runtime ABI.
-That is the most credible way to obtain BEAM's advantages without inheriting an
-existing BEAM language as the agent language itself.
+an A-Lang compiler application whose passes execute as BEAM modules and whose
+programs execute as separate BEAM modules, use ERTS as their process machine,
+and interact with a small capability-aware runtime ABI. That is the most
+credible way to obtain BEAM's advantages without inheriting an existing BEAM
+language as the agent language itself.
 
 ## Connections
 

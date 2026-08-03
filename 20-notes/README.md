@@ -36,9 +36,9 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
 ### Documents
 
 - [BEAM as the runtime for a native agent language](beam-runtime-for-native-agent-language.md)
-  — a design and evidence study of compiling a new agent language through
-  Erlang Abstract Format for direct execution by ERTS, with categorical law
-  testing, durable effects, and explicit security boundaries.
+  — a design and evidence study of running both the trusted compiler and
+  generated programs on ERTS, lowering through Erlang Abstract Format, with
+  categorical law testing, durable effects, and explicit security boundaries.
 - [Set and category principles for an agent programming language](set-and-category-principles-for-agent-programming-language.md)
   — an evidence-bounded design study of categorical composition, effects,
   state, protocols, uncertainty, interpreters, and evaluation criteria for an

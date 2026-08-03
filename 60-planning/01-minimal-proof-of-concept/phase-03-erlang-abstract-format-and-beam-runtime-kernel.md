@@ -86,11 +86,11 @@ compile it through pinned OTP services, and emit only validated artifacts.
 
 - [ ] **Section 3.2 Complete**
 
-### Task 3.2.1: Implement the Native Abstract Format Encoder
+### Task 3.2.1: Implement the BEAM-Resident Abstract Format Encoder
 
 **Description:** Lower each promoted typed IR node to normalized Abstract
-Format terms and serialize them across the compiler bridge without generating
-Erlang source.
+Format terms inside the compiler's build ERTS node without generating Erlang
+source or invoking a foreign compiler executable.
 
 - [ ] **Task 3.2.1 Complete**
 
@@ -275,19 +275,21 @@ replies, and runtime timeouts with stable diagnostics.
 
 - [ ] **Subtask 3.5.1.2 Complete**
 
-### Task 3.5.2: Validate Native Execution Claims
+### Task 3.5.2: Validate Whole-Toolchain BEAM Residency
 
-**Description:** Demonstrate that A-Lang source is neither translated to
-Erlang source nor evaluated by an Erlang, Elixir, Gleam, or other
-BEAM-language interpreter at runtime.
+**Description:** Demonstrate that every trusted compiler pass runs as BEAM
+code, and that A-Lang source is neither translated to Erlang source nor
+evaluated by an Erlang, Elixir, Gleam, or other BEAM-language interpreter at
+build time or runtime.
 
 - [ ] **Task 3.5.2 Complete**
 
 #### Subtask 3.5.2.1: Inspect the Build and Runtime Path
 
-**Description:** Publish an execution trace from A-Lang source through typed
-IR, Abstract Format, OTP validation, BEAM load, and ERTS task execution and
-identify the limited support-module calls.
+**Description:** Publish a trace from BEAM-resident source compilation through
+typed IR, Abstract Format, OTP validation, BEAM load, and ERTS task execution;
+identify every compiler and runtime module and prove that no foreign compiler
+executable participated.
 
 - [ ] **Subtask 3.5.2.1 Complete**
 
@@ -310,4 +312,6 @@ fixture-backed effects with a local capability broker and bounded adapter.
 - [ ] Artifact metadata and import inspection pass before every load
 - [ ] Reference and BEAM normalized observations agree
 - [ ] Runtime ABI rejects malformed, stale, and incompatible messages
-- [ ] Native execution path contains no A-Lang source interpreter
+- [ ] Trusted compiler path contains only loaded BEAM modules and pinned OTP
+      services
+- [ ] Generated execution path contains no A-Lang source or IR interpreter
