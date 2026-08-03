@@ -38,10 +38,16 @@ The only generated runtime import is
 `apply`, port operations, NIF loading, unsafe term decoding, atom construction,
 or filesystem and network calls.
 
+Compiler-owned local callables return raw A-Lang values so typed `apply` nodes
+compose normally. Only the exported `execute/3` dispatcher evaluates the
+selected task's completion predicate and wraps its final value or verifier
+failure in the runtime result domain.
+
 ## Bounds
 
 - at most 16 callables and 256 IR nodes per module;
 - at most 16 parameters, arguments, or product fields;
+- at most 16 compiler-owned sequence temporaries;
 - source identities no longer than 256 bytes;
 - binary values no larger than 65,536 bytes;
 - signed 64-bit integer literals; and

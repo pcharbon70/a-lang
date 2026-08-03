@@ -208,12 +208,13 @@ validate_bin_element(Element, _Depth) -> {error, {unsupported_binary_element, su
 validate_variable('_') -> ok;
 validate_variable('ALANG_TASK_ID') -> ok;
 validate_variable('ALANG_INPUTS') -> ok;
+validate_variable('_ALANG_INPUTS') -> ok;
 validate_variable('ALANG_CONTEXT') -> ok;
 validate_variable('_ALANG_CONTEXT') -> ok;
 validate_variable('ALANG_RESULT') -> ok;
 validate_variable('ALANG_SEQUENCE_ERROR') -> ok;
 validate_variable(Name) ->
-    case lists:member(Name, variable_atoms()) of
+    case lists:member(Name, variable_atoms() ++ sequence_variable_atoms() ++ unused_variable_atoms()) of
         true -> ok;
         false -> {error, {unsupported_generated_variable, Name}}
     end.
@@ -256,6 +257,22 @@ variable_atoms() ->
         'ALANG_V18', 'ALANG_V19', 'ALANG_V20', 'ALANG_V21', 'ALANG_V22', 'ALANG_V23',
         'ALANG_V24', 'ALANG_V25', 'ALANG_V26', 'ALANG_V27', 'ALANG_V28', 'ALANG_V29',
         'ALANG_V30', 'ALANG_V31'
+    ].
+
+sequence_variable_atoms() ->
+    [
+        'ALANG_SEQUENCE_0', 'ALANG_SEQUENCE_1', 'ALANG_SEQUENCE_2', 'ALANG_SEQUENCE_3',
+        'ALANG_SEQUENCE_4', 'ALANG_SEQUENCE_5', 'ALANG_SEQUENCE_6', 'ALANG_SEQUENCE_7',
+        'ALANG_SEQUENCE_8', 'ALANG_SEQUENCE_9', 'ALANG_SEQUENCE_10', 'ALANG_SEQUENCE_11',
+        'ALANG_SEQUENCE_12', 'ALANG_SEQUENCE_13', 'ALANG_SEQUENCE_14', 'ALANG_SEQUENCE_15'
+    ].
+
+unused_variable_atoms() ->
+    [
+        '_ALANG_UNUSED_0', '_ALANG_UNUSED_1', '_ALANG_UNUSED_2', '_ALANG_UNUSED_3',
+        '_ALANG_UNUSED_4', '_ALANG_UNUSED_5', '_ALANG_UNUSED_6', '_ALANG_UNUSED_7',
+        '_ALANG_UNUSED_8', '_ALANG_UNUSED_9', '_ALANG_UNUSED_10', '_ALANG_UNUSED_11',
+        '_ALANG_UNUSED_12', '_ALANG_UNUSED_13', '_ALANG_UNUSED_14', '_ALANG_UNUSED_15'
     ].
 
 validate_list(_Validator, [], _Depth) -> ok;

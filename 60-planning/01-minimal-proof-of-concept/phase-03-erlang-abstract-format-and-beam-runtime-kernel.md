@@ -19,7 +19,7 @@ ERTS execution into a complete minimal backend, closed versioned runtime ABI,
 and supervised task-process kernel without introducing an existing
 BEAM-language interpreter.
 
-**Status:** In progress — Sections 3.1 through 3.4 complete.
+**Status:** Complete — all five sections and the Phase 3 completion gates have reproducible evidence.
 
 **Dependencies:** Phase 2 complete with source-derived typed IR, normalized
 observations, test-only reference views, capability manifests, fail-closed
@@ -250,7 +250,7 @@ lifecycle failures without hot-upgrade semantics.
 fixture-backed effect programs while proving the backend and loader fail
 closed.
 
-- [ ] **Section 3.5 Complete**
+- [x] **Section 3.5 Complete** — evidence: [differential and scheduler integration tests](../../src/phase-03/alang_phase3_integration_tests.erl) and [whole-toolchain residency evidence](../../src/phase-03/alang_phase3_residency.erl)
 
 ### Task 3.5.1: Validate Source-to-BEAM Semantic Preservation
 
@@ -258,14 +258,14 @@ closed.
 compare normalized values, effect intents, result propagation, verifier
 observations, and failures with the reference evaluator.
 
-- [ ] **Task 3.5.1 Complete**
+- [x] **Task 3.5.1 Complete** — evidence: [source-to-BEAM differential suite](../../src/phase-03/alang_phase3_integration_tests.erl)
 
 #### Subtask 3.5.1.1: Run Positive Differential Fixtures
 
 **Description:** Cover every promoted value, branch, call, composition, effect
 request, and verifier form with deterministic injected effect responses.
 
-- [ ] **Subtask 3.5.1.1 Complete**
+- [x] **Subtask 3.5.1.1 Complete** — evidence: [promoted pure/control/call/effect/verifier fixtures](../../src/phase-03/alang_phase3_test_fixtures.erl) compared by the [nondeployable reference oracle](../../src/phase-03/alang_phase3_reference.erl)
 
 #### Subtask 3.5.1.2: Run Negative Backend and ABI Fixtures
 
@@ -273,7 +273,7 @@ request, and verifier form with deterministic injected effect responses.
 failures, forbidden imports, incompatible metadata, malformed messages, stale
 replies, and runtime timeouts with stable diagnostics.
 
-- [ ] **Subtask 3.5.1.2 Complete**
+- [x] **Subtask 3.5.1.2 Complete** — evidence: Section 3.1–3.4 negative suites plus [cyclic-IR, unknown-task, and verifier-failure integration gates](../../src/phase-03/alang_phase3_integration_tests.erl)
 
 ### Task 3.5.2: Validate Whole-Toolchain BEAM Residency
 
@@ -282,7 +282,7 @@ code, and that A-Lang source is neither translated to Erlang source nor
 evaluated by an Erlang, Elixir, Gleam, or other BEAM-language interpreter at
 build time or runtime.
 
-- [ ] **Task 3.5.2 Complete**
+- [x] **Task 3.5.2 Complete** — evidence: [BEAM residency verifier](../../src/phase-03/alang_phase3_residency.erl)
 
 #### Subtask 3.5.2.1: Inspect the Build and Runtime Path
 
@@ -291,7 +291,7 @@ typed IR, Abstract Format, OTP validation, BEAM load, and ERTS task execution;
 identify every compiler and runtime module and prove that no foreign compiler
 executable participated.
 
-- [ ] **Subtask 3.5.2.1 Complete**
+- [x] **Subtask 3.5.2.1 Complete** — evidence: [source-through-soft-purge boundary trace and module/import inventory](../../src/phase-03/alang_phase3_residency.erl)
 
 #### Subtask 3.5.2.2: Run Phase Completion Gates
 
@@ -299,19 +299,19 @@ executable participated.
 inspection, loader, ABI, scheduler-smoke, and complete repository suites on the
 pinned OTP release.
 
-- [ ] **Subtask 3.5.2.2 Complete**
+- [x] **Subtask 3.5.2.2 Complete** — evidence: `make test-phase-3` runs all compiler, ABI, loader, differential, scheduler-smoke, and residency gates on pinned OTP 29
 
 ## Phase 3 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 4 to replace
 fixture-backed effects with a local capability broker and bounded adapter.
 
-- [ ] Every promoted typed IR node lowers through the frozen Abstract Format
+- [x] Every promoted typed IR node lowers through the frozen Abstract Format
       subset
-- [ ] OTP strong validation and deterministic artifact checks pass
-- [ ] Artifact metadata and import inspection pass before every load
-- [ ] Reference and BEAM normalized observations agree
-- [ ] Runtime ABI rejects malformed, stale, and incompatible messages
-- [ ] Trusted compiler path contains only loaded BEAM modules and pinned OTP
+- [x] OTP strong validation and deterministic artifact checks pass
+- [x] Artifact metadata and import inspection pass before every load
+- [x] Reference and BEAM normalized observations agree
+- [x] Runtime ABI rejects malformed, stale, and incompatible messages
+- [x] Trusted compiler path contains only loaded BEAM modules and pinned OTP
       services
-- [ ] Generated execution path contains no A-Lang source or IR interpreter
+- [x] Generated execution path contains no A-Lang source or IR interpreter

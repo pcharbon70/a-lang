@@ -34,6 +34,7 @@ PHASE2_COMPILER_SOURCES := \
 PHASE2_COMPILER_STAMP := $(PHASE2_BUILD)/.compiled
 PHASE3_DIR := src/phase-03
 PHASE3_BUILD := build/phase-03/compiler
+PHASE3_EVIDENCE := build/phase-03/evidence/residency.config
 PHASE3_SOURCES := \
 	$(PHASE3_DIR)/alang_phase3_contract.erl \
 	$(PHASE3_DIR)/alang_phase3_contract_tests.erl \
@@ -50,10 +51,14 @@ PHASE3_SOURCES := \
 	$(PHASE3_DIR)/alang_phase3_runtime_fixture.erl \
 	$(PHASE3_DIR)/alang_phase3_runtime_tests.erl \
 	$(PHASE3_DIR)/alang_phase3_artifact.erl \
-	$(PHASE3_DIR)/alang_phase3_artifact_tests.erl
+	$(PHASE3_DIR)/alang_phase3_artifact_tests.erl \
+	$(PHASE3_DIR)/alang_phase3_reference.erl \
+	$(PHASE3_DIR)/alang_phase3_test_fixtures.erl \
+	$(PHASE3_DIR)/alang_phase3_residency.erl \
+	$(PHASE3_DIR)/alang_phase3_integration_tests.erl
 PHASE3_COMPILER_STAMP := $(PHASE3_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4
+.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -131,7 +136,15 @@ test-section-3-3: test-section-3-2
 test-section-3-4: test-section-3-3
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -eval 'case eunit:test(alang_phase3_artifact_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
-test: test-phase-1 test-phase-2
+build-phase-3-evidence: compile-phase-1-bootstrap compile-phase-2-toolchain compile-phase-3-toolchain
+	$(ERL) -noshell -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -eval 'case alang_phase3_residency:write("$(PHASE3_EVIDENCE)") of {ok, Evidence} -> io:format("phase_3_residency_ok modules=~B engine=~p otp=~s~n", [maps:size(maps:get(module_paths, Evidence)), maps:get(engine, Evidence), maps:get(otp_release, Evidence)]), halt(0); {error, Reason} -> io:format(standard_error, "phase_3_residency_error ~tp~n", [Reason]), halt(1) end.'
+
+test-section-3-5: test-section-3-4 build-phase-3-evidence
+	$(ERL) -noshell -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -eval 'case eunit:test(alang_phase3_integration_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-phase-3: test-section-3-5
+
+test: test-phase-1 test-phase-2 test-phase-3
 
 $(PHASE1_BUILD):
 	mkdir -p $(PHASE1_BUILD)

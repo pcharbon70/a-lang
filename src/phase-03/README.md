@@ -74,6 +74,17 @@ ignored repository `build/` directory.
   import, export, compiler, toolchain, size, load, and soft-purge policy.
 - [`alang_phase3_artifact_tests.erl`](alang_phase3_artifact_tests.erl) —
   pre-load rejection and inspected load-execute-purge lifecycle evidence.
+- [`alang_phase3_reference.erl`](alang_phase3_reference.erl) — explicit
+  nondeployable test oracle for differential value, effect, and verifier
+  observations.
+- [`alang_phase3_test_fixtures.erl`](alang_phase3_test_fixtures.erl) —
+  nondeployable promoted-node, effect, and verifier-failure IR fixtures.
+- [`alang_phase3_residency.erl`](alang_phase3_residency.erl) — reproducible
+  compiler/runtime module paths, imports, boundary trace, and BEAM-residency
+  evidence.
+- [`alang_phase3_integration_tests.erl`](alang_phase3_integration_tests.erl) —
+  source-to-BEAM differential, negative, scheduler-smoke, and residency phase
+  gates.
 - [Backend representation contract](backend-representation-contract.md) —
   value encodings, failure domains, evaluation order, and supported IR nodes.
 - [Erlang Abstract Format contract](abstract-format-contract.md) — supported
@@ -84,5 +95,6 @@ ignored repository `build/` directory.
 ## Maintaining this index
 
 Index every direct Phase 3 source, contract, fixture directory, and evidence
-file. No foreign executable may enter the compiler path, and no test oracle may
-become a deployable A-Lang runtime.
+file. No foreign executable may enter the compiler path, and the reference and
+fixture modules are permanently nondeployable test support rather than an
+A-Lang runtime.

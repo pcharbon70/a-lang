@@ -46,7 +46,7 @@ lower_valid_ir(#{tasks := Tasks, nodes := Nodes} = Ir, Context) ->
         capability_manifest => CapabilityManifest,
         source_map => SourceMap
     },
-    Execute = execute_function(Tasks, CallableMap),
+    Execute = execute_function(Tasks, Nodes, NodeMap, CallableMap),
     CallableForms = [task_function(Task, Nodes, NodeMap, CallableMap) || Task <- Tasks],
     Forms = [
         {attribute, 1, module, ?GENERATED_MODULE},
@@ -73,11 +73,14 @@ capability_manifest(Tasks, Context) ->
         _Other -> fail(capability_manifest_mismatch, <<"module">>, default_origin())
     end.
 
-execute_function(Tasks, CallableMap) ->
+execute_function(Tasks, Nodes, NodeMap, CallableMap) ->
     TaskIdVariable = {var, 1, 'ALANG_TASK_ID'},
-    InputsVariable = {var, 1, 'ALANG_INPUTS'},
+    InputsVariable = {var, 1, '_ALANG_INPUTS'},
     ContextVariable = {var, 1, 'ALANG_CONTEXT'},
-    DispatchClauses = [dispatch_clause(Task, CallableMap, InputsVariable, ContextVariable) || Task <- Tasks],
+    DispatchClauses = [
+        dispatch_clause(Task, Nodes, NodeMap, CallableMap, InputsVariable, ContextVariable)
+     || Task <- Tasks
+    ],
     UnknownClause =
         {clause, 1, [{var, 1, '_'}], [], [
             runtime_tuple(1, error, {atom, 1, unknown_task})
@@ -87,40 +90,21 @@ execute_function(Tasks, CallableMap) ->
         {clause, 1, [TaskIdVariable, InputsVariable, ContextVariable], [], [Body]}
     ]}.
 
-dispatch_clause(Task, CallableMap, InputsVariable, ContextVariable) ->
+dispatch_clause(Task, Nodes, NodeMap, CallableMap, InputsVariable, ContextVariable) ->
     TaskId = maps:get(id, Task),
     Function = maps:get(TaskId, CallableMap),
-    ParameterExpressions = [
-        remote_call(1, erlang, map_get, [literal(maps:get(name, Parameter)), InputsVariable])
-     || Parameter <- maps:get(parameters, Task)
-    ],
-    Call = {call, 1, {atom, 1, Function}, ParameterExpressions ++ [ContextVariable]},
-    {clause, 1, [literal(TaskId)], [], [Call]}.
-
-task_function(Task, Nodes, NodeMap, CallableMap) ->
     Origin = maps:get(origin, Task),
     Line = origin_line(Origin),
     Parameters = maps:get(parameters, Task),
-    BindingNames = unique_names(
-        [maps:get(name, Parameter) || Parameter <- Parameters] ++ collect_bindings(Nodes),
-        []
-    ),
-    Environment = assign_variables(BindingNames, 0, #{}),
-    ParameterVariables = [
-        {var, Line, maps:get(maps:get(name, Parameter), Environment)}
-     || Parameter <- Parameters
+    Environment = environment(Parameters, Nodes),
+    ParameterVariables = parameter_variables(Parameters, Environment, undefined, #{}, Line),
+    ParameterBindings = [
+        {match, Line, Variable,
+            remote_call(Line, erlang, map_get, [literal(maps:get(name, Parameter)), InputsVariable])}
+     || {Parameter, Variable} <- lists:zip(Parameters, ParameterVariables)
     ],
-    %% The leading underscore keeps pure callables warning-free while the same
-    %% fixed variable remains available to effectful and nested calls.
-    ContextVariable = {var, Line, '_ALANG_CONTEXT'},
     ResultVariable = {var, Line, 'ALANG_RESULT'},
-    BodyExpression = lower_node(
-        maps:get(body_root, Task),
-        NodeMap,
-        Environment,
-        CallableMap,
-        ContextVariable
-    ),
+    Call = {call, Line, {atom, Line, Function}, ParameterVariables ++ [ContextVariable]},
     #{condition := ConditionId} = maps:get(maps:get(completion_root, Task), NodeMap),
     VerifyExpression = lower_node(
         ConditionId,
@@ -135,12 +119,34 @@ task_function(Task, Nodes, NodeMap, CallableMap) ->
             runtime_tuple(Line, error, runtime_error_term(Line, verification_failed, Origin))
         ]}
     ]},
+    {clause, Line, [literal(TaskId)], [],
+        ParameterBindings ++ [{match, Line, ResultVariable, Call}, Verification]}.
+
+task_function(Task, Nodes, NodeMap, CallableMap) ->
+    Origin = maps:get(origin, Task),
+    Line = origin_line(Origin),
+    Parameters = maps:get(parameters, Task),
+    Environment = environment(Parameters, Nodes),
+    ParameterVariables = parameter_variables(
+        Parameters,
+        Environment,
+        maps:get(body_root, Task),
+        NodeMap,
+        Line
+    ),
+    %% The leading underscore keeps pure callables warning-free while the same
+    %% fixed variable remains available to effectful and nested calls.
+    ContextVariable = {var, Line, '_ALANG_CONTEXT'},
+    BodyExpression = lower_node(
+        maps:get(body_root, Task),
+        NodeMap,
+        Environment,
+        CallableMap,
+        ContextVariable
+    ),
     Function = maps:get(maps:get(id, Task), CallableMap),
     {function, Line, Function, length(Parameters) + 1, [
-        {clause, Line, ParameterVariables ++ [ContextVariable], [], [
-            {match, Line, ResultVariable, BodyExpression},
-            Verification
-        ]}
+        {clause, Line, ParameterVariables ++ [ContextVariable], [], [BodyExpression]}
     ]}.
 
 lower_node(NodeId, NodeMap, Environment, CallableMap, ContextVariable) ->
@@ -192,7 +198,10 @@ lower_node_value(#{kind := Kind, value := ValueId, origin := Origin}, NodeMap, E
     ]};
 lower_node_value(#{kind := bind, value := ValueId, body := BodyId, binding := Binding, id := Id, origin := Origin}, NodeMap, Environment, CallableMap, Context) ->
     Line = origin_line(Origin),
-    Variable = binding_variable(Binding, Environment, Id, Origin),
+    Variable = case binding_used(Binding, BodyId, NodeMap, []) of
+        true -> binding_variable(Binding, Environment, Id, Origin);
+        false -> '_'
+    end,
     {'case', Line,
         lower_node(ValueId, NodeMap, Environment, CallableMap, Context),
         [{clause, Line, [{var, Line, Variable}], [], [
@@ -209,8 +218,14 @@ lower_node_value(#{
     origin := Origin
 }, NodeMap, Environment, CallableMap, Context) ->
     Line = origin_line(Origin),
-    OkVariable = binding_variable(OkBinding, Environment, Id, Origin),
-    ErrorVariable = binding_variable(ErrorBinding, Environment, Id, Origin),
+    OkVariable = case binding_used(OkBinding, OkId, NodeMap, []) of
+        true -> binding_variable(OkBinding, Environment, Id, Origin);
+        false -> '_'
+    end,
+    ErrorVariable = case binding_used(ErrorBinding, ErrorId, NodeMap, []) of
+        true -> binding_variable(ErrorBinding, Environment, Id, Origin);
+        false -> '_'
+    end,
     {'case', Line,
         lower_node(ValueId, NodeMap, Environment, CallableMap, Context),
         [
@@ -231,16 +246,17 @@ lower_node_value(#{kind := apply, callable := Callable, arguments := Arguments, 
             ] ++ [Context]};
         error -> fail(unresolved_backend_callable, Id, Origin)
     end;
-lower_node_value(#{kind := sequence, first := First, then := Then, origin := Origin}, NodeMap, Environment, CallableMap, Context) ->
+lower_node_value(#{kind := sequence, id := Id, first := First, then := Then, origin := Origin}, NodeMap, Environment, CallableMap, Context) ->
     Line = origin_line(Origin),
+    ErrorVariable = maps:get({sequence, Id}, Environment),
     {'case', Line,
         lower_node(First, NodeMap, Environment, CallableMap, Context),
         [
-            {clause, Line, [tagged_pattern(Line, error, 'ALANG_SEQUENCE_ERROR')], [], [
+            {clause, Line, [tagged_pattern(Line, error, ErrorVariable)], [], [
                 {tuple, Line, [
                     {atom, Line, alang_data_v1},
                     {atom, Line, error},
-                    {var, Line, 'ALANG_SEQUENCE_ERROR'}
+                    {var, Line, ErrorVariable}
                 ]}
             ]},
             {clause, Line, [{var, Line, '_'}], [], [
@@ -276,11 +292,72 @@ assign_variables([Name | Rest], Index, Acc) when Index < 32 ->
 assign_variables([Name | _Rest], _Index, _Acc) ->
     fail(compiler_variable_pool_exhausted, Name, default_origin()).
 
+environment(Parameters, Nodes) ->
+    BindingNames = unique_names(
+        [maps:get(name, Parameter) || Parameter <- Parameters] ++ collect_bindings(Nodes),
+        []
+    ),
+    BindingEnvironment = assign_variables(BindingNames, 0, #{}),
+    assign_sequence_variables(Nodes, 0, BindingEnvironment).
+
+assign_sequence_variables([], _Index, Environment) -> Environment;
+assign_sequence_variables([#{kind := sequence, id := Id} | Rest], Index, Environment) when Index < 16 ->
+    assign_sequence_variables(Rest, Index + 1, Environment#{{sequence, Id} => sequence_variable_atom(Index)});
+assign_sequence_variables([#{kind := sequence, id := Id} | _Rest], _Index, _Environment) ->
+    fail(compiler_sequence_pool_exhausted, Id, default_origin());
+assign_sequence_variables([_Node | Rest], Index, Environment) ->
+    assign_sequence_variables(Rest, Index, Environment).
+
 binding_variable(Binding, Environment, Id, Origin) ->
     case maps:find(Binding, Environment) of
         {ok, Variable} -> Variable;
         error -> fail(unresolved_backend_binding, Id, Origin)
     end.
+
+parameter_variables(Parameters, Environment, undefined, _NodeMap, Line) ->
+    [
+        {var, Line, maps:get(maps:get(name, Parameter), Environment)}
+     || Parameter <- Parameters
+    ];
+parameter_variables(Parameters, Environment, BodyRoot, NodeMap, Line) ->
+    parameter_variables(Parameters, Environment, BodyRoot, NodeMap, Line, 0, []).
+
+parameter_variables([], _Environment, _BodyRoot, _NodeMap, _Line, _Index, Acc) ->
+    lists:reverse(Acc);
+parameter_variables([Parameter | Rest], Environment, BodyRoot, NodeMap, Line, Index, Acc) ->
+    Name = maps:get(name, Parameter),
+    Variable = case binding_used(Name, BodyRoot, NodeMap, []) of
+        true -> maps:get(Name, Environment);
+        false -> unused_variable_atom(Index)
+    end,
+    parameter_variables(Rest, Environment, BodyRoot, NodeMap, Line, Index + 1, [{var, Line, Variable} | Acc]).
+
+binding_used(Name, NodeId, NodeMap, Seen) ->
+    case lists:member(NodeId, Seen) of
+        true -> false;
+        false ->
+            Node = maps:get(NodeId, NodeMap),
+            case Node of
+                #{kind := input, name := Name} -> true;
+                _ -> lists:any(
+                    fun(Reference) -> binding_used(Name, Reference, NodeMap, [NodeId | Seen]) end,
+                    node_references(Node)
+                )
+            end
+    end.
+
+node_references(#{kind := Kind, left := Left, right := Right}) when Kind =:= add; Kind =:= equal -> [Left, Right];
+node_references(#{kind := product, elements := Elements}) -> Elements;
+node_references(#{kind := project, product := Product}) -> [Product];
+node_references(#{kind := Kind, value := Value}) when Kind =:= ok; Kind =:= error -> [Value];
+node_references(#{kind := bind, value := Value, body := Body}) -> [Value, Body];
+node_references(#{kind := match_result, value := Value, ok_branch := Ok, error_branch := Error}) ->
+    [Value, Ok, Error];
+node_references(#{kind := apply, arguments := Arguments}) -> Arguments;
+node_references(#{kind := sequence, first := First, then := Then}) -> [First, Then];
+node_references(#{kind := effect_request, arguments := Arguments}) -> Arguments;
+node_references(#{kind := verify, condition := Condition}) -> [Condition];
+node_references(_) -> [].
 
 collect_bindings(Nodes) ->
     lists:append([node_bindings(Node) || Node <- Nodes]).
@@ -379,3 +456,37 @@ variable_atom(28) -> 'ALANG_V28';
 variable_atom(29) -> 'ALANG_V29';
 variable_atom(30) -> 'ALANG_V30';
 variable_atom(31) -> 'ALANG_V31'.
+
+sequence_variable_atom(0) -> 'ALANG_SEQUENCE_0';
+sequence_variable_atom(1) -> 'ALANG_SEQUENCE_1';
+sequence_variable_atom(2) -> 'ALANG_SEQUENCE_2';
+sequence_variable_atom(3) -> 'ALANG_SEQUENCE_3';
+sequence_variable_atom(4) -> 'ALANG_SEQUENCE_4';
+sequence_variable_atom(5) -> 'ALANG_SEQUENCE_5';
+sequence_variable_atom(6) -> 'ALANG_SEQUENCE_6';
+sequence_variable_atom(7) -> 'ALANG_SEQUENCE_7';
+sequence_variable_atom(8) -> 'ALANG_SEQUENCE_8';
+sequence_variable_atom(9) -> 'ALANG_SEQUENCE_9';
+sequence_variable_atom(10) -> 'ALANG_SEQUENCE_10';
+sequence_variable_atom(11) -> 'ALANG_SEQUENCE_11';
+sequence_variable_atom(12) -> 'ALANG_SEQUENCE_12';
+sequence_variable_atom(13) -> 'ALANG_SEQUENCE_13';
+sequence_variable_atom(14) -> 'ALANG_SEQUENCE_14';
+sequence_variable_atom(15) -> 'ALANG_SEQUENCE_15'.
+
+unused_variable_atom(0) -> '_ALANG_UNUSED_0';
+unused_variable_atom(1) -> '_ALANG_UNUSED_1';
+unused_variable_atom(2) -> '_ALANG_UNUSED_2';
+unused_variable_atom(3) -> '_ALANG_UNUSED_3';
+unused_variable_atom(4) -> '_ALANG_UNUSED_4';
+unused_variable_atom(5) -> '_ALANG_UNUSED_5';
+unused_variable_atom(6) -> '_ALANG_UNUSED_6';
+unused_variable_atom(7) -> '_ALANG_UNUSED_7';
+unused_variable_atom(8) -> '_ALANG_UNUSED_8';
+unused_variable_atom(9) -> '_ALANG_UNUSED_9';
+unused_variable_atom(10) -> '_ALANG_UNUSED_10';
+unused_variable_atom(11) -> '_ALANG_UNUSED_11';
+unused_variable_atom(12) -> '_ALANG_UNUSED_12';
+unused_variable_atom(13) -> '_ALANG_UNUSED_13';
+unused_variable_atom(14) -> '_ALANG_UNUSED_14';
+unused_variable_atom(15) -> '_ALANG_UNUSED_15'.

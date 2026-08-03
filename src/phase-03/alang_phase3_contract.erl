@@ -168,17 +168,117 @@ validate_ir(_) ->
 
 validate_graph(Tasks, Nodes) ->
     NodeIds = [maps:get(id, Node, undefined) || Node <- Nodes],
+    TaskIds = [maps:get(id, Task, undefined) || Task <- Tasks],
     NodeMap = maps:from_list([{maps:get(id, Node, undefined), Node} || Node <- Nodes]),
-    case length(NodeIds) =:= maps:size(NodeMap) andalso lists:all(fun valid_identity/1, NodeIds) of
-        false ->
+    case {
+        length(NodeIds) =:= maps:size(NodeMap) andalso lists:all(fun valid_identity/1, NodeIds),
+        length(TaskIds) =:= length(lists:usort(TaskIds)) andalso lists:all(fun valid_identity/1, TaskIds)
+    } of
+        {false, _} ->
             {error, [compile_error(invalid_node_identity, <<"module">>, default_origin())]};
-        true ->
-            Errors = validate_tasks(Tasks, NodeMap) ++ validate_nodes(Nodes, NodeMap),
+        {_, false} ->
+            {error, [compile_error(invalid_task_identity, <<"module">>, default_origin())]};
+        {true, true} ->
+            Errors = validate_tasks(Tasks, NodeMap) ++
+                validate_nodes(Nodes, NodeMap) ++
+                validate_node_cycles(Nodes, NodeMap) ++
+                validate_callable_graph(Tasks, NodeMap),
             case Errors of
                 [] -> ok;
                 _ -> {error, Errors}
             end
     end.
+
+validate_node_cycles(Nodes, NodeMap) ->
+    [
+        compile_error(cyclic_node_graph, maps:get(id, Node), maps:get(origin, Node))
+     || Node <- Nodes,
+        reaches_node(maps:get(id, Node), maps:get(id, Node), NodeMap, [])
+    ].
+
+reaches_node(Current, Target, NodeMap, Seen) ->
+    case maps:find(Current, NodeMap) of
+        {ok, Node} ->
+            References = node_references(Node),
+            lists:any(
+                fun(Reference) when Reference =:= Target -> true;
+                   (Reference) ->
+                        maps:is_key(Reference, NodeMap) andalso
+                            not lists:member(Reference, Seen) andalso
+                            reaches_node(Reference, Target, NodeMap, [Current | Seen])
+                end,
+                References
+            );
+        error -> false
+    end.
+
+validate_callable_graph(Tasks, NodeMap) ->
+    TaskIds = [maps:get(id, Task) || Task <- Tasks],
+    CallGraph = maps:from_list([
+        {maps:get(id, Task), task_calls(Task, NodeMap)}
+     || Task <- Tasks
+    ]),
+    UnknownErrors = lists:append([
+        [
+            compile_error(unresolved_backend_callable, maps:get(id, Task), maps:get(origin, Task))
+         || Callable <- maps:get(maps:get(id, Task), CallGraph),
+            not lists:member(Callable, TaskIds)
+        ]
+     || Task <- Tasks
+    ]),
+    CycleErrors = [
+        compile_error(recursive_callable_graph, maps:get(id, Task), maps:get(origin, Task))
+     || Task <- Tasks,
+        reaches_callable(maps:get(id, Task), maps:get(id, Task), CallGraph, [])
+    ],
+    UnknownErrors ++ CycleErrors.
+
+task_calls(Task, NodeMap) ->
+    Reachable = reachable_nodes([maps:get(body_root, Task)], NodeMap, []),
+    lists:usort([
+        Callable
+     || NodeId <- Reachable,
+        #{kind := apply, callable := Callable} <- [maps:get(NodeId, NodeMap)]
+    ]).
+
+reachable_nodes([], _NodeMap, Seen) -> Seen;
+reachable_nodes([NodeId | Rest], NodeMap, Seen) ->
+    case lists:member(NodeId, Seen) of
+        true -> reachable_nodes(Rest, NodeMap, Seen);
+        false ->
+            case maps:find(NodeId, NodeMap) of
+                {ok, Node} ->
+                    References = node_references(Node),
+                    reachable_nodes(References ++ Rest, NodeMap, [NodeId | Seen]);
+                error -> reachable_nodes(Rest, NodeMap, Seen)
+            end
+    end.
+
+reaches_callable(Current, Target, CallGraph, Seen) ->
+    Calls = maps:get(Current, CallGraph, []),
+    lists:any(
+        fun(Callable) when Callable =:= Target -> true;
+           (Callable) ->
+                maps:is_key(Callable, CallGraph) andalso
+                    not lists:member(Callable, Seen) andalso
+                    reaches_callable(Callable, Target, CallGraph, [Current | Seen])
+        end,
+        Calls
+    ).
+
+node_references(#{kind := Kind, left := Left, right := Right}) when Kind =:= add; Kind =:= equal ->
+    [Left, Right];
+node_references(#{kind := product, elements := Elements}) -> Elements;
+node_references(#{kind := project, product := Product}) -> [Product];
+node_references(#{kind := Kind, value := Value}) when Kind =:= ok; Kind =:= error -> [Value];
+node_references(#{kind := bind, value := Value, body := Body}) -> [Value, Body];
+node_references(#{kind := match_result, value := Value, ok_branch := Ok, error_branch := Error}) ->
+    [Value, Ok, Error];
+node_references(#{kind := apply, arguments := Arguments}) -> Arguments;
+node_references(#{kind := sequence, first := First, then := Then}) -> [First, Then];
+node_references(#{kind := effect_request, arguments := Arguments}) -> Arguments;
+node_references(#{kind := verify, condition := Condition}) -> [Condition];
+node_references(_) -> [].
 
 validate_tasks(Tasks, NodeMap) ->
     lists:append([validate_task(Task, NodeMap) || Task <- Tasks]).
@@ -197,7 +297,9 @@ validate_task(#{
     is_list(Parameters),
     length(Parameters) =< 16,
     is_list(Effects),
+    length(Effects) =< 32,
     is_list(Requirements),
+    length(Requirements) =< 32,
     is_binary(BodyRoot),
     is_binary(CompletionRoot),
     is_map(Origin)
@@ -205,7 +307,11 @@ validate_task(#{
     RootErrors =
         missing_reference_errors(TaskId, Origin, [BodyRoot, CompletionRoot], NodeMap),
     TypeErrors =
-        case valid_type(ResultType) andalso lists:all(fun valid_parameter/1, Parameters) of
+        case valid_type(ResultType) andalso
+            valid_parameters(Parameters) andalso
+            lists:all(fun valid_identity/1, Effects) andalso
+            lists:all(fun valid_identity/1, Requirements)
+        of
             true -> [];
             false -> [compile_error(invalid_task_signature, TaskId, Origin)]
         end,
@@ -325,6 +431,11 @@ valid_parameter(#{name := Name, type := Type, origin := Origin}) ->
     is_binary(Name) andalso byte_size(Name) > 0 andalso byte_size(Name) =< 128 andalso
         valid_type(Type) andalso is_map(Origin);
 valid_parameter(_) -> false.
+
+valid_parameters(Parameters) ->
+    Names = [maps:get(name, Parameter, undefined) || Parameter <- Parameters],
+    lists:all(fun valid_parameter/1, Parameters) andalso
+        length(Names) =:= length(lists:usort(Names)).
 
 valid_type(int) -> true;
 valid_type(bool) -> true;

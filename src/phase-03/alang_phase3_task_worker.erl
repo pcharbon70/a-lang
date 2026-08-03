@@ -63,7 +63,7 @@ execute_module(State, Deadline) ->
                 true -> {completion, Value};
                 false -> {runtime_failure, <<"task-deadline-exceeded">>}
             end;
-        {alang_runtime_v1, error, Reason} -> {runtime_failure, bounded_reason(Reason)};
+        {alang_runtime_v1, error, Reason} -> {runtime_failure, bounded_runtime_reason(Reason)};
         Other -> {runtime_failure, bounded_reason({invalid_runtime_result, Other})}
     catch
         Class:Reason -> {runtime_failure, bounded_reason({task_exception, Class, Reason})}
@@ -111,4 +111,12 @@ bounded_reason(Reason) ->
     case byte_size(Binary) =< 512 of
         true -> Binary;
         false -> binary:part(Binary, 0, 512)
+    end.
+
+bounded_runtime_reason(Reason) ->
+    try erlang:external_size(Reason) =< 4096 of
+        true -> Reason;
+        false -> <<"runtime-error-too-large">>
+    catch
+        error:badarg -> <<"invalid-runtime-error">>
     end.
