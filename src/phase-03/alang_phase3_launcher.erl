@@ -7,8 +7,8 @@
 -spec run(atom(), binary(), map(), map()) -> {ok, map()} | {error, map()}.
 run(Module, TaskId, Inputs, Options) when is_atom(Module), is_binary(TaskId), is_map(Inputs), is_map(Options) ->
     case validate_options(Options) of
-        {ok, Limits, Handler, Timeout} ->
-            run_session(Module, TaskId, Inputs, Limits, Handler, Timeout);
+        {ok, Limits, Handler, Timeout, SessionId} ->
+            run_session(Module, TaskId, Inputs, Limits, Handler, Timeout, SessionId);
         {error, Reason} -> {error, #{reason => Reason, trace => []}}
     end;
 run(_Module, _TaskId, _Inputs, _Options) ->
@@ -20,23 +20,25 @@ validate_options(#{
     max_in_flight := MaxInFlight,
     max_mailbox := MaxMailbox,
     max_trace_events := MaxTraceEvents
-}) when
-    is_function(Handler, 2),
+} = Options) when
+    (is_function(Handler, 2) orelse is_function(Handler, 3)),
     is_integer(Timeout), Timeout > 0, Timeout =< 60000,
     is_integer(MaxInFlight), MaxInFlight > 0, MaxInFlight =< 32,
     is_integer(MaxMailbox), MaxMailbox > 0, MaxMailbox =< 1024,
     is_integer(MaxTraceEvents), MaxTraceEvents > 0, MaxTraceEvents =< 1024
 ->
-    {ok, #{
-        max_in_flight => MaxInFlight,
-        max_mailbox => MaxMailbox,
-        max_trace_events => MaxTraceEvents
-    }, Handler, Timeout};
+    case requested_session_id(maps:get(session_id, Options, automatic)) of
+        {ok, SessionId} -> {ok, #{
+            max_in_flight => MaxInFlight,
+            max_mailbox => MaxMailbox,
+            max_trace_events => MaxTraceEvents
+        }, Handler, Timeout, SessionId};
+        {error, _} = Error -> Error
+    end;
 validate_options(_) -> {error, invalid_runtime_limits}.
 
-run_session(Module, TaskId, Inputs, Limits, Handler, Timeout) ->
+run_session(Module, TaskId, Inputs, Limits, Handler, Timeout, SessionId) ->
     PreviousTrap = process_flag(trap_exit, true),
-    SessionId = session_id(),
     Deadline = erlang:monotonic_time(millisecond) + Timeout,
     try alang_phase3_session_sup:start_link(SessionId, Handler, Limits) of
         {ok, Supervisor} ->
@@ -148,6 +150,14 @@ finish(Supervisor, Outcome) ->
 session_id() ->
     Integer = erlang:unique_integer([monotonic, positive]),
     <<"session-", (integer_to_binary(Integer))/binary>>.
+
+requested_session_id(automatic) -> {ok, session_id()};
+requested_session_id(SessionId) when
+    is_binary(SessionId),
+    byte_size(SessionId) > 0,
+    byte_size(SessionId) =< 256
+-> {ok, SessionId};
+requested_session_id(_) -> {error, invalid_session_id}.
 
 flush_exit(Supervisor) ->
     receive

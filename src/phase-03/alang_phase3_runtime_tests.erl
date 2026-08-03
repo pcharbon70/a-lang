@@ -91,6 +91,34 @@ effect_result_crosses_gateway_once_test() ->
     end,
     assert_trace_kinds(maps:get(trace, Result), [effect_intent, effect_result]).
 
+contextual_handler_receives_bound_runtime_identity_test() ->
+    Parent = self(),
+    SessionId = <<"session-contextual-handler">>,
+    Handler = fun(Operation, Arguments, Context) ->
+        Parent ! {contextual_effect, Operation, Arguments, Context},
+        {ok, 42}
+    end,
+    Options = (options(Handler, 1000))#{session_id => SessionId},
+    {ok, Result} = alang_phase3_launcher:run(
+        alang_phase3_runtime_fixture,
+        <<"task:Fixture.effect/0">>,
+        #{},
+        Options
+    ),
+    ?assertEqual({alang_data_v1, ok, 42}, maps:get(value, Result)),
+    receive
+        {contextual_effect, <<"fixture.increment">>, {alang_data_v1, product, {41}}, Context} ->
+            ?assertEqual(SessionId, maps:get(session_id, Context)),
+            ?assertEqual(<<"task:Fixture.effect/0">>, maps:get(task_id, Context)),
+            ?assert(is_binary(maps:get(correlation_id, Context))),
+            ?assert(is_integer(maps:get(deadline, Context))),
+            ?assert(is_pid(maps:get(requester_pid, Context))),
+            ?assert(is_pid(maps:get(gateway_pid, Context))),
+            ?assertMatch({source, _, _, _}, maps:get(origin, Context))
+    after 100 ->
+        ?assert(false)
+    end.
+
 denial_is_a_typed_result_not_an_exception_test() ->
     Handler = fun(_Operation, _Arguments) -> {error, <<"policy-denied">>} end,
     {ok, Result} = alang_phase3_launcher:run(

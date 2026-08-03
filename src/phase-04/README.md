@@ -74,6 +74,14 @@ remain under the ignored repository `build/` directory.
 - [Workspace adapter contract](workspace-adapter-contract.md) — the sealed
   protocol, Bubblewrap and resource-limit profile, filesystem rules, outcome
   model, and explicitly deferred durability claims.
+- [`alang_phase4_integration_fixture.erl`](alang_phase4_integration_fixture.erl)
+  — typed workspace-effect IR promoted through the Phase 3 BEAM backend.
+- [`alang_phase4_integration_tests.erl`](alang_phase4_integration_tests.erl) —
+  loaded-artifact success, correlated trace, BEAM ownership, least-authority
+  rejection, stale-grant, bypass, and no-side-effect phase gates.
+- [Phase 4 integration evidence](phase-04-integration-evidence.md) — the
+  reproducible authorized path, denial matrix, BEAM-residency observations,
+  and boundary of the completed phase claim.
 
 ## Maintaining this index
 

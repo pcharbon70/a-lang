@@ -19,7 +19,7 @@ statically declared operations; a supervised BEAM broker resolves opaque local
 references, validates typed arguments and dynamic policy, and calls one
 OS-bounded adapter without portable delegation or ambient authority.
 
-**Status:** In progress — Sections 4.1–4.4 have reproducible implementation evidence.
+**Status:** Complete — all five sections and the Phase 4 completion gates have reproducible evidence.
 
 **Dependencies:** Phase 3 complete with generated A-Lang modules executing as
 supervised BEAM processes through a versioned runtime ABI, bounded mailboxes,
@@ -249,7 +249,7 @@ effect.
 authorized workspace effect through the BEAM broker and cannot bypass or widen
 that authority.
 
-- [ ] **Section 4.5 Complete**
+- [x] **Section 4.5 Complete** — evidence: [capability and effect integration suite](../../src/phase-04/alang_phase4_integration_tests.erl) and [reproducible evidence narrative](../../src/phase-04/phase-04-integration-evidence.md)
 
 ### Task 4.5.1: Run the Authorized Effect Path
 
@@ -257,7 +257,7 @@ that authority.
 the typed effect request, authorize it in the broker, execute the adapter, and
 return the artifact digest to the originating BEAM process.
 
-- [ ] **Task 4.5.1 Complete**
+- [x] **Task 4.5.1 Complete** — evidence: [loaded generated-BEAM authorized path](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.1.1: Verify the Successful Trace
 
@@ -265,7 +265,7 @@ return the artifact digest to the originating BEAM process.
 and process events and prove that the output exists only at the authorized
 workspace path.
 
-- [ ] **Subtask 4.5.1.1 Complete**
+- [x] **Subtask 4.5.1.1 Complete** — evidence: [correlated runtime, broker, adapter, digest, budget, and output assertions](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.1.2: Verify BEAM Ownership and Dispatch
 
@@ -273,7 +273,7 @@ workspace path.
 and broker are BEAM processes and that no host interpreter or direct generated
 module call performs the external effect.
 
-- [ ] **Subtask 4.5.1.2 Complete**
+- [x] **Subtask 4.5.1.2 Complete** — evidence: [ERTS process snapshots, BEAM module paths, artifact imports, and fixed sidecar status](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 ### Task 4.5.2: Run Least-Authority Rejection Cases
 
@@ -281,14 +281,14 @@ module call performs the external effect.
 expired, revoked, and undeclared requests plus direct adapter and module-call
 bypass attempts.
 
-- [ ] **Task 4.5.2 Complete**
+- [x] **Task 4.5.2 Complete** — evidence: [least-authority denial matrix](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.2.1: Assert No Unauthorized Side Effect
 
 **Description:** Verify the workspace and adapter logs remain unchanged for
 every denied request and that retries cannot turn a denial into execution.
 
-- [ ] **Subtask 4.5.2.1 Complete**
+- [x] **Subtask 4.5.2.1 Complete** — evidence: [unchanged adapter event counts, budgets, and workspace paths for denied requests](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 #### Subtask 4.5.2.2: Assert Stable Failure Evidence
 
@@ -296,18 +296,18 @@ every denied request and that retries cannot turn a denial into execution.
 redacted audit event, unchanged budget where appropriate, and healthy BEAM
 supervision tree.
 
-- [ ] **Subtask 4.5.2.2 Complete**
+- [x] **Subtask 4.5.2.2 Complete** — evidence: [typed denial, redacted audit, stale-generation, supervision-health, seal-bypass, and import-rejection assertions](../../src/phase-04/alang_phase4_integration_tests.erl)
 
 ## Phase 4 Completion Evidence
 
 **Description:** Phase 4 is complete only when the repository contains
 reproducible evidence for all items below.
 
-- [ ] The effect registry generates consistent compiler, manifest, broker, and adapter views
-- [ ] Generated BEAM code can request only manifest-declared operations through the ABI
-- [ ] Opaque grants are local, unforgeable, scoped, bounded, expiring, and revocable
-- [ ] Broker decisions are typed, ordered, redacted, supervised, and fail closed
-- [ ] The workspace adapter enforces path and resource isolation
-- [ ] The authorized end-to-end effect succeeds only through the BEAM broker
-- [ ] Forgery, scope escape, exhaustion, expiry, revocation, and bypass cases cause no effect
-- [ ] No portable authorization protocol is required or implemented
+- [x] The effect registry generates consistent compiler, manifest, broker, and adapter views
+- [x] Generated BEAM code can request only manifest-declared operations through the ABI
+- [x] Opaque grants are local, unforgeable, scoped, bounded, expiring, and revocable
+- [x] Broker decisions are typed, ordered, redacted, supervised, and fail closed
+- [x] The workspace adapter enforces path and resource isolation
+- [x] The authorized end-to-end effect succeeds only through the BEAM broker
+- [x] Forgery, scope escape, exhaustion, expiry, revocation, and bypass cases cause no effect
+- [x] No portable authorization protocol is required or implemented

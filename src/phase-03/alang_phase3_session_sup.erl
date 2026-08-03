@@ -5,7 +5,7 @@
 -export([start_link/3, start_task/3, stop/1, topology/1]).
 -export([init/1]).
 
--spec start_link(binary(), fun((binary(), term()) -> term()), map()) -> supervisor:startlink_ret().
+-spec start_link(binary(), function(), map()) -> supervisor:startlink_ret().
 start_link(SessionId, Handler, Limits) ->
     supervisor:start_link(?MODULE, {SessionId, Handler, Limits}).
 

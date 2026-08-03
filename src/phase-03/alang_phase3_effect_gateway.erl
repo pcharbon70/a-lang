@@ -5,13 +5,13 @@
 -export([start_link/3]).
 -export([handle_call/3, handle_cast/2, handle_info/2, init/1, terminate/2]).
 
--spec start_link(binary(), fun((binary(), term()) -> term()), map()) -> gen_server:start_ret().
+-spec start_link(binary(), function(), map()) -> gen_server:start_ret().
 start_link(SessionId, Handler, Limits) ->
     gen_server:start_link(?MODULE, {SessionId, Handler, Limits}, []).
 
 init({SessionId, Handler, #{max_in_flight := MaxInFlight, max_mailbox := MaxMailbox}}) when
     is_binary(SessionId),
-    is_function(Handler, 2),
+    (is_function(Handler, 2) orelse is_function(Handler, 3)),
     is_integer(MaxInFlight),
     MaxInFlight > 0,
     MaxInFlight =< 32,
@@ -83,8 +83,9 @@ start_effect(
 ) when is_binary(Operation) ->
     Parent = self(),
     Handler = maps:get(handler, State),
+    HandlerContext = handler_context(Envelope, Parent),
     {Worker, Monitor} = spawn_monitor(fun() ->
-        Outcome = invoke_handler(Handler, Operation, Arguments),
+        Outcome = invoke_handler(Handler, Operation, Arguments, HandlerContext),
         Parent ! {effect_finished, self(), CorrelationId, Outcome}
     end),
     Entry = #{worker => Worker, monitor => Monitor, envelope => Envelope},
@@ -93,14 +94,30 @@ start_effect(Envelope, State) ->
     deny(Envelope, <<"invalid-effect-request">>),
     State.
 
-invoke_handler(Handler, Operation, Arguments) ->
-    try Handler(Operation, Arguments) of
+invoke_handler(Handler, Operation, Arguments, Context) ->
+    try call_handler(Handler, Operation, Arguments, Context) of
         {ok, Value} -> {ok, Value};
         {error, Reason} -> {error, bounded_reason(Reason)};
         _ -> {error, <<"invalid-handler-result">>}
     catch
         _Class:_Reason -> {error, <<"effect-handler-failed">>}
     end.
+
+call_handler(Handler, Operation, Arguments, Context) when is_function(Handler, 3) ->
+    Handler(Operation, Arguments, Context);
+call_handler(Handler, Operation, Arguments, _Context) ->
+    Handler(Operation, Arguments).
+
+handler_context(Envelope, Gateway) ->
+    #{
+        session_id => element(3, Envelope),
+        task_id => element(4, Envelope),
+        correlation_id => element(5, Envelope),
+        deadline => element(6, Envelope),
+        requester_pid => element(8, Envelope),
+        origin => element(9, Envelope),
+        gateway_pid => Gateway
+    }.
 
 finish_effect(Worker, CorrelationId, Outcome, State) ->
     InFlight = maps:get(in_flight, State),

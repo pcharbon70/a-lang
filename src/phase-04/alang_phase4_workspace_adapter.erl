@@ -53,8 +53,8 @@ init({Broker, Config, Seal}) when is_pid(Broker), is_reference(Seal) ->
                 events => [],
                 fault => none
             },
-            case launch_port(Normalized) of
-                {ok, Port} -> {ok, Base#{port := Port, ready := false}};
+            case launch_ready_port(Normalized) of
+                {ok, Port} -> {ok, Base#{port := Port, ready := true}};
                 {error, Reason} -> {stop, {adapter_launch_failed, Reason}}
             end;
         {error, Reason} -> {stop, Reason}
@@ -110,7 +110,7 @@ handle_info({'EXIT', Port, Reason}, #{port := Port} = State) ->
     {noreply, handle_port_exit({port_exit, Reason}, State)};
 handle_info({'DOWN', Monitor, process, Broker, _Reason},
     #{broker_monitor := Monitor, broker := Broker} = State) ->
-    {stop, broker_terminated, State};
+    {stop, normal, State};
 handle_info(_Message, State) -> {noreply, State}.
 
 terminate(_Reason, State) ->
@@ -255,16 +255,38 @@ restart(Reason, State) ->
     Restarted = State#{port := undefined, ready := false,
         restarts := maps:get(restarts, State) + 1},
     EventState = record_event(restart, <<"internal">>, Reason, Restarted),
-    case launch_port(maps:get(config, State)) of
-        {ok, Port} -> EventState#{port := Port, ready := false};
+    case launch_ready_port(maps:get(config, State)) of
+        {ok, Port} -> EventState#{port := Port, ready := true};
         {error, _LaunchReason} -> EventState
     end.
 
 ensure_port(#{port := Port} = State) when is_port(Port) -> {ok, State};
 ensure_port(State) ->
-    case launch_port(maps:get(config, State)) of
-        {ok, Port} -> {ok, State#{port := Port, ready := false}};
+    case launch_ready_port(maps:get(config, State)) of
+        {ok, Port} -> {ok, State#{port := Port, ready := true}};
         {error, Reason} -> {error, Reason, State}
+    end.
+
+launch_ready_port(Config) ->
+    case launch_port(Config) of
+        {ok, Port} -> await_ready_port(Port);
+        {error, _} = Error -> Error
+    end.
+
+await_ready_port(Port) ->
+    receive
+        {Port, {data, Binary}} ->
+            case ready_frame(Binary) of
+                true -> {ok, Port};
+                false ->
+                    close_port(Port),
+                    {error, invalid_sidecar_handshake}
+            end;
+        {Port, {exit_status, Status}} -> {error, {sidecar_exit, Status}};
+        {'EXIT', Port, Reason} -> {error, {sidecar_exit, Reason}}
+    after 2000 ->
+        close_port(Port),
+        {error, sidecar_handshake_timeout}
     end.
 
 build_request(#{operation_tag := workspace_write, adapter := workspace_adapter,

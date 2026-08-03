@@ -4,12 +4,15 @@
 
 -export([
     audit/1,
+    adapter_events/1,
+    adapter_status/1,
     authorize/6,
     combine_grants/3,
     complete/3,
     describe_grant/2,
     issue_grant/2,
     pending_count/1,
+    request/6,
     restrict_grant/3,
     revoke_grant/2,
     runtime_context/1,
@@ -52,6 +55,15 @@ authorize(Broker, Grant, Manifest, Operation, Arguments, Context) ->
         ?MAX_CALL_TIMEOUT
     ).
 
+-spec request(pid(), term(), map(), binary(), term(), map()) ->
+    {ok, binary()} | {error, term()}.
+request(Broker, Grant, Manifest, Operation, Arguments, Context) ->
+    gen_server:call(
+        Broker,
+        {request, Grant, Manifest, Operation, Arguments, Context},
+        ?MAX_CALL_TIMEOUT
+    ).
+
 -spec complete(pid(), tuple(), atom()) -> ok | {error, atom()}.
 complete(Broker, Authorization, Outcome) ->
     gen_server:call(Broker, {complete, Authorization, Outcome}, ?MAX_CALL_TIMEOUT).
@@ -62,19 +74,30 @@ audit(Broker) -> gen_server:call(Broker, audit, ?MAX_CALL_TIMEOUT).
 -spec pending_count(pid()) -> non_neg_integer().
 pending_count(Broker) -> gen_server:call(Broker, pending_count, ?MAX_CALL_TIMEOUT).
 
+-spec adapter_status(pid()) -> {ok, map()} | {error, atom()}.
+adapter_status(Broker) -> gen_server:call(Broker, adapter_status, ?MAX_CALL_TIMEOUT).
+
+-spec adapter_events(pid()) -> {ok, [map()]} | {error, atom()}.
+adapter_events(Broker) -> gen_server:call(Broker, adapter_events, ?MAX_CALL_TIMEOUT).
+
 init(Options) ->
     case validate_options(Options) of
-        {ok, Limits, Policy} ->
+        {ok, Limits, Policy, AdapterConfig} ->
             Generation = erlang:unique_integer([monotonic, positive]),
-            {ok, #{
+            Base = #{
                 grants => alang_phase4_grants:new_store(Generation),
                 limits => Limits,
                 policy => Policy,
+                adapter => disabled,
                 pending => #{},
                 owner_monitors => #{},
                 audit => [],
                 audit_overflow => 0
-            }};
+            },
+            case start_owned_adapter(AdapterConfig, Base) of
+                {ok, Started} -> {ok, Started};
+                {error, Reason} -> {stop, {adapter_start_failed, Reason}}
+            end;
         {error, Reason} -> {stop, Reason}
     end.
 
@@ -110,6 +133,9 @@ handle_call({describe_grant, Grant}, _From, State) ->
 handle_call({authorize, Grant, Manifest, Operation, Arguments, Context}, _From, State) ->
     {Reply, Updated} = authorize_request(Grant, Manifest, Operation, Arguments, Context, State),
     {reply, Reply, Updated};
+handle_call({request, Grant, Manifest, Operation, Arguments, Context}, _From, State) ->
+    {Reply, Updated} = request_effect(Grant, Manifest, Operation, Arguments, Context, State),
+    {reply, Reply, Updated};
 handle_call({complete, Authorization, Outcome}, _From, State) ->
     {Reply, Updated} = complete_authorization(Authorization, Outcome, State),
     {reply, Reply, Updated};
@@ -121,12 +147,19 @@ handle_call(audit, _From, State) ->
     }, State};
 handle_call(pending_count, _From, State) ->
     {reply, map_size(maps:get(pending, State)), State};
+handle_call(adapter_status, _From, State) ->
+    {reply, owned_adapter_call(status, State), State};
+handle_call(adapter_events, _From, State) ->
+    {reply, owned_adapter_call(events, State), State};
 handle_call(_Request, _From, State) -> {reply, {error, unsupported_broker_call}, State}.
 
 handle_cast(_Message, State) -> {noreply, State}.
 
 handle_info({authorization_expired, Ticket}, State) ->
     {noreply, expire_authorization(Ticket, State)};
+handle_info({'DOWN', Monitor, process, Adapter, Reason},
+    #{adapter := #{pid := Adapter, monitor := Monitor}} = State) ->
+    {noreply, restart_owned_adapter(Reason, State)};
 handle_info({'DOWN', Monitor, process, Owner, _Reason}, State) ->
     {noreply, owner_down(Monitor, Owner, State)};
 handle_info(_Message, State) -> {noreply, State}.
@@ -140,7 +173,54 @@ terminate(_Reason, State) ->
         fun(_Owner, Monitor) -> erlang:demonitor(Monitor, [flush]) end,
         maps:get(owner_monitors, State)
     ),
+    stop_owned_adapter(maps:get(adapter, State)),
     ok.
+
+request_effect(Grant, Manifest, Operation, Arguments, Context, State) ->
+    case authorize_request(Grant, Manifest, Operation, Arguments, Context, State) of
+        {{ok, Authorization}, AuthorizedState} ->
+            dispatch_authorization(Authorization, Context, AuthorizedState);
+        {{error, _} = Error, DeniedState} -> {Error, DeniedState}
+    end.
+
+dispatch_authorization(
+    {alang_broker_authorization_v1, Ticket, _DecisionId} = Authorization,
+    Context,
+    #{adapter := #{pid := Adapter, seal := Seal}, pending := Pending} = State
+) ->
+    case maps:find(Ticket, Pending) of
+        {ok, #{decoded := Decoded}} ->
+            AdapterResult = try alang_phase4_workspace_adapter:dispatch(
+                Adapter,
+                Seal,
+                Decoded,
+                maps:get(request_deadline, Context)
+            ) of
+                Result -> Result
+            catch
+                exit:_Reason -> {error, {adapter_exit, outcome_unknown}}
+            end,
+            {EffectResult, Outcome} = classify_adapter_result(AdapterResult),
+            case complete_authorization(Authorization, Outcome, State) of
+                {ok, CompletedState} -> {EffectResult, CompletedState};
+                {{error, _}, CompletionState} ->
+                    {{error, <<"adapter-outcome-unknown">>}, CompletionState}
+            end;
+        error -> {{error, <<"unknown-authorization">>}, State}
+    end;
+dispatch_authorization(Authorization, _Context, State) ->
+    case complete_authorization(Authorization, failed, State) of
+        {ok, CompletedState} -> {{error, <<"adapter-unavailable">>}, CompletedState};
+        {{error, _}, CompletionState} -> {{error, <<"adapter-unavailable">>}, CompletionState}
+    end.
+
+classify_adapter_result({ok, #{digest := Digest}}) when is_binary(Digest), byte_size(Digest) =:= 64 ->
+    {{ok, Digest}, succeeded};
+classify_adapter_result({error, {_Class, outcome_unknown}}) ->
+    {{error, <<"adapter-outcome-unknown">>}, outcome_unknown};
+classify_adapter_result({error, Reason}) when is_atom(Reason) ->
+    {{error, reason_binary(Reason)}, denied};
+classify_adapter_result(_Other) -> {{error, <<"adapter-failed">>}, failed}.
 
 authorize_request(Grant, Manifest, Operation, Arguments, Context, State) ->
     case admit(Context, State) of
@@ -464,13 +544,90 @@ remove_owner_pending(Owner, Pending) ->
         Pending
     ).
 
-validate_options(#{limits := Limits, policy := Policy} = Options) when map_size(Options) =:= 2 ->
-    case {validate_limits(Limits), validate_policy(Policy)} of
-        {ok, ok} -> {ok, Limits, Policy};
-        {{error, _} = Error, _} -> Error;
-        {_, {error, _} = Error} -> Error
+validate_options(#{limits := Limits, policy := Policy} = Options) when
+    map_size(Options) =:= 2 orelse map_size(Options) =:= 3
+->
+    AdapterConfig = maps:get(adapter, Options, disabled),
+    ValidKeys = lists:sort(maps:keys(Options)) =:= [limits, policy] orelse
+        lists:sort(maps:keys(Options)) =:= [adapter, limits, policy],
+    case {ValidKeys, validate_limits(Limits), validate_policy(Policy)} of
+        {true, ok, ok} when AdapterConfig =:= disabled; is_map(AdapterConfig) ->
+            {ok, Limits, Policy, AdapterConfig};
+        {false, _, _} -> {error, invalid_broker_options};
+        {true, ok, ok} -> {error, invalid_adapter_configuration};
+        {true, {error, _} = Error, _} -> Error;
+        {true, _, {error, _} = Error} -> Error
     end;
 validate_options(_) -> {error, invalid_broker_options}.
+
+start_owned_adapter(disabled, State) -> {ok, State};
+start_owned_adapter(Config, State) when is_map(Config) ->
+    Seal = make_ref(),
+    case alang_phase4_workspace_adapter:start(self(), Config, Seal) of
+        {ok, Adapter} ->
+            Monitor = erlang:monitor(process, Adapter),
+            {ok, State#{adapter := #{
+                pid => Adapter,
+                seal => Seal,
+                monitor => Monitor,
+                config => Config
+            }}};
+        {error, Reason} -> {error, Reason}
+    end.
+
+restart_owned_adapter(Reason, #{adapter := #{config := Config}} = State) ->
+    Event = #{
+        format => alang_broker_event_v1,
+        decision_id => decision_id(),
+        correlation_id => <<"adapter-down">>,
+        operation => <<"workspace.write">>,
+        resource => undefined,
+        decision => lifecycle,
+        stage => dispatch,
+        reason => adapter_restarted,
+        policy_version => maps:get(version, maps:get(policy, State)),
+        remaining_budget => undefined,
+        grant_id => undefined,
+        adapter_failure => bounded_adapter_reason(Reason),
+        monotonic_time => erlang:monotonic_time(millisecond)
+    },
+    Base = record_event(Event, State#{adapter := disabled}),
+    case start_owned_adapter(Config, Base) of
+        {ok, Restarted} -> Restarted;
+        {error, _StartReason} -> Base
+    end;
+restart_owned_adapter(_Reason, State) -> State.
+
+stop_owned_adapter(disabled) -> ok;
+stop_owned_adapter(#{pid := Adapter, seal := Seal, monitor := Monitor}) ->
+    erlang:demonitor(Monitor, [flush]),
+    _ = try alang_phase4_workspace_adapter:stop(Adapter, Seal)
+        catch
+            exit:_Reason -> ok
+        end,
+    ok.
+
+owned_adapter_call(_Kind, #{adapter := disabled}) -> {error, adapter_unavailable};
+owned_adapter_call(status, #{adapter := #{pid := Adapter}}) ->
+    try {ok, alang_phase4_workspace_adapter:status(Adapter)}
+    catch
+        exit:_Reason -> {error, adapter_unavailable}
+    end;
+owned_adapter_call(events, #{adapter := #{pid := Adapter}}) ->
+    try {ok, alang_phase4_workspace_adapter:events(Adapter)}
+    catch
+        exit:_Reason -> {error, adapter_unavailable}
+    end.
+
+bounded_adapter_reason(Reason) ->
+    Binary = iolist_to_binary(io_lib:format("~tp", [Reason])),
+    case byte_size(Binary) =< 128 of
+        true -> Binary;
+        false -> binary:part(Binary, 0, 128)
+    end.
+
+reason_binary(Reason) ->
+    iolist_to_binary(io_lib:format("~tp", [Reason])).
 
 validate_limits(#{
     max_pending := MaxPending,
