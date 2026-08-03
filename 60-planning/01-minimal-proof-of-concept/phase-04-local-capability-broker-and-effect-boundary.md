@@ -19,7 +19,7 @@ statically declared operations; a supervised BEAM broker resolves opaque local
 references, validates typed arguments and dynamic policy, and calls one
 OS-bounded adapter without portable delegation or ambient authority.
 
-**Status:** Planned.
+**Status:** In progress — Section 4.1 has reproducible implementation evidence.
 
 **Dependencies:** Phase 3 complete with generated A-Lang modules executing as
 supervised BEAM processes through a versioned runtime ABI, bounded mailboxes,
@@ -31,7 +31,7 @@ classified failures, and inspected artifact imports.
 typed arguments, required authority, runtime operations, adapters, and
 observable results.
 
-- [ ] **Section 4.1 Complete**
+- [x] **Section 4.1 Complete** — evidence: [closed effect registry](../../src/phase-04/alang_phase4_effect_registry.erl) and [registry contract tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 ### Task 4.1.1: Define Stable Effect Identities
 
@@ -39,7 +39,7 @@ observable results.
 in the proof of concept so generated code never selects arbitrary modules or
 functions.
 
-- [ ] **Task 4.1.1 Complete**
+- [x] **Task 4.1.1 Complete** — evidence: [stable registry identities and schemas](../../src/phase-04/alang_phase4_effect_registry.erl)
 
 #### Subtask 4.1.1.1: Register the Initial Operations
 
@@ -47,21 +47,21 @@ functions.
 with closed request, success, denial, timeout, cancellation, and failure
 variants.
 
-- [ ] **Subtask 4.1.1.1 Complete**
+- [x] **Subtask 4.1.1.1 Complete** — evidence: model completion and workspace write definitions in the [closed registry](../../src/phase-04/alang_phase4_effect_registry.erl)
 
 #### Subtask 4.1.1.2: Generate Compiler and Runtime Views
 
 **Description:** Derive type-checker signatures, manifest declarations, broker
 decoders, adapter dispatch, and trace names from the same registry definition.
 
-- [ ] **Subtask 4.1.1.2 Complete**
+- [x] **Subtask 4.1.1.2 Complete** — evidence: [derived-view consistency tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 ### Task 4.1.2: Enforce Typed Effect Requests
 
 **Description:** Make every request a versioned value whose resource and
 arguments are decoded before policy evaluation or adapter dispatch.
 
-- [ ] **Task 4.1.2 Complete**
+- [x] **Task 4.1.2 Complete** — evidence: [versioned request decoder and manifest binder](../../src/phase-04/alang_phase4_effect_registry.erl)
 
 #### Subtask 4.1.2.1: Reject Dynamic Dispatch Inputs
 
@@ -69,14 +69,14 @@ arguments are decoded before policy evaluation or adapter dispatch.
 adapter identifiers, unknown fields, oversized binaries, and schema versions
 outside the registry.
 
-- [ ] **Subtask 4.1.2.1 Complete**
+- [x] **Subtask 4.1.2.1 Complete** — evidence: [dynamic-dispatch, schema, bounds, and atom-safety tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 #### Subtask 4.1.2.2: Bind Requests to Artifact Manifests
 
 **Description:** Deny any operation absent from the loaded artifact's effect
 manifest even when a session happens to hold a broader runtime grant.
 
-- [ ] **Subtask 4.1.2.2 Complete**
+- [x] **Subtask 4.1.2.2 Complete** — evidence: [independent artifact-manifest upper-bound tests](../../src/phase-04/alang_phase4_effect_registry_tests.erl)
 
 ## Section 4.2: Opaque Local Capability References
 

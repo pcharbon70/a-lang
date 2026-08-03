@@ -59,6 +59,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 3 Abstract Format backend and BEAM runtime kernel](phase-03/README.md)
   — the generalized BEAM-resident backend contract, OTP compilation path,
   closed runtime ABI, supervised task kernel, and artifact load policy.
+- [Phase 4 local capability broker and effect boundary](phase-04/README.md) —
+  the closed effect registry, opaque local authority, supervised reference
+  monitor, and isolated workspace-effect boundary.
 
 ### Files
 

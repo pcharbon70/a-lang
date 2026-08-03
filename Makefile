@@ -57,8 +57,14 @@ PHASE3_SOURCES := \
 	$(PHASE3_DIR)/alang_phase3_residency.erl \
 	$(PHASE3_DIR)/alang_phase3_integration_tests.erl
 PHASE3_COMPILER_STAMP := $(PHASE3_BUILD)/.compiled
+PHASE4_DIR := src/phase-04
+PHASE4_BUILD := build/phase-04/runtime
+PHASE4_SOURCES := \
+	$(PHASE4_DIR)/alang_phase4_effect_registry.erl \
+	$(PHASE4_DIR)/alang_phase4_effect_registry_tests.erl
+PHASE4_COMPILER_STAMP := $(PHASE4_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5
+.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -144,7 +150,19 @@ test-section-3-5: test-section-3-4 build-phase-3-evidence
 
 test-phase-3: test-section-3-5
 
-test: test-phase-1 test-phase-2 test-phase-3
+compile-phase-4-runtime: $(PHASE4_COMPILER_STAMP)
+
+$(PHASE4_COMPILER_STAMP): $(PHASE4_SOURCES)
+	mkdir -p $(PHASE4_BUILD)
+	$(ERLC) -Werror +deterministic -o $(PHASE4_BUILD) $(PHASE4_SOURCES)
+	touch $@
+
+test-section-4-1: compile-phase-4-runtime
+	$(ERL) -noshell -pa $(PHASE4_BUILD) -eval 'case eunit:test(alang_phase4_effect_registry_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-phase-4: test-section-4-1
+
+test: test-phase-1 test-phase-2 test-phase-3 test-phase-4
 
 $(PHASE1_BUILD):
 	mkdir -p $(PHASE1_BUILD)
