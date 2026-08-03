@@ -48,6 +48,20 @@ fixtures remain under the ignored repository `build/` directory.
   terminal-completion evidence for Section 5.1.
 - [Durable semantic state contract](durable-state-contract.md) — the persisted
   record, excluded live state, checkpoint boundaries, and failure semantics.
+- [`alang_phase5_journal.erl`](alang_phase5_journal.erl) — the closed record
+  vocabulary, canonical digest chain, stable transition and operation
+  identities, and strict replay validation.
+- [`alang_phase5_journal_tests.erl`](alang_phase5_journal_tests.erl) — complete
+  record-kind, stable-identity, gap, conflict, and integrity evidence.
+- [`alang_phase5_store.erl`](alang_phase5_store.erl) — the bounded BEAM storage
+  adapter with conditional synced append, atomic checkpoint publication,
+  restart validation, deadlines, and typed backpressure.
+- [`alang_phase5_store_tests.erl`](alang_phase5_store_tests.erl) — commit,
+  duplicate, conditional sequence, checkpoint, restart, limit, failure, and
+  corruption tests.
+- [Journal and storage contract](journal-and-storage-contract.md) — canonical
+  record semantics, stable identities, durability acknowledgements, bounds,
+  and local-filesystem assumptions.
 
 ## Maintaining this index
 

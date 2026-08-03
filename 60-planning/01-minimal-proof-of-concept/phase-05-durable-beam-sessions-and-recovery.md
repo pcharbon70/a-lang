@@ -19,7 +19,7 @@ durable workflow system. It defines explicit checkpoints, intent and result
 records, idempotent effect recovery, local grant restoration, and a supervised
 resume protocol for compiled A-Lang sessions.
 
-**Status:** In progress — Section 5.1 complete.
+**Status:** In progress — Sections 5.1–5.2 complete.
 
 **Dependencies:** Phase 4 complete with A-Lang code running as supervised BEAM
 processes, a closed effect registry, opaque local capability references, a
@@ -85,7 +85,10 @@ no unresolved effect intents before a session becomes durably complete.
 **Description:** Implement an append-oriented record of semantic transitions
 and external effect attempts with replay-safe identities and integrity checks.
 
-- [ ] **Section 5.2 Complete**
+- [x] **Section 5.2 Complete** — implemented by the
+  [journal and storage contract](../../src/phase-05/journal-and-storage-contract.md),
+  [canonical journal](../../src/phase-05/alang_phase5_journal.erl), and
+  [bounded store adapter](../../src/phase-05/alang_phase5_store.erl).
 
 ### Task 5.2.1: Define Journal Records
 
@@ -93,7 +96,7 @@ and external effect attempts with replay-safe identities and integrity checks.
 transition, effect intent, authorization decision, submission, result,
 checkpoint, cancellation, failure, and completion.
 
-- [ ] **Task 5.2.1 Complete**
+- [x] **Task 5.2.1 Complete**
 
 #### Subtask 5.2.1.1: Assign Stable Correlation Identities
 
@@ -101,7 +104,7 @@ checkpoint, cancellation, failure, and completion.
 trusted runtime state so retries and late replies can be recognized without
 using PIDs or model-generated values.
 
-- [ ] **Subtask 5.2.1.1 Complete**
+- [x] **Subtask 5.2.1.1 Complete**
 
 #### Subtask 5.2.1.2: Protect Ordering and Integrity
 
@@ -109,14 +112,14 @@ using PIDs or model-generated values.
 with stated semantics, and canonical encodings, and reject gaps, conflicts,
 and malformed records during replay.
 
-- [ ] **Subtask 5.2.1.2 Complete**
+- [x] **Subtask 5.2.1.2 Complete**
 
 ### Task 5.2.2: Implement the Storage Boundary
 
 **Description:** Put journal and checkpoint I/O behind a bounded adapter whose
 acknowledgements state exactly what has become durable.
 
-- [ ] **Task 5.2.2 Complete**
+- [x] **Task 5.2.2 Complete**
 
 #### Subtask 5.2.2.1: Define Commit and Read Semantics
 
@@ -124,7 +127,7 @@ acknowledgements state exactly what has become durable.
 acknowledgement, checkpoint publication, read-after-commit behavior, and
 classified storage failures.
 
-- [ ] **Subtask 5.2.2.1 Complete**
+- [x] **Subtask 5.2.2.1 Complete**
 
 #### Subtask 5.2.2.2: Bound Storage Load and Failure
 
@@ -132,7 +135,7 @@ classified storage failures.
 retries, and timeouts, and propagate store unavailability as backpressure
 instead of unbounded BEAM mailbox growth.
 
-- [ ] **Subtask 5.2.2.2 Complete**
+- [x] **Subtask 5.2.2.2 Complete**
 
 ## Section 5.3: Supervised Resume Protocol
 
