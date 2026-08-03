@@ -87,6 +87,18 @@ the ignored repository `build/` directory.
   fencing, and generated-surface acceptance evidence.
 - [Mechanically attenuated child task](mechanically-attenuated-child-task.md) —
   the typed process boundary and its parent-to-child authority derivation.
+- [`alang_phase6_integration_fixture.erl`](alang_phase6_integration_fixture.erl)
+  — typed parent-repair and child model-effect IR compiled by the Phase 3 BEAM
+  backend for final acceptance.
+- [`alang_phase6_orchestrator.erl`](alang_phase6_orchestrator.erl) — the
+  BEAM-resident live coordinator that places task checkpoints and typed
+  transitions before and after each accepted model or workspace action.
+- [`alang_phase6_integration_tests.erl`](alang_phase6_integration_tests.erl) —
+  the compiled parent, repair, child, durable workspace, journal, verifier,
+  nonexposure, negative-matrix, and exact-count completion gate.
+- [Phase 6 bounded agent integration evidence](phase-06-integration-evidence.md)
+  — the reproducible command, causal path, exact counts, denial matrix, and
+  completion claim authorized by the final suite.
 
 ## Maintaining this index
 

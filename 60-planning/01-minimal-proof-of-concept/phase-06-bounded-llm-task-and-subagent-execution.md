@@ -19,7 +19,7 @@ completion evidence, slices model context, and adds one child task whose
 authority is mechanically attenuated without exposing a signing or delegation
 primitive. Parent and child both execute as supervised BEAM processes.
 
-**Status:** In progress — Sections 6.1–6.4 complete.
+**Status:** Complete — all five sections and the phase evidence gate pass.
 
 **Dependencies:** Phase 5 complete with versioned durable state,
 intent-and-result journaling, generation fencing, subset-preserving local grant
@@ -266,7 +266,10 @@ parent, sibling, adapter, model, or another runtime generation.
 through compiled BEAM, local broker authorization, durable effects, repair,
 artifact verification, and completion evidence.
 
-- [ ] **Section 6.5 Complete**
+- [x] **Section 6.5 Complete** — implemented by the
+  [compiled integration fixture](../../src/phase-06/alang_phase6_integration_fixture.erl),
+  [acceptance suite](../../src/phase-06/alang_phase6_integration_tests.erl), and
+  [Phase 6 evidence](../../src/phase-06/phase-06-integration-evidence.md).
 
 ### Task 6.5.1: Validate the Bounded Agent Workflow
 
@@ -274,7 +277,7 @@ artifact verification, and completion evidence.
 repair, verifier, bound, policy, and child-task failure without letting model
 output control orchestration or authority.
 
-- [ ] **Task 6.5.1 Complete**
+- [x] **Task 6.5.1 Complete**
 
 #### Subtask 6.5.1.1: Run Positive Parent and Child Scenarios
 
@@ -282,7 +285,7 @@ output control orchestration or authority.
 the mock provider, child BEAM process, local broker, journal, workspace
 adapter, and verifier with a causally connected trace.
 
-- [ ] **Subtask 6.5.1.1 Complete**
+- [x] **Subtask 6.5.1.1 Complete**
 
 #### Subtask 6.5.1.2: Run Negative Model and Delegation Scenarios
 
@@ -290,7 +293,7 @@ adapter, and verifier with a causally connected trace.
 data, deadline, cancellation, widened child requirement, wrong session,
 attempted grant export, forged child reply, and failed completion predicate.
 
-- [ ] **Subtask 6.5.1.2 Complete**
+- [x] **Subtask 6.5.1.2 Complete**
 
 ### Task 6.5.2: Validate Context and Authority Nonexposure
 
@@ -298,7 +301,7 @@ attempted grant export, forged child reply, and failed completion predicate.
 surface for prohibited secret, credential, key, proof, handle, or unrelated
 context disclosure.
 
-- [ ] **Task 6.5.2 Complete**
+- [x] **Task 6.5.2 Complete**
 
 #### Subtask 6.5.2.1: Run Model-Visible Data Snapshots
 
@@ -306,7 +309,7 @@ context disclosure.
 their provenance and minimality, and scan for authority material, hidden
 runtime state, and irrelevant private inputs.
 
-- [ ] **Subtask 6.5.2.1 Complete**
+- [x] **Subtask 6.5.2.1 Complete**
 
 #### Subtask 6.5.2.2: Run Phase Completion Gates
 
@@ -314,17 +317,17 @@ runtime state, and irrelevant private inputs.
 subagent, attenuation, durable-effect, and complete repository suites and
 publish exact step, token, and effect counts.
 
-- [ ] **Subtask 6.5.2.2 Complete**
+- [x] **Subtask 6.5.2.2 Complete**
 
 ## Phase 6 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 7 to evaluate the
 complete PoC rather than isolated compiler or runtime pieces.
 
-- [ ] Deterministic model and optional live adapters share one typed boundary
-- [ ] Workflow control, budgets, and repair limits remain runtime-owned
-- [ ] Completion depends on verified evidence, not model or process assertion
-- [ ] Parent and child context snapshots satisfy declared minimization rules
-- [ ] Child authority is mechanically restricted and cannot create or transfer grants
-- [ ] Parent and child execute as supervised BEAM processes
-- [ ] The full deterministic parent-child artifact scenario passes
+- [x] Deterministic model and optional live adapters share one typed boundary
+- [x] Workflow control, budgets, and repair limits remain runtime-owned
+- [x] Completion depends on verified evidence, not model or process assertion
+- [x] Parent and child context snapshots satisfy declared minimization rules
+- [x] Child authority is mechanically restricted and cannot create or transfer grants
+- [x] Parent and child execute as supervised BEAM processes
+- [x] The full deterministic parent-child artifact scenario passes
