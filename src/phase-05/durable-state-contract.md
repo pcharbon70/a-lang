@@ -33,19 +33,22 @@ an adapter PID, seal, Port, or opaque grant.
 
 ## Durable and ephemeral fields
 
-Durable values may contain bounded integers, floats, binaries, atoms, lists,
-tuples, and maps. Recursive validation rejects PIDs, ports, references,
-functions, improper lists, non-byte bitstrings, excessive depth, excessive
-collections, and oversized encodings. Runtime process identifiers, monitors,
-timer references, mailbox positions, Port handles, ETS identifiers, and opaque
-local grant references therefore cannot cross the checkpoint boundary.
+Durable values may contain bounded integers, floats, binaries, lists, tuples,
+maps, and only the closed set of compiler-owned A-Lang data-tag atoms. Map keys
+and enum-like source values are binaries; source-controlled atoms are rejected.
+Recursive validation also rejects PIDs, ports, references, functions, improper
+lists, non-byte bitstrings, excessive depth, excessive collections, and
+oversized encodings. Runtime process identifiers, monitors, timer references,
+mailbox positions, Port handles, ETS identifiers, and opaque local grant
+references therefore cannot cross the checkpoint boundary.
 
 The artifact is named by a hexadecimal SHA-256 digest, a bounded binary module
 name, the accepted runtime ABI version, and the A-Lang state schema version.
 Loading rejects an unknown persisted format, state schema, ABI, artifact
 digest, or module name as `{recovery_rejected, Reason, Evidence}`. Recovery
-never coerces an old record or dynamically creates an atom from persisted
-input.
+preloads only the closed state and journal protocol vocabulary, then uses safe
+external-term decoding. It never coerces an old record or dynamically creates
+an atom from persisted input.
 
 ## Checkpoint boundaries
 

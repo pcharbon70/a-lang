@@ -400,8 +400,57 @@ valid_evidence(Evidence) when is_list(Evidence), length(Evidence) =< ?MAX_EVIDEN
 valid_evidence(_) -> false.
 
 valid_authority(Authority) when is_list(Authority), length(Authority) =< 128 ->
-    lists:all(fun valid_durable/1, Authority);
+    lists:all(fun valid_authority_descriptor/1, Authority);
 valid_authority(_) -> false.
+
+valid_authority_descriptor(#{
+    grant_id := GrantId,
+    invocations := Invocations,
+    budgets := Budgets,
+    expires_at := ExpiresAt,
+    task_id := TaskId,
+    combination := Combination
+} = Descriptor) when map_size(Descriptor) =:= 6 ->
+    valid_digest(GrantId) andalso
+        valid_authority_invocations(Invocations) andalso
+        valid_authority_budgets(Budgets, Invocations) andalso
+        is_integer(ExpiresAt) andalso ExpiresAt >= 0 andalso
+        valid_id(TaskId) andalso
+        lists:member(Combination, [deny, intersect]);
+valid_authority_descriptor(_Descriptor) -> false.
+
+valid_authority_invocations(Invocations) when is_list(Invocations), Invocations =/= [],
+    length(Invocations) =< 32
+-> lists:all(fun valid_authority_invocation/1, Invocations);
+valid_authority_invocations(_Invocations) -> false.
+
+valid_authority_invocation(#{
+    operation := <<"workspace.write">>,
+    workspace_id := WorkspaceId,
+    path_prefix := Prefix
+} = Invocation) when map_size(Invocation) =:= 3 ->
+    valid_id(WorkspaceId) andalso valid_path_prefix(Prefix);
+valid_authority_invocation(#{
+    operation := <<"model.complete">>,
+    model_id := ModelId
+} = Invocation) when map_size(Invocation) =:= 2 -> valid_id(ModelId);
+valid_authority_invocation(_Invocation) -> false.
+
+valid_authority_budgets(Budgets, Invocations) when is_map(Budgets) ->
+    Operations = lists:usort([maps:get(operation, Invocation) || Invocation <- Invocations]),
+    lists:sort(maps:keys(Budgets)) =:= Operations andalso valid_budgets(Budgets);
+valid_authority_budgets(_Budgets, _Invocations) -> false.
+
+valid_path_prefix(Segments) when is_list(Segments), length(Segments) =< 32 ->
+    lists:all(fun valid_path_segment/1, Segments);
+valid_path_prefix(_Segments) -> false.
+
+valid_path_segment(Segment) ->
+    valid_id(Segment) andalso Segment =/= <<".">> andalso Segment =/= <<"..">> andalso
+        Segment =/= <<".alang-operations">> andalso
+        binary:match(Segment, <<"/">>) =:= nomatch andalso
+        binary:match(Segment, <<"\\">>) =:= nomatch andalso
+        binary:match(Segment, <<0>>) =:= nomatch.
 
 valid_revocations(Revocations) when is_list(Revocations), length(Revocations) =< 1024 ->
     lists:all(fun valid_id/1, Revocations);
@@ -414,7 +463,8 @@ valid_durable(Value) -> valid_durable(Value, 0, 0).
 
 valid_durable(_Value, Depth, _Count) when Depth > ?MAX_DEPTH -> false;
 valid_durable(Value, _Depth, _Count) when is_pid(Value); is_port(Value); is_reference(Value); is_function(Value) -> false;
-valid_durable(Value, _Depth, _Count) when is_integer(Value); is_float(Value); is_atom(Value); is_binary(Value) -> true;
+valid_durable(Value, _Depth, _Count) when is_atom(Value) -> valid_durable_atom(Value);
+valid_durable(Value, _Depth, _Count) when is_integer(Value); is_float(Value); is_binary(Value) -> true;
 valid_durable(Value, _Depth, _Count) when is_bitstring(Value) -> false;
 valid_durable([], _Depth, _Count) -> true;
 valid_durable(Value, Depth, Count) when is_list(Value), Count =< ?MAX_COLLECTION ->
@@ -438,6 +488,22 @@ valid_durable(Value, Depth, Count) when is_map(Value), map_size(Value) =< ?MAX_C
         Value
     );
 valid_durable(_Value, _Depth, _Count) -> false.
+
+%% A-Lang source cannot mint VM atoms. Persist the same closed set of
+%% compiler-owned data tags so a fresh VM can decode checkpoints with
+%% binary_to_term/2's safe option without interning input-controlled atoms.
+valid_durable_atom(Atom) -> lists:member(Atom, [
+    true,
+    false,
+    alang_data_v1,
+    product,
+    ok,
+    error,
+    complete,
+    unknown_task,
+    verification_failed,
+    source
+]).
 
 proper_list_length([], Count) -> {ok, Count};
 proper_list_length([_Head | Tail], Count) when Count < ?MAX_COLLECTION -> proper_list_length(Tail, Count + 1);

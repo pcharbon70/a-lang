@@ -9,6 +9,7 @@
     authorize/6,
     combine_grants/3,
     complete/3,
+    dispatch/3,
     describe_grant/2,
     issue_grant/2,
     lookup_workspace/3,
@@ -68,6 +69,10 @@ request(Broker, Grant, Manifest, Operation, Arguments, Context) ->
 -spec lookup_workspace(pid(), map(), integer()) -> {ok, map()} | {error, term()}.
 lookup_workspace(Broker, Query, Deadline) ->
     gen_server:call(Broker, {lookup_workspace, Query, Deadline}, ?MAX_CALL_TIMEOUT).
+
+-spec dispatch(pid(), tuple(), map()) -> {ok, binary()} | {error, term()}.
+dispatch(Broker, Authorization, Context) ->
+    gen_server:call(Broker, {dispatch, Authorization, Context}, ?MAX_CALL_TIMEOUT).
 
 -spec complete(pid(), tuple(), atom()) -> ok | {error, atom()}.
 complete(Broker, Authorization, Outcome) ->
@@ -143,6 +148,9 @@ handle_call({request, Grant, Manifest, Operation, Arguments, Context}, _From, St
     {reply, Reply, Updated};
 handle_call({lookup_workspace, Query, Deadline}, _From, State) ->
     {reply, lookup_owned_adapter(Query, Deadline, State), State};
+handle_call({dispatch, Authorization, Context}, _From, State) ->
+    {Reply, Updated} = dispatch_authorization(Authorization, Context, State),
+    {reply, Reply, Updated};
 handle_call({complete, Authorization, Outcome}, _From, State) ->
     {Reply, Updated} = complete_authorization(Authorization, Outcome, State),
     {reply, Reply, Updated};

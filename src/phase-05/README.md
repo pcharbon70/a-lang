@@ -94,6 +94,21 @@ fixtures remain under the ignored repository `build/` directory.
 - [Effect and capability recovery](effect-and-capability-recovery.md) — durable
   authority descriptors, fresh-reference rules, receipt ordering, and pending
   effect decisions.
+- [`alang_phase5_workflow.erl`](alang_phase5_workflow.erl) — the durable BEAM
+  workflow coordinator that orders intent, authorization, submission, result,
+  checkpoint, and terminal publication around broker dispatch.
+- [`alang_phase5_failure_matrix.erl`](alang_phase5_failure_matrix.erl) — the
+  named crash boundaries, final safety invariants, and deletion-minimal event
+  sequence reducer used by Section 5.5.
+- [`alang_phase5_node_fixture.erl`](alang_phase5_node_fixture.erl) — the
+  separate-ERTS fixture with bounded safe configuration decoding and a
+  deterministic post-mutation kill point.
+- [`alang_phase5_integration_tests.erl`](alang_phase5_integration_tests.erl) —
+  compiled-artifact execution, nine-boundary process crash matrix, real node
+  kill and resume, storage outage, duplicate, and final-evidence tests.
+- [Phase 5 crash-recovery integration evidence](phase-05-integration-evidence.md)
+  — reproduction instructions, the expected state at every crash cut,
+  fresh-node results, aggregate boundary coverage, and explicit limitations.
 
 ## Maintaining this index
 

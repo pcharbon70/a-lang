@@ -67,8 +67,8 @@ reconciler_records_existing_result_without_second_write_test() ->
             Store, Broker, Recovery, deadline()),
         #{decision := recovered_result, result_ack := Ack} = maps:get(reconciliation, Reconciled),
         {ok, Advanced} = alang_phase5_state:advance_effect(
-            maps:get(state, Reconciled), Ack, done, #{<<"workspace.write">> => 0}),
-        ?assertEqual(done, maps:get(logical_state, Advanced)),
+            maps:get(state, Reconciled), Ack, <<"done">>, #{<<"workspace.write">> => 0}),
+        ?assertEqual(<<"done">>, maps:get(logical_state, Advanced)),
         {ok, Snapshot} = alang_phase5_store:read(Store, deadline()),
         ?assertEqual([session_created, effect_result],
             [maps:get(kind, Record) || Record <- maps:get(records, Snapshot)]),
@@ -190,7 +190,7 @@ pending_state(OperationId, Content) ->
         generation => 2,
         program => #{artifact_digest => digest($a), module_name => <<"alang_phase3_program_v1">>,
             abi_version => 1, state_schema => 1},
-        logical_state => waiting,
+        logical_state => <<"waiting">>,
         budgets => #{<<"workspace.write">> => 0}
     }),
     {ok, Intent} = alang_phase5_state:begin_effect(State0, #{

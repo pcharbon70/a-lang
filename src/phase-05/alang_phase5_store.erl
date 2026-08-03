@@ -51,6 +51,7 @@ stop(Store) -> gen_server:stop(Store).
 
 init(Options) ->
     process_flag(trap_exit, true),
+    ok = load_persistence_vocabulary(),
     case validate_options(Options) of
         {ok, Config} ->
             case open_store(Config) of
@@ -59,6 +60,11 @@ init(Options) ->
             end;
         {error, Reason} -> {stop, Reason}
     end.
+
+load_persistence_vocabulary() ->
+    {module, alang_phase5_state} = code:ensure_loaded(alang_phase5_state),
+    {module, alang_phase5_journal} = code:ensure_loaded(alang_phase5_journal),
+    ok.
 
 handle_call({inject_test_fault, Fault}, _From, #{test_faults := true} = State) when
     Fault =:= unavailable_once; Fault =:= timeout_once

@@ -19,13 +19,17 @@ ephemeral_runtime_terms_are_rejected_recursively_test() ->
     ],
     lists:foreach(
         fun(Value) ->
-            Candidate = (state())#{logical_state := #{nested => [Value]}},
+            Candidate = (state())#{logical_state := #{<<"nested">> => [Value]}},
             ?assertEqual({error, invalid_state_value}, alang_phase5_state:validate(Candidate))
         end,
         Ephemeral
     ),
-    Improper = (state())#{logical_state := [one | two]},
+    Improper = (state())#{logical_state := [<<"one">> | <<"two">>]},
     ?assertEqual({error, invalid_state_value}, alang_phase5_state:validate(Improper)).
+
+source_controlled_atoms_are_rejected_test() ->
+    Candidate = (state())#{logical_state := source_controlled_atom},
+    ?assertEqual({error, invalid_state_value}, alang_phase5_state:validate(Candidate)).
 
 unknown_versions_and_artifacts_fail_closed_test() ->
     State = state(),
@@ -77,11 +81,11 @@ post_effect_result_precedes_state_advance_test() ->
     {ok, Advanced} = alang_phase5_state:advance_effect(
         Submitted,
         Ack,
-        done,
+        <<"done">>,
         #{<<"workspace.write">> => 0}
     ),
     ?assertEqual(none, maps:get(pending, Advanced)),
-    ?assertEqual(done, maps:get(logical_state, Advanced)),
+    ?assertEqual(<<"done">>, maps:get(logical_state, Advanced)),
     ?assertEqual([digest($c)], maps:get(evidence, Advanced)).
 
 invalid_effect_order_and_identity_are_rejected_test() ->
@@ -123,8 +127,8 @@ state() ->
             abi_version => 1,
             state_schema => 1
         },
-        logical_state => #{step => 0, value => {ok, <<"ready">>}},
-        observations => [#{kind => input, value => <<"start">>}],
+        logical_state => #{<<"step">> => 0, <<"value">> => {ok, <<"ready">>}},
+        observations => [#{<<"kind">> => <<"input">>, <<"value">> => <<"start">>}],
         budgets => #{<<"workspace.write">> => 1},
         deadline => 2000000000000
     }),

@@ -81,7 +81,7 @@ state(NowUtc) ->
             abi_version => 1,
             state_schema => 1
         },
-        logical_state => ready,
+        logical_state => <<"ready">>,
         budgets => #{<<"workspace.write">> => 2},
         authority => [
             active_descriptor(NowUtc),

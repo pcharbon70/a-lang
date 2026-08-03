@@ -2,16 +2,13 @@
 
 -export([resume/1]).
 
--spec resume(map()) -> {ok, pid(), map()} | {paused, map()} | {error, tuple()}.
+-spec resume(map()) -> {ok, pid(), map()} | {paused, map()} | {completed, map()} | {error, tuple()}.
 resume(#{store_options := StoreOptions, expected := Expected, broker_options := BrokerOptions}) ->
     case open_snapshot(StoreOptions) of
         {ok, Snapshot} ->
             case alang_phase5_recovery:recover(Snapshot, Expected) of
                 {ok, Recovery} -> persist_generation_and_start(
-                    Recovery,
-                    StoreOptions,
-                    BrokerOptions
-                );
+                    Recovery, StoreOptions, BrokerOptions);
                 {error, _} = Error -> Error
             end;
         {error, Reason} -> {error, {recovery_rejected, {storage_unavailable, Reason}, #{}}}
@@ -31,29 +28,61 @@ open_snapshot(StoreOptions) ->
     end.
 
 persist_generation_and_start(Recovery, StoreOptions, BrokerOptions) ->
+    case maps:get(terminal, maps:get(state, Recovery)) of
+        completed -> {completed, Recovery};
+        paused -> {paused, Recovery};
+        cancelled -> {error, {recovery_rejected, session_cancelled, #{}}};
+        failed -> {error, {recovery_rejected, session_failed, #{}}};
+        running -> persist_running_generation(Recovery, StoreOptions, BrokerOptions)
+    end.
+
+persist_running_generation(Recovery, StoreOptions, BrokerOptions) ->
     case alang_phase5_store:start(StoreOptions) of
         {ok, Store} ->
             State = maps:get(state, Recovery),
-            Sequence = maps:get(journal_next_sequence, Recovery),
-            CheckpointResult = try alang_phase5_store:checkpoint(
-                Store,
-                State,
-                Sequence,
-                deadline()
-            ) of
+            CheckpointResult = try append_recovery_checkpoint(Store, Recovery, State) of
                 Result -> Result
             after
                 alang_phase5_store:stop(Store)
             end,
             case CheckpointResult of
-                {ok, Ack} -> start_supervision(Recovery#{resume_checkpoint => Ack}, StoreOptions,
-                    BrokerOptions);
+                {ok, UpdatedRecovery, Ack} -> start_supervision(
+                    UpdatedRecovery#{resume_checkpoint => Ack}, StoreOptions, BrokerOptions);
                 {error, Reason} ->
                     {error, {recovery_rejected, {checkpoint_publish_failed, Reason}, #{}}}
             end;
         {error, Reason} ->
             {error, {recovery_rejected, {storage_unavailable, Reason}, #{}}};
         ignore -> {error, {recovery_rejected, store_unavailable, #{}}}
+    end.
+
+append_recovery_checkpoint(Store, Recovery, State) ->
+    Deadline = deadline(),
+    {ok, Snapshot} = alang_phase5_store:read(Store, Deadline),
+    {ok, Journal} = alang_phase5_journal:validate(
+        maps:get(records, Snapshot), maps:get(session_id, Snapshot)),
+    {ok, StateDigest} = alang_phase5_state:checkpoint_digest(State),
+    case alang_phase5_journal:append(
+        Journal,
+        checkpoint,
+        maps:get(generation, Recovery),
+        #{state_digest => StateDigest},
+        erlang:system_time(millisecond)
+    ) of
+        {ok, Record, UpdatedJournal} ->
+            case alang_phase5_store:append(Store, Record, Deadline) of
+                {ok, _} ->
+                    Sequence = maps:get(next_sequence, UpdatedJournal),
+                    case alang_phase5_store:checkpoint(Store, State, Sequence, Deadline) of
+                        {ok, Ack} -> {ok, Recovery#{
+                            journal_next_sequence := Sequence,
+                            journal_head_digest := maps:get(head_digest, UpdatedJournal)
+                        }, Ack};
+                        {error, Reason} -> {error, Reason}
+                    end;
+                {error, Reason} -> {error, Reason}
+            end;
+        {error, Reason} -> {error, Reason}
     end.
 
 start_supervision(Recovery, StoreOptions, BrokerOptions) ->

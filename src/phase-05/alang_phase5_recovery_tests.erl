@@ -294,7 +294,7 @@ state(ArtifactDigest) ->
             abi_version => 1,
             state_schema => 1
         },
-        logical_state => ready,
+        logical_state => <<"ready">>,
         observations => [],
         budgets => #{<<"workspace.write">> => 1},
         deadline => 2000000000000,

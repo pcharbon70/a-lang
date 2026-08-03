@@ -195,7 +195,7 @@ fold_record(#{kind := observation, payload := Payload}, Plan) ->
     State = maps:get(state, Plan),
     Observations = maps:get(observations, State),
     Digest = maps:get(observation_digest, Payload),
-    {ok, Plan#{state := State#{observations := Observations ++ [#{digest => Digest}]}}};
+    {ok, Plan#{state := State#{observations := Observations ++ [#{<<"digest">> => Digest}]}}};
 fold_record(#{kind := effect_intent, payload := Payload}, Plan) ->
     State = maps:get(state, Plan),
     Intent = maps:with([operation_id, transition_id, operation, payload_digest], Payload),

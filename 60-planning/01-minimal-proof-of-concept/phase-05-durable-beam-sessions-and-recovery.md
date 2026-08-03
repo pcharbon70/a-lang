@@ -19,7 +19,7 @@ durable workflow system. It defines explicit checkpoints, intent and result
 records, idempotent effect recovery, local grant restoration, and a supervised
 resume protocol for compiled A-Lang sessions.
 
-**Status:** In progress — Sections 5.1–5.4 complete.
+**Status:** Complete — all five sections and the phase evidence gate pass.
 
 **Dependencies:** Phase 4 complete with A-Lang code running as supervised BEAM
 processes, a closed effect registry, opaque local capability references, a
@@ -256,7 +256,10 @@ non-idempotent action, or reporting completion.
 processes, adapters, the node, and the storage connection at every durable
 transition.
 
-- [ ] **Section 5.5 Complete**
+- [x] **Section 5.5 Complete** — implemented by the
+  [durable workflow](../../src/phase-05/alang_phase5_workflow.erl),
+  [failure matrix](../../src/phase-05/alang_phase5_failure_matrix.erl), and
+  [crash-recovery integration evidence](../../src/phase-05/phase-05-integration-evidence.md).
 
 ### Task 5.5.1: Exercise the Recovery Matrix
 
@@ -264,7 +267,7 @@ transition.
 adapter submission, external mutation, result commit, checkpoint, and terminal
 completion.
 
-- [ ] **Task 5.5.1 Complete**
+- [x] **Task 5.5.1 Complete**
 
 #### Subtask 5.5.1.1: Recover Process and Node Failures
 
@@ -272,7 +275,7 @@ completion.
 and assert that a fresh supervision tree resumes from the same durable semantic
 state.
 
-- [ ] **Subtask 5.5.1.1 Complete**
+- [x] **Subtask 5.5.1.1 Complete**
 
 #### Subtask 5.5.1.2: Recover Adapter and Store Failures
 
@@ -280,7 +283,7 @@ state.
 partial availability, duplicate acknowledgements, and reconnection without
 unbounded retry or mailbox growth.
 
-- [ ] **Subtask 5.5.1.2 Complete**
+- [x] **Subtask 5.5.1.2 Complete**
 
 ### Task 5.5.2: Prove Recovery Safety Properties
 
@@ -288,7 +291,7 @@ unbounded retry or mailbox growth.
 no duplicate logical workspace effect, no acceptance of stale messages, and no
 false completion across the full failure matrix.
 
-- [ ] **Task 5.5.2 Complete**
+- [x] **Task 5.5.2 Complete**
 
 #### Subtask 5.5.2.1: Compare Artifacts and Journals
 
@@ -296,25 +299,25 @@ false completion across the full failure matrix.
 operation identity, a valid journal chain, a valid final checkpoint, and no
 unresolved effect intent after successful recovery.
 
-- [ ] **Subtask 5.5.2.1 Complete**
+- [x] **Subtask 5.5.2.1 Complete**
 
 #### Subtask 5.5.2.2: Capture Minimal Counterexamples
 
 **Description:** Reduce any failing injection sequence to the shortest process,
 node, adapter, or store event history that violates a recovery invariant.
 
-- [ ] **Subtask 5.5.2.2 Complete**
+- [x] **Subtask 5.5.2.2 Complete**
 
 ## Phase 5 Completion Evidence
 
 **Description:** Phase 5 is complete only when the repository contains
 reproducible evidence for all items below.
 
-- [ ] Durable and ephemeral state are explicitly separated and versioned
-- [ ] Journal, checkpoint, commit, and integrity semantics are documented and tested
-- [ ] Fresh BEAM supervision trees resume only from validated durable state
-- [ ] Runtime generations fence stale and duplicate messages
-- [ ] Recovered local grants preserve or reduce prior authority
-- [ ] Pending effects reconcile through stable operation identities
-- [ ] The crash matrix produces no duplicate logical effect or false completion
-- [ ] Irreconcilable outcomes pause with evidence instead of being guessed
+- [x] Durable and ephemeral state are explicitly separated and versioned
+- [x] Journal, checkpoint, commit, and integrity semantics are documented and tested
+- [x] Fresh BEAM supervision trees resume only from validated durable state
+- [x] Runtime generations fence stale and duplicate messages
+- [x] Recovered local grants preserve or reduce prior authority
+- [x] Pending effects reconcile through stable operation identities
+- [x] The crash matrix produces no duplicate logical effect or false completion
+- [x] Irreconcilable outcomes pause with evidence instead of being guessed
