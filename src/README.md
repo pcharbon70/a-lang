@@ -56,6 +56,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
   — the OTP 29 compiler modules, minimal static semantics, normalized typed IR,
   test-only semantic views, and fail-closed bridge into the proven BEAM
   execution path.
+- [Phase 3 Abstract Format backend and BEAM runtime kernel](phase-03/README.md)
+  — the generalized BEAM-resident backend contract, OTP compilation path,
+  closed runtime ABI, supervised task kernel, and artifact load policy.
 
 ### Files
 

@@ -19,7 +19,7 @@ ERTS execution into a complete minimal backend, closed versioned runtime ABI,
 and supervised task-process kernel without introducing an existing
 BEAM-language interpreter.
 
-**Status:** Planned.
+**Status:** Complete — all five sections and the Phase 3 completion gates have reproducible evidence.
 
 **Dependencies:** Phase 2 complete with source-derived typed IR, normalized
 observations, test-only reference views, capability manifests, fail-closed
@@ -30,7 +30,7 @@ semantic fixtures, and successful compiled BEAM execution accepted.
 **Description:** Define the exact runtime representations and supported
 Abstract Format subset before emitting code.
 
-- [ ] **Section 3.1 Complete**
+- [x] **Section 3.1 Complete** — evidence: [backend representation contract](../../src/phase-03/backend-representation-contract.md), [Abstract Format contract](../../src/phase-03/abstract-format-contract.md), and [executable contract tests](../../src/phase-03/alang_phase3_contract_tests.erl)
 
 ### Task 3.1.1: Map Typed IR Values and Control to BEAM Terms
 
@@ -38,7 +38,7 @@ Abstract Format subset before emitting code.
 opaque identifiers, records, products, results, functions, tasks, sequential
 composition, effect requests, and verifier results.
 
-- [ ] **Task 3.1.1 Complete**
+- [x] **Task 3.1.1 Complete** — evidence: [closed value and failure encodings](../../src/phase-03/alang_phase3_contract.erl)
 
 #### Subtask 3.1.1.1: Define Value and Error Encodings
 
@@ -46,7 +46,7 @@ composition, effect requests, and verifier results.
 errors from runtime protocol errors, and prohibit representation collisions
 with user data.
 
-- [ ] **Subtask 3.1.1.1 Complete**
+- [x] **Subtask 3.1.1.1 Complete** — evidence: [value representation contract](../../src/phase-03/backend-representation-contract.md#values)
 
 #### Subtask 3.1.1.2: Define Evaluation and Failure Order
 
@@ -54,14 +54,14 @@ with user data.
 exception containment, effect suspension, deadline observation, and verifier
 execution in terms that both the evaluator and compiled backend can observe.
 
-- [ ] **Subtask 3.1.1.2 Complete**
+- [x] **Subtask 3.1.1.2 Complete** — evidence: [evaluation and failure order](../../src/phase-03/backend-representation-contract.md#evaluation-and-failure-order)
 
 ### Task 3.1.2: Freeze the Abstract Format Subset
 
 **Description:** Enumerate the smallest OTP-supported Abstract Format forms and
 runtime calls required by the PoC and reject every other backend shape.
 
-- [ ] **Task 3.1.2 Complete**
+- [x] **Task 3.1.2 Complete** — evidence: [closed Abstract Format surface](../../src/phase-03/abstract-format-contract.md)
 
 #### Subtask 3.1.2.1: Classify Required Forms and Calls
 
@@ -69,7 +69,7 @@ runtime calls required by the PoC and reject every other backend shape.
 literals, tuples, maps where justified, calls, cases, receives, timeouts, and
 the fixed A-Lang runtime ABI without relying on Core Erlang or BEAM assembly.
 
-- [ ] **Subtask 3.1.2.1 Complete**
+- [x] **Subtask 3.1.2.1 Complete** — evidence: [allowed forms and calls](../../src/phase-03/alang_phase3_contract.erl)
 
 #### Subtask 3.1.2.2: Define Fail-Closed Backend Diagnostics
 
@@ -77,14 +77,14 @@ the fixed A-Lang runtime ABI without relying on Core Erlang or BEAM assembly.
 unresolved runtime call, illegal atom source, and OTP rejection back to the
 original A-Lang node and source span.
 
-- [ ] **Subtask 3.1.2.2 Complete**
+- [x] **Subtask 3.1.2.2 Complete** — evidence: [source-oriented rejection tests](../../src/phase-03/alang_phase3_contract_tests.erl)
 
 ## Section 3.2: Abstract Format Lowering and OTP Compilation
 
 **Description:** Generate supported Abstract Format directly from typed IR,
 compile it through pinned OTP services, and emit only validated artifacts.
 
-- [ ] **Section 3.2 Complete**
+- [x] **Section 3.2 Complete** — evidence: [BEAM-resident lowering](../../src/phase-03/alang_phase3_lowering.erl), [bounded Abstract Format validator](../../src/phase-03/alang_phase3_forms.erl), [pinned OTP compiler bridge](../../src/phase-03/alang_phase3_backend.erl), and [backend tests](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 ### Task 3.2.1: Implement the BEAM-Resident Abstract Format Encoder
 
@@ -92,7 +92,7 @@ compile it through pinned OTP services, and emit only validated artifacts.
 Format terms inside the compiler's build ERTS node without generating Erlang
 source or invoking a foreign compiler executable.
 
-- [ ] **Task 3.2.1 Complete**
+- [x] **Task 3.2.1 Complete** — evidence: [fixed-module Abstract Format encoder](../../src/phase-03/alang_phase3_lowering.erl)
 
 #### Subtask 3.2.1.1: Lower Pure Data and Control Nodes
 
@@ -100,7 +100,7 @@ source or invoking a foreign compiler executable.
 products, result construction, exhaustive cases, sequential tasks, and final
 returns with deterministic generated identities.
 
-- [ ] **Subtask 3.2.1.1 Complete**
+- [x] **Subtask 3.2.1.1 Complete** — evidence: [pure data and control lowering tests](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 #### Subtask 3.2.1.2: Lower Effect and Verifier Boundaries
 
@@ -109,7 +109,7 @@ calls through the fixed runtime ABI while preserving correlation, deadline,
 source origin, expected argument and result types, and capability operation
 identity.
 
-- [ ] **Subtask 3.2.1.2 Complete**
+- [x] **Subtask 3.2.1.2 Complete** — evidence: [runtime-ABI-only effect lowering](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 ### Task 3.2.2: Implement the Pinned OTP Compilation Bridge
 
@@ -117,7 +117,7 @@ identity.
 validation, and return either a verified in-memory BEAM binary with diagnostics
 or a structured failure.
 
-- [ ] **Task 3.2.2 Complete**
+- [x] **Task 3.2.2 Complete** — evidence: [in-memory OTP compilation bridge](../../src/phase-03/alang_phase3_backend.erl)
 
 #### Subtask 3.2.2.1: Compile with Strong Validation and Determinism
 
@@ -125,7 +125,7 @@ or a structured failure.
 stable options, warning capture, no uncontrolled filesystem lookup, and
 repeatable artifact comparison.
 
-- [ ] **Subtask 3.2.2.1 Complete**
+- [x] **Subtask 3.2.2.1 Complete** — evidence: [pinned strong-validation and repeatability test](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 #### Subtask 3.2.2.2: Return Source-Oriented Compiler Evidence
 
@@ -133,14 +133,14 @@ repeatable artifact comparison.
 record backend and OTP versions, and reject any output that lacks successful
 validation evidence.
 
-- [ ] **Subtask 3.2.2.2 Complete**
+- [x] **Subtask 3.2.2.2 Complete** — evidence: [source-identity diagnostic translation](../../src/phase-03/alang_phase3_backend.erl)
 
 ## Section 3.3: Versioned Runtime ABI and Task Process
 
 **Description:** Establish the only runtime protocol compiled programs may use
 for effects, replies, deadlines, cancellation, traces, and termination.
 
-- [ ] **Section 3.3 Complete**
+- [x] **Section 3.3 Complete** — evidence: [closed runtime ABI](../../src/phase-03/alang_phase3_abi.erl), [supervised session kernel](../../src/phase-03/alang_phase3_session_sup.erl), and [runtime protocol and lifecycle tests](../../src/phase-03/alang_phase3_runtime_tests.erl)
 
 ### Task 3.3.1: Implement the Closed Runtime Message Protocol
 
@@ -148,7 +148,7 @@ for effects, replies, deadlines, cancellation, traces, and termination.
 intent, effect result, denial, cancellation, deadline, trace, completion, and
 runtime failure.
 
-- [ ] **Task 3.3.1 Complete**
+- [x] **Task 3.3.1 Complete** — evidence: [closed envelope implementation](../../src/phase-03/alang_phase3_abi.erl)
 
 #### Subtask 3.3.1.1: Define Envelope and Correlation Semantics
 
@@ -156,7 +156,7 @@ runtime failure.
 correlation ID, monotonic deadline, typed payload tag, reply target, and source
 origin with explicit maximum sizes.
 
-- [ ] **Subtask 3.3.1.1 Complete**
+- [x] **Subtask 3.3.1.1 Complete** — evidence: [bounded envelope construction and validation](../../src/phase-03/alang_phase3_abi.erl)
 
 #### Subtask 3.3.1.2: Reject Malformed and Stale Messages
 
@@ -164,7 +164,7 @@ origin with explicit maximum sizes.
 and tags, drop or record late replies deterministically, and avoid dynamic atom
 creation from message contents.
 
-- [ ] **Subtask 3.3.1.2 Complete**
+- [x] **Subtask 3.3.1.2 Complete** — evidence: [malformed, stale, oversized, and atom-safety tests](../../src/phase-03/alang_phase3_runtime_tests.erl)
 
 ### Task 3.3.2: Implement the Minimal Supervised Task Lifecycle
 
@@ -172,7 +172,7 @@ creation from message contents.
 its admission, execution, waiting, cancellation, timeout, completion, and
 failure states.
 
-- [ ] **Task 3.3.2 Complete**
+- [x] **Task 3.3.2 Complete** — evidence: [runtime launcher](../../src/phase-03/alang_phase3_launcher.erl), [session supervisor](../../src/phase-03/alang_phase3_session_sup.erl), and [task worker](../../src/phase-03/alang_phase3_task_worker.erl)
 
 #### Subtask 3.3.2.1: Define Process Topology and Ownership
 
@@ -180,7 +180,7 @@ failure states.
 gateway, and trace collector responsibilities and make every process and
 monitor relationship explicit.
 
-- [ ] **Subtask 3.3.2.1 Complete**
+- [x] **Subtask 3.3.2.1 Complete** — evidence: [explicit supervised ownership topology](../../src/phase-03/alang_phase3_session_sup.erl)
 
 #### Subtask 3.3.2.2: Bound Mailboxes, Deadlines, and Cancellation
 
@@ -188,14 +188,14 @@ monitor relationship explicit.
 pressure, handle task and gateway death, propagate cancellation, and ensure
 timeouts do not convert an uncertain effect into an automatic retry.
 
-- [ ] **Subtask 3.3.2.2 Complete**
+- [x] **Subtask 3.3.2.2 Complete** — evidence: [bounded gateway](../../src/phase-03/alang_phase3_effect_gateway.erl), [bounded trace collector](../../src/phase-03/alang_phase3_trace.erl), and [overload, cancellation, gateway-death, deadline, and no-retry tests](../../src/phase-03/alang_phase3_runtime_tests.erl)
 
 ## Section 3.4: Artifact Inspection and Loading Boundary
 
 **Description:** Ensure that only approved compiler artifacts with a closed
 import and metadata surface can load on the PoC node.
 
-- [ ] **Section 3.4 Complete**
+- [x] **Section 3.4 Complete** — evidence: [artifact and loading contract](../../src/phase-03/artifact-contract.md), [artifact inspector and loader](../../src/phase-03/alang_phase3_artifact.erl), and [pre-load and lifecycle tests](../../src/phase-03/alang_phase3_artifact_tests.erl)
 
 ### Task 3.4.1: Emit A-Lang Artifact Metadata
 
@@ -203,7 +203,7 @@ import and metadata surface can load on the PoC node.
 OTP versions, ABI version, capability manifest, source map, and reproducibility
 data.
 
-- [ ] **Task 3.4.1 Complete**
+- [x] **Task 3.4.1 Complete** — evidence: [artifact metadata contract](../../src/phase-03/artifact-contract.md#metadata-placement) and [metadata emission](../../src/phase-03/alang_phase3_lowering.erl)
 
 #### Subtask 3.4.1.1: Define Metadata Placement and Digest Scope
 
@@ -211,7 +211,7 @@ data.
 bytes each digest covers, and prevent mutable build details from undermining
 deterministic comparison.
 
-- [ ] **Subtask 3.4.1.1 Complete**
+- [x] **Subtask 3.4.1.1 Complete** — evidence: [metadata placement and digest scope](../../src/phase-03/artifact-contract.md#metadata-placement)
 
 #### Subtask 3.4.1.2: Implement Metadata Inspection
 
@@ -219,14 +219,14 @@ deterministic comparison.
 versions, imports, capability requirements, and load policy without executing
 the module.
 
-- [ ] **Subtask 3.4.1.2 Complete**
+- [x] **Subtask 3.4.1.2 Complete** — evidence: [nonexecuting artifact inspection](../../src/phase-03/alang_phase3_artifact.erl)
 
 ### Task 3.4.2: Enforce the Approved Load Policy
 
 **Description:** Inspect module identity, imports, attributes, chunks, size,
 compiler provenance, and ABI compatibility before isolated loading.
 
-- [ ] **Task 3.4.2 Complete**
+- [x] **Task 3.4.2 Complete** — evidence: [approved load policy](../../src/phase-03/alang_phase3_artifact.erl)
 
 #### Subtask 3.4.2.1: Restrict Imports and Dynamic Behavior
 
@@ -234,7 +234,7 @@ compiler provenance, and ABI compatibility before isolated loading.
 pure BIFs, and reject arbitrary module application, ports, NIF loading,
 unsafe term decoding, and unbounded dynamic module or atom creation.
 
-- [ ] **Subtask 3.4.2.1 Complete**
+- [x] **Subtask 3.4.2.1 Complete** — evidence: [closed BEAM import and container tests](../../src/phase-03/alang_phase3_artifact_tests.erl)
 
 #### Subtask 3.4.2.2: Load, Execute, and Purge Safely
 
@@ -242,7 +242,7 @@ unsafe term decoding, and unbounded dynamic module or atom creation.
 the runtime launcher, terminate all owning tasks before purge, and report code
 lifecycle failures without hot-upgrade semantics.
 
-- [ ] **Subtask 3.4.2.2 Complete**
+- [x] **Subtask 3.4.2.2 Complete** — evidence: [inspected load-execute-soft-purge test](../../src/phase-03/alang_phase3_artifact_tests.erl)
 
 ## Section 3.5: Phase 3 Integration Tests
 
@@ -250,7 +250,7 @@ lifecycle failures without hot-upgrade semantics.
 fixture-backed effect programs while proving the backend and loader fail
 closed.
 
-- [ ] **Section 3.5 Complete**
+- [x] **Section 3.5 Complete** — evidence: [differential and scheduler integration tests](../../src/phase-03/alang_phase3_integration_tests.erl) and [whole-toolchain residency evidence](../../src/phase-03/alang_phase3_residency.erl)
 
 ### Task 3.5.1: Validate Source-to-BEAM Semantic Preservation
 
@@ -258,14 +258,14 @@ closed.
 compare normalized values, effect intents, result propagation, verifier
 observations, and failures with the reference evaluator.
 
-- [ ] **Task 3.5.1 Complete**
+- [x] **Task 3.5.1 Complete** — evidence: [source-to-BEAM differential suite](../../src/phase-03/alang_phase3_integration_tests.erl)
 
 #### Subtask 3.5.1.1: Run Positive Differential Fixtures
 
 **Description:** Cover every promoted value, branch, call, composition, effect
 request, and verifier form with deterministic injected effect responses.
 
-- [ ] **Subtask 3.5.1.1 Complete**
+- [x] **Subtask 3.5.1.1 Complete** — evidence: [promoted pure/control/call/effect/verifier fixtures](../../src/phase-03/alang_phase3_test_fixtures.erl) compared by the [nondeployable reference oracle](../../src/phase-03/alang_phase3_reference.erl)
 
 #### Subtask 3.5.1.2: Run Negative Backend and ABI Fixtures
 
@@ -273,7 +273,7 @@ request, and verifier form with deterministic injected effect responses.
 failures, forbidden imports, incompatible metadata, malformed messages, stale
 replies, and runtime timeouts with stable diagnostics.
 
-- [ ] **Subtask 3.5.1.2 Complete**
+- [x] **Subtask 3.5.1.2 Complete** — evidence: Section 3.1–3.4 negative suites plus [cyclic-IR, unknown-task, and verifier-failure integration gates](../../src/phase-03/alang_phase3_integration_tests.erl)
 
 ### Task 3.5.2: Validate Whole-Toolchain BEAM Residency
 
@@ -282,7 +282,7 @@ code, and that A-Lang source is neither translated to Erlang source nor
 evaluated by an Erlang, Elixir, Gleam, or other BEAM-language interpreter at
 build time or runtime.
 
-- [ ] **Task 3.5.2 Complete**
+- [x] **Task 3.5.2 Complete** — evidence: [BEAM residency verifier](../../src/phase-03/alang_phase3_residency.erl)
 
 #### Subtask 3.5.2.1: Inspect the Build and Runtime Path
 
@@ -291,7 +291,7 @@ typed IR, Abstract Format, OTP validation, BEAM load, and ERTS task execution;
 identify every compiler and runtime module and prove that no foreign compiler
 executable participated.
 
-- [ ] **Subtask 3.5.2.1 Complete**
+- [x] **Subtask 3.5.2.1 Complete** — evidence: [source-through-soft-purge boundary trace and module/import inventory](../../src/phase-03/alang_phase3_residency.erl)
 
 #### Subtask 3.5.2.2: Run Phase Completion Gates
 
@@ -299,19 +299,19 @@ executable participated.
 inspection, loader, ABI, scheduler-smoke, and complete repository suites on the
 pinned OTP release.
 
-- [ ] **Subtask 3.5.2.2 Complete**
+- [x] **Subtask 3.5.2.2 Complete** — evidence: `make test-phase-3` runs all compiler, ABI, loader, differential, scheduler-smoke, and residency gates on pinned OTP 29
 
 ## Phase 3 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 4 to replace
 fixture-backed effects with a local capability broker and bounded adapter.
 
-- [ ] Every promoted typed IR node lowers through the frozen Abstract Format
+- [x] Every promoted typed IR node lowers through the frozen Abstract Format
       subset
-- [ ] OTP strong validation and deterministic artifact checks pass
-- [ ] Artifact metadata and import inspection pass before every load
-- [ ] Reference and BEAM normalized observations agree
-- [ ] Runtime ABI rejects malformed, stale, and incompatible messages
-- [ ] Trusted compiler path contains only loaded BEAM modules and pinned OTP
+- [x] OTP strong validation and deterministic artifact checks pass
+- [x] Artifact metadata and import inspection pass before every load
+- [x] Reference and BEAM normalized observations agree
+- [x] Runtime ABI rejects malformed, stale, and incompatible messages
+- [x] Trusted compiler path contains only loaded BEAM modules and pinned OTP
       services
-- [ ] Generated execution path contains no A-Lang source or IR interpreter
+- [x] Generated execution path contains no A-Lang source or IR interpreter
