@@ -19,7 +19,7 @@ ERTS execution into a complete minimal backend, closed versioned runtime ABI,
 and supervised task-process kernel without introducing an existing
 BEAM-language interpreter.
 
-**Status:** In progress — Section 3.1 complete.
+**Status:** In progress — Sections 3.1 and 3.2 complete.
 
 **Dependencies:** Phase 2 complete with source-derived typed IR, normalized
 observations, test-only reference views, capability manifests, fail-closed
@@ -84,7 +84,7 @@ original A-Lang node and source span.
 **Description:** Generate supported Abstract Format directly from typed IR,
 compile it through pinned OTP services, and emit only validated artifacts.
 
-- [ ] **Section 3.2 Complete**
+- [x] **Section 3.2 Complete** — evidence: [BEAM-resident lowering](../../src/phase-03/alang_phase3_lowering.erl), [bounded Abstract Format validator](../../src/phase-03/alang_phase3_forms.erl), [pinned OTP compiler bridge](../../src/phase-03/alang_phase3_backend.erl), and [backend tests](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 ### Task 3.2.1: Implement the BEAM-Resident Abstract Format Encoder
 
@@ -92,7 +92,7 @@ compile it through pinned OTP services, and emit only validated artifacts.
 Format terms inside the compiler's build ERTS node without generating Erlang
 source or invoking a foreign compiler executable.
 
-- [ ] **Task 3.2.1 Complete**
+- [x] **Task 3.2.1 Complete** — evidence: [fixed-module Abstract Format encoder](../../src/phase-03/alang_phase3_lowering.erl)
 
 #### Subtask 3.2.1.1: Lower Pure Data and Control Nodes
 
@@ -100,7 +100,7 @@ source or invoking a foreign compiler executable.
 products, result construction, exhaustive cases, sequential tasks, and final
 returns with deterministic generated identities.
 
-- [ ] **Subtask 3.2.1.1 Complete**
+- [x] **Subtask 3.2.1.1 Complete** — evidence: [pure data and control lowering tests](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 #### Subtask 3.2.1.2: Lower Effect and Verifier Boundaries
 
@@ -109,7 +109,7 @@ calls through the fixed runtime ABI while preserving correlation, deadline,
 source origin, expected argument and result types, and capability operation
 identity.
 
-- [ ] **Subtask 3.2.1.2 Complete**
+- [x] **Subtask 3.2.1.2 Complete** — evidence: [runtime-ABI-only effect lowering](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 ### Task 3.2.2: Implement the Pinned OTP Compilation Bridge
 
@@ -117,7 +117,7 @@ identity.
 validation, and return either a verified in-memory BEAM binary with diagnostics
 or a structured failure.
 
-- [ ] **Task 3.2.2 Complete**
+- [x] **Task 3.2.2 Complete** — evidence: [in-memory OTP compilation bridge](../../src/phase-03/alang_phase3_backend.erl)
 
 #### Subtask 3.2.2.1: Compile with Strong Validation and Determinism
 
@@ -125,7 +125,7 @@ or a structured failure.
 stable options, warning capture, no uncontrolled filesystem lookup, and
 repeatable artifact comparison.
 
-- [ ] **Subtask 3.2.2.1 Complete**
+- [x] **Subtask 3.2.2.1 Complete** — evidence: [pinned strong-validation and repeatability test](../../src/phase-03/alang_phase3_backend_tests.erl)
 
 #### Subtask 3.2.2.2: Return Source-Oriented Compiler Evidence
 
@@ -133,7 +133,7 @@ repeatable artifact comparison.
 record backend and OTP versions, and reject any output that lacks successful
 validation evidence.
 
-- [ ] **Subtask 3.2.2.2 Complete**
+- [x] **Subtask 3.2.2.2 Complete** — evidence: [source-identity diagnostic translation](../../src/phase-03/alang_phase3_backend.erl)
 
 ## Section 3.3: Versioned Runtime ABI and Task Process
 

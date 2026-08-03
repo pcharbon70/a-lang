@@ -42,6 +42,15 @@ ignored repository `build/` directory.
   failure, IR vocabulary, reference, and runtime-call contract.
 - [`alang_phase3_contract_tests.erl`](alang_phase3_contract_tests.erl) —
   representation, bounds, source-origin, and fail-closed subset tests.
+- [`alang_phase3_lowering.erl`](alang_phase3_lowering.erl) — deterministic
+  typed-IR lowering to a fixed module and compiler-owned Abstract Format
+  identities.
+- [`alang_phase3_forms.erl`](alang_phase3_forms.erl) — bounded, fail-closed
+  validator for the accepted Abstract Format subset and runtime calls.
+- [`alang_phase3_backend.erl`](alang_phase3_backend.erl) — pinned OTP 29 strong
+  validation and deterministic in-memory BEAM compilation bridge.
+- [`alang_phase3_backend_tests.erl`](alang_phase3_backend_tests.erl) — lowering,
+  determinism, source-diagnostic, and forbidden-form evidence.
 - [Backend representation contract](backend-representation-contract.md) —
   value encodings, failure domains, evaluation order, and supported IR nodes.
 - [Erlang Abstract Format contract](abstract-format-contract.md) — supported

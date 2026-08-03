@@ -36,10 +36,14 @@ PHASE3_DIR := src/phase-03
 PHASE3_BUILD := build/phase-03/compiler
 PHASE3_SOURCES := \
 	$(PHASE3_DIR)/alang_phase3_contract.erl \
-	$(PHASE3_DIR)/alang_phase3_contract_tests.erl
+	$(PHASE3_DIR)/alang_phase3_contract_tests.erl \
+	$(PHASE3_DIR)/alang_phase3_lowering.erl \
+	$(PHASE3_DIR)/alang_phase3_forms.erl \
+	$(PHASE3_DIR)/alang_phase3_backend.erl \
+	$(PHASE3_DIR)/alang_phase3_backend_tests.erl
 PHASE3_COMPILER_STAMP := $(PHASE3_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1
+.PHONY: build-phase-1-artifact build-phase-2-artifact check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -107,6 +111,9 @@ $(PHASE3_COMPILER_STAMP): $(PHASE3_SOURCES)
 
 test-section-3-1: compile-phase-2-toolchain compile-phase-3-toolchain
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -eval 'case eunit:test(alang_phase3_contract_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-section-3-2: test-section-3-1
+	$(ERL) -noshell -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -eval 'case eunit:test(alang_phase3_backend_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
 test: test-phase-1 test-phase-2
 
