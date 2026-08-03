@@ -19,7 +19,7 @@ statically declared operations; a supervised BEAM broker resolves opaque local
 references, validates typed arguments and dynamic policy, and calls one
 OS-bounded adapter without portable delegation or ambient authority.
 
-**Status:** In progress — Sections 4.1–4.3 have reproducible implementation evidence.
+**Status:** In progress — Sections 4.1–4.4 have reproducible implementation evidence.
 
 **Dependencies:** Phase 3 complete with generated A-Lang modules executing as
 supervised BEAM processes through a versioned runtime ABI, bounded mailboxes,
@@ -194,7 +194,7 @@ unknown rather than replaying them automatically.
 boundary while treating BEAM process isolation as orchestration rather than a
 security sandbox.
 
-- [ ] **Section 4.4 Complete**
+- [x] **Section 4.4 Complete** — evidence: [workspace adapter contract](../../src/phase-04/workspace-adapter-contract.md), [sealed BEAM adapter manager](../../src/phase-04/alang_phase4_workspace_adapter.erl), [fixed BEAM sidecar](../../src/phase-04/alang_phase4_workspace_sidecar.erl), and [adapter isolation tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 ### Task 4.4.1: Implement the Workspace Adapter Contract
 
@@ -202,7 +202,7 @@ security sandbox.
 segments, bounded bytes, an operation identifier, and a deadline, and return a
 typed result with an artifact digest.
 
-- [ ] **Task 4.4.1 Complete**
+- [x] **Task 4.4.1 Complete** — evidence: [typed workspace protocol and implementation](../../src/phase-04/workspace-adapter-contract.md)
 
 #### Subtask 4.4.1.1: Enforce Filesystem Scope
 
@@ -210,7 +210,7 @@ typed result with an artifact digest.
 workspace identity, oversized content, special files, and destinations outside
 the broker-authorized root.
 
-- [ ] **Subtask 4.4.1.1 Complete**
+- [x] **Subtask 4.4.1.1 Complete** — evidence: [workspace, traversal, symlink, special-target, and content-bound tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 #### Subtask 4.4.1.2: Define Idempotent Operation Identity
 
@@ -218,14 +218,14 @@ the broker-authorized root.
 with the same identifier and payload observable as the same logical attempt,
 without yet claiming crash-safe durability.
 
-- [ ] **Subtask 4.4.1.2 Complete**
+- [x] **Subtask 4.4.1.2 Complete** — evidence: [created, replayed, and conflicting operation-identity tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 ### Task 4.4.2: Isolate Adapter Failure and Resource Use
 
 **Description:** Run the adapter through the narrowest practical OS boundary
 with explicit CPU, memory, filesystem, output, and time limits.
 
-- [ ] **Task 4.4.2 Complete**
+- [x] **Task 4.4.2 Complete** — evidence: [Bubblewrap, `prlimit`, BEAM heap, frame, output, and deadline isolation profile](../../src/phase-04/workspace-adapter-contract.md#isolation-profile)
 
 #### Subtask 4.4.2.1: Frame and Validate Adapter Messages
 
@@ -233,7 +233,7 @@ with explicit CPU, memory, filesystem, output, and time limits.
 adapter exits to typed failures, and prevent protocol desynchronization from
 corrupting the broker mailbox.
 
-- [ ] **Subtask 4.4.2.1 Complete**
+- [x] **Subtask 4.4.2.1 Complete** — evidence: [bounded packet framing and malformed-response tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 #### Subtask 4.4.2.2: Contain Crashes and Timeouts
 
@@ -241,7 +241,7 @@ corrupting the broker mailbox.
 session coordinator or treating an unknown external outcome as a successful
 effect.
 
-- [ ] **Subtask 4.4.2.2 Complete**
+- [x] **Subtask 4.4.2.2 Complete** — evidence: [crash, timeout, unknown-outcome, and replacement tests](../../src/phase-04/alang_phase4_workspace_adapter_tests.erl)
 
 ## Section 4.5: Capability and Effect Integration Test
 

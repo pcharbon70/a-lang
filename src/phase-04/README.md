@@ -62,6 +62,18 @@ remain under the ignored repository `build/` directory.
 - [`alang_phase4_broker_tests.erl`](alang_phase4_broker_tests.erl) — ordered
   decision, backpressure, audit-redaction, owner-death, timeout, and fail-closed
   restart evidence.
+- [`alang_phase4_workspace_adapter.erl`](alang_phase4_workspace_adapter.erl) —
+  the sealed BEAM manager for bounded framed Port calls, OS isolation, typed
+  results, fault containment, and sidecar replacement.
+- [`alang_phase4_workspace_sidecar.erl`](alang_phase4_workspace_sidecar.erl) —
+  the fixed BEAM sidecar implementing normalized, symlink-safe, atomic,
+  digesting, and lifetime-idempotent workspace writes.
+- [`alang_phase4_workspace_adapter_tests.erl`](alang_phase4_workspace_adapter_tests.erl)
+  — workspace scope, idempotence, isolation, bypass, crash, malformed-frame,
+  timeout, replacement, and redaction evidence.
+- [Workspace adapter contract](workspace-adapter-contract.md) — the sealed
+  protocol, Bubblewrap and resource-limit profile, filesystem rules, outcome
+  model, and explicitly deferred durability claims.
 
 ## Maintaining this index
 
