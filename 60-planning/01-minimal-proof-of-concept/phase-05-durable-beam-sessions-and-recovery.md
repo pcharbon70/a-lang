@@ -19,7 +19,7 @@ durable workflow system. It defines explicit checkpoints, intent and result
 records, idempotent effect recovery, local grant restoration, and a supervised
 resume protocol for compiled A-Lang sessions.
 
-**Status:** Planned.
+**Status:** In progress — Section 5.1 complete.
 
 **Dependencies:** Phase 4 complete with A-Lang code running as supervised BEAM
 processes, a closed effect registry, opaque local capability references, a
@@ -30,7 +30,10 @@ fail-closed broker, and one bounded idempotent workspace adapter.
 **Description:** Define exactly which A-Lang state is authoritative across
 restart and which BEAM process state is only a disposable live cache.
 
-- [ ] **Section 5.1 Complete**
+- [x] **Section 5.1 Complete** — implemented by the
+  [durable state contract](../../src/phase-05/durable-state-contract.md),
+  [`alang_phase5_state`](../../src/phase-05/alang_phase5_state.erl), and its
+  [Section 5.1 tests](../../src/phase-05/alang_phase5_state_tests.erl).
 
 ### Task 5.1.1: Version the Persisted Session State
 
@@ -38,7 +41,7 @@ restart and which BEAM process state is only a disposable live cache.
 schema version, logical state, accepted observations, budgets, deadlines,
 pending work, and terminal status.
 
-- [ ] **Task 5.1.1 Complete**
+- [x] **Task 5.1.1 Complete**
 
 #### Subtask 5.1.1.1: Separate Durable and Ephemeral Fields
 
@@ -46,14 +49,14 @@ pending work, and terminal status.
 ports, monitors, timers, mailbox positions, opaque runtime references, and
 other node-local terms.
 
-- [ ] **Subtask 5.1.1.1 Complete**
+- [x] **Subtask 5.1.1.1 Complete**
 
 #### Subtask 5.1.1.2: Define State Migration Failure
 
 **Description:** Reject unknown program or state-schema versions with a typed
 operator-visible result rather than coercing or partially loading old state.
 
-- [ ] **Subtask 5.1.1.2 Complete**
+- [x] **Subtask 5.1.1.2 Complete**
 
 ### Task 5.1.2: Define Checkpoint Boundaries
 
@@ -61,21 +64,21 @@ operator-visible result rather than coercing or partially loading old state.
 commit state before accepting new work, issuing an effect, or reporting
 completion.
 
-- [ ] **Task 5.1.2 Complete**
+- [x] **Task 5.1.2 Complete**
 
 #### Subtask 5.1.2.1: Specify Pre-Effect and Post-Effect Gates
 
 **Description:** Require a durable intent before dispatch and a durable result
 before advancing logical state or exposing the effect as complete.
 
-- [ ] **Subtask 5.1.2.1 Complete**
+- [x] **Subtask 5.1.2.1 Complete**
 
 #### Subtask 5.1.2.2: Specify Terminal Completion Gates
 
 **Description:** Require final state, evidence digests, remaining budgets, and
 no unresolved effect intents before a session becomes durably complete.
 
-- [ ] **Subtask 5.1.2.2 Complete**
+- [x] **Subtask 5.1.2.2 Complete**
 
 ## Section 5.2: Intent and Result Journal
 
