@@ -18,6 +18,8 @@ fresh_supervision_tree_and_generation_fencing_test() ->
     with_fixture(fun(Fixture) ->
         Options = resume_options(Fixture, true),
         {ok, Supervisor1, Recovery1} = alang_phase5_resume:resume(Options),
+        Reference1 = maps:get(digest($7), maps:get(references,
+            maps:get(recovered_authority, Recovery1))),
         {ok, Topology1} = await_topology(Supervisor1, 100),
         Generation1 = maps:get(generation, Recovery1),
         Inbox1 = maps:get(inbox, Topology1),
@@ -36,7 +38,10 @@ fresh_supervision_tree_and_generation_fencing_test() ->
         try
             {ok, Topology2} = await_topology(Supervisor2, 100),
             Generation2 = maps:get(generation, Recovery2),
+            Reference2 = maps:get(digest($7), maps:get(references,
+                maps:get(recovered_authority, Recovery2))),
             ?assertEqual(Generation1 + 1, Generation2),
+            ?assertNotEqual(Reference1, Reference2),
             Inbox2 = maps:get(inbox, Topology2),
             ?assertEqual(
                 {error, stale_generation},
@@ -110,8 +115,8 @@ effect_suffix_is_folded_without_dispatch_test() ->
         Entries = [
             {effect_intent, #{transition_id => TransitionId, operation_id => OperationId,
                 operation => <<"workspace.write">>, payload_digest => digest($d)}},
-            {authorization, #{operation_id => OperationId, decision => allowed,
-                decision_digest => digest($e)}},
+            {authorization, #{operation_id => OperationId, grant_id => digest($7),
+                decision => allowed, decision_digest => digest($e), remaining_budget => 0}},
             {submission, #{operation_id => OperationId, adapter_identity => <<"workspace-v1">>,
                 payload_digest => digest($d)}},
             {effect_result, #{operation_id => OperationId, outcome => succeeded,
@@ -131,7 +136,10 @@ effect_suffix_is_folded_without_dispatch_test() ->
         {ok, Recovery} = alang_phase5_recovery:recover(Snapshot1, maps:get(expected, Fixture)),
         Pending = maps:get(pending, maps:get(state, Recovery)),
         ?assertEqual(submitted, maps:get(stage, Pending)),
-        ?assertMatch(#{OperationId := #{outcome := succeeded}}, maps:get(known_results, Recovery)),
+        [ReducedAuthority] = maps:get(authority, maps:get(state, Recovery)),
+        ?assertEqual(0, maps:get(<<"workspace.write">>, maps:get(budgets, ReducedAuthority))),
+        Known = maps:get(known_results, Recovery),
+        ?assertEqual(succeeded, maps:get(outcome, maps:get(payload, maps:get(OperationId, Known)))),
         ?assertEqual([], filelib:wildcard(filename:join([maps:get(workspace, Fixture), "**", "*.md"])))
     end).
 
@@ -289,9 +297,23 @@ state(ArtifactDigest) ->
         logical_state => ready,
         observations => [],
         budgets => #{<<"workspace.write">> => 1},
-        deadline => 2000000000000
+        deadline => 2000000000000,
+        authority => [authority(ArtifactDigest)]
     }),
     State.
+
+authority(_ArtifactDigest) -> #{
+    grant_id => digest($7),
+    invocations => [#{
+        operation => <<"workspace.write">>,
+        workspace_id => <<"workspace-a">>,
+        path_prefix => [<<"results">>]
+    }],
+    budgets => #{<<"workspace.write">> => 1},
+    expires_at => 2000000000000,
+    task_id => <<"task:Workspace.write/0">>,
+    combination => deny
+}.
 
 envelope(Generation, CorrelationCharacter, PayloadCharacter) -> #{
     format => alang_runtime_envelope_v1,

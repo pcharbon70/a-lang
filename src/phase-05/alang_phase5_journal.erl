@@ -203,8 +203,12 @@ valid_payload(effect_intent, Payload) ->
         [transition_id, operation_id, payload_digest]) andalso
         valid_id(maps:get(operation, Payload, undefined));
 valid_payload(authorization, Payload) ->
-    payload(Payload, [operation_id, decision, decision_digest], [operation_id, decision_digest]) andalso
-        lists:member(maps:get(decision, Payload, invalid), [allowed, denied]);
+    payload(Payload, [operation_id, grant_id, decision, decision_digest, remaining_budget],
+        [operation_id, grant_id, decision_digest]) andalso
+        lists:member(maps:get(decision, Payload, invalid), [allowed, denied]) andalso
+        is_integer(maps:get(remaining_budget, Payload, invalid)) andalso
+        maps:get(remaining_budget, Payload) >= 0 andalso
+        maps:get(remaining_budget, Payload) =< 1000000;
 valid_payload(submission, Payload) ->
     payload(Payload, [operation_id, adapter_identity, payload_digest], [operation_id, payload_digest]) andalso
         valid_id(maps:get(adapter_identity, Payload, undefined));

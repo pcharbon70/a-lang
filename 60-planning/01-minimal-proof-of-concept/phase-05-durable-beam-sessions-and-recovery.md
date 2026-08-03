@@ -19,7 +19,7 @@ durable workflow system. It defines explicit checkpoints, intent and result
 records, idempotent effect recovery, local grant restoration, and a supervised
 resume protocol for compiled A-Lang sessions.
 
-**Status:** In progress — Sections 5.1–5.3 complete.
+**Status:** In progress — Sections 5.1–5.4 complete.
 
 **Dependencies:** Phase 4 complete with A-Lang code running as supervised BEAM
 processes, a closed effect registry, opaque local capability references, a
@@ -198,7 +198,10 @@ arrives with different content.
 **Description:** Restore local least authority and resolve uncertain external
 effect outcomes without converting retries into duplicate mutations.
 
-- [ ] **Section 5.4 Complete**
+- [x] **Section 5.4 Complete** — implemented by
+  [effect and capability recovery](../../src/phase-05/effect-and-capability-recovery.md),
+  [fresh local authority restoration](../../src/phase-05/alang_phase5_authority.erl),
+  and [pending-effect reconciliation](../../src/phase-05/alang_phase5_effect_recovery.erl).
 
 ### Task 5.4.1: Reissue Local Grants from Durable Policy
 
@@ -206,7 +209,7 @@ effect outcomes without converting retries into duplicate mutations.
 budgets, deadlines, ownership, and revocation records instead of serializing or
 reusing old references.
 
-- [ ] **Task 5.4.1 Complete**
+- [x] **Task 5.4.1 Complete**
 
 #### Subtask 5.4.1.1: Preserve or Reduce Authority
 
@@ -214,14 +217,14 @@ reusing old references.
 durably accepted authority and cannot regain spent budget, expired time, or
 revoked scope.
 
-- [ ] **Subtask 5.4.1.1 Complete**
+- [x] **Subtask 5.4.1.1 Complete**
 
 #### Subtask 5.4.1.2: Bind Grants to the New Generation
 
 **Description:** Issue fresh references for the restored runtime generation
 and reject every reference retained by a crashed process or stale message.
 
-- [ ] **Subtask 5.4.1.2 Complete**
+- [x] **Subtask 5.4.1.2 Complete**
 
 ### Task 5.4.2: Reconcile Pending Effects
 
@@ -229,7 +232,7 @@ and reject every reference retained by a crashed process or stale message.
 not submitted, submitted with known adapter identity, or outcome unknown, then
 apply the operation-specific recovery rule.
 
-- [ ] **Task 5.4.2 Complete**
+- [x] **Task 5.4.2 Complete**
 
 #### Subtask 5.4.2.1: Query Idempotent Adapter State
 
@@ -237,7 +240,7 @@ apply the operation-specific recovery rule.
 verify payload and artifact digests, and record the existing result instead of
 writing twice when completion already occurred.
 
-- [ ] **Subtask 5.4.2.1 Complete**
+- [x] **Subtask 5.4.2.1 Complete**
 
 #### Subtask 5.4.2.2: Fail Closed on Irreconcilable Outcomes
 
@@ -245,7 +248,7 @@ writing twice when completion already occurred.
 external outcome cannot be proven, rather than guessing, retrying a
 non-idempotent action, or reporting completion.
 
-- [ ] **Subtask 5.4.2.2 Complete**
+- [x] **Subtask 5.4.2.2 Complete**
 
 ## Section 5.5: Crash-Recovery Integration Test
 

@@ -11,6 +11,7 @@
     complete/3,
     describe_grant/2,
     issue_grant/2,
+    lookup_workspace/3,
     pending_count/1,
     request/6,
     restrict_grant/3,
@@ -63,6 +64,10 @@ request(Broker, Grant, Manifest, Operation, Arguments, Context) ->
         {request, Grant, Manifest, Operation, Arguments, Context},
         ?MAX_CALL_TIMEOUT
     ).
+
+-spec lookup_workspace(pid(), map(), integer()) -> {ok, map()} | {error, term()}.
+lookup_workspace(Broker, Query, Deadline) ->
+    gen_server:call(Broker, {lookup_workspace, Query, Deadline}, ?MAX_CALL_TIMEOUT).
 
 -spec complete(pid(), tuple(), atom()) -> ok | {error, atom()}.
 complete(Broker, Authorization, Outcome) ->
@@ -136,6 +141,8 @@ handle_call({authorize, Grant, Manifest, Operation, Arguments, Context}, _From, 
 handle_call({request, Grant, Manifest, Operation, Arguments, Context}, _From, State) ->
     {Reply, Updated} = request_effect(Grant, Manifest, Operation, Arguments, Context, State),
     {reply, Reply, Updated};
+handle_call({lookup_workspace, Query, Deadline}, _From, State) ->
+    {reply, lookup_owned_adapter(Query, Deadline, State), State};
 handle_call({complete, Authorization, Outcome}, _From, State) ->
     {Reply, Updated} = complete_authorization(Authorization, Outcome, State),
     {reply, Reply, Updated};
@@ -615,6 +622,14 @@ owned_adapter_call(status, #{adapter := #{pid := Adapter}}) ->
     end;
 owned_adapter_call(events, #{adapter := #{pid := Adapter}}) ->
     try {ok, alang_phase4_workspace_adapter:events(Adapter)}
+    catch
+        exit:_Reason -> {error, adapter_unavailable}
+    end.
+
+lookup_owned_adapter(_Query, _Deadline, #{adapter := disabled}) -> {error, adapter_unavailable};
+lookup_owned_adapter(Query, Deadline, #{adapter := #{pid := Adapter, seal := Seal}}) ->
+    try alang_phase4_workspace_adapter:lookup(Adapter, Seal, Query, Deadline) of
+        Result -> Result
     catch
         exit:_Reason -> {error, adapter_unavailable}
     end.

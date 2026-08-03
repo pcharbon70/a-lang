@@ -79,6 +79,21 @@ fixtures remain under the ignored repository `build/` directory.
   decisions, suffix folding, and invalid-input quarantine tests.
 - [Supervised resume protocol](resume-protocol.md) — recovery ordering, fresh
   supervision semantics, runtime generations, and late-message rules.
+- [`alang_phase5_authority.erl`](alang_phase5_authority.erl) — validation and
+  fail-closed reconstruction of fresh, generation-bound local grants from
+  durable structural authority.
+- [`alang_phase5_authority_tests.erl`](alang_phase5_authority_tests.erl) —
+  budget, expiry, revocation, subset, fresh-reference, and stale-reference
+  recovery evidence.
+- [`alang_phase5_effect_recovery.erl`](alang_phase5_effect_recovery.erl) —
+  pending-effect classification, stable adapter lookup, missing result-record
+  repair, and durable pause for irreconcilable outcomes.
+- [`alang_phase5_effect_recovery_tests.erl`](alang_phase5_effect_recovery_tests.erl)
+  — sidecar crash-window, cross-restart receipt, not-submitted, divergent,
+  result-repair, no-second-write, and pause-checkpoint tests.
+- [Effect and capability recovery](effect-and-capability-recovery.md) — durable
+  authority descriptors, fresh-reference rules, receipt ordering, and pending
+  effect decisions.
 
 ## Maintaining this index
 

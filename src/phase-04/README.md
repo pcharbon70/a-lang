@@ -67,10 +67,12 @@ remain under the ignored repository `build/` directory.
   results, fault containment, and sidecar replacement.
 - [`alang_phase4_workspace_sidecar.erl`](alang_phase4_workspace_sidecar.erl) —
   the fixed BEAM sidecar implementing normalized, symlink-safe, atomic,
-  digesting, and lifetime-idempotent workspace writes.
+  digesting workspace writes plus the durable intent/completion receipts used
+  by Phase 5 recovery.
 - [`alang_phase4_workspace_adapter_tests.erl`](alang_phase4_workspace_adapter_tests.erl)
   — workspace scope, idempotence, isolation, bypass, crash, malformed-frame,
-  timeout, replacement, and redaction evidence.
+  timeout, replacement, and redaction evidence; Phase 5 adds cross-restart
+  receipt tests in its own implementation directory.
 - [Workspace adapter contract](workspace-adapter-contract.md) — the sealed
   protocol, Bubblewrap and resource-limit profile, filesystem rules, outcome
   model, and explicitly deferred durability claims.

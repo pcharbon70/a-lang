@@ -2,7 +2,7 @@
 
 -export([resume/1]).
 
--spec resume(map()) -> {ok, pid(), map()} | {error, tuple()}.
+-spec resume(map()) -> {ok, pid(), map()} | {paused, map()} | {error, tuple()}.
 resume(#{store_options := StoreOptions, expected := Expected, broker_options := BrokerOptions}) ->
     case open_snapshot(StoreOptions) of
         {ok, Snapshot} ->
@@ -62,8 +62,43 @@ start_supervision(Recovery, StoreOptions, BrokerOptions) ->
         store_options => StoreOptions,
         broker_options => BrokerOptions
     }) of
-        {ok, Supervisor} -> {ok, Supervisor, Recovery};
+        {ok, Supervisor} -> activate_recovery(Supervisor, Recovery);
         {error, Reason} -> {error, {recovery_rejected, {supervision_start_failed, Reason}, #{}}}
+    end.
+
+activate_recovery(Supervisor, Recovery) ->
+    case alang_phase5_session_sup:topology(Supervisor) of
+        {ok, Topology} ->
+            Store = maps:get(durable_store, Topology),
+            Broker = maps:get(broker, Topology),
+            Coordinator = maps:get(coordinator, Topology),
+            case alang_phase5_effect_recovery:reconcile(Store, Broker, Recovery, deadline()) of
+                {ok, Reconciled} -> restore_authority(Supervisor, Broker, Coordinator, Reconciled);
+                {paused, Paused} ->
+                    alang_phase5_session_sup:stop(Supervisor),
+                    {paused, Paused};
+                {error, Reason} ->
+                    alang_phase5_session_sup:stop(Supervisor),
+                    {error, {recovery_rejected, Reason, #{}}}
+            end;
+        {error, Reason} ->
+            alang_phase5_session_sup:stop(Supervisor),
+            {error, {recovery_rejected, {incomplete_supervision, Reason}, #{}}}
+    end.
+
+restore_authority(Supervisor, Broker, Coordinator, Recovery) ->
+    State = maps:get(state, Recovery),
+    case alang_phase5_authority:restore(
+        Broker,
+        State,
+        Coordinator,
+        erlang:system_time(millisecond),
+        erlang:monotonic_time(millisecond)
+    ) of
+        {ok, Authority} -> {ok, Supervisor, Recovery#{recovered_authority => Authority}};
+        {error, Reason} ->
+            alang_phase5_session_sup:stop(Supervisor),
+            {error, {recovery_rejected, Reason, #{}}}
     end.
 
 deadline() -> erlang:monotonic_time(millisecond) + 2000.

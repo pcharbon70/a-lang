@@ -209,14 +209,19 @@ fold_record(#{kind := effect_intent, payload := Payload}, Plan) ->
     end;
 fold_record(#{kind := authorization, payload := Payload}, Plan) ->
     case maps:get(decision, Payload) of
-        allowed -> advance_stage(Plan, maps:get(operation_id, Payload), authorized, undefined);
+        allowed ->
+            case apply_authorization_budget(Payload, Plan) of
+                {ok, Budgeted} ->
+                    advance_stage(Budgeted, maps:get(operation_id, Payload), authorized, undefined);
+                {error, _} = Error -> Error
+            end;
         denied -> {ok, Plan}
     end;
 fold_record(#{kind := submission, payload := Payload}, Plan) ->
     advance_stage(Plan, maps:get(operation_id, Payload), submitted,
         maps:get(adapter_identity, Payload));
-fold_record(#{kind := effect_result, payload := Payload}, Plan) ->
-    remember_result(Payload, Plan);
+fold_record(#{kind := effect_result} = Record, Plan) ->
+    remember_result(Record, Plan);
 fold_record(#{kind := completion}, Plan) ->
     case maps:get(terminal, maps:get(state, Plan)) of
         completed -> {ok, Plan};
@@ -244,7 +249,7 @@ advance_stage(Plan, OperationId, Stage, AdapterIdentity) ->
         )
     end.
 
-remember_result(Payload, Plan) ->
+remember_result(#{payload := Payload, record_digest := RecordDigest}, Plan) ->
     OperationId = maps:get(operation_id, Payload),
     Known = maps:get(known_results, Plan),
     case maps:find(OperationId, Known) of
@@ -252,12 +257,43 @@ remember_result(Payload, Plan) ->
             State = maps:get(state, Plan),
             case maps:get(pending, State) of
                 #{operation_id := OperationId, stage := Stage} when Stage =:= submitted; Stage =:= outcome_unknown ->
-                    {ok, Plan#{known_results := Known#{OperationId => Payload}}};
+                    {ok, Plan#{known_results := Known#{OperationId => #{
+                        payload => Payload,
+                        record_digest => RecordDigest
+                    }}}};
                 _ -> {error, result_without_submission}
             end;
-        {ok, Payload} -> {duplicate, Plan};
+        {ok, #{payload := Payload}} -> {duplicate, Plan};
         {ok, _Conflict} -> {error, conflicting_effect_result}
     end.
+
+apply_authorization_budget(Payload, Plan) ->
+    State = maps:get(state, Plan),
+    Pending = maps:get(pending, State),
+    OperationId = maps:get(operation_id, Payload),
+    case Pending of
+        #{operation_id := OperationId, operation := Operation} ->
+            GrantId = maps:get(grant_id, Payload),
+            Remaining = maps:get(remaining_budget, Payload),
+            case reduce_authority(maps:get(authority, State), GrantId, Operation, Remaining, []) of
+                {ok, Authority} -> {ok, Plan#{state := State#{authority := Authority}}};
+                {error, _} = Error -> Error
+            end;
+        _ -> {error, authorization_without_intent}
+    end.
+
+reduce_authority([], _GrantId, _Operation, _Remaining, _Acc) ->
+    {error, authorization_unknown_grant};
+reduce_authority([#{grant_id := GrantId, budgets := Budgets} = Grant | Rest], GrantId,
+    Operation, Remaining, Acc) ->
+    case maps:find(Operation, Budgets) of
+        {ok, Current} when Remaining =< Current ->
+            {ok, lists:reverse(Acc) ++ [Grant#{budgets := Budgets#{Operation := Remaining}} | Rest]};
+        {ok, _Current} -> {error, authorization_budget_widening};
+        error -> {error, authorization_scope_mismatch}
+    end;
+reduce_authority([Grant | Rest], GrantId, Operation, Remaining, Acc) ->
+    reduce_authority(Rest, GrantId, Operation, Remaining, [Grant | Acc]).
 
 map_state_result({ok, State}, Plan) -> {ok, Plan#{state := State}};
 map_state_result({error, Reason}, _Plan) -> {error, {invalid_semantic_transition, Reason}}.

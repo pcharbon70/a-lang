@@ -72,9 +72,11 @@ artifact inspection rejects the direct module import before loading.
 
 ## Boundary of the evidence
 
-This evidence establishes a local, in-memory Phase 4 authority boundary. It
-does not claim crash-safe effect identity, grant restoration, or durable
-recovery. Those mechanisms remain planned for Phase 5. The OS adapter is a
+This evidence establishes the original local Phase 4 authority boundary. Its
+gate did not claim crash-safe effect identity, grant restoration, or durable
+recovery; the subsequently implemented
+[Phase 5 recovery boundary](../phase-05/effect-and-capability-recovery.md)
+adds those claims and their separate evidence. The OS adapter is a
 bounded external effect sidecar running a fixed BEAM module; it is neither a
 foreign compiler component nor an interpreter for A-Lang source or IR.
 

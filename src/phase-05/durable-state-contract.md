@@ -27,6 +27,10 @@ deadline, pending effect, terminal status, evidence digests, durable authority
 descriptions, revocations, and the next transition sequence. Its deterministic
 encoding and SHA-256 digest identify the precise checkpointed value.
 
+A pending workspace effect also carries only the normalized workspace, path,
+and expected artifact digest required for recovery lookup. It does not contain
+an adapter PID, seal, Port, or opaque grant.
+
 ## Durable and ephemeral fields
 
 Durable values may contain bounded integers, floats, binaries, atoms, lists,

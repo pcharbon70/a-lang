@@ -272,13 +272,16 @@ bounded_evidence(_Evidence) -> #{}.
 
 normalize_intent(Intent) ->
     Required = [operation_id, transition_id, operation, payload_digest],
-    case exact_keys(Intent, Required) andalso
+    KeysValid = exact_keys(Intent, Required) orelse exact_keys(Intent, Required ++ [recovery]),
+    Recovery = maps:get(recovery, Intent, none),
+    case KeysValid andalso
         valid_id(maps:get(operation_id, Intent, undefined)) andalso
         valid_id(maps:get(transition_id, Intent, undefined)) andalso
         valid_id(maps:get(operation, Intent, undefined)) andalso
-        valid_digest(maps:get(payload_digest, Intent, undefined))
+        valid_digest(maps:get(payload_digest, Intent, undefined)) andalso
+        valid_effect_recovery(Recovery)
     of
-        true -> {ok, Intent#{stage => intent, adapter_identity => undefined}};
+        true -> {ok, Intent#{stage => intent, adapter_identity => undefined, recovery => Recovery}};
         false -> {error, invalid_effect_intent}
     end.
 
@@ -360,14 +363,35 @@ valid_deadline(Value) -> is_integer(Value) andalso Value >= 0.
 
 valid_pending(none) -> true;
 valid_pending(Pending) when is_map(Pending) ->
-    exact_keys(Pending, [operation_id, transition_id, operation, payload_digest, stage, adapter_identity]) andalso
+    exact_keys(Pending, [operation_id, transition_id, operation, payload_digest, recovery,
+        stage, adapter_identity]) andalso
         valid_id(maps:get(operation_id, Pending, undefined)) andalso
         valid_id(maps:get(transition_id, Pending, undefined)) andalso
         valid_id(maps:get(operation, Pending, undefined)) andalso
         valid_digest(maps:get(payload_digest, Pending, undefined)) andalso
+        valid_effect_recovery(maps:get(recovery, Pending, invalid)) andalso
         lists:member(maps:get(stage, Pending, invalid), [intent, authorized, submitted, outcome_unknown]) andalso
         valid_adapter_identity(maps:get(stage, Pending, invalid), maps:get(adapter_identity, Pending, invalid));
 valid_pending(_) -> false.
+
+valid_effect_recovery(none) -> true;
+valid_effect_recovery(Recovery) when is_map(Recovery) ->
+    exact_keys(Recovery, [kind, workspace_id, path_segments, artifact_digest]) andalso
+        maps:get(kind, Recovery, invalid) =:= workspace_write andalso
+        valid_id(maps:get(workspace_id, Recovery, undefined)) andalso
+        valid_path_segments(maps:get(path_segments, Recovery, invalid)) andalso
+        valid_digest(maps:get(artifact_digest, Recovery, undefined));
+valid_effect_recovery(_) -> false.
+
+valid_path_segments(Segments) when is_list(Segments), Segments =/= [], length(Segments) =< 32 ->
+    lists:all(fun(Segment) ->
+        valid_id(Segment) andalso Segment =/= <<".">> andalso Segment =/= <<"..">> andalso
+            Segment =/= <<".alang-operations">> andalso
+            binary:match(Segment, <<"/">>) =:= nomatch andalso
+            binary:match(Segment, <<"\\">>) =:= nomatch andalso
+            binary:match(Segment, <<0>>) =:= nomatch
+    end, Segments);
+valid_path_segments(_) -> false.
 
 valid_terminal(Value) -> lists:member(Value, [running, paused, failed, completed, cancelled]).
 

@@ -33,7 +33,9 @@ Transition and operation identifiers are SHA-256 derivations of a trusted
 session identity and runtime-assigned ordinal. They contain no PID, reference,
 port, timer, model-supplied identity, or newly interned atom. Related intent,
 authorization, submission, and result records carry the operation identity as
-their correlation identity.
+their correlation identity. An authorization decision also records the stable
+durable grant identity and post-decision remaining budget, allowing replay to
+reduce authority without serializing the local grant reference.
 
 ## Storage boundary
 
