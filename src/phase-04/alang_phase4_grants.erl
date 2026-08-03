@@ -13,6 +13,7 @@
     resolve/4,
     resolve_bound/3,
     restrict/4,
+    restrict_for_child/6,
     revoke/2,
     runtime_context/1
 ]).
@@ -53,10 +54,27 @@ issue(_Store, _Spec, _Now) -> {error, invalid_grant_store}.
 -spec restrict(map(), term(), map(), integer()) -> {ok, tuple(), map()} | {error, atom()}.
 restrict(Store, Opaque, Restriction, Now) when is_integer(Now) ->
     case lookup_active(Store, Opaque, Now) of
-        {ok, Parent} -> restrict_parent(Store, Parent, Restriction, Now);
+        {ok, #{delegation := restrictable} = Parent} ->
+            restrict_parent(Store, Parent, Restriction, Now);
+        {ok, _Parent} -> {error, delegation_denied};
         {error, _} = Error -> Error
     end;
 restrict(_Store, _Opaque, _Restriction, _Now) -> {error, invalid_clock}.
+
+-spec restrict_for_child(map(), term(), map(), map(), pid(), integer()) ->
+    {ok, tuple(), map()} | {error, atom()}.
+restrict_for_child(Store, Opaque, Restriction, Binding, Issuer, Now) when
+    is_pid(Issuer), is_integer(Now)
+->
+    case lookup_active(Store, Opaque, Now) of
+        {ok, #{delegation := restrictable, owner_pid := Issuer} = Parent} ->
+            restrict_child_parent(Store, Parent, Restriction, Binding, Now);
+        {ok, #{delegation := deny}} -> {error, delegation_denied};
+        {ok, _Parent} -> {error, parent_owner_mismatch};
+        {error, _} = Error -> Error
+    end;
+restrict_for_child(_Store, _Opaque, _Restriction, _Binding, _Issuer, _Now) ->
+    {error, invalid_child_restriction}.
 
 -spec combine(map(), term(), term(), integer()) -> {ok, tuple(), map()} | {error, atom()}.
 combine(Store, LeftOpaque, RightOpaque, Now) when is_integer(Now) ->
@@ -208,6 +226,7 @@ issue_root(Store, Spec) ->
     insert_grant(Store#{budget_pools := Pools}, Spec#{
         ancestors => [],
         budget_pools => PoolBindings,
+        delegation => restrictable,
         presenter_pid => undefined,
         status => active
     }).
@@ -218,13 +237,59 @@ restrict_parent(Store, Parent, Restriction, Now) when is_map(Restriction) ->
             ParentReference = maps:get(reference, Parent),
             insert_grant(Store, Narrowed#{
                 ancestors => lists:usort([ParentReference | maps:get(ancestors, Parent)]),
-                budget_pools => maps:get(budget_pools, Parent),
+                budget_pools => maps:with(operation_set(maps:get(invocations, Narrowed)),
+                    maps:get(budget_pools, Parent)),
+                delegation => restrictable,
                 presenter_pid => maps:get(presenter_pid, Parent),
                 status => active
             });
         {error, _} = Error -> Error
     end;
 restrict_parent(_Store, _Parent, _Restriction, _Now) -> {error, invalid_restriction}.
+
+restrict_child_parent(Store, Parent, Restriction, Binding, Now) when is_map(Binding) ->
+    case {normalize_restriction(Restriction, Parent, Store, Now),
+        validate_child_binding(Binding, Parent)} of
+        {{ok, Narrowed}, ok} ->
+            ParentReference = maps:get(reference, Parent),
+            Operations = operation_set(maps:get(invocations, Narrowed)),
+            insert_grant(Store, Narrowed#{
+                owner_pid := maps:get(owner_pid, Binding),
+                session_id := maps:get(session_id, Binding),
+                artifact_digest := maps:get(artifact_digest, Binding),
+                task_id := maps:get(task_id, Binding),
+                combination := deny,
+                ancestors => lists:usort([ParentReference | maps:get(ancestors, Parent)]),
+                budget_pools => maps:with(Operations, maps:get(budget_pools, Parent)),
+                delegation => deny,
+                presenter_pid => undefined,
+                status => active
+            });
+        {{error, _} = Error, _} -> Error;
+        {_, {error, _} = Error} -> Error
+    end;
+restrict_child_parent(_Store, _Parent, _Restriction, _Binding, _Now) ->
+    {error, invalid_child_binding}.
+
+validate_child_binding(Binding, Parent) ->
+    Expected = lists:sort([owner_pid, session_id, artifact_digest, task_id]),
+    case lists:sort(maps:keys(Binding)) =:= Expected andalso
+        is_pid(maps:get(owner_pid, Binding, undefined)) andalso
+        erlang:is_process_alive(maps:get(owner_pid, Binding, undefined)) andalso
+        valid_id(maps:get(session_id, Binding, invalid)) andalso
+        valid_digest(maps:get(artifact_digest, Binding, invalid)) andalso
+        valid_id(maps:get(task_id, Binding, invalid))
+    of
+        false -> {error, invalid_child_binding};
+        true ->
+            case maps:get(owner_pid, Binding) =/= maps:get(owner_pid, Parent) andalso
+                maps:get(session_id, Binding) =/= maps:get(session_id, Parent) andalso
+                maps:get(task_id, Binding) =/= maps:get(task_id, Parent)
+            of
+                true -> ok;
+                false -> {error, child_binding_not_fresh}
+            end
+    end.
 
 normalize_restriction(Restriction, Parent, Store, Now) ->
     ExpectedKeys = lists:sort([invocations, budgets, deadline]),
@@ -302,6 +367,7 @@ combine_intersection(Store, Left, Right) ->
                     ))#{
                         ancestors => Ancestors,
                         budget_pools => Pools,
+                        delegation => restrictable,
                         presenter_pid => maps:get(presenter_pid, Left),
                         status => active
                     })
@@ -425,7 +491,8 @@ inherited_spec(Parent, Invocations, Budgets, Deadline) ->
         session_id,
         artifact_digest,
         task_id,
-        combination
+        combination,
+        delegation
     ], Parent))#{
         invocations => Invocations,
         budgets => Budgets,
@@ -606,7 +673,8 @@ public_grant(Store, Grant) ->
         artifact_digest => maps:get(artifact_digest, Grant),
         task_id => maps:get(task_id, Grant),
         status => maps:get(status, Grant),
-        combination => maps:get(combination, Grant)
+        combination => maps:get(combination, Grant),
+        delegation => maps:get(delegation, Grant)
     }.
 
 opaque_reference({alang_opaque_v1, ?GRANT_TYPE, Reference}) when is_reference(Reference) ->

@@ -19,7 +19,7 @@ completion evidence, slices model context, and adds one child task whose
 authority is mechanically attenuated without exposing a signing or delegation
 primitive. Parent and child both execute as supervised BEAM processes.
 
-**Status:** In progress — Sections 6.1–6.3 complete.
+**Status:** In progress — Sections 6.1–6.4 complete.
 
 **Dependencies:** Phase 5 complete with versioned durable state,
 intent-and-result journaling, generation fencing, subset-preserving local grant
@@ -208,14 +208,17 @@ incomplete status.
 inputs, reduced context, a narrower capability requirement, an ephemeral
 runtime identity, and broker-enforced inability to create or transfer grants.
 
-- [ ] **Section 6.4 Complete**
+- [x] **Section 6.4 Complete** — implemented by the
+  [child runtime](../../src/phase-06/alang_phase6_child.erl),
+  [child supervisor](../../src/phase-06/alang_phase6_child_sup.erl), and
+  [mechanical attenuation contract](../../src/phase-06/mechanically-attenuated-child-task.md).
 
 ### Task 6.4.1: Define and Spawn the Child Task
 
 **Description:** Extract one bounded drafting or formatting step into a child
 task whose interface and requirement are explicit in the parent IR.
 
-- [ ] **Task 6.4.1 Complete**
+- [x] **Task 6.4.1 Complete**
 
 #### Subtask 6.4.1.1: Define the Child Interface and Context
 
@@ -223,7 +226,7 @@ task whose interface and requirement are explicit in the parent IR.
 input, output schema, completion predicate, and summarized capabilities and
 exclude unrelated parent state and proof material.
 
-- [ ] **Subtask 6.4.1.1 Complete**
+- [x] **Subtask 6.4.1.1 Complete**
 
 #### Subtask 6.4.1.2: Create and Supervise the Child Session
 
@@ -231,7 +234,7 @@ exclude unrelated parent state and proof material.
 monitor its BEAM process, propagate deadline and cancellation, correlate the
 typed result, and discard late or wrong-session replies.
 
-- [ ] **Subtask 6.4.1.2 Complete**
+- [x] **Subtask 6.4.1.2 Complete**
 
 ### Task 6.4.2: Attenuate and Constrain Child Authority
 
@@ -239,7 +242,7 @@ typed result, and discard late or wrong-session replies.
 and child requirement and prevent model-controlled authority creation or
 transfer through the broker API.
 
-- [ ] **Task 6.4.2 Complete**
+- [x] **Task 6.4.2 Complete**
 
 #### Subtask 6.4.2.1: Issue the Narrow Child Local Grant
 
@@ -247,7 +250,7 @@ transfer through the broker API.
 and expiry; reject any widening; and issue a fresh opaque reference bound to
 the child BEAM process lineage.
 
-- [ ] **Subtask 6.4.2.1 Complete**
+- [x] **Subtask 6.4.2.1 Complete**
 
 #### Subtask 6.4.2.2: Deny Grant Creation and Transfer
 
@@ -255,7 +258,7 @@ the child BEAM process lineage.
 export, or delegate operation, and reject use of the child reference by the
 parent, sibling, adapter, model, or another runtime generation.
 
-- [ ] **Subtask 6.4.2.2 Complete**
+- [x] **Subtask 6.4.2.2 Complete**
 
 ## Section 6.5: Phase 6 Integration Tests
 

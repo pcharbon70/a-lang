@@ -75,6 +75,18 @@ the ignored repository `build/` directory.
   journal, traversal, and symlink acceptance evidence.
 - [Structured repair and completion verification](repair-and-completion-verification.md)
   — the narrow retry boundary and conjunctive durable completion gate.
+- [`alang_phase6_child.erl`](alang_phase6_child.erl) — reduced child interface,
+  parent-owned spawn, private correlation fence, typed result validation,
+  cancellation, and late or wrong-session reply handling.
+- [`alang_phase6_child_worker.erl`](alang_phase6_child_worker.erl) — the
+  deadline-bound supervised child process and monitored executor boundary.
+- [`alang_phase6_child_sup.erl`](alang_phase6_child_sup.erl) — the dynamic OTP
+  supervisor for temporary child sessions.
+- [`alang_phase6_child_tests.erl`](alang_phase6_child_tests.erl) — reduced
+  context, subset, shared budget, binding, nondelegation, cancellation, reply
+  fencing, and generated-surface acceptance evidence.
+- [Mechanically attenuated child task](mechanically-attenuated-child-task.md) —
+  the typed process boundary and its parent-to-child authority derivation.
 
 ## Maintaining this index
 
