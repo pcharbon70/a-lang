@@ -19,7 +19,7 @@ statically declared operations; a supervised BEAM broker resolves opaque local
 references, validates typed arguments and dynamic policy, and calls one
 OS-bounded adapter without portable delegation or ambient authority.
 
-**Status:** In progress — Section 4.1 has reproducible implementation evidence.
+**Status:** In progress — Sections 4.1–4.2 have reproducible implementation evidence.
 
 **Dependencies:** Phase 3 complete with generated A-Lang modules executing as
 supervised BEAM processes through a versioned runtime ABI, bounded mailboxes,
@@ -84,14 +84,14 @@ manifest even when a session happens to hold a broader runtime grant.
 unforgeable, process-local references with no portable or self-certifying wire
 meaning.
 
-- [ ] **Section 4.2 Complete**
+- [x] **Section 4.2 Complete** — evidence: [opaque grant store](../../src/phase-04/alang_phase4_grants.erl) and [grant law and lifetime tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 ### Task 4.2.1: Define Grant State and Restriction Laws
 
 **Description:** Model each grant as a set of permitted typed invocations plus
 resource scope, budgets, deadlines, owner, lifecycle, and revocation state.
 
-- [ ] **Task 4.2.1 Complete**
+- [x] **Task 4.2.1 Complete** — evidence: [structural invocation sets, shared budgets, and restriction laws](../../src/phase-04/alang_phase4_grants.erl)
 
 #### Subtask 4.2.1.1: Specify Local Least Authority
 
@@ -99,7 +99,7 @@ resource scope, budgets, deadlines, owner, lifecycle, and revocation state.
 session authority and make every narrowing operation monotonically reduce or
 preserve that set.
 
-- [ ] **Subtask 4.2.1.1 Complete**
+- [x] **Subtask 4.2.1.1 Complete** — evidence: [generated monotone-restriction tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 #### Subtask 4.2.1.2: Specify Combination and Revocation
 
@@ -107,14 +107,14 @@ preserve that set.
 how revocation invalidates descendants, and how stale references fail without
 revealing broker state.
 
-- [ ] **Subtask 4.2.1.2 Complete**
+- [x] **Subtask 4.2.1.2 Complete** — evidence: [policy-gated intersection, shared-budget, and descendant-revocation tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 ### Task 4.2.2: Issue and Resolve Opaque References
 
 **Description:** Create high-entropy references inside the trusted broker and
 bind them to one session, artifact, process lineage, and runtime instance.
 
-- [ ] **Task 4.2.2 Complete**
+- [x] **Task 4.2.2 Complete** — evidence: [broker-local opaque reference issuance and resolution](../../src/phase-04/alang_phase4_grants.erl)
 
 #### Subtask 4.2.2.1: Prevent Reference Forgery and Leakage
 
@@ -122,7 +122,7 @@ bind them to one session, artifact, process lineage, and runtime instance.
 responses, logs, traces, artifacts, and external adapter payloads; expose only
 redacted reference identifiers where correlation is necessary.
 
-- [ ] **Subtask 4.2.2.1 Complete**
+- [x] **Subtask 4.2.2.1 Complete** — evidence: [unique-reference and redacted-description tests](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 #### Subtask 4.2.2.2: Bind References to Runtime Lifetimes
 
@@ -130,7 +130,7 @@ redacted reference identifiers where correlation is necessary.
 artifact, process lineage, or runtime generation and remove them when their
 owner terminates or their deadline expires.
 
-- [ ] **Subtask 4.2.2.2 Complete**
+- [x] **Subtask 4.2.2.2 Complete** — evidence: [node, runtime, generation, session, artifact, owner, task, presenter, expiry, and owner-removal checks](../../src/phase-04/alang_phase4_grants_tests.erl)
 
 ## Section 4.3: Supervised BEAM Reference Monitor
 

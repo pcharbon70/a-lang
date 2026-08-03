@@ -48,6 +48,12 @@ remain under the ignored repository `build/` directory.
 - [`alang_phase4_effect_registry_tests.erl`](alang_phase4_effect_registry_tests.erl)
   — view-consistency, typed-decoding, dynamic-dispatch, bounds, atom-safety,
   and artifact-manifest tests.
+- [`alang_phase4_grants.erl`](alang_phase4_grants.erl) — broker-owned opaque
+  reference state, structural invocation scopes, restriction and intersection
+  laws, shared budgets, lifetime binding, and cascading revocation.
+- [`alang_phase4_grants_tests.erl`](alang_phase4_grants_tests.erl) — generated
+  restriction-law cases plus combination, budget, revocation, opacity, scope,
+  and runtime-lifetime evidence.
 
 ## Maintaining this index
 
