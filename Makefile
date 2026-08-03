@@ -81,10 +81,15 @@ PHASE5_SOURCES := \
 	$(PHASE5_DIR)/alang_phase5_journal.erl \
 	$(PHASE5_DIR)/alang_phase5_journal_tests.erl \
 	$(PHASE5_DIR)/alang_phase5_store.erl \
-	$(PHASE5_DIR)/alang_phase5_store_tests.erl
+	$(PHASE5_DIR)/alang_phase5_store_tests.erl \
+	$(PHASE5_DIR)/alang_phase5_recovery.erl \
+	$(PHASE5_DIR)/alang_phase5_runtime_process.erl \
+	$(PHASE5_DIR)/alang_phase5_session_sup.erl \
+	$(PHASE5_DIR)/alang_phase5_resume.erl \
+	$(PHASE5_DIR)/alang_phase5_recovery_tests.erl
 PHASE5_COMPILER_STAMP := $(PHASE5_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2
+.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -207,7 +212,10 @@ test-section-5-1: compile-phase-5-runtime
 test-section-5-2: test-section-5-1
 	$(ERL) -noshell -pa $(PHASE5_BUILD) -eval 'case eunit:test([alang_phase5_journal_tests, alang_phase5_store_tests], [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
-test-phase-5: test-section-5-2
+test-section-5-3: test-section-5-2 compile-phase-1-bootstrap compile-phase-2-toolchain compile-phase-3-toolchain compile-phase-4-runtime
+	$(ERL) -noshell -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -eval 'case eunit:test(alang_phase5_recovery_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-phase-5: test-section-5-3
 
 test: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5
 

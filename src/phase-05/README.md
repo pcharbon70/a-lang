@@ -62,6 +62,23 @@ fixtures remain under the ignored repository `build/` directory.
 - [Journal and storage contract](journal-and-storage-contract.md) — canonical
   record semantics, stable identities, durability acknowledgements, bounds,
   and local-filesystem assumptions.
+- [`alang_phase5_recovery.erl`](alang_phase5_recovery.erl) — independent
+  journal/checkpoint/artifact validation, safe suffix folding, quarantine
+  classification, and fresh-generation derivation.
+- [`alang_phase5_runtime_process.erl`](alang_phase5_runtime_process.erl) —
+  fresh coordinator, inbox, and trace workers with bounded runtime-envelope
+  admission, generation fencing, and duplicate/conflict decisions.
+- [`alang_phase5_session_sup.erl`](alang_phase5_session_sup.erl) — the
+  one-for-all fresh session subtree containing store, broker/adapter, and
+  runtime roles, plus typed topology inspection.
+- [`alang_phase5_resume.erl`](alang_phase5_resume.erl) — the fail-closed
+  preflight, recovered-generation checkpoint publication, and supervised
+  startup coordinator.
+- [`alang_phase5_recovery_tests.erl`](alang_phase5_recovery_tests.erl) — valid
+  reconstruction, fresh process/timer evidence, generation fencing, duplicate
+  decisions, suffix folding, and invalid-input quarantine tests.
+- [Supervised resume protocol](resume-protocol.md) — recovery ordering, fresh
+  supervision semantics, runtime generations, and late-message rules.
 
 ## Maintaining this index
 

@@ -19,7 +19,7 @@ durable workflow system. It defines explicit checkpoints, intent and result
 records, idempotent effect recovery, local grant restoration, and a supervised
 resume protocol for compiled A-Lang sessions.
 
-**Status:** In progress — Sections 5.1–5.2 complete.
+**Status:** In progress — Sections 5.1–5.3 complete.
 
 **Dependencies:** Phase 4 complete with A-Lang code running as supervised BEAM
 processes, a closed effect registry, opaque local capability references, a
@@ -142,7 +142,10 @@ instead of unbounded BEAM mailbox growth.
 **Description:** Reconstruct a fresh BEAM supervision subtree from durable
 state and replay only the semantic decisions needed to resume safely.
 
-- [ ] **Section 5.3 Complete**
+- [x] **Section 5.3 Complete** — implemented by the
+  [supervised resume protocol](../../src/phase-05/resume-protocol.md),
+  [recovery validator](../../src/phase-05/alang_phase5_recovery.erl), and
+  [fresh session supervisor](../../src/phase-05/alang_phase5_session_sup.erl).
 
 ### Task 5.3.1: Implement Deterministic Recovery
 
@@ -150,7 +153,7 @@ state and replay only the semantic decisions needed to resume safely.
 journal, restore the latest checkpoint, fold subsequent records, and derive a
 single resumable state or classified failure.
 
-- [ ] **Task 5.3.1 Complete**
+- [x] **Task 5.3.1 Complete**
 
 #### Subtask 5.3.1.1: Rebuild BEAM Runtime State
 
@@ -158,7 +161,7 @@ single resumable state or classified failure.
 processes and recreate monitors, timers, and bounded queues from semantic state
 rather than serialized runtime terms.
 
-- [ ] **Subtask 5.3.1.1 Complete**
+- [x] **Subtask 5.3.1.1 Complete**
 
 #### Subtask 5.3.1.2: Quarantine Invalid Recovery Inputs
 
@@ -166,21 +169,21 @@ rather than serialized runtime terms.
 ABIs, unknown schemas, impossible transitions, and conflicting terminal states
 without executing an external effect.
 
-- [ ] **Subtask 5.3.1.2 Complete**
+- [x] **Subtask 5.3.1.2 Complete**
 
 ### Task 5.3.2: Handle Late and Duplicate Messages
 
 **Description:** Make the resumed session recognize messages produced by old
 process generations and decide whether to accept, deduplicate, or reject them.
 
-- [ ] **Task 5.3.2 Complete**
+- [x] **Task 5.3.2 Complete**
 
 #### Subtask 5.3.2.1: Add Runtime Generation Fencing
 
 **Description:** Include a trusted generation and correlation identity in
 runtime envelopes so stale replies cannot advance a newly restored session.
 
-- [ ] **Subtask 5.3.2.1 Complete**
+- [x] **Subtask 5.3.2.1 Complete**
 
 #### Subtask 5.3.2.2: Record Duplicate Decisions
 
@@ -188,7 +191,7 @@ runtime envelopes so stale replies cannot advance a newly restored session.
 ignore harmless duplicate signals, and audit conflicts where the same identity
 arrives with different content.
 
-- [ ] **Subtask 5.3.2.2 Complete**
+- [x] **Subtask 5.3.2.2 Complete**
 
 ## Section 5.4: Effect and Capability Recovery
 
