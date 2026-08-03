@@ -66,9 +66,15 @@ workspace read-only even if a host process races the semantic checks.
 The sidecar caches a digest of each successful request under its bounded
 operation identifier. Repeating the same identifier and payload returns the
 same artifact digest with `replayed`; reusing an identifier for a different
-payload returns `operation_conflict`. This cache is intentionally in memory:
-Phase 4 claims idempotence within one sidecar lifetime, not crash-safe
-durability.
+payload returns `operation_conflict`.
+
+Phase 5 extends this boundary with a reserved `.alang-operations` directory.
+The sidecar syncs an intent receipt before mutation and a completion receipt
+after the target rename, and supports sealed lookup by operation, path,
+payload, and artifact digest. This closes the sidecar-lifetime gap while
+preserving the Phase 4 request and result ABI. Generated A-Lang paths cannot
+address the receipt directory. See
+[effect and capability recovery](../phase-05/effect-and-capability-recovery.md).
 
 A timeout, malformed response, or sidecar exit has an unknown external
 outcome. The manager kills and replaces the sidecar, reports that uncertainty,
@@ -84,6 +90,6 @@ timeout, replacement, output digest, and redaction behavior. The broader
 requires the next section to prove that loaded generated BEAM code reaches
 this boundary only through the broker.
 
-The proof of concept does not claim durable operation records, crash recovery,
-or hostile multi-user workspace coordination. Those claims belong to Phase 5
-and later validation.
+Phase 4's original gate does not itself claim crash recovery. Durable operation
+records and reconciliation are Phase 5 claims; hostile multi-user workspace
+coordination remains outside the proof of concept.

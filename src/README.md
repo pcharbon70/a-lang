@@ -62,6 +62,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 4 local capability broker and effect boundary](phase-04/README.md) —
   the closed effect registry, opaque local authority, supervised reference
   monitor, and isolated workspace-effect boundary.
+- [Phase 5 durable BEAM sessions and recovery](phase-05/README.md) — the
+  versioned semantic state, integrity journal, supervised resume protocol,
+  authority restoration, and crash-recovery evidence.
 
 ### Files
 

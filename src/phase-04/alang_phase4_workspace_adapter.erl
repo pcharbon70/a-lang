@@ -8,6 +8,7 @@
     dispatch/4,
     events/1,
     inject_test_fault/3,
+    lookup/4,
     start/3,
     status/1,
     stop/2
@@ -22,6 +23,10 @@ start(Broker, Config, Seal) -> gen_server:start(?MODULE, {Broker, Config, Seal},
 -spec dispatch(pid(), reference(), map(), integer()) -> {ok, map()} | {error, term()}.
 dispatch(Adapter, Seal, Decoded, Deadline) ->
     gen_server:call(Adapter, {dispatch, Seal, Decoded, Deadline}, ?CALL_TIMEOUT).
+
+-spec lookup(pid(), reference(), map(), integer()) -> {ok, map()} | {error, term()}.
+lookup(Adapter, Seal, Query, Deadline) ->
+    gen_server:call(Adapter, {lookup, Seal, Query, Deadline}, ?CALL_TIMEOUT).
 
 -spec inject_test_fault(pid(), reference(), atom()) -> ok | {error, atom()}.
 inject_test_fault(Adapter, Seal, Fault) ->
@@ -66,9 +71,15 @@ handle_call({dispatch, Seal, Decoded, Deadline}, From, State) ->
         false -> {reply, {error, adapter_bypass_denied}, State};
         true -> dispatch_authorized(Decoded, Deadline, From, State)
     end;
+handle_call({lookup, Seal, Query, Deadline}, From, State) ->
+    case authorized(Seal, From, State) of
+        false -> {reply, {error, adapter_bypass_denied}, State};
+        true -> lookup_authorized(Query, Deadline, From, State)
+    end;
 handle_call({inject_test_fault, Seal, Fault}, From, State) ->
     case authorized(Seal, From, State) andalso maps:get(test_faults, maps:get(config, State)) of
-        true when Fault =:= hang; Fault =:= malformed; Fault =:= crash ->
+        true when Fault =:= hang; Fault =:= malformed; Fault =:= crash;
+            Fault =:= crash_after_mutation ->
             {reply, ok, State#{fault := Fault}};
         true -> {reply, {error, invalid_test_fault}, State};
         false -> {reply, {error, adapter_bypass_denied}, State}
@@ -126,26 +137,43 @@ dispatch_authorized(Decoded, Deadline, From, State) ->
     Config = maps:get(config, State),
     case build_request(Decoded, Deadline, Now, Config) of
         {ok, Request, OperationId, Timeout} ->
-            start_dispatch(Request, OperationId, Timeout, From, State);
+            start_dispatch(dispatch, Request, OperationId, Timeout, From, State);
         {error, _} = Error -> {reply, Error, State}
     end.
 
-start_dispatch(Request, OperationId, Timeout, From, State) ->
+lookup_authorized(_Query, _Deadline, _From, #{pending := Pending} = State) when
+    Pending =/= undefined
+-> {reply, {error, adapter_overloaded}, State};
+lookup_authorized(Query, Deadline, From, State) ->
+    Now = erlang:monotonic_time(millisecond),
+    Config = maps:get(config, State),
+    case build_lookup_request(Query, Deadline, Now, Config) of
+        {ok, Request, OperationId, Timeout} ->
+            start_dispatch(lookup, Request, OperationId, Timeout, From, State);
+        {error, _} = Error -> {reply, Error, State}
+    end.
+
+start_dispatch(Kind, Request, OperationId, Timeout, From, State) ->
     case ensure_port(State) of
         {ok, Ready} ->
             Ticket = make_ref(),
             Timer = erlang:send_after(Timeout, self(), {adapter_timeout, Ticket}),
             Pending = #{
+                kind => Kind,
                 ticket => Ticket,
                 from => From,
                 timer => Timer,
                 operation_id => OperationId,
                 operation_hash => redacted(OperationId)
             },
-            Started = record_event(request, OperationId, undefined, Ready#{pending := Pending}),
+            Started = record_event(request_event_kind(Kind), OperationId, undefined,
+                Ready#{pending := Pending}),
             execute_fault_or_send(Request, Started);
         {error, Reason, Failed} -> {reply, {error, {adapter_unavailable, Reason}}, Failed}
     end.
+
+request_event_kind(dispatch) -> request;
+request_event_kind(lookup) -> lookup.
 
 execute_fault_or_send(Request, #{fault := Fault, port := Port} = State) ->
     case Fault of
@@ -163,8 +191,23 @@ execute_fault_or_send(Request, #{fault := Fault, port := Port} = State) ->
             {noreply, State#{fault := none}};
         crash ->
             close_port(Port),
-            {noreply, State#{fault := none}}
+            {noreply, State#{fault := none}};
+        crash_after_mutation ->
+            CrashRequest = crash_after_mutation_request(Request),
+            Encoded = term_to_binary(CrashRequest, [deterministic]),
+            try erlang:port_command(Port, Encoded) of
+                true -> {noreply, State#{fault := none}};
+                false -> finish_unknown({adapter_write_failed, outcome_unknown}, State#{fault := none})
+            catch
+                error:badarg -> finish_unknown({adapter_exit, outcome_unknown}, State#{fault := none})
+            end
     end.
+
+crash_after_mutation_request(
+    {alang_workspace_request_v1, WorkspaceId, Segments, Content, OperationId, Timeout}
+) -> {alang_workspace_request_v2, WorkspaceId, Segments, Content, OperationId, Timeout,
+    crash_after_mutation};
+crash_after_mutation_request(Request) -> Request.
 
 handle_response(_Binary, #{pending := undefined} = State) -> restart(protocol_desynchronization, State);
 handle_response(Binary, State) ->
@@ -183,7 +226,7 @@ decode_response(Binary, State) ->
 
 validate_response(
     {alang_workspace_result_v1, ok, OperationId, Digest, Bytes, Disposition},
-    #{pending := #{operation_id := OperationId}} = State
+    #{pending := #{kind := dispatch, operation_id := OperationId}} = State
 ) when
     is_binary(Digest), byte_size(Digest) =:= 64,
     is_integer(Bytes), Bytes >= 0, Bytes =< 65536,
@@ -206,6 +249,21 @@ validate_response(
         true -> finish_error(Reason, State);
         false -> finish_and_restart({adapter_protocol_error, outcome_unknown}, invalid_reason, State)
     end;
+validate_response(
+    {alang_workspace_lookup_result_v1, OperationId, Status, PayloadDigest, ArtifactDigest, Bytes},
+    #{pending := #{kind := lookup, operation_id := OperationId}} = State
+) ->
+    case valid_lookup_response(Status, PayloadDigest, ArtifactDigest, Bytes) of
+        true -> finish_success(#{
+            operation_id => OperationId,
+            status => Status,
+            payload_digest => PayloadDigest,
+            artifact_digest => ArtifactDigest,
+            bytes => Bytes
+        }, State);
+        false -> finish_and_restart({adapter_protocol_error, outcome_unknown},
+            invalid_lookup_response, State)
+    end;
 validate_response(_Response, State) ->
     finish_and_restart({adapter_protocol_error, outcome_unknown}, response_mismatch, State).
 
@@ -213,7 +271,8 @@ finish_success(Result, State) ->
     Pending = maps:get(pending, State),
     cancel_pending_timer(Pending),
     gen_server:reply(maps:get(from, Pending), {ok, Result}),
-    record_event(success, maps:get(operation_id, Pending), maps:get(disposition, Result),
+    Detail = maps:get(disposition, Result, maps:get(status, Result, internal_failure)),
+    record_event(success, maps:get(operation_id, Pending), Detail,
         State#{pending := undefined}).
 
 finish_error(Reason, State) ->
@@ -314,6 +373,43 @@ build_request(#{operation_tag := workspace_write, adapter := workspace_adapter,
     end;
 build_request(_Decoded, _Deadline, _Now, _Config) -> {error, invalid_adapter_request}.
 
+build_lookup_request(Query, Deadline, Now, Config) when is_map(Query), is_integer(Deadline) ->
+    case validate_lookup_query(Query, Config) of
+        ok ->
+            Limits = maps:get(limits, Config),
+            Remaining = min(Deadline - Now, maps:get(request_timeout_ms, Limits)),
+            case Remaining > 0 of
+                true ->
+                    OperationId = maps:get(operation_id, Query),
+                    Request = {alang_workspace_lookup_v1,
+                        maps:get(workspace_id, Query),
+                        maps:get(path_segments, Query),
+                        OperationId,
+                        maps:get(payload_digest, Query),
+                        maps:get(artifact_digest, Query),
+                        Remaining},
+                    case erlang:external_size(Request) =< maps:get(max_request_bytes, Limits) of
+                        true -> {ok, Request, OperationId, Remaining};
+                        false -> {error, adapter_request_too_large}
+                    end;
+                false -> {error, adapter_deadline_exceeded}
+            end;
+        {error, _} = Error -> Error
+    end;
+build_lookup_request(_Query, _Deadline, _Now, _Config) -> {error, invalid_adapter_request}.
+
+validate_lookup_query(#{workspace_id := WorkspaceId, path_segments := Segments,
+    operation_id := OperationId, payload_digest := PayloadDigest,
+    artifact_digest := ArtifactDigest} = Query, Config) when map_size(Query) =:= 5 ->
+    case WorkspaceId =:= maps:get(workspace_id, Config) andalso
+        valid_segments(Segments) andalso valid_id(OperationId) andalso
+        valid_digest(PayloadDigest) andalso valid_digest(ArtifactDigest)
+    of
+        true -> ok;
+        false -> {error, invalid_adapter_request}
+    end;
+validate_lookup_query(_Query, _Config) -> {error, invalid_adapter_request}.
+
 validate_arguments(#{workspace_id := WorkspaceId, path_segments := Segments,
     content := Content, operation_id := OperationId} = Arguments, Config) when map_size(Arguments) =:= 4 ->
     Limits = maps:get(limits, Config),
@@ -367,7 +463,8 @@ launch_port(Config) ->
                 Root,
                 integer_to_list(maps:get(max_content_bytes, Limits)),
                 integer_to_list(maps:get(max_response_bytes, Limits)),
-                integer_to_list(maps:get(max_cache_entries, Limits))
+                integer_to_list(maps:get(max_cache_entries, Limits)),
+                atom_to_list(maps:get(test_faults, Config))
             ],
             try open_port({spawn_executable, Prlimit}, [
                 binary,
@@ -463,6 +560,7 @@ valid_directory(_) -> false.
 authorized(Seal, {Caller, _Tag}, State) ->
     Seal =:= maps:get(seal, State) andalso Caller =:= maps:get(broker, State).
 
+valid_segments([<<".alang-operations">> | _Rest]) -> false;
 valid_segments(Segments) when is_list(Segments), Segments =/= [], length(Segments) =< 32 ->
     lists:all(fun valid_segment/1, Segments);
 valid_segments(_) -> false.
@@ -474,6 +572,9 @@ valid_segment(Segment) ->
         binary:match(Segment, <<0>>) =:= nomatch.
 
 valid_id(Value) -> is_binary(Value) andalso byte_size(Value) > 0 andalso byte_size(Value) =< 128.
+
+valid_digest(Value) when is_binary(Value), byte_size(Value) =:= 64 -> valid_hex(Value);
+valid_digest(_) -> false.
 
 valid_hex(Digest) -> lists:all(fun is_hex/1, binary_to_list(Digest)).
 
@@ -488,7 +589,13 @@ valid_sidecar_reason(content_too_large) -> true;
 valid_sidecar_reason(invalid_operation_id) -> true;
 valid_sidecar_reason(deadline_exceeded) -> true;
 valid_sidecar_reason(operation_conflict) -> true;
+valid_sidecar_reason(outcome_unknown) -> true;
 valid_sidecar_reason(idempotency_cache_full) -> true;
+valid_sidecar_reason(invalid_payload_digest) -> true;
+valid_sidecar_reason(invalid_artifact_digest) -> true;
+valid_sidecar_reason(invalid_receipt_directory) -> true;
+valid_sidecar_reason(receipt_corrupt) -> true;
+valid_sidecar_reason(receipt_unavailable) -> true;
 valid_sidecar_reason(symlink_escape) -> true;
 valid_sidecar_reason(invalid_workspace_root) -> true;
 valid_sidecar_reason(special_file) -> true;
@@ -499,6 +606,11 @@ valid_sidecar_reason(write_failed) -> true;
 valid_sidecar_reason(protocol_error) -> true;
 valid_sidecar_reason(request_too_large) -> true;
 valid_sidecar_reason(_) -> false.
+
+valid_lookup_response(Status, PayloadDigest, ArtifactDigest, Bytes) ->
+    lists:member(Status, [completed, not_submitted, outcome_unknown, conflict]) andalso
+        valid_digest(PayloadDigest) andalso valid_digest(ArtifactDigest) andalso
+        ((is_integer(Bytes) andalso Bytes >= 0 andalso Bytes =< 65536) orelse Bytes =:= undefined).
 
 ready_frame(Binary) ->
     try binary_to_term(Binary, [safe]) of

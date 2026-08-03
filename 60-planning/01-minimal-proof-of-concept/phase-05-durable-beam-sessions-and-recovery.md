@@ -19,7 +19,7 @@ durable workflow system. It defines explicit checkpoints, intent and result
 records, idempotent effect recovery, local grant restoration, and a supervised
 resume protocol for compiled A-Lang sessions.
 
-**Status:** Planned.
+**Status:** Complete — all five sections and the phase evidence gate pass.
 
 **Dependencies:** Phase 4 complete with A-Lang code running as supervised BEAM
 processes, a closed effect registry, opaque local capability references, a
@@ -30,7 +30,10 @@ fail-closed broker, and one bounded idempotent workspace adapter.
 **Description:** Define exactly which A-Lang state is authoritative across
 restart and which BEAM process state is only a disposable live cache.
 
-- [ ] **Section 5.1 Complete**
+- [x] **Section 5.1 Complete** — implemented by the
+  [durable state contract](../../src/phase-05/durable-state-contract.md),
+  [`alang_phase5_state`](../../src/phase-05/alang_phase5_state.erl), and its
+  [Section 5.1 tests](../../src/phase-05/alang_phase5_state_tests.erl).
 
 ### Task 5.1.1: Version the Persisted Session State
 
@@ -38,7 +41,7 @@ restart and which BEAM process state is only a disposable live cache.
 schema version, logical state, accepted observations, budgets, deadlines,
 pending work, and terminal status.
 
-- [ ] **Task 5.1.1 Complete**
+- [x] **Task 5.1.1 Complete**
 
 #### Subtask 5.1.1.1: Separate Durable and Ephemeral Fields
 
@@ -46,14 +49,14 @@ pending work, and terminal status.
 ports, monitors, timers, mailbox positions, opaque runtime references, and
 other node-local terms.
 
-- [ ] **Subtask 5.1.1.1 Complete**
+- [x] **Subtask 5.1.1.1 Complete**
 
 #### Subtask 5.1.1.2: Define State Migration Failure
 
 **Description:** Reject unknown program or state-schema versions with a typed
 operator-visible result rather than coercing or partially loading old state.
 
-- [ ] **Subtask 5.1.1.2 Complete**
+- [x] **Subtask 5.1.1.2 Complete**
 
 ### Task 5.1.2: Define Checkpoint Boundaries
 
@@ -61,28 +64,31 @@ operator-visible result rather than coercing or partially loading old state.
 commit state before accepting new work, issuing an effect, or reporting
 completion.
 
-- [ ] **Task 5.1.2 Complete**
+- [x] **Task 5.1.2 Complete**
 
 #### Subtask 5.1.2.1: Specify Pre-Effect and Post-Effect Gates
 
 **Description:** Require a durable intent before dispatch and a durable result
 before advancing logical state or exposing the effect as complete.
 
-- [ ] **Subtask 5.1.2.1 Complete**
+- [x] **Subtask 5.1.2.1 Complete**
 
 #### Subtask 5.1.2.2: Specify Terminal Completion Gates
 
 **Description:** Require final state, evidence digests, remaining budgets, and
 no unresolved effect intents before a session becomes durably complete.
 
-- [ ] **Subtask 5.1.2.2 Complete**
+- [x] **Subtask 5.1.2.2 Complete**
 
 ## Section 5.2: Intent and Result Journal
 
 **Description:** Implement an append-oriented record of semantic transitions
 and external effect attempts with replay-safe identities and integrity checks.
 
-- [ ] **Section 5.2 Complete**
+- [x] **Section 5.2 Complete** — implemented by the
+  [journal and storage contract](../../src/phase-05/journal-and-storage-contract.md),
+  [canonical journal](../../src/phase-05/alang_phase5_journal.erl), and
+  [bounded store adapter](../../src/phase-05/alang_phase5_store.erl).
 
 ### Task 5.2.1: Define Journal Records
 
@@ -90,7 +96,7 @@ and external effect attempts with replay-safe identities and integrity checks.
 transition, effect intent, authorization decision, submission, result,
 checkpoint, cancellation, failure, and completion.
 
-- [ ] **Task 5.2.1 Complete**
+- [x] **Task 5.2.1 Complete**
 
 #### Subtask 5.2.1.1: Assign Stable Correlation Identities
 
@@ -98,7 +104,7 @@ checkpoint, cancellation, failure, and completion.
 trusted runtime state so retries and late replies can be recognized without
 using PIDs or model-generated values.
 
-- [ ] **Subtask 5.2.1.1 Complete**
+- [x] **Subtask 5.2.1.1 Complete**
 
 #### Subtask 5.2.1.2: Protect Ordering and Integrity
 
@@ -106,14 +112,14 @@ using PIDs or model-generated values.
 with stated semantics, and canonical encodings, and reject gaps, conflicts,
 and malformed records during replay.
 
-- [ ] **Subtask 5.2.1.2 Complete**
+- [x] **Subtask 5.2.1.2 Complete**
 
 ### Task 5.2.2: Implement the Storage Boundary
 
 **Description:** Put journal and checkpoint I/O behind a bounded adapter whose
 acknowledgements state exactly what has become durable.
 
-- [ ] **Task 5.2.2 Complete**
+- [x] **Task 5.2.2 Complete**
 
 #### Subtask 5.2.2.1: Define Commit and Read Semantics
 
@@ -121,7 +127,7 @@ acknowledgements state exactly what has become durable.
 acknowledgement, checkpoint publication, read-after-commit behavior, and
 classified storage failures.
 
-- [ ] **Subtask 5.2.2.1 Complete**
+- [x] **Subtask 5.2.2.1 Complete**
 
 #### Subtask 5.2.2.2: Bound Storage Load and Failure
 
@@ -129,14 +135,17 @@ classified storage failures.
 retries, and timeouts, and propagate store unavailability as backpressure
 instead of unbounded BEAM mailbox growth.
 
-- [ ] **Subtask 5.2.2.2 Complete**
+- [x] **Subtask 5.2.2.2 Complete**
 
 ## Section 5.3: Supervised Resume Protocol
 
 **Description:** Reconstruct a fresh BEAM supervision subtree from durable
 state and replay only the semantic decisions needed to resume safely.
 
-- [ ] **Section 5.3 Complete**
+- [x] **Section 5.3 Complete** — implemented by the
+  [supervised resume protocol](../../src/phase-05/resume-protocol.md),
+  [recovery validator](../../src/phase-05/alang_phase5_recovery.erl), and
+  [fresh session supervisor](../../src/phase-05/alang_phase5_session_sup.erl).
 
 ### Task 5.3.1: Implement Deterministic Recovery
 
@@ -144,7 +153,7 @@ state and replay only the semantic decisions needed to resume safely.
 journal, restore the latest checkpoint, fold subsequent records, and derive a
 single resumable state or classified failure.
 
-- [ ] **Task 5.3.1 Complete**
+- [x] **Task 5.3.1 Complete**
 
 #### Subtask 5.3.1.1: Rebuild BEAM Runtime State
 
@@ -152,7 +161,7 @@ single resumable state or classified failure.
 processes and recreate monitors, timers, and bounded queues from semantic state
 rather than serialized runtime terms.
 
-- [ ] **Subtask 5.3.1.1 Complete**
+- [x] **Subtask 5.3.1.1 Complete**
 
 #### Subtask 5.3.1.2: Quarantine Invalid Recovery Inputs
 
@@ -160,21 +169,21 @@ rather than serialized runtime terms.
 ABIs, unknown schemas, impossible transitions, and conflicting terminal states
 without executing an external effect.
 
-- [ ] **Subtask 5.3.1.2 Complete**
+- [x] **Subtask 5.3.1.2 Complete**
 
 ### Task 5.3.2: Handle Late and Duplicate Messages
 
 **Description:** Make the resumed session recognize messages produced by old
 process generations and decide whether to accept, deduplicate, or reject them.
 
-- [ ] **Task 5.3.2 Complete**
+- [x] **Task 5.3.2 Complete**
 
 #### Subtask 5.3.2.1: Add Runtime Generation Fencing
 
 **Description:** Include a trusted generation and correlation identity in
 runtime envelopes so stale replies cannot advance a newly restored session.
 
-- [ ] **Subtask 5.3.2.1 Complete**
+- [x] **Subtask 5.3.2.1 Complete**
 
 #### Subtask 5.3.2.2: Record Duplicate Decisions
 
@@ -182,14 +191,17 @@ runtime envelopes so stale replies cannot advance a newly restored session.
 ignore harmless duplicate signals, and audit conflicts where the same identity
 arrives with different content.
 
-- [ ] **Subtask 5.3.2.2 Complete**
+- [x] **Subtask 5.3.2.2 Complete**
 
 ## Section 5.4: Effect and Capability Recovery
 
 **Description:** Restore local least authority and resolve uncertain external
 effect outcomes without converting retries into duplicate mutations.
 
-- [ ] **Section 5.4 Complete**
+- [x] **Section 5.4 Complete** — implemented by
+  [effect and capability recovery](../../src/phase-05/effect-and-capability-recovery.md),
+  [fresh local authority restoration](../../src/phase-05/alang_phase5_authority.erl),
+  and [pending-effect reconciliation](../../src/phase-05/alang_phase5_effect_recovery.erl).
 
 ### Task 5.4.1: Reissue Local Grants from Durable Policy
 
@@ -197,7 +209,7 @@ effect outcomes without converting retries into duplicate mutations.
 budgets, deadlines, ownership, and revocation records instead of serializing or
 reusing old references.
 
-- [ ] **Task 5.4.1 Complete**
+- [x] **Task 5.4.1 Complete**
 
 #### Subtask 5.4.1.1: Preserve or Reduce Authority
 
@@ -205,14 +217,14 @@ reusing old references.
 durably accepted authority and cannot regain spent budget, expired time, or
 revoked scope.
 
-- [ ] **Subtask 5.4.1.1 Complete**
+- [x] **Subtask 5.4.1.1 Complete**
 
 #### Subtask 5.4.1.2: Bind Grants to the New Generation
 
 **Description:** Issue fresh references for the restored runtime generation
 and reject every reference retained by a crashed process or stale message.
 
-- [ ] **Subtask 5.4.1.2 Complete**
+- [x] **Subtask 5.4.1.2 Complete**
 
 ### Task 5.4.2: Reconcile Pending Effects
 
@@ -220,7 +232,7 @@ and reject every reference retained by a crashed process or stale message.
 not submitted, submitted with known adapter identity, or outcome unknown, then
 apply the operation-specific recovery rule.
 
-- [ ] **Task 5.4.2 Complete**
+- [x] **Task 5.4.2 Complete**
 
 #### Subtask 5.4.2.1: Query Idempotent Adapter State
 
@@ -228,7 +240,7 @@ apply the operation-specific recovery rule.
 verify payload and artifact digests, and record the existing result instead of
 writing twice when completion already occurred.
 
-- [ ] **Subtask 5.4.2.1 Complete**
+- [x] **Subtask 5.4.2.1 Complete**
 
 #### Subtask 5.4.2.2: Fail Closed on Irreconcilable Outcomes
 
@@ -236,7 +248,7 @@ writing twice when completion already occurred.
 external outcome cannot be proven, rather than guessing, retrying a
 non-idempotent action, or reporting completion.
 
-- [ ] **Subtask 5.4.2.2 Complete**
+- [x] **Subtask 5.4.2.2 Complete**
 
 ## Section 5.5: Crash-Recovery Integration Test
 
@@ -244,7 +256,10 @@ non-idempotent action, or reporting completion.
 processes, adapters, the node, and the storage connection at every durable
 transition.
 
-- [ ] **Section 5.5 Complete**
+- [x] **Section 5.5 Complete** — implemented by the
+  [durable workflow](../../src/phase-05/alang_phase5_workflow.erl),
+  [failure matrix](../../src/phase-05/alang_phase5_failure_matrix.erl), and
+  [crash-recovery integration evidence](../../src/phase-05/phase-05-integration-evidence.md).
 
 ### Task 5.5.1: Exercise the Recovery Matrix
 
@@ -252,7 +267,7 @@ transition.
 adapter submission, external mutation, result commit, checkpoint, and terminal
 completion.
 
-- [ ] **Task 5.5.1 Complete**
+- [x] **Task 5.5.1 Complete**
 
 #### Subtask 5.5.1.1: Recover Process and Node Failures
 
@@ -260,7 +275,7 @@ completion.
 and assert that a fresh supervision tree resumes from the same durable semantic
 state.
 
-- [ ] **Subtask 5.5.1.1 Complete**
+- [x] **Subtask 5.5.1.1 Complete**
 
 #### Subtask 5.5.1.2: Recover Adapter and Store Failures
 
@@ -268,7 +283,7 @@ state.
 partial availability, duplicate acknowledgements, and reconnection without
 unbounded retry or mailbox growth.
 
-- [ ] **Subtask 5.5.1.2 Complete**
+- [x] **Subtask 5.5.1.2 Complete**
 
 ### Task 5.5.2: Prove Recovery Safety Properties
 
@@ -276,7 +291,7 @@ unbounded retry or mailbox growth.
 no duplicate logical workspace effect, no acceptance of stale messages, and no
 false completion across the full failure matrix.
 
-- [ ] **Task 5.5.2 Complete**
+- [x] **Task 5.5.2 Complete**
 
 #### Subtask 5.5.2.1: Compare Artifacts and Journals
 
@@ -284,25 +299,25 @@ false completion across the full failure matrix.
 operation identity, a valid journal chain, a valid final checkpoint, and no
 unresolved effect intent after successful recovery.
 
-- [ ] **Subtask 5.5.2.1 Complete**
+- [x] **Subtask 5.5.2.1 Complete**
 
 #### Subtask 5.5.2.2: Capture Minimal Counterexamples
 
 **Description:** Reduce any failing injection sequence to the shortest process,
 node, adapter, or store event history that violates a recovery invariant.
 
-- [ ] **Subtask 5.5.2.2 Complete**
+- [x] **Subtask 5.5.2.2 Complete**
 
 ## Phase 5 Completion Evidence
 
 **Description:** Phase 5 is complete only when the repository contains
 reproducible evidence for all items below.
 
-- [ ] Durable and ephemeral state are explicitly separated and versioned
-- [ ] Journal, checkpoint, commit, and integrity semantics are documented and tested
-- [ ] Fresh BEAM supervision trees resume only from validated durable state
-- [ ] Runtime generations fence stale and duplicate messages
-- [ ] Recovered local grants preserve or reduce prior authority
-- [ ] Pending effects reconcile through stable operation identities
-- [ ] The crash matrix produces no duplicate logical effect or false completion
-- [ ] Irreconcilable outcomes pause with evidence instead of being guessed
+- [x] Durable and ephemeral state are explicitly separated and versioned
+- [x] Journal, checkpoint, commit, and integrity semantics are documented and tested
+- [x] Fresh BEAM supervision trees resume only from validated durable state
+- [x] Runtime generations fence stale and duplicate messages
+- [x] Recovered local grants preserve or reduce prior authority
+- [x] Pending effects reconcile through stable operation identities
+- [x] The crash matrix produces no duplicate logical effect or false completion
+- [x] Irreconcilable outcomes pause with evidence instead of being guessed
