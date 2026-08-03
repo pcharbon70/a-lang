@@ -64,6 +64,17 @@ the ignored repository `build/` directory.
 - [Deterministic task orchestration and context slicing](task-orchestration-and-context.md)
   — the runtime-owned control model, stop semantics, context rules, and
   instruction-authority boundary.
+- [`alang_phase6_repair.erl`](alang_phase6_repair.erl) — bounded diagnostic-only
+  repair classification, minimal repair requests, and digest-linked attempt
+  provenance.
+- [`alang_phase6_verifier.erl`](alang_phase6_verifier.erl) — independent
+  artifact, Markdown, section, and journal predicates plus deterministic
+  complete-or-incomplete witnesses.
+- [`alang_phase6_repair_verifier_tests.erl`](alang_phase6_repair_verifier_tests.erl)
+  — repair classification, provenance, budget, task-counter, artifact,
+  journal, traversal, and symlink acceptance evidence.
+- [Structured repair and completion verification](repair-and-completion-verification.md)
+  — the narrow retry boundary and conjunctive durable completion gate.
 
 ## Maintaining this index
 

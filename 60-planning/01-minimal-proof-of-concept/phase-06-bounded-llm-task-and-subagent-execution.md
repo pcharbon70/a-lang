@@ -19,7 +19,7 @@ completion evidence, slices model context, and adds one child task whose
 authority is mechanically attenuated without exposing a signing or delegation
 primitive. Parent and child both execute as supervised BEAM processes.
 
-**Status:** In progress — Sections 6.1–6.2 complete.
+**Status:** In progress — Sections 6.1–6.3 complete.
 
 **Dependencies:** Phase 5 complete with versioned durable state,
 intent-and-result journaling, generation fencing, subset-preserving local grant
@@ -149,7 +149,10 @@ undeclared instruction authority from model-visible context.
 model-produced fragment and require independent evidence before the task can
 report success.
 
-- [ ] **Section 6.3 Complete**
+- [x] **Section 6.3 Complete** — implemented by the
+  [repair runtime](../../src/phase-06/alang_phase6_repair.erl),
+  [completion verifier](../../src/phase-06/alang_phase6_verifier.erl), and
+  [repair and verification contract](../../src/phase-06/repair-and-completion-verification.md).
 
 ### Task 6.3.1: Implement Bounded Diagnostic Repair
 
@@ -157,7 +160,7 @@ report success.
 schema, the smallest failing fragment, and stable diagnostics under one
 explicit repair budget.
 
-- [ ] **Task 6.3.1 Complete**
+- [x] **Task 6.3.1 Complete**
 
 #### Subtask 6.3.1.1: Classify Repairable and Terminal Failures
 
@@ -165,7 +168,7 @@ explicit repair budget.
 retry after uncertain or consequential effects, and route policy, budget,
 authorization, and cancellation failures directly to typed termination.
 
-- [ ] **Subtask 6.3.1.1 Complete**
+- [x] **Subtask 6.3.1.1 Complete**
 
 #### Subtask 6.3.1.2: Preserve Repair Provenance
 
@@ -173,7 +176,7 @@ authorization, and cancellation failures directly to typed termination.
 call, diagnostic, attempt number, context digest, and resulting accepted or
 rejected fragment.
 
-- [ ] **Subtask 6.3.1.2 Complete**
+- [x] **Subtask 6.3.1.2 Complete**
 
 ### Task 6.3.2: Implement Completion Predicates and Witnesses
 
@@ -181,7 +184,7 @@ rejected fragment.
 artifact and trace evidence rather than treating normal termination or model
 assertion as completion.
 
-- [ ] **Task 6.3.2 Complete**
+- [x] **Task 6.3.2 Complete**
 
 #### Subtask 6.3.2.1: Verify the Published Artifact
 
@@ -189,7 +192,7 @@ assertion as completion.
 UTF-8 and Markdown constraints, nonempty required section, and binding to the
 journaled workspace result.
 
-- [ ] **Subtask 6.3.2.1 Complete**
+- [x] **Subtask 6.3.2.1 Complete**
 
 #### Subtask 6.3.2.2: Emit a Completion Witness
 
@@ -197,7 +200,7 @@ journaled workspace result.
 artifact or trace references, unresolved uncertainty, and final complete or
 incomplete status.
 
-- [ ] **Subtask 6.3.2.2 Complete**
+- [x] **Subtask 6.3.2.2 Complete**
 
 ## Section 6.4: Mechanically Attenuated Child Task
 

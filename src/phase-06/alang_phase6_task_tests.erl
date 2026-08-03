@@ -57,8 +57,11 @@ task_state_machine_requires_checkpoints_and_preserves_goal_test() ->
     {ok, WriteAck} = alang_phase6_task:checkpoint(State4),
     {ok, State5} = alang_phase6_task:transition(State4,
         {write_requested, <<"workspace-op-1">>, WriteAck}, Now + 6),
+    ?assertEqual({error, invalid_completion_witness}, alang_phase6_task:transition(State5,
+        {artifact_verified, digest(<<"model-claimed-witness">>)}, Now + 7)),
+    Witness = completion_witness(),
     {ok, State6} = alang_phase6_task:transition(State5,
-        {artifact_verified, digest(<<"witness">>)}, Now + 7),
+        {artifact_verified, Witness}, Now + 7),
     ?assertEqual(complete, maps:get(phase, State6)),
     ?assertEqual(Goal, maps:get(original_goal, State6)),
     ?assertEqual({error, task_terminal}, alang_phase6_task:transition(State6, cancel, Now + 8)).
@@ -133,3 +136,19 @@ digest(Term) ->
     << <<(hex_digit(Nibble))>> || <<Nibble:4>> <= Binary >>.
 hex_digit(Nibble) when Nibble < 10 -> $0 + Nibble;
 hex_digit(Nibble) -> $a + Nibble - 10.
+
+completion_witness() ->
+    Reference = digest(<<"evidence">>),
+    Names = [relative_path_safe, regular_file, digest_match, byte_bound, utf8,
+        markdown, required_section_nonempty, journal_binding],
+    Predicates = [#{name => Name, passed => true,
+        evidence => #{kind => artifact, reference => Reference}} || Name <- Names],
+    Base = #{
+        format => alang_completion_witness_v1,
+        status => complete,
+        artifact => #{relative_path => <<"reports/result.md">>, digest => Reference, bytes => 32},
+        journal_operation_id => <<"workspace-op-1">>,
+        predicates => Predicates,
+        unresolved_uncertainty => []
+    },
+    Base#{witness_digest => digest(Base)}.

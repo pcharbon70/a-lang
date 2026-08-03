@@ -120,13 +120,35 @@ apply_transition(#{phase := decode, pending := #{kind := model, digest := Digest
     {model_result, Status}, Now);
 apply_transition(#{phase := decode, pending := #{kind := model, digest := Digest}} = State,
     {model_result, #{format := alang_model_result_v1, status := Status,
-        request_digest := Digest}}, Now) ->
+        request_digest := Digest}}, Now) when
+    Status =:= content_policy_denial; Status =:= timeout; Status =:= provider_error;
+    Status =:= budget_exhausted; Status =:= outcome_unknown
+->
     terminate(State#{pending := none}, failed, Status, Now);
-apply_transition(#{phase := verify_draft} = State, {draft_verified, DraftDigest}, Now) ->
+apply_transition(#{phase := verify_draft, draft := Draft} = State,
+    {draft_verified, DraftDigest}, Now) when is_binary(Draft) ->
     case valid_digest(DraftDigest) of
         true -> advance(State#{evidence := append_evidence(State, DraftDigest)}, request_write,
             {draft_verified, DraftDigest}, Now);
         false -> {error, invalid_draft_evidence}
+    end;
+apply_transition(#{phase := verify_draft, draft := #{format := alang_model_result_v1,
+    status := Status}} = State, {repair_planned, RepairRequestDigest}, Now) when
+    Status =:= invalid_syntax; Status =:= schema_failure
+->
+    Counters = maps:get(counters, State),
+    case {valid_digest(RepairRequestDigest),
+        maps:get(repair_attempts, Counters) < maps:get(max_repair_attempts, maps:get(limits, State))}
+    of
+        {true, true} ->
+            Updated = State#{
+                counters := Counters#{repair_attempts := maps:get(repair_attempts, Counters) + 1},
+                pending := none,
+                draft := none
+            },
+            advance(Updated, request_model, {repair_planned, RepairRequestDigest}, Now);
+        {false, _} -> {error, invalid_repair_request_identity};
+        {_, false} -> incomplete(State, repair_bound_exhausted, Now)
     end;
 apply_transition(#{phase := request_write} = State,
     {write_requested, OperationId, Ack}, Now) ->
@@ -146,14 +168,22 @@ apply_transition(#{phase := request_write} = State,
             end
     end;
 apply_transition(#{phase := verify_artifact} = State,
-    {artifact_verified, WitnessDigest}, Now) ->
-    case valid_digest(WitnessDigest) of
-        true ->
+    {artifact_verified, #{status := complete, witness_digest := WitnessDigest} = Witness}, Now) ->
+    case alang_phase6_verifier:validate_witness(Witness) of
+        ok ->
             Evidence = append_evidence(State, WitnessDigest),
             advance(State#{pending := none, evidence := Evidence,
                 result := #{status => complete, witness_digest => WitnessDigest}},
                 complete, {artifact_verified, WitnessDigest}, Now);
-        false -> {error, invalid_completion_witness}
+        {error, _} -> {error, invalid_completion_witness}
+    end;
+apply_transition(#{phase := verify_artifact}, {artifact_verified, _Witness}, _Now) ->
+    {error, invalid_completion_witness};
+apply_transition(#{phase := verify_artifact} = State,
+    {artifact_incomplete, #{status := incomplete} = Witness}, Now) ->
+    case alang_phase6_verifier:validate_witness(Witness) of
+        ok -> incomplete(State, completion_predicate_failed, Now);
+        {error, _} -> {error, invalid_completion_witness}
     end;
 apply_transition(#{phase := Phase}, _Event, _Now) when
     Phase =:= complete; Phase =:= failed; Phase =:= cancelled; Phase =:= incomplete
