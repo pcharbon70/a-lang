@@ -51,6 +51,25 @@ ignored repository `build/` directory.
   validation and deterministic in-memory BEAM compilation bridge.
 - [`alang_phase3_backend_tests.erl`](alang_phase3_backend_tests.erl) — lowering,
   determinism, source-diagnostic, and forbidden-form evidence.
+- [`alang_phase3_abi.erl`](alang_phase3_abi.erl) — closed versioned envelopes,
+  bounded validation, effect correlation, stale-reply handling, and typed
+  denial results.
+- [`alang_phase3_trace.erl`](alang_phase3_trace.erl) — bounded per-session trace
+  collector with explicit overflow evidence.
+- [`alang_phase3_effect_gateway.erl`](alang_phase3_effect_gateway.erl) — bounded
+  effect admission, monitored execution, cancellation, and no-retry replies.
+- [`alang_phase3_task_worker.erl`](alang_phase3_task_worker.erl) — isolated
+  compiled-task execution, exception containment, deadlines, and result
+  envelopes.
+- [`alang_phase3_session_sup.erl`](alang_phase3_session_sup.erl) — one-session
+  supervisor owning the trace collector, effect gateway, and temporary task.
+- [`alang_phase3_launcher.erl`](alang_phase3_launcher.erl) — bounded session
+  admission, monitoring, cancellation, trace collection, and teardown.
+- [`alang_phase3_runtime_fixture.erl`](alang_phase3_runtime_fixture.erl) —
+  nondeployable pure, effect, and slow-task fixture used by runtime tests.
+- [`alang_phase3_runtime_tests.erl`](alang_phase3_runtime_tests.erl) — ABI,
+  atom-safety, supervision, overload, gateway-death, deadline, cancellation,
+  trace-bound, and no-retry evidence.
 - [Backend representation contract](backend-representation-contract.md) —
   value encodings, failure domains, evaluation order, and supported IR nodes.
 - [Erlang Abstract Format contract](abstract-format-contract.md) — supported

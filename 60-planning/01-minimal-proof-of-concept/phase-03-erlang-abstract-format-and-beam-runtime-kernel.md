@@ -19,7 +19,7 @@ ERTS execution into a complete minimal backend, closed versioned runtime ABI,
 and supervised task-process kernel without introducing an existing
 BEAM-language interpreter.
 
-**Status:** In progress — Sections 3.1 and 3.2 complete.
+**Status:** In progress — Sections 3.1 through 3.3 complete.
 
 **Dependencies:** Phase 2 complete with source-derived typed IR, normalized
 observations, test-only reference views, capability manifests, fail-closed
@@ -140,7 +140,7 @@ validation evidence.
 **Description:** Establish the only runtime protocol compiled programs may use
 for effects, replies, deadlines, cancellation, traces, and termination.
 
-- [ ] **Section 3.3 Complete**
+- [x] **Section 3.3 Complete** — evidence: [closed runtime ABI](../../src/phase-03/alang_phase3_abi.erl), [supervised session kernel](../../src/phase-03/alang_phase3_session_sup.erl), and [runtime protocol and lifecycle tests](../../src/phase-03/alang_phase3_runtime_tests.erl)
 
 ### Task 3.3.1: Implement the Closed Runtime Message Protocol
 
@@ -148,7 +148,7 @@ for effects, replies, deadlines, cancellation, traces, and termination.
 intent, effect result, denial, cancellation, deadline, trace, completion, and
 runtime failure.
 
-- [ ] **Task 3.3.1 Complete**
+- [x] **Task 3.3.1 Complete** — evidence: [closed envelope implementation](../../src/phase-03/alang_phase3_abi.erl)
 
 #### Subtask 3.3.1.1: Define Envelope and Correlation Semantics
 
@@ -156,7 +156,7 @@ runtime failure.
 correlation ID, monotonic deadline, typed payload tag, reply target, and source
 origin with explicit maximum sizes.
 
-- [ ] **Subtask 3.3.1.1 Complete**
+- [x] **Subtask 3.3.1.1 Complete** — evidence: [bounded envelope construction and validation](../../src/phase-03/alang_phase3_abi.erl)
 
 #### Subtask 3.3.1.2: Reject Malformed and Stale Messages
 
@@ -164,7 +164,7 @@ origin with explicit maximum sizes.
 and tags, drop or record late replies deterministically, and avoid dynamic atom
 creation from message contents.
 
-- [ ] **Subtask 3.3.1.2 Complete**
+- [x] **Subtask 3.3.1.2 Complete** — evidence: [malformed, stale, oversized, and atom-safety tests](../../src/phase-03/alang_phase3_runtime_tests.erl)
 
 ### Task 3.3.2: Implement the Minimal Supervised Task Lifecycle
 
@@ -172,7 +172,7 @@ creation from message contents.
 its admission, execution, waiting, cancellation, timeout, completion, and
 failure states.
 
-- [ ] **Task 3.3.2 Complete**
+- [x] **Task 3.3.2 Complete** — evidence: [runtime launcher](../../src/phase-03/alang_phase3_launcher.erl), [session supervisor](../../src/phase-03/alang_phase3_session_sup.erl), and [task worker](../../src/phase-03/alang_phase3_task_worker.erl)
 
 #### Subtask 3.3.2.1: Define Process Topology and Ownership
 
@@ -180,7 +180,7 @@ failure states.
 gateway, and trace collector responsibilities and make every process and
 monitor relationship explicit.
 
-- [ ] **Subtask 3.3.2.1 Complete**
+- [x] **Subtask 3.3.2.1 Complete** — evidence: [explicit supervised ownership topology](../../src/phase-03/alang_phase3_session_sup.erl)
 
 #### Subtask 3.3.2.2: Bound Mailboxes, Deadlines, and Cancellation
 
@@ -188,7 +188,7 @@ monitor relationship explicit.
 pressure, handle task and gateway death, propagate cancellation, and ensure
 timeouts do not convert an uncertain effect into an automatic retry.
 
-- [ ] **Subtask 3.3.2.2 Complete**
+- [x] **Subtask 3.3.2.2 Complete** — evidence: [bounded gateway](../../src/phase-03/alang_phase3_effect_gateway.erl), [bounded trace collector](../../src/phase-03/alang_phase3_trace.erl), and [overload, cancellation, gateway-death, deadline, and no-retry tests](../../src/phase-03/alang_phase3_runtime_tests.erl)
 
 ## Section 3.4: Artifact Inspection and Loading Boundary
 
