@@ -19,7 +19,8 @@ local broker, and durability layers against simpler baselines, applies the
 original falsification criteria, and records a promote, revise, narrow, or stop
 decision with an explicit deferred-work ledger.
 
-**Status:** Planned.
+**Status:** In progress — Section 8.1 complete with reproducible offline
+demonstration evidence.
 
 **Dependencies:** Phase 7 complete with law, differential, adversarial, fault,
 performance, leak, and seeded-defect evidence for the entire compiled
@@ -31,7 +32,8 @@ parent-child workflow accepted.
 inspectable from a clean checkout without network access, secrets, or hidden
 manual setup.
 
-- [ ] **Section 8.1 Complete**
+- [x] **Section 8.1 Complete** — reproduce with `make test-section-8-1`; see
+  the [demonstration package](../../src/phase-08/reproducible-demonstration-package.md).
 
 ### Task 8.1.1: Package the Deterministic Vertical Slice
 
@@ -40,7 +42,7 @@ runtime, checks the example, emits and inspects BEAM, launches ERTS, runs the
 mock-model workflow, writes the artifact, verifies completion, and exits with
 a stable status.
 
-- [ ] **Task 8.1.1 Complete**
+- [x] **Task 8.1.1 Complete**
 
 #### Subtask 8.1.1.1: Freeze Example Inputs and Expected Outputs
 
@@ -48,7 +50,8 @@ a stable status.
 local grant fixture, expected manifest, BEAM metadata, artifact digest,
 normalized trace, and completion witness.
 
-- [ ] **Subtask 8.1.1.1 Complete**
+- [x] **Subtask 8.1.1.1 Complete** — the [fixture index](../../src/phase-08/fixtures/README.md)
+  records all frozen inputs, observations, and digests.
 
 #### Subtask 8.1.1.2: Build the One-Command Runner
 
@@ -56,7 +59,8 @@ normalized trace, and completion witness.
 state, run every stage with bounded time, preserve evidence on failure, and
 clean only disposable outputs explicitly owned by the run.
 
-- [ ] **Subtask 8.1.1.2 Complete**
+- [x] **Subtask 8.1.1.2 Complete** — `make demo` runs the bounded workflow
+  and preserves its owned evidence bundle under `build/phase-08/demo/`.
 
 ### Task 8.1.2: Publish Inspection and Explanation Tools
 
@@ -64,7 +68,7 @@ clean only disposable outputs explicitly owned by the run.
 manifest, artifact provenance, runtime trace, broker decisions, journal,
 artifact result, and completion witness without reading internal databases.
 
-- [ ] **Task 8.1.2 Complete**
+- [x] **Task 8.1.2 Complete**
 
 #### Subtask 8.1.2.1: Produce Machine-Readable Evidence Bundles
 
@@ -73,7 +77,8 @@ that allow automated verification of the complete causal path while keeping
 opaque capability references, adapter credentials, and sensitive content
 excluded.
 
-- [ ] **Subtask 8.1.2.1 Complete**
+- [x] **Subtask 8.1.2.1 Complete** — the bundle inspector recomputes source,
+  IR, artifact, witness, and normalized-evidence digests and rejects tampering.
 
 #### Subtask 8.1.2.2: Produce Human-Readable Explanations
 
@@ -81,7 +86,8 @@ excluded.
 grant scope, typed effect request, broker decision, effect state, verifier
 result, and any uncertainty in A-Lang vocabulary.
 
-- [ ] **Subtask 8.1.2.2 Complete**
+- [x] **Subtask 8.1.2.2 Complete** — each bundle includes a generated
+  explanation of task, authority, effects, result, and residual uncertainty.
 
 ## Section 8.2: Controlled Baseline and Ablation Comparison
 

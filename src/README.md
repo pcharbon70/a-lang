@@ -71,6 +71,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 7 law, security, fault, and performance validation](phase-07/README.md)
   — the BEAM-native PropEr harness, explicit semantic observations, generated
   laws, adversarial cases, fault injection, and bounded measurements.
+- [Phase 8 demonstration and proof-of-concept decision](phase-08/README.md) —
+  the offline source-to-evidence package, matched ablations, architecture
+  decision, risk ledger, and final acceptance gate.
 
 ### Files
 
