@@ -19,8 +19,8 @@ local broker, and durability layers against simpler baselines, applies the
 original falsification criteria, and records a promote, revise, narrow, or stop
 decision with an explicit deferred-work ledger.
 
-**Status:** In progress — Section 8.1 complete with reproducible offline
-demonstration evidence.
+**Status:** In progress — Sections 8.1 and 8.2 complete with reproducible
+offline demonstration and matched-ablation evidence.
 
 **Dependencies:** Phase 7 complete with law, differential, adversarial, fault,
 performance, leak, and seeded-defect evidence for the entire compiled
@@ -95,7 +95,8 @@ result, and any uncertainty in A-Lang vocabulary.
 least-authority enforcement, recovery, or cost rather than attributing every
 benefit to the new language as a whole.
 
-- [ ] **Section 8.2 Complete**
+- [x] **Section 8.2 Complete** — reproduce with `make test-section-8-2`; see
+  the [controlled comparison](../../src/phase-08/controlled-baseline-and-ablation-comparison.md).
 
 ### Task 8.2.1: Define Semantically Matched Comparison Conditions
 
@@ -103,7 +104,7 @@ benefit to the new language as a whole.
 conditions that remove one architectural layer while preserving inputs,
 outputs, budgets, and success criteria as far as possible.
 
-- [ ] **Task 8.2.1 Complete**
+- [x] **Task 8.2.1 Complete**
 
 #### Subtask 8.2.1.1: Compare Execution Interpretations
 
@@ -111,7 +112,9 @@ outputs, budgets, and success criteria as far as possible.
 compare compiled BEAM execution with a minimal conventional typed runtime, and
 compare the law-declared IR with a conventional typed IR under matched effects.
 
-- [ ] **Subtask 8.2.1.1 Complete**
+- [x] **Subtask 8.2.1.1 Complete** — compiled BEAM, bounded oracle, and
+  conventional test-only evaluator observations agree for the frozen pure and
+  effectful tasks.
 
 #### Subtask 8.2.1.2: Compare Local Enforcement Paths
 
@@ -119,7 +122,9 @@ compare the law-declared IR with a conventional typed IR under matched effects.
 runtime-handler baseline while holding resource semantics, budgets, journal,
 adapter, verifier, and effect result constant.
 
-- [ ] **Subtask 8.2.1.2 Complete**
+- [x] **Subtask 8.2.1.2 Complete** — the same registry, sidecar, content,
+  journal projection, and verifier expose two broker denials and two
+  corresponding unauthorized direct-handler writes.
 
 ### Task 8.2.2: Measure the Accepted Evaluation Matrix
 
@@ -127,7 +132,7 @@ adapter, verifier, and effect result constant.
 effects, recovery, trace quality, latency, resource use, artifact size,
 implementation complexity, and reviewer effort for each condition.
 
-- [ ] **Task 8.2.2 Complete**
+- [x] **Task 8.2.2 Complete**
 
 #### Subtask 8.2.2.1: Run Correctness and Recovery Comparisons
 
@@ -135,7 +140,9 @@ implementation complexity, and reviewer effort for each condition.
 fixtures and report success, false completion, denial, duplicate effect,
 uncertain state, and diagnostic locality separately.
 
-- [ ] **Subtask 8.2.2.1 Complete**
+- [x] **Subtask 8.2.2.1 Complete** — the matrix incorporates 17 detected
+  seeded defects and 63 passing recovery cases while preserving reconciled and
+  explicitly uncertain outcomes.
 
 #### Subtask 8.2.2.2: Run Cost and Usability Comparisons
 
@@ -143,7 +150,9 @@ uncertain state, and diagnostic locality separately.
 latency; memory and storage; lines and components; authoring burden; and human
 ability to understand manifests, grants, denials, and traces.
 
-- [ ] **Subtask 8.2.2.2 Complete**
+- [x] **Subtask 8.2.2.2 Complete** — each run records latency distributions,
+  VM pressure, artifact sizes, and structural proxies; human authoring and
+  reviewer studies are explicitly `not_run`.
 
 ## Section 8.3: Falsification Review and Architecture Decision
 

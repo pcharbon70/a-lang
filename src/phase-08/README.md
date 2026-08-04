@@ -45,8 +45,15 @@ Generated bundles belong under ignored `build/phase-08/` paths.
   redaction, artifact, and explanation checks for a generated bundle.
 - [`alang_phase8_demo_tests.erl`](alang_phase8_demo_tests.erl) — deterministic
   rerun, expected-output, tamper, and inspection acceptance tests.
+- [`alang_phase8_comparison.erl`](alang_phase8_comparison.erl) — semantically
+  matched execution, authority, recovery, performance, and structural-cost
+  comparison runner.
+- [`alang_phase8_comparison_tests.erl`](alang_phase8_comparison_tests.erl) —
+  executable agreement, denial, recovery-evidence, and reporting gates.
 - [Reproducible demonstration package](reproducible-demonstration-package.md)
   — usage, contents, trust boundaries, reproducibility, and failure behavior.
+- [Controlled baseline and ablation comparison](controlled-baseline-and-ablation-comparison.md)
+  — conditions, controls, observations, cost boundaries, and limits.
 
 ## Maintaining this index
 
