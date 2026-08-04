@@ -19,7 +19,7 @@ completion evidence, slices model context, and adds one child task whose
 authority is mechanically attenuated without exposing a signing or delegation
 primitive. Parent and child both execute as supervised BEAM processes.
 
-**Status:** Planned.
+**Status:** Complete — all five sections and the phase evidence gate pass.
 
 **Dependencies:** Phase 5 complete with versioned durable state,
 intent-and-result journaling, generation fencing, subset-preserving local grant
@@ -30,7 +30,10 @@ restoration, idempotent effect recovery, and the crash matrix accepted.
 **Description:** Define one typed, bounded request and response protocol used
 by the deterministic fixture adapter and any optional live model provider.
 
-- [ ] **Section 6.1 Complete**
+- [x] **Section 6.1 Complete** — implemented by the
+  [provider-neutral model contract](../../src/phase-06/model-boundary-contract.md),
+  [closed model protocol](../../src/phase-06/alang_phase6_model_protocol.erl),
+  and [deterministic mock adapter](../../src/phase-06/alang_phase6_mock_model.erl).
 
 ### Task 6.1.1: Define Model Profiles and Structured Results
 
@@ -38,7 +41,7 @@ by the deterministic fixture adapter and any optional live model provider.
 input context, requested output schema, provenance, and typed result without
 allowing arbitrary provider fields into A-Lang semantics.
 
-- [ ] **Task 6.1.1 Complete**
+- [x] **Task 6.1.1 Complete**
 
 #### Subtask 6.1.1.1: Define the Bounded Completion Request
 
@@ -46,7 +49,7 @@ allowing arbitrary provider fields into A-Lang semantics.
 output schema, maximum input and output size, deadline, retry class, and
 redaction policy with deterministic canonical encoding.
 
-- [ ] **Subtask 6.1.1.1 Complete**
+- [x] **Subtask 6.1.1.1 Complete**
 
 #### Subtask 6.1.1.2: Define Typed Success and Failure Results
 
@@ -54,14 +57,14 @@ redaction policy with deterministic canonical encoding.
 failure, content-policy denial, timeout, provider error, budget exhaustion,
 and uncertain transport outcome with retained provider metadata.
 
-- [ ] **Subtask 6.1.1.2 Complete**
+- [x] **Subtask 6.1.1.2 Complete**
 
 ### Task 6.1.2: Implement Mock and Optional Live Provider Adapters
 
 **Description:** Make offline deterministic fixtures the acceptance path and
 place any live provider behind the identical isolated adapter contract.
 
-- [ ] **Task 6.1.2 Complete**
+- [x] **Task 6.1.2 Complete**
 
 #### Subtask 6.1.2.1: Complete the Deterministic Mock Provider
 
@@ -69,7 +72,7 @@ place any live provider behind the identical isolated adapter contract.
 usage and provenance, and cover valid, malformed, timeout, transient,
 permanent, and uncertain cases without network or secrets.
 
-- [ ] **Subtask 6.1.2.1 Complete**
+- [x] **Subtask 6.1.2.1 Complete**
 
 #### Subtask 6.1.2.2: Add a Feature-Gated Live Provider
 
@@ -77,7 +80,9 @@ permanent, and uncertain cases without network or secrets.
 enforce the model profile, redact traces, support no arbitrary URL or model
 selection, and exclude live nondeterminism from mandatory phase acceptance.
 
-- [ ] **Subtask 6.1.2.2 Complete**
+- [x] **Subtask 6.1.2.2 Complete** — the optional live integration is an
+  explicit `live_provider_disabled` feature gate; it is not part of mandatory
+  acceptance and no credentials or network path are present.
 
 ## Section 6.2: Deterministic Task Orchestration and Context Slicing
 
@@ -85,7 +90,10 @@ selection, and exclude live nondeterminism from mandatory phase acceptance.
 compiled runtime while giving the model only the smallest context needed for
 one declared judgment.
 
-- [ ] **Section 6.2 Complete**
+- [x] **Section 6.2 Complete** — implemented by the
+  [runtime task machine](../../src/phase-06/alang_phase6_task.erl),
+  [context slicer](../../src/phase-06/alang_phase6_context.erl), and
+  [orchestration contract](../../src/phase-06/task-orchestration-and-context.md).
 
 ### Task 6.2.1: Implement the Minimal Task State Machine
 
@@ -93,7 +101,7 @@ one declared judgment.
 request-write, verify-artifact, complete, fail, and cancel states as explicit
 compiled transitions.
 
-- [ ] **Task 6.2.1 Complete**
+- [x] **Task 6.2.1 Complete**
 
 #### Subtask 6.2.1.1: Bind State Transitions to Typed Results
 
@@ -101,7 +109,7 @@ compiled transitions.
 variant, reject unexpected replies, persist checkpoints before consequential
 effects, and preserve the original goal independently from the current plan.
 
-- [ ] **Subtask 6.2.1.1 Complete**
+- [x] **Subtask 6.2.1.1 Complete**
 
 #### Subtask 6.2.1.2: Enforce Bounds and Stop Conditions
 
@@ -109,7 +117,7 @@ effects, and preserve the original goal independently from the current plan.
 elapsed time, context bytes, output bytes, and effect count and terminate with
 a typed incomplete result when a bound is exhausted.
 
-- [ ] **Subtask 6.2.1.2 Complete**
+- [x] **Subtask 6.2.1.2 Complete**
 
 ### Task 6.2.2: Implement Capability-Aware Context Slicing
 
@@ -117,7 +125,7 @@ a typed incomplete result when a bound is exhausted.
 relevant typed inputs, allowed action summaries, evidence, and diagnostics
 without copying the full proof or runtime state.
 
-- [ ] **Task 6.2.2 Complete**
+- [x] **Task 6.2.2 Complete**
 
 #### Subtask 6.2.2.1: Define Context Selection Rules
 
@@ -125,7 +133,7 @@ without copying the full proof or runtime state.
 available effects and constraints, exclude private state and irrelevant
 history, and preserve provenance for every included fragment.
 
-- [ ] **Subtask 6.2.2.1 Complete**
+- [x] **Subtask 6.2.2.1 Complete**
 
 #### Subtask 6.2.2.2: Prevent Authority and Instruction Leakage
 
@@ -133,7 +141,7 @@ history, and preserve provenance for every included fragment.
 credentials, unredacted traces, runtime addresses, and retrieved text with
 undeclared instruction authority from model-visible context.
 
-- [ ] **Subtask 6.2.2.2 Complete**
+- [x] **Subtask 6.2.2.2 Complete**
 
 ## Section 6.3: Structured Repair and Completion Verification
 
@@ -141,7 +149,10 @@ undeclared instruction authority from model-visible context.
 model-produced fragment and require independent evidence before the task can
 report success.
 
-- [ ] **Section 6.3 Complete**
+- [x] **Section 6.3 Complete** — implemented by the
+  [repair runtime](../../src/phase-06/alang_phase6_repair.erl),
+  [completion verifier](../../src/phase-06/alang_phase6_verifier.erl), and
+  [repair and verification contract](../../src/phase-06/repair-and-completion-verification.md).
 
 ### Task 6.3.1: Implement Bounded Diagnostic Repair
 
@@ -149,7 +160,7 @@ report success.
 schema, the smallest failing fragment, and stable diagnostics under one
 explicit repair budget.
 
-- [ ] **Task 6.3.1 Complete**
+- [x] **Task 6.3.1 Complete**
 
 #### Subtask 6.3.1.1: Classify Repairable and Terminal Failures
 
@@ -157,7 +168,7 @@ explicit repair budget.
 retry after uncertain or consequential effects, and route policy, budget,
 authorization, and cancellation failures directly to typed termination.
 
-- [ ] **Subtask 6.3.1.1 Complete**
+- [x] **Subtask 6.3.1.1 Complete**
 
 #### Subtask 6.3.1.2: Preserve Repair Provenance
 
@@ -165,7 +176,7 @@ authorization, and cancellation failures directly to typed termination.
 call, diagnostic, attempt number, context digest, and resulting accepted or
 rejected fragment.
 
-- [ ] **Subtask 6.3.1.2 Complete**
+- [x] **Subtask 6.3.1.2 Complete**
 
 ### Task 6.3.2: Implement Completion Predicates and Witnesses
 
@@ -173,7 +184,7 @@ rejected fragment.
 artifact and trace evidence rather than treating normal termination or model
 assertion as completion.
 
-- [ ] **Task 6.3.2 Complete**
+- [x] **Task 6.3.2 Complete**
 
 #### Subtask 6.3.2.1: Verify the Published Artifact
 
@@ -181,7 +192,7 @@ assertion as completion.
 UTF-8 and Markdown constraints, nonempty required section, and binding to the
 journaled workspace result.
 
-- [ ] **Subtask 6.3.2.1 Complete**
+- [x] **Subtask 6.3.2.1 Complete**
 
 #### Subtask 6.3.2.2: Emit a Completion Witness
 
@@ -189,7 +200,7 @@ journaled workspace result.
 artifact or trace references, unresolved uncertainty, and final complete or
 incomplete status.
 
-- [ ] **Subtask 6.3.2.2 Complete**
+- [x] **Subtask 6.3.2.2 Complete**
 
 ## Section 6.4: Mechanically Attenuated Child Task
 
@@ -197,14 +208,17 @@ incomplete status.
 inputs, reduced context, a narrower capability requirement, an ephemeral
 runtime identity, and broker-enforced inability to create or transfer grants.
 
-- [ ] **Section 6.4 Complete**
+- [x] **Section 6.4 Complete** — implemented by the
+  [child runtime](../../src/phase-06/alang_phase6_child.erl),
+  [child supervisor](../../src/phase-06/alang_phase6_child_sup.erl), and
+  [mechanical attenuation contract](../../src/phase-06/mechanically-attenuated-child-task.md).
 
 ### Task 6.4.1: Define and Spawn the Child Task
 
 **Description:** Extract one bounded drafting or formatting step into a child
 task whose interface and requirement are explicit in the parent IR.
 
-- [ ] **Task 6.4.1 Complete**
+- [x] **Task 6.4.1 Complete**
 
 #### Subtask 6.4.1.1: Define the Child Interface and Context
 
@@ -212,7 +226,7 @@ task whose interface and requirement are explicit in the parent IR.
 input, output schema, completion predicate, and summarized capabilities and
 exclude unrelated parent state and proof material.
 
-- [ ] **Subtask 6.4.1.1 Complete**
+- [x] **Subtask 6.4.1.1 Complete**
 
 #### Subtask 6.4.1.2: Create and Supervise the Child Session
 
@@ -220,7 +234,7 @@ exclude unrelated parent state and proof material.
 monitor its BEAM process, propagate deadline and cancellation, correlate the
 typed result, and discard late or wrong-session replies.
 
-- [ ] **Subtask 6.4.1.2 Complete**
+- [x] **Subtask 6.4.1.2 Complete**
 
 ### Task 6.4.2: Attenuate and Constrain Child Authority
 
@@ -228,7 +242,7 @@ typed result, and discard late or wrong-session replies.
 and child requirement and prevent model-controlled authority creation or
 transfer through the broker API.
 
-- [ ] **Task 6.4.2 Complete**
+- [x] **Task 6.4.2 Complete**
 
 #### Subtask 6.4.2.1: Issue the Narrow Child Local Grant
 
@@ -236,7 +250,7 @@ transfer through the broker API.
 and expiry; reject any widening; and issue a fresh opaque reference bound to
 the child BEAM process lineage.
 
-- [ ] **Subtask 6.4.2.1 Complete**
+- [x] **Subtask 6.4.2.1 Complete**
 
 #### Subtask 6.4.2.2: Deny Grant Creation and Transfer
 
@@ -244,7 +258,7 @@ the child BEAM process lineage.
 export, or delegate operation, and reject use of the child reference by the
 parent, sibling, adapter, model, or another runtime generation.
 
-- [ ] **Subtask 6.4.2.2 Complete**
+- [x] **Subtask 6.4.2.2 Complete**
 
 ## Section 6.5: Phase 6 Integration Tests
 
@@ -252,7 +266,10 @@ parent, sibling, adapter, model, or another runtime generation.
 through compiled BEAM, local broker authorization, durable effects, repair,
 artifact verification, and completion evidence.
 
-- [ ] **Section 6.5 Complete**
+- [x] **Section 6.5 Complete** — implemented by the
+  [compiled integration fixture](../../src/phase-06/alang_phase6_integration_fixture.erl),
+  [acceptance suite](../../src/phase-06/alang_phase6_integration_tests.erl), and
+  [Phase 6 evidence](../../src/phase-06/phase-06-integration-evidence.md).
 
 ### Task 6.5.1: Validate the Bounded Agent Workflow
 
@@ -260,7 +277,7 @@ artifact verification, and completion evidence.
 repair, verifier, bound, policy, and child-task failure without letting model
 output control orchestration or authority.
 
-- [ ] **Task 6.5.1 Complete**
+- [x] **Task 6.5.1 Complete**
 
 #### Subtask 6.5.1.1: Run Positive Parent and Child Scenarios
 
@@ -268,7 +285,7 @@ output control orchestration or authority.
 the mock provider, child BEAM process, local broker, journal, workspace
 adapter, and verifier with a causally connected trace.
 
-- [ ] **Subtask 6.5.1.1 Complete**
+- [x] **Subtask 6.5.1.1 Complete**
 
 #### Subtask 6.5.1.2: Run Negative Model and Delegation Scenarios
 
@@ -276,7 +293,7 @@ adapter, and verifier with a causally connected trace.
 data, deadline, cancellation, widened child requirement, wrong session,
 attempted grant export, forged child reply, and failed completion predicate.
 
-- [ ] **Subtask 6.5.1.2 Complete**
+- [x] **Subtask 6.5.1.2 Complete**
 
 ### Task 6.5.2: Validate Context and Authority Nonexposure
 
@@ -284,7 +301,7 @@ attempted grant export, forged child reply, and failed completion predicate.
 surface for prohibited secret, credential, key, proof, handle, or unrelated
 context disclosure.
 
-- [ ] **Task 6.5.2 Complete**
+- [x] **Task 6.5.2 Complete**
 
 #### Subtask 6.5.2.1: Run Model-Visible Data Snapshots
 
@@ -292,7 +309,7 @@ context disclosure.
 their provenance and minimality, and scan for authority material, hidden
 runtime state, and irrelevant private inputs.
 
-- [ ] **Subtask 6.5.2.1 Complete**
+- [x] **Subtask 6.5.2.1 Complete**
 
 #### Subtask 6.5.2.2: Run Phase Completion Gates
 
@@ -300,17 +317,17 @@ runtime state, and irrelevant private inputs.
 subagent, attenuation, durable-effect, and complete repository suites and
 publish exact step, token, and effect counts.
 
-- [ ] **Subtask 6.5.2.2 Complete**
+- [x] **Subtask 6.5.2.2 Complete**
 
 ## Phase 6 Completion Evidence
 
 **Description:** Record the evidence that authorizes Phase 7 to evaluate the
 complete PoC rather than isolated compiler or runtime pieces.
 
-- [ ] Deterministic model and optional live adapters share one typed boundary
-- [ ] Workflow control, budgets, and repair limits remain runtime-owned
-- [ ] Completion depends on verified evidence, not model or process assertion
-- [ ] Parent and child context snapshots satisfy declared minimization rules
-- [ ] Child authority is mechanically restricted and cannot create or transfer grants
-- [ ] Parent and child execute as supervised BEAM processes
-- [ ] The full deterministic parent-child artifact scenario passes
+- [x] Deterministic model and optional live adapters share one typed boundary
+- [x] Workflow control, budgets, and repair limits remain runtime-owned
+- [x] Completion depends on verified evidence, not model or process assertion
+- [x] Parent and child context snapshots satisfy declared minimization rules
+- [x] Child authority is mechanically restricted and cannot create or transfer grants
+- [x] Parent and child execute as supervised BEAM processes
+- [x] The full deterministic parent-child artifact scenario passes

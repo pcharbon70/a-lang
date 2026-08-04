@@ -15,6 +15,7 @@
     lookup_workspace/3,
     pending_count/1,
     request/6,
+    restrict_child_grant/4,
     restrict_grant/3,
     revoke_grant/2,
     runtime_context/1,
@@ -34,6 +35,11 @@ issue_grant(Broker, Spec) -> gen_server:call(Broker, {issue_grant, Spec}, ?MAX_C
 -spec restrict_grant(pid(), term(), map()) -> {ok, tuple()} | {error, atom()}.
 restrict_grant(Broker, Parent, Restriction) ->
     gen_server:call(Broker, {restrict_grant, Parent, Restriction}, ?MAX_CALL_TIMEOUT).
+
+-spec restrict_child_grant(pid(), term(), map(), map()) -> {ok, tuple()} | {error, atom()}.
+restrict_child_grant(Broker, Parent, Restriction, Binding) ->
+    gen_server:call(Broker, {restrict_child_grant, Parent, Restriction, Binding},
+        ?MAX_CALL_TIMEOUT).
 
 -spec combine_grants(pid(), term(), term()) -> {ok, tuple()} | {error, atom()}.
 combine_grants(Broker, Left, Right) ->
@@ -125,6 +131,16 @@ handle_call({restrict_grant, Parent, Restriction}, _From, State) ->
     Now = erlang:monotonic_time(millisecond),
     case alang_phase4_grants:restrict(maps:get(grants, State), Parent, Restriction, Now) of
         {ok, Grant, GrantStore} -> {reply, {ok, Grant}, State#{grants := GrantStore}};
+        {error, _} = Error -> {reply, Error, State}
+    end;
+handle_call({restrict_child_grant, Parent, Restriction, Binding}, {Issuer, _Tag}, State) ->
+    Now = erlang:monotonic_time(millisecond),
+    case alang_phase4_grants:restrict_for_child(
+        maps:get(grants, State), Parent, Restriction, Binding, Issuer, Now
+    ) of
+        {ok, Grant, GrantStore} ->
+            Monitored = monitor_owner(maps:get(owner_pid, Binding), State#{grants := GrantStore}),
+            {reply, {ok, Grant}, Monitored};
         {error, _} = Error -> {reply, Error, State}
     end;
 handle_call({combine_grants, Left, Right}, _From, State) ->

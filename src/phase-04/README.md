@@ -50,13 +50,15 @@ remain under the ignored repository `build/` directory.
   and artifact-manifest tests.
 - [`alang_phase4_grants.erl`](alang_phase4_grants.erl) — broker-owned opaque
   reference state, structural invocation scopes, restriction and intersection
-  laws, shared budgets, lifetime binding, and cascading revocation.
+  laws, parent-owned nondelegable child restriction, shared budgets, lifetime
+  binding, and cascading revocation.
 - [`alang_phase4_grants_tests.erl`](alang_phase4_grants_tests.erl) — generated
   restriction-law cases plus combination, budget, revocation, opacity, scope,
   and runtime-lifetime evidence.
 - [`alang_phase4_broker.erl`](alang_phase4_broker.erl) — the bounded BEAM
   reference monitor with ordered authorization, typed decisions, redacted
-  audit events, owner monitoring, and no-replay authorization lifecycles.
+  audit events, parent-owned child derivation, owner monitoring, and no-replay
+  authorization lifecycles.
 - [`alang_phase4_broker_sup.erl`](alang_phase4_broker_sup.erl) — one-for-one
   supervision and lookup for a broker that restarts without implicit grants.
 - [`alang_phase4_broker_tests.erl`](alang_phase4_broker_tests.erl) — ordered
