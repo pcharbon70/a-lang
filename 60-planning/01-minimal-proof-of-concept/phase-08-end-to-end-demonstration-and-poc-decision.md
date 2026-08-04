@@ -19,8 +19,8 @@ local broker, and durability layers against simpler baselines, applies the
 original falsification criteria, and records a promote, revise, narrow, or stop
 decision with an explicit deferred-work ledger.
 
-**Status:** In progress — Sections 8.1 and 8.2 complete with reproducible
-offline demonstration and matched-ablation evidence.
+**Status:** In progress — Sections 8.1 through 8.3 complete with reproducible
+demonstration, matched-ablation, and architecture-decision evidence.
 
 **Dependencies:** Phase 7 complete with law, differential, adversarial, fault,
 performance, leak, and seeded-defect evidence for the entire compiled
@@ -160,7 +160,9 @@ ability to understand manifests, grants, denials, and traces.
 criteria and prevent a successful demo from automatically becoming a platform
 commitment.
 
-- [ ] **Section 8.3 Complete**
+- [x] **Section 8.3 Complete** — reproduce with `make test-section-8-3`; see
+  the [falsification review](../../src/phase-08/falsification-review.md) and
+  [architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md).
 
 ### Task 8.3.1: Evaluate Each Research Hypothesis
 
@@ -168,7 +170,7 @@ commitment.
 local capability enforcement, and explicit durability independently using the
 Phase 7 evidence and Phase 8 comparisons.
 
-- [ ] **Task 8.3.1 Complete**
+- [x] **Task 8.3.1 Complete**
 
 #### Subtask 8.3.1.1: Apply Positive Resolution Criteria
 
@@ -177,7 +179,9 @@ enforcement, backend agreement, bounded runtime behavior, durable recovery,
 local authority restriction, process and adapter isolation, and completion
 evidence.
 
-- [ ] **Subtask 8.3.1.1 Complete**
+- [x] **Subtask 8.3.1.1 Complete** — the review traces semantic, compiler,
+  runtime, recovery, authority, isolation, and completion criteria to
+  reproducible Phase 2 through Phase 8 evidence.
 
 #### Subtask 8.3.1.2: Apply Rejection and Narrowing Criteria
 
@@ -186,14 +190,16 @@ categorical machinery ties a conventional IR, BEAM or durability complexity
 erases runtime benefit, or a simpler closed handler matches the local broker's
 enforcement with less complexity.
 
-- [ ] **Subtask 8.3.1.2 Complete**
+- [x] **Subtask 8.3.1.2 Complete** — effectful source, categorical advantage,
+  multi-OTP support, production scale, hostile-code isolation, and usability
+  claims are narrowed or rejected rather than inferred from the demo.
 
 ### Task 8.3.2: Record the PoC Architecture Decision
 
 **Description:** Publish one evidence-backed outcome for each major layer and
 for the combined architecture: promote, revise, narrow, replace, or stop.
 
-- [ ] **Task 8.3.2 Complete**
+- [x] **Task 8.3.2 Complete**
 
 #### Subtask 8.3.2.1: State Accepted and Rejected Claims
 
@@ -201,7 +207,9 @@ for the combined architecture: promote, revise, narrow, replace, or stop.
 untested, security-sensitive, scale-dependent, model-dependent, or merely
 suggestive and link every claim to evidence.
 
-- [ ] **Subtask 8.3.2.1 Complete**
+- [x] **Subtask 8.3.2.1 Complete** — `make decide` validates six dispositions,
+  explicit accepted and rejected claims, evidence paths, and non-production
+  status.
 
 #### Subtask 8.3.2.2: Define the Next Decision Boundary
 
@@ -209,7 +217,9 @@ suggestive and link every claim to evidence.
 production question, the evidence it requires, and the features that remain
 frozen until that decision is made.
 
-- [ ] **Subtask 8.3.2.2 Complete**
+- [x] **Subtask 8.3.2.2 Complete** — the only authorized next question is an
+  effectful source-language fidelity comparison; unrelated language and
+  distribution features remain frozen.
 
 ## Section 8.4: Phase 8 Integration Tests and Decision Gates
 

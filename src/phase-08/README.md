@@ -50,10 +50,19 @@ Generated bundles belong under ignored `build/phase-08/` paths.
   comparison runner.
 - [`alang_phase8_comparison_tests.erl`](alang_phase8_comparison_tests.erl) —
   executable agreement, denial, recovery-evidence, and reporting gates.
+- [`alang_phase8_decision.erl`](alang_phase8_decision.erl) — the validated,
+  machine-readable layer dispositions and next decision boundary.
+- [`alang_phase8_decision_tests.erl`](alang_phase8_decision_tests.erl) —
+  evidence-path, outcome, scope-freeze, and owned-output decision gates.
 - [Reproducible demonstration package](reproducible-demonstration-package.md)
   — usage, contents, trust boundaries, reproducibility, and failure behavior.
 - [Controlled baseline and ablation comparison](controlled-baseline-and-ablation-comparison.md)
   — conditions, controls, observations, cost boundaries, and limits.
+- [Falsification review](falsification-review.md) — positive, rejection, and
+  narrowing criteria applied independently to each research hypothesis.
+- [Proof-of-concept architecture decision](proof-of-concept-architecture-decision.md)
+  — accepted and rejected claims, layer dispositions, and the single next
+  prototype boundary.
 
 ## Maintaining this index
 
