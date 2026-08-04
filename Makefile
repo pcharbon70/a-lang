@@ -126,10 +126,12 @@ PHASE7_SOURCES := \
 	$(PHASE7_DIR)/alang_phase7_law_tests.erl \
 	$(PHASE7_DIR)/alang_phase7_authority_model.erl \
 	$(PHASE7_DIR)/alang_phase7_history_model.erl \
-	$(PHASE7_DIR)/alang_phase7_state_property_tests.erl
+	$(PHASE7_DIR)/alang_phase7_state_property_tests.erl \
+	$(PHASE7_DIR)/alang_phase7_adversarial.erl \
+	$(PHASE7_DIR)/alang_phase7_adversarial_tests.erl
 PHASE7_COMPILER_STAMP := $(PHASE7_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2
+.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2 test-section-7-3
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -301,7 +303,10 @@ test-section-7-1: compile-phase-1-bootstrap compile-phase-2-toolchain compile-ph
 test-section-7-2: test-section-7-1 compile-phase-4-runtime compile-phase-5-runtime
 	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE7_BUILD) -eval 'case eunit:test(alang_phase7_state_property_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
-test-phase-7: test-section-7-2
+test-section-7-3: test-section-7-2 compile-phase-6-runtime
+	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -eval 'case eunit:test(alang_phase7_adversarial_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-phase-7: test-section-7-3
 
 test: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7
 

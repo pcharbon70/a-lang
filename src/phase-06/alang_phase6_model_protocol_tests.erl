@@ -34,6 +34,17 @@ request_bounds_and_context_order_are_enforced_test() ->
         alang_phase6_model_protocol:validate_request(Request#{context := [First, First]})
     ).
 
+malformed_context_is_a_typed_rejection_test() ->
+    Request = request(<<"model-call-malformed">>, <<"Draft">>),
+    ?assertEqual(
+        {error, invalid_model_context},
+        alang_phase6_model_protocol:validate_request(Request#{context := [make_ref()]})
+    ),
+    ?assertEqual(
+        {error, invalid_output_schema},
+        alang_phase6_model_protocol:validate_request(Request#{output_schema := invalid})
+    ).
+
 success_and_failure_variants_are_typed_test() ->
     Request = request(<<"model-call-3">>, <<"Draft">>),
     Output = <<"# Result\n\nAccepted.\n">>,

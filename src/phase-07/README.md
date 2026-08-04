@@ -54,12 +54,21 @@ Generated dependencies and build products belong in the ignored `_build/` and
   effect-transition oracle with safety and bounded-settlement invariants.
 - [`alang_phase7_state_property_tests.erl`](alang_phase7_state_property_tests.erl)
   — generated grant, binding, budget, journal, recovery, and liveness histories.
+- [`alang_phase7_adversarial.erl`](alang_phase7_adversarial.erl) — bounded
+  binary mutation, exception classification, and recursive secret/runtime-
+  identity leak scanning utilities.
+- [`alang_phase7_adversarial_tests.erl`](alang_phase7_adversarial_tests.erl) —
+  generated parser, IR, forms, artifact, ABI, effect, and model attacks plus
+  targeted size, atom, grant, path, adapter, context, and disclosure cases.
 - [Typed generators and law observations](typed-generators-and-law-observations.md)
   — the dependency boundary, generated domains, equality rules, and
   reproduction command for Section 7.1.
 - [Authorization and runtime state properties](authorization-and-state-properties.md)
   — the finite-set capability oracle, generated histories, invariants, limits,
   and reproduction command for Section 7.2.
+- [Adversarial boundary testing](adversarial-boundary-testing.md) — the
+  implemented boundary inventory, attack classes, explicit limits, leak gate,
+  and Section 7.3 reproduction command.
 
 ## Maintaining this index
 

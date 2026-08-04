@@ -38,7 +38,7 @@ transition(recover, #{phase := uncertain} = State) ->
 transition(cancel, State) -> step(State#{phase := cancelled, terminal := true});
 transition(expire, State) -> step(State#{phase := denied, terminal := true});
 transition(restart, #{phase := uncertain} = State) ->
-    step(State#{phase := explicit_uncertain, terminal := true, authorized := false});
+    step(State#{phase := explicit_uncertain, terminal := true});
 transition(restart, State) -> step(State#{phase := ready, authorized := false,
     journal_intent := false});
 transition(_Command, State) -> step(State).

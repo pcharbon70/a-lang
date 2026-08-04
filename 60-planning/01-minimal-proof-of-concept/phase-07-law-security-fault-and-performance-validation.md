@@ -19,7 +19,7 @@ differential checks, malformed and hostile inputs, complete effect-transition
 fault injection, scheduler and resource pressure, and seeded-defect
 sensitivity.
 
-**Status:** In progress — Sections 7.1–7.2 complete.
+**Status:** In progress — Sections 7.1–7.3 complete.
 
 **Dependencies:** Phase 6 complete with a deterministic compiled parent-child
 BEAM workflow, typed model boundary, opaque local authority, durable effects,
@@ -148,7 +148,10 @@ automatic retry after an ambiguous submission.
 capability, resource, model, and logging boundary with malformed and hostile inputs
 under explicit resource limits.
 
-- [ ] **Section 7.3 Complete**
+- [x] **Section 7.3 Complete** — implemented by the
+  [bounded adversarial utilities](../../src/phase-07/alang_phase7_adversarial.erl),
+  [attack suite](../../src/phase-07/alang_phase7_adversarial_tests.erl), and
+  [boundary inventory](../../src/phase-07/adversarial-boundary-testing.md).
 
 ### Task 7.3.1: Fuzz Compiler, Artifact, and ABI Boundaries
 
@@ -156,7 +159,7 @@ under explicit resource limits.
 Format encoding, compiler-bridge frames, BEAM artifact metadata, loader
 inspection, and runtime message decoding.
 
-- [ ] **Task 7.3.1 Complete**
+- [x] **Task 7.3.1 Complete**
 
 #### Subtask 7.3.1.1: Assert Fail-Closed Parsing and Loading
 
@@ -164,7 +167,7 @@ inspection, and runtime message decoding.
 atom growth, partial successful artifacts, or execution of an uninspected
 module.
 
-- [ ] **Subtask 7.3.1.1 Complete**
+- [x] **Subtask 7.3.1.1 Complete**
 
 #### Subtask 7.3.1.2: Exercise Size and Complexity Limits
 
@@ -172,14 +175,14 @@ module.
 messages, recursion depth, branch count, binaries, and metadata and record CPU,
 memory, and diagnostic behavior.
 
-- [ ] **Subtask 7.3.1.2 Complete**
+- [x] **Subtask 7.3.1.2 Complete**
 
 ### Task 7.3.2: Attack Authorization, Resource, and Model Boundaries
 
 **Description:** Test privilege, parsing, resolution, replay, path, context,
 and disclosure attacks against the complete effect path.
 
-- [ ] **Task 7.3.2 Complete**
+- [x] **Task 7.3.2 Complete**
 
 #### Subtask 7.3.2.1: Attack Grant and Resource Semantics
 
@@ -188,7 +191,7 @@ generation, stale grants, scope and budget widening, clock skew, wrong
 ownership, traversal, normalization collisions, symlinks, races, and direct
 adapter bypass attempts.
 
-- [ ] **Subtask 7.3.2.1 Complete**
+- [x] **Subtask 7.3.2.1 Complete**
 
 #### Subtask 7.3.2.2: Attack Context and Secret Boundaries
 
@@ -197,7 +200,7 @@ grant-management escalation through model output, inspect logs and crash
 reports, and scan every model-visible or persisted surface for credentials,
 opaque references, and broker state.
 
-- [ ] **Subtask 7.3.2.2 Complete**
+- [x] **Subtask 7.3.2.2 Complete**
 
 ## Section 7.4: Fault and Performance Characterization
 
