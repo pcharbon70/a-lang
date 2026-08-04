@@ -19,8 +19,10 @@ Every generated module carries exactly one `alang_backend` module attribute.
 The attribute contains the fixed module, backend metadata format, typed-IR
 format, runtime ABI, BEAM-resident compiler identity, pinned OTP/ERTS identity,
 reproducibility profile, source and IR digests, declared capability manifest,
-and node-to-source map. The ordinary deterministic `Attr` chunk is the sole
-metadata location; Phase 3 does not hand-assemble a custom BEAM chunk.
+and node-to-source map. The map is embedded in a versioned deterministic-ETF
+envelope so raw `Attr` bytes do not depend on VM-local map encoding order. The
+ordinary deterministic `Attr` chunk is the sole metadata location; Phase 3
+does not hand-assemble a custom BEAM chunk.
 
 The source digest covers the original A-Lang source bytes. The IR digest covers
 the deterministic ETF encoding of the typed IR. The compiler bridge reports a

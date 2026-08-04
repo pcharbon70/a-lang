@@ -54,6 +54,17 @@ pinned_compilation_is_in_memory_and_deterministic_test() ->
     ?assertEqual(<<"29">>, maps:get(otp_release, First)),
     ?assertNot(filelib:is_file(?GENERATED_BEAM)).
 
+metadata_attribute_uses_versioned_deterministic_etf_test() ->
+    {Ir, Context} = counter_input(),
+    {ok, Lowered} = alang_phase3_lowering:lower(Ir, Context),
+    [{attribute, _, alang_backend, Encoded}] = [Form ||
+        {attribute, _, alang_backend, _} = Form <- maps:get(forms, Lowered)],
+    ?assertMatch({alang_backend_metadata_etf_v1, _}, Encoded),
+    ?assertEqual({ok, maps:get(metadata, Lowered)},
+        alang_phase3_forms:decode_metadata(Encoded)),
+    ?assertEqual(Encoded, alang_phase3_forms:encode_metadata(
+        maps:get(metadata, Lowered))).
+
 emitted_beam_has_fixed_module_and_export_test() ->
     {Ir, Context} = counter_input(),
     {ok, Compiled} = alang_phase3_backend:compile_ir(Ir, Context, ?TOOLCHAIN),

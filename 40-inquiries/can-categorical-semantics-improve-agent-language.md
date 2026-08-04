@@ -140,11 +140,24 @@ Relevant foundations include:
 - BEAM and PropEr provide a concrete runtime and generative test harness, but
   concurrent laws require observational equivalence and passing properties is
   not a proof.
+- The Phase 7 harness executes selected identity, composition, manifest,
+  serialization, handler, and observation laws and detects the corresponding
+  seeded violations.
+- The [Phase 8 controlled comparison](../src/phase-08/controlled-baseline-and-ablation-comparison.md)
+  finds semantic agreement between the law-declared IR and a conventional
+  typed IR on the frozen effect task. It does not isolate reuse, repair,
+  portability, authoring, or reviewer benefits.
+- The [architecture decision](../src/phase-08/proof-of-concept-architecture-decision.md)
+  narrows categorical structure to internal laws and analyses; user-visible
+  categorical notation remains frozen.
 
 ## Outcome
 
-Open. Resolve only after a controlled comparison against a strong conventional
-typed DSL, not after constructing a categorical prototype alone.
+Open, with the current claim narrowed. One controlled comparison against a
+strong conventional typed IR ties on the frozen observation, so the prototype
+does not justify categorical superiority. Broader composition-pressure tasks
+and independently measured reuse, repair, or interoperability value would be
+required for a positive resolution.
 
 If categorical and conventional typed implementations tie, retain only the
 categorical ideas that simplify implementation, proofs, or interoperability;

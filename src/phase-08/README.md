@@ -54,6 +54,12 @@ Generated bundles belong under ignored `build/phase-08/` paths.
   machine-readable layer dispositions and next decision boundary.
 - [`alang_phase8_decision_tests.erl`](alang_phase8_decision_tests.erl) —
   evidence-path, outcome, scope-freeze, and owned-output decision gates.
+- [`alang_phase8_release.erl`](alang_phase8_release.erl) — supported-toolchain,
+  compiler-residency, demo, comparison, validation, decision, and archive gate
+  aggregation for the final release candidate.
+- [`alang_phase8_release_tests.erl`](alang_phase8_release_tests.erl) — exact
+  environment, campaign, roadmap-status, leak, documentation, and evidence
+  acceptance tests.
 - [Reproducible demonstration package](reproducible-demonstration-package.md)
   — usage, contents, trust boundaries, reproducibility, and failure behavior.
 - [Controlled baseline and ablation comparison](controlled-baseline-and-ablation-comparison.md)
@@ -63,6 +69,15 @@ Generated bundles belong under ignored `build/phase-08/` paths.
 - [Proof-of-concept architecture decision](proof-of-concept-architecture-decision.md)
   — accepted and rejected claims, layer dispositions, and the single next
   prototype boundary.
+- [Implementation status and risk record](implementation-status-and-risk-record.md)
+  — supported contracts, commands, feature dispositions, security assumptions,
+  and operational risks.
+- [Deferred-work ledger](deferred-work-ledger.md) — explicitly unimplemented
+  language, runtime, authority, model, durability, operational, and research
+  work with reconsideration triggers.
+- [Phase 8 integration and release evidence](phase-08-integration-evidence.md)
+  — exact environment, reproduction commands, aggregate results, evidence
+  index, and the deliberately unmet roadmap gate.
 
 ## Maintaining this index
 

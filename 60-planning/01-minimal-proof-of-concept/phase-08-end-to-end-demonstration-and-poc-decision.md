@@ -19,8 +19,9 @@ local broker, and durability layers against simpler baselines, applies the
 original falsification criteria, and records a promote, revise, narrow, or stop
 decision with an explicit deferred-work ledger.
 
-**Status:** In progress — Sections 8.1 through 8.3 complete with reproducible
-demonstration, matched-ablation, and architecture-decision evidence.
+**Status:** Complete — all four sections pass; the accepted outcome is
+`revise`, production remains unapproved, and the original roadmap is closed as
+revised rather than falsely marked complete.
 
 **Dependencies:** Phase 7 complete with law, differential, adversarial, fault,
 performance, leak, and seeded-defect evidence for the entire compiled
@@ -227,7 +228,8 @@ frozen until that decision is made.
 documentation, security boundaries, and deferred features with the final PoC
 evidence, then run the complete demonstration and acceptance campaign.
 
-- [ ] **Section 8.4 Complete**
+- [x] **Section 8.4 Complete** — reproduce with `make test-section-8-4`; see
+  the [integration and release evidence](../../src/phase-08/phase-08-integration-evidence.md).
 
 ### Task 8.4.1: Publish the Implementation and Risk Record
 
@@ -235,7 +237,7 @@ evidence, then run the complete demonstration and acceptance campaign.
 architecture, artifact and ABI versions, operational commands, evidence,
 limitations, and known security assumptions.
 
-- [ ] **Task 8.4.1 Complete**
+- [x] **Task 8.4.1 Complete**
 
 #### Subtask 8.4.1.1: Reconcile Feature and Status Ledgers
 
@@ -243,7 +245,10 @@ limitations, and known security assumptions.
 deferred; update phase evidence and inquiries; and ensure no test helper or
 internal module is mistaken for a promoted language feature.
 
-- [ ] **Subtask 8.4.1.1 Complete**
+- [x] **Subtask 8.4.1.1 Complete** — the
+  [implementation and risk record](../../src/phase-08/implementation-status-and-risk-record.md)
+  reconciles implemented, partial, rejected, deferred, and test-only surfaces;
+  all three research inquiries record the Phase 8 findings.
 
 #### Subtask 8.4.1.2: Publish the Deferred-Work Ledger
 
@@ -252,7 +257,9 @@ hot upgrades, additional effects, live-provider hardening, portable delegation
 protocols, formal proof, audit, and production operations as explicitly
 unimplemented work with reasons.
 
-- [ ] **Subtask 8.4.1.2 Complete**
+- [x] **Subtask 8.4.1.2 Complete** — the
+  [deferred-work ledger](../../src/phase-08/deferred-work-ledger.md) records
+  reasons and reconsideration triggers without authorizing scope expansion.
 
 ### Task 8.4.2: Run Final Proof-of-Concept Acceptance
 
@@ -260,7 +267,7 @@ unimplemented work with reasons.
 comparison matrix, documentation and link checks, and architecture decision as
 one release-candidate gate.
 
-- [ ] **Task 8.4.2 Complete**
+- [x] **Task 8.4.2 Complete**
 
 #### Subtask 8.4.2.1: Reproduce on Supported Environments
 
@@ -268,7 +275,9 @@ one release-candidate gate.
 declared host and OTP environment, preserve exact versions and evidence
 digests, and report any environment-specific deviation.
 
-- [ ] **Subtask 8.4.2.1 Complete**
+- [x] **Subtask 8.4.2.1 Complete** — the complete gate passes on the sole
+  declared environment: OTP 29.0.4, ERTS 17.0.4,
+  `x86_64-pc-linux-gnu` Linux; no other environment is claimed.
 
 #### Subtask 8.4.2.2: Close the Roadmap with an Evidence Index
 
@@ -276,18 +285,20 @@ digests, and report any environment-specific deviation.
 test, trace, metric, review, or decision evidence and leave every unmet item
 unchecked with its blocker.
 
-- [ ] **Subtask 8.4.2.2 Complete**
+- [x] **Subtask 8.4.2.2 Complete** — the release evidence indexes every Phase
+  8 claim, while the planning-stream README leaves the unmet all-boundaries
+  OS-isolation gate unchecked with its blocker.
 
 ## Phase 8 Completion Evidence
 
 **Description:** Record the final evidence and decision that completes the PoC
 roadmap without implying production readiness.
 
-- [ ] Offline one-command source-to-verified-artifact demo passes
-- [ ] Machine- and human-readable evidence bundles are complete and redacted
-- [ ] Semantic-oracle, compiled-BEAM, conventional-runtime, conventional-IR,
+- [x] Offline one-command source-to-verified-artifact demo passes
+- [x] Machine- and human-readable evidence bundles are complete and redacted
+- [x] Semantic-oracle, compiled-BEAM, conventional-runtime, conventional-IR,
       and local-enforcement comparisons run
-- [ ] Original positive and negative research criteria are evaluated
-- [ ] Supported, partial, rejected, and deferred ledgers are reconciled
-- [ ] Architecture decision and next boundary are accepted
-- [ ] Complete validation and repository gates pass on supported environments
+- [x] Original positive and negative research criteria are evaluated
+- [x] Supported, partial, rejected, and deferred ledgers are reconciled
+- [x] Architecture decision and next boundary are accepted
+- [x] Complete validation and repository gates pass on supported environments

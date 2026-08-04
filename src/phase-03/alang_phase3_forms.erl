@@ -1,6 +1,6 @@
 -module(alang_phase3_forms).
 
--export([validate/1, validate_metadata/1]).
+-export([decode_metadata/1, encode_metadata/1, validate/1, validate_metadata/1]).
 
 -define(GENERATED_MODULE, alang_phase3_program_v1).
 -define(MAX_FORMS, 40).
@@ -29,7 +29,28 @@ validate(Forms) when is_list(Forms) ->
 validate(_) ->
     {error, invalid_abstract_forms}.
 
-validate_metadata(#{
+-spec encode_metadata(map()) -> {alang_backend_metadata_etf_v1, binary()}.
+encode_metadata(Metadata) when is_map(Metadata) ->
+    {alang_backend_metadata_etf_v1, term_to_binary(Metadata, [deterministic])}.
+
+-spec decode_metadata(term()) -> {ok, map()} | {error, term()}.
+decode_metadata(Metadata) when is_map(Metadata) -> {ok, Metadata};
+decode_metadata({alang_backend_metadata_etf_v1, Binary}) when is_binary(Binary),
+    byte_size(Binary) =< 65536 ->
+    try binary_to_term(Binary, [safe]) of
+        Metadata when is_map(Metadata) -> {ok, Metadata};
+        _Other -> {error, invalid_backend_metadata_encoding}
+    catch _:_ -> {error, invalid_backend_metadata_encoding} end;
+decode_metadata(_) -> {error, invalid_backend_metadata_encoding}.
+
+-spec validate_metadata(term()) -> ok | {error, term()}.
+validate_metadata(Encoded) ->
+    case decode_metadata(Encoded) of
+        {ok, Metadata} -> validate_metadata_map(Metadata);
+        {error, _} = Error -> Error
+    end.
+
+validate_metadata_map(#{
     format := alang_backend_metadata_v1,
     module := ?GENERATED_MODULE,
     abi := alang_runtime_v1,
@@ -70,7 +91,7 @@ validate_metadata(#{
     length(SourceMap) =< ?MAX_LIST
 ->
     ok;
-validate_metadata(_) ->
+validate_metadata_map(_) ->
     {error, invalid_backend_metadata}.
 
 validate_forms([], _Depth) -> ok;

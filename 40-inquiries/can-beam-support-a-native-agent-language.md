@@ -150,6 +150,19 @@ will fail this requirement.
   typed IR lowering, projections, test oracle, bridge, and compiler driver are
   Erlang-bootstrap modules compiled to `.beam` and run by OTP 29 ERTS. This is
   feasibility evidence for the narrow slice, not yet a general compiler.
+- Phases 3 through 8 now compile inspected programs through deterministic
+  Abstract Format, run bounded supervised effects, enforce runtime-local
+  grants, recover durable workspace state, and pass law, adversarial, fault,
+  pressure, mutation, comparison, and release-candidate gates on the pinned
+  OTP 29.0.4 host.
+- The Phase 8 release gate found and corrected VM-dependent raw attribute bytes
+  by embedding backend metadata as versioned deterministic ETF. This supports
+  the compiler-boundary choice while illustrating why cross-process release
+  evidence is necessary.
+- The [architecture decision](../src/phase-08/proof-of-concept-architecture-decision.md)
+  promotes BEAM only to the next bounded prototype. Multi-OTP compatibility,
+  a representative alternative-runtime advantage, hostile-code isolation,
+  production scale, and OS-bounded model/storage boundaries remain unproved.
 
 ## Resolution criteria
 
@@ -173,7 +186,7 @@ if BEAM's resource and deployment constraints erase its concurrency advantage.
 
 ## Outcome
 
-Open. The source-level architecture is credible, and a local Abstract Format
-spike has demonstrated the basic compile/load path. The decisive evidence must
-come from a pinned OTP 29 prototype, a property and fault-injection harness,
-and representative performance measurements.
+Open, with narrow PoC feasibility established. The pinned OTP 29 prototype,
+property harness, fault injection, and single-host characterization support
+continuing on BEAM. They do not yet meet the inquiry's multi-release,
+representative-runtime, hostile-isolation, or production-operability criteria.
