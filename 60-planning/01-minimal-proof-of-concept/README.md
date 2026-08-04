@@ -243,17 +243,35 @@ the path proven in Phase 1; they do not replace it with a host runtime.
 The roadmap is complete only when all eight phase evidence checklists pass and
 a clean checkout can reproduce all of the following:
 
-- [ ] An A-Lang source program compiles into an inspected `.beam` artifact
-- [ ] The artifact loads and runs as supervised BEAM processes on pinned ERTS
-- [ ] No host-language or existing BEAM-language interpreter executes the task
-- [ ] Static types, effects, capability requirements, and runtime manifests agree
-- [ ] Opaque local grants and the broker prevent undeclared or out-of-scope effects
-- [ ] Model, tool, storage, and workspace boundaries remain typed and OS-bounded
-- [ ] Process, adapter, and node failure do not duplicate the logical effect
-- [ ] Completion requires the declared typed result and evidence digest
-- [ ] Property and mutation suites detect seeded semantic and enforcement defects
-- [ ] Performance and resource results are reported against declared baselines
-- [ ] BEAM, categorical IR, and agent-language hypotheses receive explicit decisions
+- [x] An A-Lang source program compiles into an inspected `.beam` artifact —
+  [demonstration evidence](../../src/phase-08/reproducible-demonstration-package.md)
+- [x] The artifact loads and runs as supervised BEAM processes on pinned ERTS —
+  [release evidence](../../src/phase-08/phase-08-integration-evidence.md)
+- [x] No host-language or existing BEAM-language interpreter executes the task —
+  [implementation record](../../src/phase-08/implementation-status-and-risk-record.md)
+- [x] Static types, effects, capability requirements, and runtime manifests agree —
+  [controlled comparison](../../src/phase-08/controlled-baseline-and-ablation-comparison.md)
+- [x] Opaque local grants and the broker prevent undeclared or out-of-scope effects —
+  [controlled comparison](../../src/phase-08/controlled-baseline-and-ablation-comparison.md)
+- [ ] Model, tool, storage, and workspace boundaries remain typed and OS-bounded —
+  blocked because the mock model and local durable store are trusted BEAM
+  processes and no general tool adapter is implemented; see the
+  [risk record](../../src/phase-08/implementation-status-and-risk-record.md)
+- [x] Process, adapter, and node failure do not duplicate the logical effect —
+  [Phase 7 fault evidence](../../src/phase-07/fault-and-performance-characterization.md)
+- [x] Completion requires the declared typed result and evidence digest —
+  [demonstration evidence](../../src/phase-08/reproducible-demonstration-package.md)
+- [x] Property and mutation suites detect seeded semantic and enforcement defects —
+  [Phase 7 integration evidence](../../src/phase-07/phase-07-integration-evidence.md)
+- [x] Performance and resource results are reported against declared baselines —
+  [controlled comparison](../../src/phase-08/controlled-baseline-and-ablation-comparison.md)
+- [x] BEAM, categorical IR, and agent-language hypotheses receive explicit decisions —
+  [architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md)
+
+**Roadmap outcome:** Revised, not complete. Phase 8 closes the planned
+implementation and records the unmet OS-boundary gate rather than waiving it.
+The combined architecture is not approved for production; exactly one bounded
+effectful-source fidelity prototype may continue.
 
 ## Maintaining this index
 

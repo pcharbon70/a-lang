@@ -19,7 +19,9 @@ local broker, and durability layers against simpler baselines, applies the
 original falsification criteria, and records a promote, revise, narrow, or stop
 decision with an explicit deferred-work ledger.
 
-**Status:** Planned.
+**Status:** Complete — all four sections pass; the accepted outcome is
+`revise`, production remains unapproved, and the original roadmap is closed as
+revised rather than falsely marked complete.
 
 **Dependencies:** Phase 7 complete with law, differential, adversarial, fault,
 performance, leak, and seeded-defect evidence for the entire compiled
@@ -31,7 +33,8 @@ parent-child workflow accepted.
 inspectable from a clean checkout without network access, secrets, or hidden
 manual setup.
 
-- [ ] **Section 8.1 Complete**
+- [x] **Section 8.1 Complete** — reproduce with `make test-section-8-1`; see
+  the [demonstration package](../../src/phase-08/reproducible-demonstration-package.md).
 
 ### Task 8.1.1: Package the Deterministic Vertical Slice
 
@@ -40,7 +43,7 @@ runtime, checks the example, emits and inspects BEAM, launches ERTS, runs the
 mock-model workflow, writes the artifact, verifies completion, and exits with
 a stable status.
 
-- [ ] **Task 8.1.1 Complete**
+- [x] **Task 8.1.1 Complete**
 
 #### Subtask 8.1.1.1: Freeze Example Inputs and Expected Outputs
 
@@ -48,7 +51,8 @@ a stable status.
 local grant fixture, expected manifest, BEAM metadata, artifact digest,
 normalized trace, and completion witness.
 
-- [ ] **Subtask 8.1.1.1 Complete**
+- [x] **Subtask 8.1.1.1 Complete** — the [fixture index](../../src/phase-08/fixtures/README.md)
+  records all frozen inputs, observations, and digests.
 
 #### Subtask 8.1.1.2: Build the One-Command Runner
 
@@ -56,7 +60,8 @@ normalized trace, and completion witness.
 state, run every stage with bounded time, preserve evidence on failure, and
 clean only disposable outputs explicitly owned by the run.
 
-- [ ] **Subtask 8.1.1.2 Complete**
+- [x] **Subtask 8.1.1.2 Complete** — `make demo` runs the bounded workflow
+  and preserves its owned evidence bundle under `build/phase-08/demo/`.
 
 ### Task 8.1.2: Publish Inspection and Explanation Tools
 
@@ -64,7 +69,7 @@ clean only disposable outputs explicitly owned by the run.
 manifest, artifact provenance, runtime trace, broker decisions, journal,
 artifact result, and completion witness without reading internal databases.
 
-- [ ] **Task 8.1.2 Complete**
+- [x] **Task 8.1.2 Complete**
 
 #### Subtask 8.1.2.1: Produce Machine-Readable Evidence Bundles
 
@@ -73,7 +78,8 @@ that allow automated verification of the complete causal path while keeping
 opaque capability references, adapter credentials, and sensitive content
 excluded.
 
-- [ ] **Subtask 8.1.2.1 Complete**
+- [x] **Subtask 8.1.2.1 Complete** — the bundle inspector recomputes source,
+  IR, artifact, witness, and normalized-evidence digests and rejects tampering.
 
 #### Subtask 8.1.2.2: Produce Human-Readable Explanations
 
@@ -81,7 +87,8 @@ excluded.
 grant scope, typed effect request, broker decision, effect state, verifier
 result, and any uncertainty in A-Lang vocabulary.
 
-- [ ] **Subtask 8.1.2.2 Complete**
+- [x] **Subtask 8.1.2.2 Complete** — each bundle includes a generated
+  explanation of task, authority, effects, result, and residual uncertainty.
 
 ## Section 8.2: Controlled Baseline and Ablation Comparison
 
@@ -89,7 +96,8 @@ result, and any uncertainty in A-Lang vocabulary.
 least-authority enforcement, recovery, or cost rather than attributing every
 benefit to the new language as a whole.
 
-- [ ] **Section 8.2 Complete**
+- [x] **Section 8.2 Complete** — reproduce with `make test-section-8-2`; see
+  the [controlled comparison](../../src/phase-08/controlled-baseline-and-ablation-comparison.md).
 
 ### Task 8.2.1: Define Semantically Matched Comparison Conditions
 
@@ -97,7 +105,7 @@ benefit to the new language as a whole.
 conditions that remove one architectural layer while preserving inputs,
 outputs, budgets, and success criteria as far as possible.
 
-- [ ] **Task 8.2.1 Complete**
+- [x] **Task 8.2.1 Complete**
 
 #### Subtask 8.2.1.1: Compare Execution Interpretations
 
@@ -105,7 +113,9 @@ outputs, budgets, and success criteria as far as possible.
 compare compiled BEAM execution with a minimal conventional typed runtime, and
 compare the law-declared IR with a conventional typed IR under matched effects.
 
-- [ ] **Subtask 8.2.1.1 Complete**
+- [x] **Subtask 8.2.1.1 Complete** — compiled BEAM, bounded oracle, and
+  conventional test-only evaluator observations agree for the frozen pure and
+  effectful tasks.
 
 #### Subtask 8.2.1.2: Compare Local Enforcement Paths
 
@@ -113,7 +123,9 @@ compare the law-declared IR with a conventional typed IR under matched effects.
 runtime-handler baseline while holding resource semantics, budgets, journal,
 adapter, verifier, and effect result constant.
 
-- [ ] **Subtask 8.2.1.2 Complete**
+- [x] **Subtask 8.2.1.2 Complete** — the same registry, sidecar, content,
+  journal projection, and verifier expose two broker denials and two
+  corresponding unauthorized direct-handler writes.
 
 ### Task 8.2.2: Measure the Accepted Evaluation Matrix
 
@@ -121,7 +133,7 @@ adapter, verifier, and effect result constant.
 effects, recovery, trace quality, latency, resource use, artifact size,
 implementation complexity, and reviewer effort for each condition.
 
-- [ ] **Task 8.2.2 Complete**
+- [x] **Task 8.2.2 Complete**
 
 #### Subtask 8.2.2.1: Run Correctness and Recovery Comparisons
 
@@ -129,7 +141,9 @@ implementation complexity, and reviewer effort for each condition.
 fixtures and report success, false completion, denial, duplicate effect,
 uncertain state, and diagnostic locality separately.
 
-- [ ] **Subtask 8.2.2.1 Complete**
+- [x] **Subtask 8.2.2.1 Complete** — the matrix incorporates 17 detected
+  seeded defects and 63 passing recovery cases while preserving reconciled and
+  explicitly uncertain outcomes.
 
 #### Subtask 8.2.2.2: Run Cost and Usability Comparisons
 
@@ -137,7 +151,9 @@ uncertain state, and diagnostic locality separately.
 latency; memory and storage; lines and components; authoring burden; and human
 ability to understand manifests, grants, denials, and traces.
 
-- [ ] **Subtask 8.2.2.2 Complete**
+- [x] **Subtask 8.2.2.2 Complete** — each run records latency distributions,
+  VM pressure, artifact sizes, and structural proxies; human authoring and
+  reviewer studies are explicitly `not_run`.
 
 ## Section 8.3: Falsification Review and Architecture Decision
 
@@ -145,7 +161,9 @@ ability to understand manifests, grants, denials, and traces.
 criteria and prevent a successful demo from automatically becoming a platform
 commitment.
 
-- [ ] **Section 8.3 Complete**
+- [x] **Section 8.3 Complete** — reproduce with `make test-section-8-3`; see
+  the [falsification review](../../src/phase-08/falsification-review.md) and
+  [architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md).
 
 ### Task 8.3.1: Evaluate Each Research Hypothesis
 
@@ -153,7 +171,7 @@ commitment.
 local capability enforcement, and explicit durability independently using the
 Phase 7 evidence and Phase 8 comparisons.
 
-- [ ] **Task 8.3.1 Complete**
+- [x] **Task 8.3.1 Complete**
 
 #### Subtask 8.3.1.1: Apply Positive Resolution Criteria
 
@@ -162,7 +180,9 @@ enforcement, backend agreement, bounded runtime behavior, durable recovery,
 local authority restriction, process and adapter isolation, and completion
 evidence.
 
-- [ ] **Subtask 8.3.1.1 Complete**
+- [x] **Subtask 8.3.1.1 Complete** — the review traces semantic, compiler,
+  runtime, recovery, authority, isolation, and completion criteria to
+  reproducible Phase 2 through Phase 8 evidence.
 
 #### Subtask 8.3.1.2: Apply Rejection and Narrowing Criteria
 
@@ -171,14 +191,16 @@ categorical machinery ties a conventional IR, BEAM or durability complexity
 erases runtime benefit, or a simpler closed handler matches the local broker's
 enforcement with less complexity.
 
-- [ ] **Subtask 8.3.1.2 Complete**
+- [x] **Subtask 8.3.1.2 Complete** — effectful source, categorical advantage,
+  multi-OTP support, production scale, hostile-code isolation, and usability
+  claims are narrowed or rejected rather than inferred from the demo.
 
 ### Task 8.3.2: Record the PoC Architecture Decision
 
 **Description:** Publish one evidence-backed outcome for each major layer and
 for the combined architecture: promote, revise, narrow, replace, or stop.
 
-- [ ] **Task 8.3.2 Complete**
+- [x] **Task 8.3.2 Complete**
 
 #### Subtask 8.3.2.1: State Accepted and Rejected Claims
 
@@ -186,7 +208,9 @@ for the combined architecture: promote, revise, narrow, replace, or stop.
 untested, security-sensitive, scale-dependent, model-dependent, or merely
 suggestive and link every claim to evidence.
 
-- [ ] **Subtask 8.3.2.1 Complete**
+- [x] **Subtask 8.3.2.1 Complete** — `make decide` validates six dispositions,
+  explicit accepted and rejected claims, evidence paths, and non-production
+  status.
 
 #### Subtask 8.3.2.2: Define the Next Decision Boundary
 
@@ -194,7 +218,9 @@ suggestive and link every claim to evidence.
 production question, the evidence it requires, and the features that remain
 frozen until that decision is made.
 
-- [ ] **Subtask 8.3.2.2 Complete**
+- [x] **Subtask 8.3.2.2 Complete** — the only authorized next question is an
+  effectful source-language fidelity comparison; unrelated language and
+  distribution features remain frozen.
 
 ## Section 8.4: Phase 8 Integration Tests and Decision Gates
 
@@ -202,7 +228,8 @@ frozen until that decision is made.
 documentation, security boundaries, and deferred features with the final PoC
 evidence, then run the complete demonstration and acceptance campaign.
 
-- [ ] **Section 8.4 Complete**
+- [x] **Section 8.4 Complete** — reproduce with `make test-section-8-4`; see
+  the [integration and release evidence](../../src/phase-08/phase-08-integration-evidence.md).
 
 ### Task 8.4.1: Publish the Implementation and Risk Record
 
@@ -210,7 +237,7 @@ evidence, then run the complete demonstration and acceptance campaign.
 architecture, artifact and ABI versions, operational commands, evidence,
 limitations, and known security assumptions.
 
-- [ ] **Task 8.4.1 Complete**
+- [x] **Task 8.4.1 Complete**
 
 #### Subtask 8.4.1.1: Reconcile Feature and Status Ledgers
 
@@ -218,7 +245,10 @@ limitations, and known security assumptions.
 deferred; update phase evidence and inquiries; and ensure no test helper or
 internal module is mistaken for a promoted language feature.
 
-- [ ] **Subtask 8.4.1.1 Complete**
+- [x] **Subtask 8.4.1.1 Complete** — the
+  [implementation and risk record](../../src/phase-08/implementation-status-and-risk-record.md)
+  reconciles implemented, partial, rejected, deferred, and test-only surfaces;
+  all three research inquiries record the Phase 8 findings.
 
 #### Subtask 8.4.1.2: Publish the Deferred-Work Ledger
 
@@ -227,7 +257,9 @@ hot upgrades, additional effects, live-provider hardening, portable delegation
 protocols, formal proof, audit, and production operations as explicitly
 unimplemented work with reasons.
 
-- [ ] **Subtask 8.4.1.2 Complete**
+- [x] **Subtask 8.4.1.2 Complete** — the
+  [deferred-work ledger](../../src/phase-08/deferred-work-ledger.md) records
+  reasons and reconsideration triggers without authorizing scope expansion.
 
 ### Task 8.4.2: Run Final Proof-of-Concept Acceptance
 
@@ -235,7 +267,7 @@ unimplemented work with reasons.
 comparison matrix, documentation and link checks, and architecture decision as
 one release-candidate gate.
 
-- [ ] **Task 8.4.2 Complete**
+- [x] **Task 8.4.2 Complete**
 
 #### Subtask 8.4.2.1: Reproduce on Supported Environments
 
@@ -243,7 +275,9 @@ one release-candidate gate.
 declared host and OTP environment, preserve exact versions and evidence
 digests, and report any environment-specific deviation.
 
-- [ ] **Subtask 8.4.2.1 Complete**
+- [x] **Subtask 8.4.2.1 Complete** — the complete gate passes on the sole
+  declared environment: OTP 29.0.4, ERTS 17.0.4,
+  `x86_64-pc-linux-gnu` Linux; no other environment is claimed.
 
 #### Subtask 8.4.2.2: Close the Roadmap with an Evidence Index
 
@@ -251,18 +285,20 @@ digests, and report any environment-specific deviation.
 test, trace, metric, review, or decision evidence and leave every unmet item
 unchecked with its blocker.
 
-- [ ] **Subtask 8.4.2.2 Complete**
+- [x] **Subtask 8.4.2.2 Complete** — the release evidence indexes every Phase
+  8 claim, while the planning-stream README leaves the unmet all-boundaries
+  OS-isolation gate unchecked with its blocker.
 
 ## Phase 8 Completion Evidence
 
 **Description:** Record the final evidence and decision that completes the PoC
 roadmap without implying production readiness.
 
-- [ ] Offline one-command source-to-verified-artifact demo passes
-- [ ] Machine- and human-readable evidence bundles are complete and redacted
-- [ ] Semantic-oracle, compiled-BEAM, conventional-runtime, conventional-IR,
+- [x] Offline one-command source-to-verified-artifact demo passes
+- [x] Machine- and human-readable evidence bundles are complete and redacted
+- [x] Semantic-oracle, compiled-BEAM, conventional-runtime, conventional-IR,
       and local-enforcement comparisons run
-- [ ] Original positive and negative research criteria are evaluated
-- [ ] Supported, partial, rejected, and deferred ledgers are reconciled
-- [ ] Architecture decision and next boundary are accepted
-- [ ] Complete validation and repository gates pass on supported environments
+- [x] Original positive and negative research criteria are evaluated
+- [x] Supported, partial, rejected, and deferred ledgers are reconciled
+- [x] Architecture decision and next boundary are accepted
+- [x] Complete validation and repository gates pass on supported environments

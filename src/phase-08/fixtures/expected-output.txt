@@ -1,0 +1,5 @@
+# A-Lang Proof of Concept
+
+## Findings
+
+The compiled BEAM workflow produced this verified artifact.

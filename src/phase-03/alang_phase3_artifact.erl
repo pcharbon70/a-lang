@@ -101,7 +101,11 @@ validate_decoded(Beam, ChunkIds, Decoded) ->
 
 extract_metadata(Attributes) ->
     case proplists:get_all_values(alang_backend, Attributes) of
-        [[Metadata]] when is_map(Metadata) -> {ok, Metadata};
+        [[Encoded]] ->
+            case alang_phase3_forms:decode_metadata(Encoded) of
+                {ok, Metadata} -> {ok, Metadata};
+                {error, _} -> {error, invalid_backend_metadata_attribute}
+            end;
         Other -> {error, {invalid_backend_metadata_attribute, summarize(Other)}}
     end.
 

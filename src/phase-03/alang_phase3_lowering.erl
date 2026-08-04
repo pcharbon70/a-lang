@@ -51,7 +51,7 @@ lower_valid_ir(#{tasks := Tasks, nodes := Nodes} = Ir, Context) ->
     Forms = [
         {attribute, 1, module, ?GENERATED_MODULE},
         {attribute, 1, export, [{execute, 3}]},
-        {attribute, 1, alang_backend, Metadata},
+        {attribute, 1, alang_backend, alang_phase3_forms:encode_metadata(Metadata)},
         Execute
         | CallableForms
     ],

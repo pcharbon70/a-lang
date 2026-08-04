@@ -26,7 +26,7 @@ compile_forms(Forms, ToolchainPath) ->
     case alang_phase3_forms:validate(Forms) of
         ok ->
             case alang_phase1_compiler:check_toolchain(ToolchainPath) of
-                {ok, Toolchain} -> validate_and_emit(Forms, Toolchain);
+                {ok, Toolchain} -> validate_and_emit(canonicalize_metadata(Forms), Toolchain);
                 {error, _} = Error -> Error
             end;
         {error, Reason} ->
@@ -102,9 +102,22 @@ diagnostic_origin(Detail, Forms) ->
         Line -> closest_origin(Line, SourceMap)
     end.
 
-source_map([{attribute, _, alang_backend, #{source_map := SourceMap}} | _]) -> SourceMap;
+source_map([{attribute, _, alang_backend, Encoded} | _]) ->
+    case alang_phase3_forms:decode_metadata(Encoded) of
+        {ok, #{source_map := SourceMap}} -> SourceMap;
+        _ -> []
+    end;
 source_map([_ | Rest]) -> source_map(Rest);
 source_map([]) -> [].
+
+canonicalize_metadata([{attribute, Line, alang_backend, Encoded} | Rest]) ->
+    case alang_phase3_forms:decode_metadata(Encoded) of
+        {ok, Metadata} -> [{attribute, Line, alang_backend,
+            alang_phase3_forms:encode_metadata(Metadata)} | Rest];
+        {error, _} -> [{attribute, Line, alang_backend, Encoded} | Rest]
+    end;
+canonicalize_metadata([Form | Rest]) -> [Form | canonicalize_metadata(Rest)];
+canonicalize_metadata([]) -> [].
 
 diagnostic_line(#{errors := Errors}) -> diagnostic_line(Errors);
 diagnostic_line([{_File, [{Line, _Module, _Description} | _]} | _]) when is_integer(Line) -> Line;

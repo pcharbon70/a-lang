@@ -137,8 +137,21 @@ PHASE7_SOURCES := \
 	$(PHASE7_DIR)/alang_phase7_campaign.erl \
 	$(PHASE7_DIR)/alang_phase7_campaign_tests.erl
 PHASE7_COMPILER_STAMP := $(PHASE7_BUILD)/.compiled
+PHASE8_DIR := src/phase-08
+PHASE8_BUILD := build/phase-08/release
+PHASE8_SOURCES := \
+	$(PHASE8_DIR)/alang_phase8_demo.erl \
+	$(PHASE8_DIR)/alang_phase8_inspect.erl \
+	$(PHASE8_DIR)/alang_phase8_demo_tests.erl \
+	$(PHASE8_DIR)/alang_phase8_comparison.erl \
+	$(PHASE8_DIR)/alang_phase8_comparison_tests.erl \
+	$(PHASE8_DIR)/alang_phase8_decision.erl \
+	$(PHASE8_DIR)/alang_phase8_decision_tests.erl \
+	$(PHASE8_DIR)/alang_phase8_release.erl \
+	$(PHASE8_DIR)/alang_phase8_release_tests.erl
+PHASE8_COMPILER_STAMP := $(PHASE8_BUILD)/.compiled
 
-.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2 test-section-7-3 test-section-7-4 test-section-7-5
+.PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compare compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation compile-phase-8-release decide demo release-candidate run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2 test-section-7-3 test-section-7-4 test-section-7-5 test-section-8-1 test-section-8-2 test-section-8-3 test-section-8-4
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -321,7 +334,40 @@ test-section-7-5: test-section-7-4
 
 test-phase-7: test-section-7-5
 
-test: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7
+compile-phase-8-release: $(PHASE8_COMPILER_STAMP)
+
+$(PHASE8_COMPILER_STAMP): $(PHASE8_SOURCES)
+	mkdir -p $(PHASE8_BUILD)
+	$(ERLC) -Werror +deterministic -o $(PHASE8_BUILD) $(PHASE8_SOURCES)
+	touch $@
+
+demo: compile-phase-1-bootstrap compile-phase-2-toolchain compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation compile-phase-8-release
+	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD) -s alang_phase8_demo main -extra build/phase-08/demo
+
+test-section-8-1: demo
+	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD) -eval 'case eunit:test(alang_phase8_demo_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+compare: compile-phase-8-release
+	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD) -s alang_phase8_comparison main -extra build/phase-08/comparison
+
+test-section-8-2: test-section-8-1 test-section-7-4 test-section-7-5 compare
+	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD) -eval 'case eunit:test(alang_phase8_comparison_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+decide: compile-phase-8-release
+	$(ERL) -noshell -pa $(PHASE8_BUILD) -s alang_phase8_decision main -extra build/phase-08/decision/architecture-decision.config
+
+test-section-8-3: test-section-8-2 decide
+	$(ERL) -noshell -pa $(PHASE8_BUILD) -eval 'case eunit:test(alang_phase8_decision_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+release-candidate: compile-phase-8-release
+	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD) -s alang_phase8_release main -extra build/phase-08/release-candidate
+
+test-section-8-4: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-section-8-3 release-candidate
+	$(ERL) -noshell -pa $(PROPER_EBIN) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD) -eval 'case eunit:test(alang_phase8_release_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-phase-8: test-section-8-4
+
+test: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8
 
 $(PHASE1_BUILD):
 	mkdir -p $(PHASE1_BUILD)

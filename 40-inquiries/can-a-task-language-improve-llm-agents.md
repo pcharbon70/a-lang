@@ -93,8 +93,21 @@ deeper semantic understanding in arbitrary pretrained LLMs.
 
 - [Task languages for LLM agents: a deep dive](../20-notes/llm-agent-task-languages-deep-dive.md)
 - [LLM agent task languages](../10-maps/llm-agent-task-languages.md)
+- The [minimal proof of concept](../src/phase-08/reproducible-demonstration-package.md)
+  shows that a typed task representation can drive BEAM compilation, runtime
+  enforcement, bounded effects, and evidence-backed completion.
+- The [controlled comparison](../src/phase-08/controlled-baseline-and-ablation-comparison.md)
+  isolates material runtime-enforcement value but does not test whether an LLM
+  understands a task better. Effectful acceptance tasks still begin as
+  constructed typed IR rather than user-authored A-Lang source.
+- The [architecture decision](../src/phase-08/proof-of-concept-architecture-decision.md)
+  therefore narrows the demonstrated claim to executable contracts and makes
+  effectful source-language fidelity the next decision boundary.
 
 ## Outcome
 
-The inquiry remains open. The literature supports constructing a prototype and
-running controlled ablations, not yet selecting a final grammar.
+The inquiry remains open. The prototype supports runtime-enforced task
+contracts, but the central language-understanding and source-notation questions
+remain untested. The next comparison must start from user-authored effectful
+source, hold the BEAM runtime constant, and measure fidelity against a strong
+conventional typed notation across declared model families.
