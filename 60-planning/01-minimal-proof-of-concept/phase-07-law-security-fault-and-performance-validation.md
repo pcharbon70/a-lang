@@ -208,7 +208,11 @@ opaque references, and broker state.
 and load failures and compare its control-plane costs with a conventional
 typed control-flow baseline under the same external adapters.
 
-- [ ] **Section 7.4 Complete**
+- [x] **Section 7.4 Complete** — implemented by the
+  [fault campaign](../../src/phase-07/alang_phase7_fault_campaign.erl),
+  [performance harness](../../src/phase-07/alang_phase7_bench.erl),
+  [executable checks](../../src/phase-07/alang_phase7_fault_performance_tests.erl),
+  and [characterization note](../../src/phase-07/fault-and-performance-characterization.md).
 
 ### Task 7.4.1: Execute the Complete Fault Matrix
 
@@ -216,7 +220,7 @@ typed control-flow baseline under the same external adapters.
 broker, model adapter, workspace adapter, and journal boundary at every
 meaningful transition.
 
-- [ ] **Task 7.4.1 Complete**
+- [x] **Task 7.4.1 Complete**
 
 #### Subtask 7.4.1.1: Verify Process and Port Recovery
 
@@ -224,7 +228,7 @@ meaningful transition.
 handling, session and capability cleanup, grant restoration, deadline
 behavior, and explicit uncertain outcomes.
 
-- [ ] **Subtask 7.4.1.1 Complete**
+- [x] **Subtask 7.4.1.1 Complete**
 
 #### Subtask 7.4.1.2: Verify Durable Effect Recovery
 
@@ -232,7 +236,7 @@ behavior, and explicit uncertain outcomes.
 acknowledged writes are not duplicated, and ensure unobserved submissions are
 reconciled rather than retried blindly.
 
-- [ ] **Subtask 7.4.1.2 Complete**
+- [x] **Subtask 7.4.1.2 Complete**
 
 ### Task 7.4.2: Measure Runtime and Authorization Costs
 
@@ -240,7 +244,7 @@ reconciled rather than retried blindly.
 scheduler, broker decision, journal, and recovery costs under bounded
 representative loads.
 
-- [ ] **Task 7.4.2 Complete**
+- [x] **Task 7.4.2 Complete**
 
 #### Subtask 7.4.2.1: Benchmark Control-Plane Operations
 
@@ -248,7 +252,7 @@ representative loads.
 grant resolution, effect decision, journal transition, adapter execution,
 recovery, and completion verification at p50, p95, and p99.
 
-- [ ] **Subtask 7.4.2.1 Complete**
+- [x] **Subtask 7.4.2.1 Complete**
 
 #### Subtask 7.4.2.2: Exercise Resource Pressure and Backpressure
 
@@ -256,7 +260,7 @@ recovery, and completion verification at p50, p95, and p99.
 load, port failure, grant count, binary size, scheduler load, and storage delay
 and verify admission and bounded-failure behavior.
 
-- [ ] **Subtask 7.4.2.2 Complete**
+- [x] **Subtask 7.4.2.2 Complete**
 
 ## Section 7.5: Phase 7 Integration Tests
 

@@ -60,6 +60,15 @@ Generated dependencies and build products belong in the ignored `_build/` and
 - [`alang_phase7_adversarial_tests.erl`](alang_phase7_adversarial_tests.erl) —
   generated parser, IR, forms, artifact, ABI, effect, and model attacks plus
   targeted size, atom, grant, path, adapter, context, and disclosure cases.
+- [`alang_phase7_fault_campaign.erl`](alang_phase7_fault_campaign.erl) — the
+  complete component-by-transition fault manifest, monitored process probes,
+  and post-recovery invariant checks.
+- [`alang_phase7_bench.erl`](alang_phase7_bench.erl) — reproducible BEAM-native
+  latency, typed-control baseline, concurrency, grant, and payload-pressure
+  measurements with runtime environment evidence.
+- [`alang_phase7_fault_performance_tests.erl`](alang_phase7_fault_performance_tests.erl)
+  — executable completeness, percentile, baseline, and pressure assertions for
+  Section 7.4.
 - [Typed generators and law observations](typed-generators-and-law-observations.md)
   — the dependency boundary, generated domains, equality rules, and
   reproduction command for Section 7.1.
@@ -69,6 +78,9 @@ Generated dependencies and build products belong in the ignored `_build/` and
 - [Adversarial boundary testing](adversarial-boundary-testing.md) — the
   implemented boundary inventory, attack classes, explicit limits, leak gate,
   and Section 7.3 reproduction command.
+- [Fault and performance characterization](fault-and-performance-characterization.md)
+  — the 63-case campaign, measured operations, comparison baseline, pressure
+  scenarios, limits, and Section 7.4 reproduction command.
 
 ## Maintaining this index
 
