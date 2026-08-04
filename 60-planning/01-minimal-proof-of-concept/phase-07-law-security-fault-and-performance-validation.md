@@ -19,7 +19,7 @@ differential checks, malformed and hostile inputs, complete effect-transition
 fault injection, scheduler and resource pressure, and seeded-defect
 sensitivity.
 
-**Status:** Planned.
+**Status:** Complete — all five sections and the Phase 7 evidence gate pass.
 
 **Dependencies:** Phase 6 complete with a deterministic compiled parent-child
 BEAM workflow, typed model boundary, opaque local authority, durable effects,
@@ -31,7 +31,10 @@ context minimization, and completion witnesses accepted.
 state-machine values and define equality or observation explicitly for every
 law under test.
 
-- [ ] **Section 7.1 Complete**
+- [x] **Section 7.1 Complete** — implemented by the
+  [typed generators](../../src/phase-07/alang_phase7_generators.erl),
+  [observation rules](../../src/phase-07/alang_phase7_observation.erl), and
+  [generated law suite](../../src/phase-07/alang_phase7_law_tests.erl).
 
 ### Task 7.1.1: Implement Typed Source and IR Generators
 
@@ -39,7 +42,7 @@ law under test.
 result branches, sequential tasks, effect rows, requirements, and verifier
 nodes with shrinkers that preserve validity.
 
-- [ ] **Task 7.1.1 Complete**
+- [x] **Task 7.1.1 Complete**
 
 #### Subtask 7.1.1.1: Generate Pure and Effectful Programs
 
@@ -47,7 +50,7 @@ nodes with shrinkers that preserve validity.
 control size and depth, retain source origins, and produce both textual and
 deterministic canonical ETF forms where possible.
 
-- [ ] **Subtask 7.1.1.1 Complete**
+- [x] **Subtask 7.1.1.1 Complete**
 
 #### Subtask 7.1.1.2: Shrink Semantic Counterexamples
 
@@ -55,14 +58,14 @@ deterministic canonical ETF forms where possible.
 and verifier predicates without introducing type errors or changing the
 failure class being investigated.
 
-- [ ] **Subtask 7.1.1.2 Complete**
+- [x] **Subtask 7.1.1.2 Complete**
 
 ### Task 7.1.2: Define Categorical and Effect Observations
 
 **Description:** Specify the equality used for pure values and the normalized
 trace equivalence used for effectful or concurrent task execution.
 
-- [ ] **Task 7.1.2 Complete**
+- [x] **Task 7.1.2 Complete**
 
 #### Subtask 7.1.2.1: Define Pure Composition Laws
 
@@ -70,7 +73,7 @@ trace equivalence used for effectful or concurrent task execution.
 pairing, result injection and case behavior, and deterministic normalization
 under ordinary value equality.
 
-- [ ] **Subtask 7.1.2.1 Complete**
+- [x] **Subtask 7.1.2.1 Complete**
 
 #### Subtask 7.1.2.2: Define Task and Interpreter Laws
 
@@ -78,7 +81,7 @@ under ordinary value equality.
 requirement union, result propagation, interpreter coverage, manifest
 composition, serialization, and reference-to-BEAM observational agreement.
 
-- [ ] **Subtask 7.1.2.2 Complete**
+- [x] **Subtask 7.1.2.2 Complete**
 
 ## Section 7.2: Authorization and Runtime State Properties
 
@@ -86,7 +89,10 @@ composition, serialization, and reference-to-BEAM observational agreement.
 messages, journal histories, failures, and recovery actions and check their
 monotonic or state-machine invariants.
 
-- [ ] **Section 7.2 Complete**
+- [x] **Section 7.2 Complete** — implemented by the
+  [finite authority model](../../src/phase-07/alang_phase7_authority_model.erl),
+  [effect-history model](../../src/phase-07/alang_phase7_history_model.erl), and
+  [generated state properties](../../src/phase-07/alang_phase7_state_property_tests.erl).
 
 ### Task 7.2.1: Implement Local Capability Restriction Properties
 
@@ -94,7 +100,7 @@ monotonic or state-machine invariants.
 invocations and test that every child, policy, budget, and time change
 preserves or reduces authority.
 
-- [ ] **Task 7.2.1 Complete**
+- [x] **Task 7.2.1 Complete**
 
 #### Subtask 7.2.1.1: Test Restriction and Composition Laws
 
@@ -102,7 +108,7 @@ preserves or reduces authority.
 restriction, policy conjunction, resource and validity intersection, child
 restriction, and policy-controlled union of independent local grants.
 
-- [ ] **Subtask 7.2.1.1 Complete**
+- [x] **Subtask 7.2.1.1 Complete**
 
 #### Subtask 7.2.1.2: Test Reference Lifecycle and Broker Agreement
 
@@ -110,7 +116,7 @@ restriction, and policy-controlled union of independent local grants.
 restart, wrong-session, wrong-generation, forged-reference, and deletion cases
 and compare the finite-set authority model with BEAM broker decisions.
 
-- [ ] **Subtask 7.2.1.2 Complete**
+- [x] **Subtask 7.2.1.2 Complete**
 
 ### Task 7.2.2: Implement Broker and Journal State-Machine Properties
 
@@ -118,7 +124,7 @@ and compare the finite-set authority model with BEAM broker decisions.
 intents, adapter outcomes, results, cancellation, expiry, disablement, crashes,
 and recovery as generated command histories.
 
-- [ ] **Task 7.2.2 Complete**
+- [x] **Task 7.2.2 Complete**
 
 #### Subtask 7.2.2.1: Test Safety Invariants
 
@@ -126,7 +132,7 @@ and recovery as generated command histories.
 journaled intent; no budget underflow; no authority widening; no accepted
 expired or disabled grant; and no duplicate acknowledged non-idempotent effect.
 
-- [ ] **Subtask 7.2.2.1 Complete**
+- [x] **Subtask 7.2.2.1 Complete**
 
 #### Subtask 7.2.2.2: Test Recovery and Liveness Bounds
 
@@ -134,7 +140,7 @@ expired or disabled grant; and no duplicate acknowledged non-idempotent effect.
 cancelled, or explicit uncertain state within bounded steps and never loops in
 automatic retry after an ambiguous submission.
 
-- [ ] **Subtask 7.2.2.2 Complete**
+- [x] **Subtask 7.2.2.2 Complete**
 
 ## Section 7.3: Adversarial Boundary Testing
 
@@ -142,7 +148,10 @@ automatic retry after an ambiguous submission.
 capability, resource, model, and logging boundary with malformed and hostile inputs
 under explicit resource limits.
 
-- [ ] **Section 7.3 Complete**
+- [x] **Section 7.3 Complete** — implemented by the
+  [bounded adversarial utilities](../../src/phase-07/alang_phase7_adversarial.erl),
+  [attack suite](../../src/phase-07/alang_phase7_adversarial_tests.erl), and
+  [boundary inventory](../../src/phase-07/adversarial-boundary-testing.md).
 
 ### Task 7.3.1: Fuzz Compiler, Artifact, and ABI Boundaries
 
@@ -150,7 +159,7 @@ under explicit resource limits.
 Format encoding, compiler-bridge frames, BEAM artifact metadata, loader
 inspection, and runtime message decoding.
 
-- [ ] **Task 7.3.1 Complete**
+- [x] **Task 7.3.1 Complete**
 
 #### Subtask 7.3.1.1: Assert Fail-Closed Parsing and Loading
 
@@ -158,7 +167,7 @@ inspection, and runtime message decoding.
 atom growth, partial successful artifacts, or execution of an uninspected
 module.
 
-- [ ] **Subtask 7.3.1.1 Complete**
+- [x] **Subtask 7.3.1.1 Complete**
 
 #### Subtask 7.3.1.2: Exercise Size and Complexity Limits
 
@@ -166,14 +175,14 @@ module.
 messages, recursion depth, branch count, binaries, and metadata and record CPU,
 memory, and diagnostic behavior.
 
-- [ ] **Subtask 7.3.1.2 Complete**
+- [x] **Subtask 7.3.1.2 Complete**
 
 ### Task 7.3.2: Attack Authorization, Resource, and Model Boundaries
 
 **Description:** Test privilege, parsing, resolution, replay, path, context,
 and disclosure attacks against the complete effect path.
 
-- [ ] **Task 7.3.2 Complete**
+- [x] **Task 7.3.2 Complete**
 
 #### Subtask 7.3.2.1: Attack Grant and Resource Semantics
 
@@ -182,7 +191,7 @@ generation, stale grants, scope and budget widening, clock skew, wrong
 ownership, traversal, normalization collisions, symlinks, races, and direct
 adapter bypass attempts.
 
-- [ ] **Subtask 7.3.2.1 Complete**
+- [x] **Subtask 7.3.2.1 Complete**
 
 #### Subtask 7.3.2.2: Attack Context and Secret Boundaries
 
@@ -191,7 +200,7 @@ grant-management escalation through model output, inspect logs and crash
 reports, and scan every model-visible or persisted surface for credentials,
 opaque references, and broker state.
 
-- [ ] **Subtask 7.3.2.2 Complete**
+- [x] **Subtask 7.3.2.2 Complete**
 
 ## Section 7.4: Fault and Performance Characterization
 
@@ -199,7 +208,11 @@ opaque references, and broker state.
 and load failures and compare its control-plane costs with a conventional
 typed control-flow baseline under the same external adapters.
 
-- [ ] **Section 7.4 Complete**
+- [x] **Section 7.4 Complete** — implemented by the
+  [fault campaign](../../src/phase-07/alang_phase7_fault_campaign.erl),
+  [performance harness](../../src/phase-07/alang_phase7_bench.erl),
+  [executable checks](../../src/phase-07/alang_phase7_fault_performance_tests.erl),
+  and [characterization note](../../src/phase-07/fault-and-performance-characterization.md).
 
 ### Task 7.4.1: Execute the Complete Fault Matrix
 
@@ -207,7 +220,7 @@ typed control-flow baseline under the same external adapters.
 broker, model adapter, workspace adapter, and journal boundary at every
 meaningful transition.
 
-- [ ] **Task 7.4.1 Complete**
+- [x] **Task 7.4.1 Complete**
 
 #### Subtask 7.4.1.1: Verify Process and Port Recovery
 
@@ -215,7 +228,7 @@ meaningful transition.
 handling, session and capability cleanup, grant restoration, deadline
 behavior, and explicit uncertain outcomes.
 
-- [ ] **Subtask 7.4.1.1 Complete**
+- [x] **Subtask 7.4.1.1 Complete**
 
 #### Subtask 7.4.1.2: Verify Durable Effect Recovery
 
@@ -223,7 +236,7 @@ behavior, and explicit uncertain outcomes.
 acknowledged writes are not duplicated, and ensure unobserved submissions are
 reconciled rather than retried blindly.
 
-- [ ] **Subtask 7.4.1.2 Complete**
+- [x] **Subtask 7.4.1.2 Complete**
 
 ### Task 7.4.2: Measure Runtime and Authorization Costs
 
@@ -231,7 +244,7 @@ reconciled rather than retried blindly.
 scheduler, broker decision, journal, and recovery costs under bounded
 representative loads.
 
-- [ ] **Task 7.4.2 Complete**
+- [x] **Task 7.4.2 Complete**
 
 #### Subtask 7.4.2.1: Benchmark Control-Plane Operations
 
@@ -239,7 +252,7 @@ representative loads.
 grant resolution, effect decision, journal transition, adapter execution,
 recovery, and completion verification at p50, p95, and p99.
 
-- [ ] **Subtask 7.4.2.1 Complete**
+- [x] **Subtask 7.4.2.1 Complete**
 
 #### Subtask 7.4.2.2: Exercise Resource Pressure and Backpressure
 
@@ -247,7 +260,7 @@ recovery, and completion verification at p50, p95, and p99.
 load, port failure, grant count, binary size, scheduler load, and storage delay
 and verify admission and bounded-failure behavior.
 
-- [ ] **Subtask 7.4.2.2 Complete**
+- [x] **Subtask 7.4.2.2 Complete**
 
 ## Section 7.5: Phase 7 Integration Tests
 
@@ -255,7 +268,10 @@ and verify admission and bounded-failure behavior.
 benchmarks as one reproducible validation campaign and prove that the harness
 detects known bad implementations.
 
-- [ ] **Section 7.5 Complete**
+- [x] **Section 7.5 Complete** — implemented by the
+  [mutation harness](../../src/phase-07/alang_phase7_mutation.erl),
+  [aggregate campaign](../../src/phase-07/alang_phase7_campaign.erl), and
+  [integration evidence](../../src/phase-07/phase-07-integration-evidence.md).
 
 ### Task 7.5.1: Validate Seeded-Defect Sensitivity
 
@@ -263,7 +279,7 @@ detects known bad implementations.
 require the intended property, differential, adversarial, or fault test to
 fail with a minimized or otherwise actionable case.
 
-- [ ] **Task 7.5.1 Complete**
+- [x] **Task 7.5.1 Complete**
 
 #### Subtask 7.5.1.1: Seed Semantic and Backend Defects
 
@@ -271,7 +287,7 @@ fail with a minimized or otherwise actionable case.
 manifest interpretation, serialization, evaluation order, and one runtime ABI
 mapping and confirm targeted detection.
 
-- [ ] **Subtask 7.5.1.1 Complete**
+- [x] **Subtask 7.5.1.1 Complete**
 
 #### Subtask 7.5.1.2: Seed Authorization and Recovery Defects
 
@@ -279,7 +295,7 @@ mapping and confirm targeted detection.
 session and generation binding, revocation, budget atomicity, path containment,
 journal ordering, and crash retry and confirm targeted detection.
 
-- [ ] **Subtask 7.5.1.2 Complete**
+- [x] **Subtask 7.5.1.2 Complete**
 
 ### Task 7.5.2: Publish the Validation Evidence Set
 
@@ -287,7 +303,7 @@ journal ordering, and crash retry and confirm targeted detection.
 counterexamples, fault matrix, environment, metrics, limits, failures, and
 remaining coverage gaps in a reproducible report.
 
-- [ ] **Task 7.5.2 Complete**
+- [x] **Task 7.5.2 Complete**
 
 #### Subtask 7.5.2.1: Separate Passing Evidence from Open Risk
 
@@ -295,7 +311,7 @@ remaining coverage gaps in a reproducible report.
 proof, characterize nondeterministic observations, and preserve every failed
 or inconclusive criterion for the final decision.
 
-- [ ] **Subtask 7.5.2.1 Complete**
+- [x] **Subtask 7.5.2.1 Complete**
 
 #### Subtask 7.5.2.2: Run Phase Completion Gates
 
@@ -303,18 +319,18 @@ or inconclusive criterion for the final decision.
 performance, leak-scan, and complete repository gates and archive exact tool
 and runtime versions with the results.
 
-- [ ] **Subtask 7.5.2.2 Complete**
+- [x] **Subtask 7.5.2.2 Complete**
 
 ## Phase 7 Completion Evidence
 
 **Description:** Record the complete evidence package that authorizes Phase 8
 to judge the architecture against its research hypotheses.
 
-- [ ] Well-typed generators and semantic shrinkers cover the promoted IR
-- [ ] Composition, test-view, local restriction, and state-machine properties pass
-- [ ] Seeded defects are detected by the intended tests
-- [ ] Finite-set authority model and BEAM broker decisions agree
-- [ ] Test-only semantic views and compiled BEAM agree within defined observations
-- [ ] Adversarial inputs fail closed within declared resource bounds
-- [ ] Complete transition fault matrix preserves durable safety invariants
-- [ ] Performance and resource results include tails, pressure, and uncertainty
+- [x] Well-typed generators and semantic shrinkers cover the promoted IR
+- [x] Composition, test-view, local restriction, and state-machine properties pass
+- [x] Seeded defects are detected by the intended tests
+- [x] Finite-set authority model and BEAM broker decisions agree
+- [x] Test-only semantic views and compiled BEAM agree within defined observations
+- [x] Adversarial inputs fail closed within declared resource bounds
+- [x] Complete transition fault matrix preserves durable safety invariants
+- [x] Performance and resource results include tails, pressure, and uncertainty

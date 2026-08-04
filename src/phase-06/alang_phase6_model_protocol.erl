@@ -280,14 +280,23 @@ validate_provenance(#{
     end;
 validate_provenance(_Provenance) -> {error, invalid_model_provenance}.
 
-request_within_profile(Request, Profile) ->
-    ContextBytes = lists:sum([
-        byte_size(maps:get(content, Fragment)) || Fragment <- maps:get(context, Request)
-    ]),
-    InputBytes = ContextBytes + byte_size(maps:get(instruction, Request)),
-    SchemaMax = maps:get(max_bytes, maps:get(output_schema, Request)),
-    InputBytes =< maps:get(max_input_bytes, Profile) andalso
-        SchemaMax =< maps:get(max_output_bytes, Profile).
+request_within_profile(#{context := Context, instruction := Instruction,
+    output_schema := #{max_bytes := SchemaMax}},
+    #{max_input_bytes := MaxInput, max_output_bytes := MaxOutput}) when
+    is_list(Context), is_binary(Instruction), is_integer(SchemaMax),
+    is_integer(MaxInput), is_integer(MaxOutput)
+->
+    case context_bytes(Context, 0) of
+        {ok, ContextBytes} ->
+            ContextBytes + byte_size(Instruction) =< MaxInput andalso SchemaMax =< MaxOutput;
+        error -> false
+    end;
+request_within_profile(_Request, _Profile) -> false.
+
+context_bytes([], Bytes) -> {ok, Bytes};
+context_bytes([#{content := Content} | Rest], Bytes) when is_binary(Content) ->
+    context_bytes(Rest, Bytes + byte_size(Content));
+context_bytes(_Context, _Bytes) -> error.
 
 valid_parsed(#{format := markdown_draft_v1, markdown := Output} = Parsed, Output, Schema) when
     map_size(Parsed) =:= 2
