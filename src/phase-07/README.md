@@ -47,9 +47,19 @@ Generated dependencies and build products belong in the ignored `_build/` and
   value, manifest, fresh-identity, and effect-trace normalization rules.
 - [`alang_phase7_law_tests.erl`](alang_phase7_law_tests.erl) — generated
   categorical, serialization, shrinking, and reference-to-BEAM properties.
+- [`alang_phase7_authority_model.erl`](alang_phase7_authority_model.erl) — the
+  finite resource universe and set observation used to check grant
+  restriction independently of the implementation.
+- [`alang_phase7_history_model.erl`](alang_phase7_history_model.erl) — a small
+  effect-transition oracle with safety and bounded-settlement invariants.
+- [`alang_phase7_state_property_tests.erl`](alang_phase7_state_property_tests.erl)
+  — generated grant, binding, budget, journal, recovery, and liveness histories.
 - [Typed generators and law observations](typed-generators-and-law-observations.md)
   — the dependency boundary, generated domains, equality rules, and
   reproduction command for Section 7.1.
+- [Authorization and runtime state properties](authorization-and-state-properties.md)
+  — the finite-set capability oracle, generated histories, invariants, limits,
+  and reproduction command for Section 7.2.
 
 ## Maintaining this index
 

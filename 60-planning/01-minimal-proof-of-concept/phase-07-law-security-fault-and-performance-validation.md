@@ -19,7 +19,7 @@ differential checks, malformed and hostile inputs, complete effect-transition
 fault injection, scheduler and resource pressure, and seeded-defect
 sensitivity.
 
-**Status:** In progress — Section 7.1 complete.
+**Status:** In progress — Sections 7.1–7.2 complete.
 
 **Dependencies:** Phase 6 complete with a deterministic compiled parent-child
 BEAM workflow, typed model boundary, opaque local authority, durable effects,
@@ -89,7 +89,10 @@ composition, serialization, and reference-to-BEAM observational agreement.
 messages, journal histories, failures, and recovery actions and check their
 monotonic or state-machine invariants.
 
-- [ ] **Section 7.2 Complete**
+- [x] **Section 7.2 Complete** — implemented by the
+  [finite authority model](../../src/phase-07/alang_phase7_authority_model.erl),
+  [effect-history model](../../src/phase-07/alang_phase7_history_model.erl), and
+  [generated state properties](../../src/phase-07/alang_phase7_state_property_tests.erl).
 
 ### Task 7.2.1: Implement Local Capability Restriction Properties
 
@@ -97,7 +100,7 @@ monotonic or state-machine invariants.
 invocations and test that every child, policy, budget, and time change
 preserves or reduces authority.
 
-- [ ] **Task 7.2.1 Complete**
+- [x] **Task 7.2.1 Complete**
 
 #### Subtask 7.2.1.1: Test Restriction and Composition Laws
 
@@ -105,7 +108,7 @@ preserves or reduces authority.
 restriction, policy conjunction, resource and validity intersection, child
 restriction, and policy-controlled union of independent local grants.
 
-- [ ] **Subtask 7.2.1.1 Complete**
+- [x] **Subtask 7.2.1.1 Complete**
 
 #### Subtask 7.2.1.2: Test Reference Lifecycle and Broker Agreement
 
@@ -113,7 +116,7 @@ restriction, and policy-controlled union of independent local grants.
 restart, wrong-session, wrong-generation, forged-reference, and deletion cases
 and compare the finite-set authority model with BEAM broker decisions.
 
-- [ ] **Subtask 7.2.1.2 Complete**
+- [x] **Subtask 7.2.1.2 Complete**
 
 ### Task 7.2.2: Implement Broker and Journal State-Machine Properties
 
@@ -121,7 +124,7 @@ and compare the finite-set authority model with BEAM broker decisions.
 intents, adapter outcomes, results, cancellation, expiry, disablement, crashes,
 and recovery as generated command histories.
 
-- [ ] **Task 7.2.2 Complete**
+- [x] **Task 7.2.2 Complete**
 
 #### Subtask 7.2.2.1: Test Safety Invariants
 
@@ -129,7 +132,7 @@ and recovery as generated command histories.
 journaled intent; no budget underflow; no authority widening; no accepted
 expired or disabled grant; and no duplicate acknowledged non-idempotent effect.
 
-- [ ] **Subtask 7.2.2.1 Complete**
+- [x] **Subtask 7.2.2.1 Complete**
 
 #### Subtask 7.2.2.2: Test Recovery and Liveness Bounds
 
@@ -137,7 +140,7 @@ expired or disabled grant; and no duplicate acknowledged non-idempotent effect.
 cancelled, or explicit uncertain state within bounded steps and never loops in
 automatic retry after an ambiguous submission.
 
-- [ ] **Subtask 7.2.2.2 Complete**
+- [x] **Subtask 7.2.2.2 Complete**
 
 ## Section 7.3: Adversarial Boundary Testing
 
