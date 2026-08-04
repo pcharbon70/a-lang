@@ -19,7 +19,7 @@ differential checks, malformed and hostile inputs, complete effect-transition
 fault injection, scheduler and resource pressure, and seeded-defect
 sensitivity.
 
-**Status:** In progress — Sections 7.1–7.3 complete.
+**Status:** Complete — all five sections and the Phase 7 evidence gate pass.
 
 **Dependencies:** Phase 6 complete with a deterministic compiled parent-child
 BEAM workflow, typed model boundary, opaque local authority, durable effects,
@@ -268,7 +268,10 @@ and verify admission and bounded-failure behavior.
 benchmarks as one reproducible validation campaign and prove that the harness
 detects known bad implementations.
 
-- [ ] **Section 7.5 Complete**
+- [x] **Section 7.5 Complete** — implemented by the
+  [mutation harness](../../src/phase-07/alang_phase7_mutation.erl),
+  [aggregate campaign](../../src/phase-07/alang_phase7_campaign.erl), and
+  [integration evidence](../../src/phase-07/phase-07-integration-evidence.md).
 
 ### Task 7.5.1: Validate Seeded-Defect Sensitivity
 
@@ -276,7 +279,7 @@ detects known bad implementations.
 require the intended property, differential, adversarial, or fault test to
 fail with a minimized or otherwise actionable case.
 
-- [ ] **Task 7.5.1 Complete**
+- [x] **Task 7.5.1 Complete**
 
 #### Subtask 7.5.1.1: Seed Semantic and Backend Defects
 
@@ -284,7 +287,7 @@ fail with a minimized or otherwise actionable case.
 manifest interpretation, serialization, evaluation order, and one runtime ABI
 mapping and confirm targeted detection.
 
-- [ ] **Subtask 7.5.1.1 Complete**
+- [x] **Subtask 7.5.1.1 Complete**
 
 #### Subtask 7.5.1.2: Seed Authorization and Recovery Defects
 
@@ -292,7 +295,7 @@ mapping and confirm targeted detection.
 session and generation binding, revocation, budget atomicity, path containment,
 journal ordering, and crash retry and confirm targeted detection.
 
-- [ ] **Subtask 7.5.1.2 Complete**
+- [x] **Subtask 7.5.1.2 Complete**
 
 ### Task 7.5.2: Publish the Validation Evidence Set
 
@@ -300,7 +303,7 @@ journal ordering, and crash retry and confirm targeted detection.
 counterexamples, fault matrix, environment, metrics, limits, failures, and
 remaining coverage gaps in a reproducible report.
 
-- [ ] **Task 7.5.2 Complete**
+- [x] **Task 7.5.2 Complete**
 
 #### Subtask 7.5.2.1: Separate Passing Evidence from Open Risk
 
@@ -308,7 +311,7 @@ remaining coverage gaps in a reproducible report.
 proof, characterize nondeterministic observations, and preserve every failed
 or inconclusive criterion for the final decision.
 
-- [ ] **Subtask 7.5.2.1 Complete**
+- [x] **Subtask 7.5.2.1 Complete**
 
 #### Subtask 7.5.2.2: Run Phase Completion Gates
 
@@ -316,18 +319,18 @@ or inconclusive criterion for the final decision.
 performance, leak-scan, and complete repository gates and archive exact tool
 and runtime versions with the results.
 
-- [ ] **Subtask 7.5.2.2 Complete**
+- [x] **Subtask 7.5.2.2 Complete**
 
 ## Phase 7 Completion Evidence
 
 **Description:** Record the complete evidence package that authorizes Phase 8
 to judge the architecture against its research hypotheses.
 
-- [ ] Well-typed generators and semantic shrinkers cover the promoted IR
-- [ ] Composition, test-view, local restriction, and state-machine properties pass
-- [ ] Seeded defects are detected by the intended tests
-- [ ] Finite-set authority model and BEAM broker decisions agree
-- [ ] Test-only semantic views and compiled BEAM agree within defined observations
-- [ ] Adversarial inputs fail closed within declared resource bounds
-- [ ] Complete transition fault matrix preserves durable safety invariants
-- [ ] Performance and resource results include tails, pressure, and uncertainty
+- [x] Well-typed generators and semantic shrinkers cover the promoted IR
+- [x] Composition, test-view, local restriction, and state-machine properties pass
+- [x] Seeded defects are detected by the intended tests
+- [x] Finite-set authority model and BEAM broker decisions agree
+- [x] Test-only semantic views and compiled BEAM agree within defined observations
+- [x] Adversarial inputs fail closed within declared resource bounds
+- [x] Complete transition fault matrix preserves durable safety invariants
+- [x] Performance and resource results include tails, pressure, and uncertainty

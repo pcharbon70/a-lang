@@ -69,6 +69,18 @@ Generated dependencies and build products belong in the ignored `_build/` and
 - [`alang_phase7_fault_performance_tests.erl`](alang_phase7_fault_performance_tests.erl)
   — executable completeness, percentile, baseline, and pressure assertions for
   Section 7.4.
+- [`alang_phase7_mutation.erl`](alang_phase7_mutation.erl) — 17 local,
+  nondeployable seeded defects with named detectors and actionable
+  counterexamples.
+- [`alang_phase7_mutation_tests.erl`](alang_phase7_mutation_tests.erl) —
+  completeness, category, detection, and counterexample gates for the mutation
+  set.
+- [`alang_phase7_campaign.erl`](alang_phase7_campaign.erl) — the aggregate law,
+  state, adversarial, fault, performance, mutation, version, count, limit, and
+  caveat evidence record.
+- [`alang_phase7_campaign_tests.erl`](alang_phase7_campaign_tests.erl) — exact
+  count, version, leak-scan, and reproduction-command assertions for the final
+  Phase 7 campaign.
 - [Typed generators and law observations](typed-generators-and-law-observations.md)
   — the dependency boundary, generated domains, equality rules, and
   reproduction command for Section 7.1.
@@ -81,6 +93,12 @@ Generated dependencies and build products belong in the ignored `_build/` and
 - [Fault and performance characterization](fault-and-performance-characterization.md)
   — the 63-case campaign, measured operations, comparison baseline, pressure
   scenarios, limits, and Section 7.4 reproduction command.
+- [Seeded-defect sensitivity](seeded-defect-sensitivity.md) — the mutation
+  strategy, 8 semantic/backend defects, 9 authorization/recovery defects,
+  interpretation limits, and Section 7.5 reproduction command.
+- [Phase 7 integration evidence](phase-07-integration-evidence.md) — exact
+  versions, case counts, acceptance commands, captured performance and
+  pressure results, replay constraints, and remaining risks.
 
 ## Maintaining this index
 
