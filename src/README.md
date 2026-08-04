@@ -68,6 +68,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 6 bounded LLM task and subagent execution](phase-06/README.md) — the
   typed model boundary, deterministic task control, structured repair,
   completion verification, and mechanically attenuated child-task runtime.
+- [Phase 7 law, security, fault, and performance validation](phase-07/README.md)
+  — the BEAM-native PropEr harness, explicit semantic observations, generated
+  laws, adversarial cases, fault injection, and bounded measurements.
 
 ### Files
 

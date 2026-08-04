@@ -19,7 +19,7 @@ differential checks, malformed and hostile inputs, complete effect-transition
 fault injection, scheduler and resource pressure, and seeded-defect
 sensitivity.
 
-**Status:** Planned.
+**Status:** In progress — Section 7.1 complete.
 
 **Dependencies:** Phase 6 complete with a deterministic compiled parent-child
 BEAM workflow, typed model boundary, opaque local authority, durable effects,
@@ -31,7 +31,10 @@ context minimization, and completion witnesses accepted.
 state-machine values and define equality or observation explicitly for every
 law under test.
 
-- [ ] **Section 7.1 Complete**
+- [x] **Section 7.1 Complete** — implemented by the
+  [typed generators](../../src/phase-07/alang_phase7_generators.erl),
+  [observation rules](../../src/phase-07/alang_phase7_observation.erl), and
+  [generated law suite](../../src/phase-07/alang_phase7_law_tests.erl).
 
 ### Task 7.1.1: Implement Typed Source and IR Generators
 
@@ -39,7 +42,7 @@ law under test.
 result branches, sequential tasks, effect rows, requirements, and verifier
 nodes with shrinkers that preserve validity.
 
-- [ ] **Task 7.1.1 Complete**
+- [x] **Task 7.1.1 Complete**
 
 #### Subtask 7.1.1.1: Generate Pure and Effectful Programs
 
@@ -47,7 +50,7 @@ nodes with shrinkers that preserve validity.
 control size and depth, retain source origins, and produce both textual and
 deterministic canonical ETF forms where possible.
 
-- [ ] **Subtask 7.1.1.1 Complete**
+- [x] **Subtask 7.1.1.1 Complete**
 
 #### Subtask 7.1.1.2: Shrink Semantic Counterexamples
 
@@ -55,14 +58,14 @@ deterministic canonical ETF forms where possible.
 and verifier predicates without introducing type errors or changing the
 failure class being investigated.
 
-- [ ] **Subtask 7.1.1.2 Complete**
+- [x] **Subtask 7.1.1.2 Complete**
 
 ### Task 7.1.2: Define Categorical and Effect Observations
 
 **Description:** Specify the equality used for pure values and the normalized
 trace equivalence used for effectful or concurrent task execution.
 
-- [ ] **Task 7.1.2 Complete**
+- [x] **Task 7.1.2 Complete**
 
 #### Subtask 7.1.2.1: Define Pure Composition Laws
 
@@ -70,7 +73,7 @@ trace equivalence used for effectful or concurrent task execution.
 pairing, result injection and case behavior, and deterministic normalization
 under ordinary value equality.
 
-- [ ] **Subtask 7.1.2.1 Complete**
+- [x] **Subtask 7.1.2.1 Complete**
 
 #### Subtask 7.1.2.2: Define Task and Interpreter Laws
 
@@ -78,7 +81,7 @@ under ordinary value equality.
 requirement union, result propagation, interpreter coverage, manifest
 composition, serialization, and reference-to-BEAM observational agreement.
 
-- [ ] **Subtask 7.1.2.2 Complete**
+- [x] **Subtask 7.1.2.2 Complete**
 
 ## Section 7.2: Authorization and Runtime State Properties
 

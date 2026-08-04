@@ -114,10 +114,15 @@ created. They are examples rather than archive documents themselves.
 ## Repository files
 
 - [`.gitignore`](.gitignore) — excludes generated build and evidence output
-- [`.tool-versions`](.tool-versions) — pins the project Erlang/OTP toolchain
+- [`.tool-versions`](.tool-versions) — pins Erlang/OTP and the Rebar dependency
+  tool used by the test-only validation harness
 - [`Makefile`](Makefile) — exposes reproducible proof-of-concept build,
   execution, and validation commands
 - [`AGENTS.md`](AGENTS.md) — repository-wide instructions for creating,
   organizing, researching, and validating archive material
 - [`frontmatter.schema.json`](frontmatter.schema.json) — the authoritative
   machine-readable metadata contract
+- [`rebar.config`](rebar.config) — declares the pinned BEAM-native PropEr test
+  dependency without adding it to the deployable A-Lang runtime
+- [`rebar.lock`](rebar.lock) — records the exact PropEr package version and
+  integrity hashes used by Phase 7
