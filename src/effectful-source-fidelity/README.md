@@ -60,11 +60,20 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_decision_tests.erl`](alang_fidelity_decision_tests.erl) —
   covers promotion, JSON replacement, stop, invalid-campaign, interval, and
   safety-veto outcomes.
+- [`alang_fidelity_frontend_tests.erl`](alang_fidelity_frontend_tests.erl) —
+  checks the versioned source lexer, closed task declarations, input bounds,
+  stable origins, rejection diagnostics, and unchanged v1 delegation.
 - [`alang_fidelity_integration_tests.erl`](alang_fidelity_integration_tests.erl)
   — runs the complete contract/corpus gate, mutant matrix, BEAM residency
   check, frozen-scope audit, and byte-for-byte digest reproduction.
 - [`alang_fidelity_json.erl`](alang_fidelity_json.erl) — provides bounded,
   duplicate-aware OTP JSON decoding and deterministic SHA-256 term digests.
+- [`alang_fidelity_lexer.erl`](alang_fidelity_lexer.erl) — tokenizes the frozen
+  `alang-source-v2` surface with byte and line-column origins, bounded UTF-8
+  strings, binary identifiers, and no source-controlled atoms.
+- [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
+  source unchanged and parses v2 task declarations, authority, scopes, and
+  limits into the stream-owned AST boundary.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.

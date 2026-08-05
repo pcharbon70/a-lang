@@ -20,8 +20,8 @@ AST boundary from the pure `alang-source-v1` counter slice to the frozen
 model, workspace, repair, child, limit, result, and completion semantics without
 adding general-purpose language features or interpreting source.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** In progress; completed sections link implementation state to
+reproducible BEAM-native tests, while later sections remain unchecked.
 
 **Dependencies:** Phase 1 complete with frozen representation and corpus
 contracts. The Phase 2 v1 frontend remains supported, and the Phase 3 IR/runtime
@@ -29,61 +29,63 @@ vocabulary defines the maximum semantic surface this parser may expose.
 
 ## Section 2.1: Versioned Lexical and Declaration Surface
 
-**Description:** Add only the tokens, literals, built-in types, and task clauses
-needed by the pre-registered effectful corpus while retaining bounded input and
-binary identifiers.
+**Description:** Add only the tokens, literals, built-in types, and declaration
+clauses used by the pre-registered effectful corpus while retaining bounded
+input, source-local origins, and binary identifiers.
 
-- [ ] **Section 2.1 Complete**
+- [x] **Section 2.1 Complete**
 
 ### Task 2.1.1: Extend the Lexer Without Expanding Trust
 
-**Description:** Recognize the v2 keywords and punctuation with stable byte,
-line, and column origins, bounded UTF-8 strings, and no atoms created from
-source-controlled text.
+**Description:** Recognize the frozen v2 shebang, clause keywords, qualified
+names, and punctuation with stable byte, line, and column origins, bounded
+UTF-8 strings, and no atoms created from source-controlled text.
 
-- [ ] **Task 2.1.1 Complete**
+- [x] **Task 2.1.1 Complete**
 
 #### Subtask 2.1.1.1: Add Closed V2 Tokens and Literals
 
-**Description:** Add `Binary`, `Result`, `do`, `let`, `return`, `match`, `ok`,
-`error`, `limits`, `delegate`, `with`, and `artifact` forms plus quoted binary
-literals, named arguments, braces, brackets, commas, and assignment arrows;
-reject interpolation and arbitrary operator names.
+**Description:** Add `task`, `facts`, `input`, `effects`, `requirements`,
+`scopes`, and `limits` forms plus bounded strings, binary identifiers,
+qualified names, braces, brackets, commas, colons, and semicolons; reject
+interpolation, arbitrary escapes, and unsupported punctuation.
 
-- [ ] **Subtask 2.1.1.1 Complete**
+- [x] **Subtask 2.1.1.1 Complete**
 
 #### Subtask 2.1.1.2: Preserve Bounds, Origins, and V1 Behavior
 
-**Description:** Keep the 1 MiB source ceiling, deterministic token stream,
-bounded literal and identifier sizes, comment behavior, and v1 token meanings;
-add Unicode validation without normalizing identifiers implicitly.
+**Description:** Keep the 1 MiB lexer ceiling, enforce the frozen 8,192-byte v2
+document bound, preserve deterministic tokens and v1 dispatch, and validate
+Unicode without normalizing identifiers implicitly.
 
-- [ ] **Subtask 2.1.1.2 Complete**
+- [x] **Subtask 2.1.1.2 Complete**
 
-### Task 2.1.2: Parse V2 Task Headers and Limits
+### Task 2.1.2: Parse V2 Task Declarations and Limits
 
-**Description:** Parse nonempty effect and requirement lists plus a closed limit
-record before the task body so static authority is explicit at the source
-boundary.
+**Description:** Parse facts, typed inputs, effects, requirements, scopes, and a
+closed limit record in presentation-independent clause order so declared
+authority and resource bounds are explicit at the source boundary. Empty
+authority is retained for the pre-registered clarification-only cases.
 
-- [ ] **Task 2.1.2 Complete**
+- [x] **Task 2.1.2 Complete**
 
-#### Subtask 2.1.2.1: Parse Built-In Data and Result Types
+#### Subtask 2.1.2.1: Parse the Frozen Built-In Input Types
 
-**Description:** Accept `Int`, `Bool`, `Binary`, and the built-in
-`Result<Success, Failure>` form only; retain task parameters and results while
-rejecting user-defined, polymorphic, recursive, or higher-kinded types.
+**Description:** Accept only `bool`, `json`, `model-profile`, `nat`, `path`, and
+`text` in v2 input declarations; preserve v1 `Int` and `Bool` behavior through
+the unchanged legacy frontend while rejecting user-defined or polymorphic
+types.
 
-- [ ] **Subtask 2.1.2.1 Complete**
+- [x] **Subtask 2.1.2.1 Complete**
 
 #### Subtask 2.1.2.2: Parse Authority and Runtime Limits
 
-**Description:** Accept closed lists containing only `model.complete` and
-`workspace.write`, their matching requirements, and named integer limits for
-steps, model calls, repairs, workspace writes, child calls, output bytes, and
-deadline milliseconds; reject duplicate or unknown keys.
+**Description:** Accept closed lists containing only `child.run`,
+`model.generate`, and `workspace.write`, model/workspace requirements, declared
+resource scopes, and the seven frozen integer limits; reject duplicate or
+unknown fields and values.
 
-- [ ] **Subtask 2.1.2.2 Complete**
+- [x] **Subtask 2.1.2.2 Complete**
 
 ## Section 2.2: Sequential Effects, Results, Child Tasks, and Completion
 
