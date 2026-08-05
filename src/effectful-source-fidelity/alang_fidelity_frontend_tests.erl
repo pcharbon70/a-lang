@@ -85,6 +85,14 @@ declaration_source() ->
         "  input context: json optional;\n",
         "  effects [workspace.write, model.generate];\n",
         "  limits { timeout-ms 30000; output-bytes 2048; workspace-writes 1; child-calls 0; repair-calls 0; model-calls 1; steps 3; }\n",
+        "  step draft: model.generate depends [];\n",
+        "  step publish: workspace.write depends [draft];\n",
+        "  step finish: complete depends [publish];\n",
+        "  on-error [];\n",
+        "  child none;\n",
+        "  complete [artifact-exists \"/workspace/result.md\": true, max-bytes \"/workspace/result.md\": 2048];\n",
+        "  clarify [];\n",
+        "  terminal complete;\n",
         "}\n"
     ]).
 

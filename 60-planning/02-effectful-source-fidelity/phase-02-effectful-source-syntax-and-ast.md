@@ -87,38 +87,38 @@ unknown fields and values.
 
 - [x] **Subtask 2.1.2.2 Complete**
 
-## Section 2.2: Sequential Effects, Results, Child Tasks, and Completion
+## Section 2.2: Ordered Effects, Error Results, Child Attenuation, and Completion
 
-**Description:** Parse the minimal structured control forms that map directly
-to already implemented typed-IR and Phase 6 runtime concepts.
+**Description:** Parse the minimal ordered action, error, child, and completion
+declarations frozen in Phase 1 so they can map directly to the existing typed
+IR and runtime concepts without executing source.
 
-- [ ] **Section 2.2 Complete**
+- [x] **Section 2.2 Complete**
 
-### Task 2.2.1: Parse Sequential Bodies and Closed Effect Calls
+### Task 2.2.1: Parse Ordered Steps and Closed Operations
 
-**Description:** Add a `do` body containing ordered `let` bindings and one
-terminal `return`, with explicit result matching around model and workspace
-operations rather than exceptions or implicit retries.
+**Description:** Parse ordered `step` declarations with explicit dependency
+lists and a closed `on-error` table so failure behavior remains data rather than
+exceptions, implicit retries, or unstructured control flow.
 
-- [ ] **Task 2.2.1 Complete**
+- [x] **Task 2.2.1 Complete**
 
-#### Subtask 2.2.1.1: Parse `do`, Binding, Return, and Result Match
+#### Subtask 2.2.1.1: Parse Steps, Dependencies, and Error Branches
 
-**Description:** Parse sequential bindings and `match value { ok(name) => ...,
-error(name) => ... }` with lexical scopes and total branches; do not add loops,
-recursion, mutation, early return, or unstructured control flow.
+**Description:** Parse named actions, ordered dependency lists, and explicit
+`action reason => terminal-class` branches; do not add loops, recursion,
+mutation, early return, or unstructured control flow.
 
-- [ ] **Subtask 2.2.1.1 Complete**
+- [x] **Subtask 2.2.1.1 Complete**
 
-#### Subtask 2.2.1.2: Parse the Two Registered Effect Intrinsics
+#### Subtask 2.2.1.2: Parse the Registered Step Operations
 
-**Description:** Parse named, closed arguments for `model.complete` and
-`workspace.write`, including model/workspace identity, prompt/path/content,
-maximum bytes, and relative deadline. Operation identities remain compiler- and
-runtime-derived rather than source-authored; reject dynamic operation, adapter,
-endpoint, credential, module, and function selection.
+**Description:** Accept only `model.generate`, `model.repair`,
+`workspace.write`, `child.run`, and `complete` as step operations. Runtime
+operation identities and arguments remain compiler-derived; reject dynamic
+operation, adapter, endpoint, credential, module, and function selection.
 
-- [ ] **Subtask 2.2.1.2 Complete**
+- [x] **Subtask 2.2.1.2 Complete**
 
 ### Task 2.2.2: Parse Restricted Delegation and Completion Clauses
 
@@ -126,25 +126,25 @@ endpoint, credential, module, and function selection.
 as source-owned declarations rather than adding a generic spawn primitive or a
 model-controlled completion decision.
 
-- [ ] **Task 2.2.2 Complete**
+- [x] **Task 2.2.2 Complete**
 
-#### Subtask 2.2.2.1: Parse `delegate` with Mechanical Bounds
+#### Subtask 2.2.2.1: Parse a Mechanically Bounded Child Record
 
-**Description:** Accept a statically named local child task, typed arguments,
-and a `with` record that can only reduce effects, requirements, model calls,
-output bytes, and deadline; prohibit grant values, process identifiers,
-delegation, combination, and dynamic task names.
+**Description:** Accept `child none` or one closed child record containing only
+effects, requirements, scopes, and limits. Prohibit grant values, process
+identifiers, nested delegation, combination, and dynamic task names.
 
-- [ ] **Subtask 2.2.2.1 Complete**
+- [x] **Subtask 2.2.2.1 Complete**
 
 #### Subtask 2.2.2.2: Parse Structured Artifact Completion
 
-**Description:** Accept an `ensures artifact(...)` clause with a safe relative
-path, expected canonical digest, maximum bytes, UTF-8 and Markdown-H1 flags,
-required H2 section, and successful-journal requirement; prohibit arbitrary
-predicates and model assertions of completion.
+**Description:** Accept only the frozen `artifact-exists`, `markdown-h1`,
+`utf8`, `max-bytes`, `journal-succeeded`, and `clarification-recorded`
+predicates with typed expected values, followed by explicit clarification and
+terminal declarations; prohibit arbitrary predicates and model assertions of
+completion.
 
-- [ ] **Subtask 2.2.2.2 Complete**
+- [x] **Subtask 2.2.2.2 Complete**
 
 ## Section 2.3: V2 AST, Canonical Boundary, and Diagnostics
 

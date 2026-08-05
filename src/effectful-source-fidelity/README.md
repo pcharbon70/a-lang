@@ -42,6 +42,9 @@ test path. Generated evidence belongs under the ignored
 
 ### Files
 
+- [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
+  ordered effect and repair steps, explicit error results, attenuated child
+  declarations, completion predicates, clarification, and terminal classes.
 - [`alang_fidelity_contract.erl`](alang_fidelity_contract.erl) — validates the
   closed task-comprehension and representation-neutral answer-key contracts
   and computes canonical semantic digests.

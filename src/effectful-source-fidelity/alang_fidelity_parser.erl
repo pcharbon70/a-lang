@@ -31,7 +31,13 @@ parse_tokens(Tokens) when is_list(Tokens) ->
             effects => undefined,
             requirements => undefined,
             scopes => undefined,
-            limits => undefined
+            limits => undefined,
+            steps => [],
+            on_error => undefined,
+            child => undefined,
+            completion => undefined,
+            clarify => undefined,
+            terminal => undefined
         },
         {Task, Tokens5} = parse_declarations(Tokens4, State0, TaskName, TaskNameOrigin, TaskOrigin),
         {_Eof, _EofOrigin, []} = expect(eof, Tokens5),
@@ -91,6 +97,41 @@ parse_declarations([{limits_kw, _, Origin} | Rest], State, TaskName, TaskNameOri
     ensure_unset(limits, State, Origin),
     {Limits, Tokens1} = parse_limits(Rest, Origin),
     parse_declarations(Tokens1, State#{limits => Limits}, TaskName, TaskNameOrigin, TaskOrigin);
+parse_declarations([{step_kw, _, Origin} | Rest], State, TaskName, TaskNameOrigin, TaskOrigin) ->
+    {Step, Tokens1} = parse_step(Rest, Origin),
+    Steps = maps:get(steps, State),
+    ensure_unique_named(Step, Steps, duplicate_step),
+    parse_declarations(Tokens1, State#{steps => [Step | Steps]}, TaskName, TaskNameOrigin, TaskOrigin);
+parse_declarations([{on_error_kw, _, Origin} | Rest], State, TaskName, TaskNameOrigin, TaskOrigin) ->
+    ensure_unset(on_error, State, Origin),
+    {OnError, Tokens1} = parse_on_error(Rest, Origin),
+    parse_declarations(Tokens1, State#{on_error => OnError}, TaskName, TaskNameOrigin, TaskOrigin);
+parse_declarations([{child_kw, _, Origin} | Rest], State, TaskName, TaskNameOrigin, TaskOrigin) ->
+    ensure_unset(child, State, Origin),
+    {Child, Tokens1} = parse_child(Rest, Origin),
+    parse_declarations(Tokens1, State#{child => Child}, TaskName, TaskNameOrigin, TaskOrigin);
+parse_declarations([{complete_kw, _, Origin} | Rest], State, TaskName, TaskNameOrigin, TaskOrigin) ->
+    ensure_unset(completion, State, Origin),
+    {Completion, Tokens1} = parse_completion(Rest, Origin),
+    parse_declarations(Tokens1, State#{completion => Completion}, TaskName, TaskNameOrigin, TaskOrigin);
+parse_declarations([{clarify_kw, _, Origin} | Rest], State, TaskName, TaskNameOrigin, TaskOrigin) ->
+    ensure_unset(clarify, State, Origin),
+    {_LBracket, _LBracketOrigin, Tokens1} = expect(lbracket, Rest),
+    {Needs, Tokens2} = parse_string_nodes(Tokens1),
+    {_Semicolon, _SemicolonOrigin, Tokens3} = expect(semicolon, Tokens2),
+    parse_declarations(
+        Tokens3,
+        State#{clarify => #{kind => clarification_needs, values => Needs, origin => Origin}},
+        TaskName,
+        TaskNameOrigin,
+        TaskOrigin
+    );
+parse_declarations([{terminal_kw, _, Origin} | Rest], State, TaskName, TaskNameOrigin, TaskOrigin) ->
+    ensure_unset(terminal, State, Origin),
+    {TerminalClass, ClassOrigin, Tokens1} = expect_terminal(Rest),
+    {_Semicolon, _SemicolonOrigin, Tokens2} = expect(semicolon, Tokens1),
+    Terminal = #{kind => terminal, class => TerminalClass, class_origin => ClassOrigin, origin => Origin},
+    parse_declarations(Tokens2, State#{terminal => Terminal}, TaskName, TaskNameOrigin, TaskOrigin);
 parse_declarations([{Kind, _, Origin} | _], _State, _TaskName, _TaskNameOrigin, _TaskOrigin) ->
     fail(unexpected_task_clause, Origin, iolist_to_binary(io_lib:format("unsupported or misplaced task clause: ~p", [Kind])));
 parse_declarations([], _State, _TaskName, _TaskNameOrigin, _TaskOrigin) ->
@@ -247,8 +288,202 @@ parse_limit_fields(Tokens0, State, Acc, Origin) ->
     Entry = #{kind => limit, name => Name, value => Value, value_origin => ValueOrigin, origin => NameOrigin},
     parse_limit_fields(Tokens3, State#{Key => Entry}, [Entry | Acc], Origin).
 
+parse_step(Tokens0, Origin) ->
+    {Name, NameOrigin, Tokens1} = expect(identifier, Tokens0),
+    {_Colon, _ColonOrigin, Tokens2} = expect(colon, Tokens1),
+    {Operation, OperationOrigin, Tokens3} = parse_operation(Tokens2),
+    {_Depends, _DependsOrigin, Tokens4} = expect(depends_kw, Tokens3),
+    {_LBracket, _LBracketOrigin, Tokens5} = expect(lbracket, Tokens4),
+    {Dependencies, Tokens6} = parse_identifier_nodes(Tokens5),
+    ensure_unique_values(Dependencies, duplicate_dependency),
+    {_Semicolon, _SemicolonOrigin, Tokens7} = expect(semicolon, Tokens6),
+    {#{
+        kind => step,
+        name => Name,
+        name_origin => NameOrigin,
+        operation => Operation,
+        operation_origin => OperationOrigin,
+        depends_on => Dependencies,
+        origin => Origin
+    }, Tokens7}.
+
+parse_operation([{complete_kw, _, Origin} | Rest]) ->
+    {<<"complete">>, Origin, Rest};
+parse_operation(Tokens0) ->
+    {Namespace, Origin, Tokens1} = expect_word(Tokens0),
+    {_Dot, _DotOrigin, Tokens2} = expect(dot, Tokens1),
+    {Operation, _OperationOrigin, Tokens3} = expect_word(Tokens2),
+    Name = <<Namespace/binary, ".", Operation/binary>>,
+    Allowed = [<<"child.run">>, <<"model.generate">>, <<"model.repair">>, <<"workspace.write">>],
+    case lists:member(Name, Allowed) of
+        true -> {Name, Origin, Tokens3};
+        false -> fail(unknown_operation, Origin, <<"unknown step operation: ", Name/binary>>)
+    end.
+
+parse_on_error(Tokens0, Origin) ->
+    {_LBracket, _LBracketOrigin, Tokens1} = expect(lbracket, Tokens0),
+    {Branches, Tokens2} = parse_error_branches(Tokens1),
+    {_Semicolon, _SemicolonOrigin, Tokens3} = expect(semicolon, Tokens2),
+    ensure_unique_error_branches(Branches),
+    {#{kind => error_branches, values => Branches, origin => Origin}, Tokens3}.
+
+parse_error_branches([{rbracket, _, _} | Rest]) ->
+    {[], Rest};
+parse_error_branches(Tokens) ->
+    {Branch, Tokens1} = parse_error_branch(Tokens),
+    parse_more_error_branches(Tokens1, [Branch]).
+
+parse_more_error_branches([{comma, _, _} | Rest], Acc) ->
+    {Branch, Tokens1} = parse_error_branch(Rest),
+    parse_more_error_branches(Tokens1, [Branch | Acc]);
+parse_more_error_branches([{rbracket, _, _} | Rest], Acc) ->
+    {lists:reverse(Acc), Rest};
+parse_more_error_branches(Tokens, _Acc) ->
+    fail(expected_list_separator, token_origin(Tokens), <<"expected comma or rbracket">>).
+
+parse_error_branch(Tokens0) ->
+    {Action, Origin, Tokens1} = expect(identifier, Tokens0),
+    {Reason, ReasonOrigin, Tokens2} = expect(identifier, Tokens1),
+    case lists:member(Reason, [<<"denied">>, <<"invalid-output">>, <<"timeout">>]) of
+        true -> ok;
+        false -> fail(unknown_error_reason, ReasonOrigin, <<"unknown error reason: ", Reason/binary>>)
+    end,
+    {_Arrow, _ArrowOrigin, Tokens3} = expect(fat_arrow, Tokens2),
+    {TerminalClass, TerminalOrigin, Tokens4} = expect_terminal(Tokens3),
+    {#{
+        kind => error_branch,
+        action => Action,
+        reason => Reason,
+        terminal_class => TerminalClass,
+        reason_origin => ReasonOrigin,
+        terminal_origin => TerminalOrigin,
+        origin => Origin
+    }, Tokens4}.
+
+parse_child([{none_kw, _, ValueOrigin} | Rest], Origin) ->
+    {_Semicolon, _SemicolonOrigin, Tokens1} = expect(semicolon, Rest),
+    {#{kind => child, value => none, value_origin => ValueOrigin, origin => Origin}, Tokens1};
+parse_child(Tokens0, Origin) ->
+    {_LBrace, _LBraceOrigin, Tokens1} = expect(lbrace, Tokens0),
+    State = #{effects => undefined, requirements => undefined, scopes => undefined, limits => undefined},
+    parse_child_fields(Tokens1, State, Origin).
+
+parse_child_fields([{rbrace, _, EndOrigin} | Rest], State, Origin) ->
+    ensure_fields([effects, requirements, scopes, limits], State, missing_child_field, EndOrigin),
+    {#{
+        kind => child,
+        value => attenuation,
+        effects => maps:get(effects, State),
+        requirements => maps:get(requirements, State),
+        scopes => maps:get(scopes, State),
+        limits => maps:get(limits, State),
+        origin => Origin
+    }, Rest};
+parse_child_fields([{effects_kw, _, FieldOrigin} | Rest], State, Origin) ->
+    ensure_unset(effects, State, FieldOrigin),
+    {_LBracket, _LBracketOrigin, Tokens1} = expect(lbracket, Rest),
+    {Effects, Tokens2} = parse_effect_nodes(Tokens1),
+    {_Semicolon, _SemicolonOrigin, Tokens3} = expect(semicolon, Tokens2),
+    ensure_unique_values(Effects, duplicate_effect),
+    Field = #{kind => effects, values => Effects, origin => FieldOrigin},
+    parse_child_fields(Tokens3, State#{effects => Field}, Origin);
+parse_child_fields([{requirements_kw, _, FieldOrigin} | Rest], State, Origin) ->
+    ensure_unset(requirements, State, FieldOrigin),
+    {_LBracket, _LBracketOrigin, Tokens1} = expect(lbracket, Rest),
+    {Requirements, Tokens2} = parse_requirement_nodes(Tokens1),
+    {_Semicolon, _SemicolonOrigin, Tokens3} = expect(semicolon, Tokens2),
+    ensure_unique_requirements(Requirements),
+    Field = #{kind => requirements, values => Requirements, origin => FieldOrigin},
+    parse_child_fields(Tokens3, State#{requirements => Field}, Origin);
+parse_child_fields([{scopes_kw, _, FieldOrigin} | Rest], State, Origin) ->
+    ensure_unset(scopes, State, FieldOrigin),
+    {Scopes, Tokens1} = parse_scopes(Rest, FieldOrigin),
+    parse_child_fields(Tokens1, State#{scopes => Scopes}, Origin);
+parse_child_fields([{limits_kw, _, FieldOrigin} | Rest], State, Origin) ->
+    ensure_unset(limits, State, FieldOrigin),
+    {Limits, Tokens1} = parse_limits(Rest, FieldOrigin),
+    parse_child_fields(Tokens1, State#{limits => Limits}, Origin);
+parse_child_fields([{_Kind, _, FieldOrigin} | _], _State, _Origin) ->
+    fail(unknown_child_field, FieldOrigin, <<"child attenuation contains an unsupported field">>);
+parse_child_fields([], _State, _Origin) ->
+    fail(expected_token, default_origin(), <<"expected child rbrace">>).
+
+parse_completion(Tokens0, Origin) ->
+    {_LBracket, _LBracketOrigin, Tokens1} = expect(lbracket, Tokens0),
+    {Predicates, Tokens2} = parse_completion_predicates(Tokens1),
+    {_Semicolon, _SemicolonOrigin, Tokens3} = expect(semicolon, Tokens2),
+    ensure_unique_predicates(Predicates),
+    {#{kind => completion, predicates => Predicates, origin => Origin}, Tokens3}.
+
+parse_completion_predicates([{rbracket, _, _} | Rest]) ->
+    {[], Rest};
+parse_completion_predicates(Tokens) ->
+    {Predicate, Tokens1} = parse_completion_predicate(Tokens),
+    parse_more_completion_predicates(Tokens1, [Predicate]).
+
+parse_more_completion_predicates([{comma, _, _} | Rest], Acc) ->
+    {Predicate, Tokens1} = parse_completion_predicate(Rest),
+    parse_more_completion_predicates(Tokens1, [Predicate | Acc]);
+parse_more_completion_predicates([{rbracket, _, _} | Rest], Acc) ->
+    {lists:reverse(Acc), Rest};
+parse_more_completion_predicates(Tokens, _Acc) ->
+    fail(expected_list_separator, token_origin(Tokens), <<"expected comma or rbracket">>).
+
+parse_completion_predicate(Tokens0) ->
+    {PredicateKind, Origin, Tokens1} = expect(identifier, Tokens0),
+    checked_predicate_kind(PredicateKind, Origin),
+    {Target, TargetOrigin, Tokens2} = expect(string, Tokens1),
+    {_Colon, _ColonOrigin, Tokens3} = expect(colon, Tokens2),
+    {Expected, ExpectedType, ExpectedOrigin, Tokens4} = parse_scalar(Tokens3),
+    check_predicate_expected(PredicateKind, ExpectedType, ExpectedOrigin),
+    {#{
+        kind => completion_predicate,
+        predicate => PredicateKind,
+        target => Target,
+        expected => Expected,
+        expected_type => ExpectedType,
+        target_origin => TargetOrigin,
+        expected_origin => ExpectedOrigin,
+        origin => Origin
+    }, Tokens4}.
+
+parse_scalar([{true_kw, true, Origin} | Rest]) -> {true, boolean, Origin, Rest};
+parse_scalar([{false_kw, false, Origin} | Rest]) -> {false, boolean, Origin, Rest};
+parse_scalar([{integer, Value, Origin} | Rest]) -> {Value, integer, Origin, Rest};
+parse_scalar([{string, Value, Origin} | Rest]) -> {Value, string, Origin, Rest};
+parse_scalar(Tokens) -> fail(expected_scalar, token_origin(Tokens), <<"expected boolean, integer, or string">>).
+
+checked_predicate_kind(Name, _Origin) when
+    Name =:= <<"artifact-exists">>;
+    Name =:= <<"clarification-recorded">>;
+    Name =:= <<"journal-succeeded">>;
+    Name =:= <<"markdown-h1">>;
+    Name =:= <<"max-bytes">>;
+    Name =:= <<"utf8">>
+->
+    ok;
+checked_predicate_kind(Name, Origin) ->
+    fail(unknown_completion_predicate, Origin, <<"unknown completion predicate: ", Name/binary>>).
+
+check_predicate_expected(Name, boolean, _Origin) when
+    Name =:= <<"artifact-exists">>;
+    Name =:= <<"clarification-recorded">>;
+    Name =:= <<"journal-succeeded">>;
+    Name =:= <<"utf8">>
+->
+    ok;
+check_predicate_expected(<<"markdown-h1">>, string, _Origin) -> ok;
+check_predicate_expected(<<"max-bytes">>, integer, _Origin) -> ok;
+check_predicate_expected(_Name, _Type, Origin) ->
+    fail(invalid_completion_expected_type, Origin, <<"completion predicate has the wrong expected value type">>).
+
 finalize_task(State, TaskName, TaskNameOrigin, TaskOrigin, EndOrigin) ->
-    ensure_fields([facts, effects, requirements, scopes, limits], State, missing_task_clause, EndOrigin),
+    ensure_fields(
+        [facts, effects, requirements, scopes, limits, on_error, child, completion, clarify, terminal],
+        State,
+        missing_task_clause,
+        EndOrigin
+    ),
     Facts = maps:get(facts, State),
     case maps:get(values, Facts) of
         [] -> fail(empty_facts, maps:get(origin, Facts), <<"facts must contain at least one string">>);
@@ -257,6 +492,11 @@ finalize_task(State, TaskName, TaskNameOrigin, TaskOrigin, EndOrigin) ->
     Inputs = lists:reverse(maps:get(inputs, State)),
     case Inputs of
         [] -> fail(missing_input, EndOrigin, <<"task must declare at least one input">>);
+        _ -> ok
+    end,
+    Steps = lists:reverse(maps:get(steps, State)),
+    case Steps of
+        [] -> fail(missing_step, EndOrigin, <<"task must declare at least one step">>);
         _ -> ok
     end,
     #{
@@ -269,6 +509,12 @@ finalize_task(State, TaskName, TaskNameOrigin, TaskOrigin, EndOrigin) ->
         requirements => maps:get(requirements, State),
         scopes => maps:get(scopes, State),
         limits => maps:get(limits, State),
+        steps => Steps,
+        on_error => maps:get(on_error, State),
+        child => maps:get(child, State),
+        completion => maps:get(completion, State),
+        clarify => maps:get(clarify, State),
+        terminal => maps:get(terminal, State),
         origin => TaskOrigin
     }.
 
@@ -354,6 +600,28 @@ ensure_unique_requirements([Node | Rest], Seen) ->
         false -> ensure_unique_requirements(Rest, Seen#{Key => true})
     end.
 
+ensure_unique_error_branches(Nodes) ->
+    ensure_unique_error_branches(Nodes, #{}).
+
+ensure_unique_error_branches([], _Seen) -> ok;
+ensure_unique_error_branches([Node | Rest], Seen) ->
+    Key = {maps:get(action, Node), maps:get(reason, Node)},
+    case maps:is_key(Key, Seen) of
+        true -> fail(duplicate_error_branch, maps:get(origin, Node), <<"duplicate error branch">>);
+        false -> ensure_unique_error_branches(Rest, Seen#{Key => true})
+    end.
+
+ensure_unique_predicates(Nodes) ->
+    ensure_unique_predicates(Nodes, #{}).
+
+ensure_unique_predicates([], _Seen) -> ok;
+ensure_unique_predicates([Node | Rest], Seen) ->
+    Key = {maps:get(predicate, Node), maps:get(target, Node)},
+    case maps:is_key(Key, Seen) of
+        true -> fail(duplicate_completion_predicate, maps:get(origin, Node), <<"duplicate completion predicate">>);
+        false -> ensure_unique_predicates(Rest, Seen#{Key => true})
+    end.
+
 expect(Kind, [{Kind, Value, Origin} | Rest]) ->
     {Value, Origin, Rest};
 expect(Kind, Tokens) ->
@@ -363,6 +631,15 @@ expect_word([{identifier, Value, Origin} | Rest]) -> {Value, Origin, Rest};
 expect_word([{child_kw, _, Origin} | Rest]) -> {<<"child">>, Origin, Rest};
 expect_word([{complete_kw, _, Origin} | Rest]) -> {<<"complete">>, Origin, Rest};
 expect_word(Tokens) -> fail(expected_identifier, token_origin(Tokens), <<"expected identifier">>).
+
+expect_terminal([{complete_kw, _, Origin} | Rest]) -> {<<"complete">>, Origin, Rest};
+expect_terminal([{identifier, Value, Origin} | Rest]) ->
+    case lists:member(Value, [<<"failed">>, <<"needs-clarification">>]) of
+        true -> {Value, Origin, Rest};
+        false -> fail(unknown_terminal_class, Origin, <<"unknown terminal class: ", Value/binary>>)
+    end;
+expect_terminal(Tokens) ->
+    fail(expected_terminal_class, token_origin(Tokens), <<"expected complete, failed, or needs-clarification">>).
 
 token_origin([{_, _, Origin} | _]) -> Origin;
 token_origin([]) -> default_origin().
