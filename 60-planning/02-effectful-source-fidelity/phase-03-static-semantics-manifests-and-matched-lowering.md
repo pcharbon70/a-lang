@@ -150,7 +150,7 @@ before lowering.
 **Description:** Infer the complete static manifest and lower checked semantics
 to one versioned IR whose meaning is independent of source notation.
 
-- [ ] **Section 3.3 Complete**
+- [x] **Section 3.3 Complete**
 
 ### Task 3.3.1: Infer Effects, Requirements, and Bounds
 
@@ -158,7 +158,7 @@ to one versioned IR whose meaning is independent of source notation.
 the finite graph, compare them with declarations, map registered operations to
 requirements, and produce the least static runtime manifest.
 
-- [ ] **Task 3.3.1 Complete**
+- [x] **Task 3.3.1 Complete**
 
 #### Subtask 3.3.1.1: Require Declared and Inferred Authority Equality
 
@@ -166,7 +166,7 @@ requirements, and produce the least static runtime manifest.
 requirements, dynamic resources, and registry mismatches; derive model and
 workspace resource selectors without embedding a grant or credential.
 
-- [ ] **Subtask 3.3.1.1 Complete**
+- [x] **Subtask 3.3.1.1 Complete**
 
 #### Subtask 3.3.1.2: Prove Limits Cover the Static Upper Bound
 
@@ -174,7 +174,7 @@ workspace resource selectors without embedding a grant or credential.
 the maximum reachable branch, require declared ceilings to cover that bound,
 and require child ceilings and deadlines to be no greater than the parent's.
 
-- [ ] **Subtask 3.3.1.2 Complete**
+- [x] **Subtask 3.3.1.2 Complete**
 
 ### Task 3.3.2: Lower Both Conditions to `alang_typed_task_ir_v2`
 
@@ -182,7 +182,7 @@ and require child ceilings and deadlines to be no greater than the parent's.
 delegate node, and a structured completion specification while preserving all
 v1 data, result, call, sequence, effect-request, and verifier semantics.
 
-- [ ] **Task 3.3.2 Complete**
+- [x] **Task 3.3.2 Complete**
 
 #### Subtask 3.3.2.1: Produce Stable Nodes, Manifests, and Source Maps
 
@@ -192,7 +192,7 @@ encode the normalized IR with deterministic ETF. Record closed effect-site
 ordinals from which trusted runtime state can derive operation identities;
 never accept an identity supplied by either frontend.
 
-- [ ] **Subtask 3.3.2.1 Complete**
+- [x] **Subtask 3.3.2.1 Complete**
 
 #### Subtask 3.3.2.2: Enforce the No-Manual-IR Campaign Gate
 
@@ -201,7 +201,7 @@ JSON digest, frontend identity, and normalized semantic digest; reject direct
 IR files, fixture constructors, reference evaluators, and missing provenance
 from acceptance execution.
 
-- [ ] **Subtask 3.3.2.2 Complete**
+- [x] **Subtask 3.3.2.2 Complete**
 
 ## Section 3.4: Phase 3 Integration Tests
 

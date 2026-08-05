@@ -49,6 +49,9 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_ast_tests.erl`](alang_fidelity_ast_tests.erl) — exercises
   exact-shape, origin, path, canonical ETF, legacy compatibility, atom-growth,
   and malformed-input rejection gates.
+- [`alang_fidelity_authority.erl`](alang_fidelity_authority.erl) — infers exact
+  registered effects, least static resource requirements, child attenuation,
+  and finite direct-plus-delegated usage bounds without embedding grants.
 - [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
   ordered effect and repair steps, explicit error results, attenuated child
   declarations, completion predicates, clarification, and terminal classes.
@@ -61,6 +64,9 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_control_tests.erl`](alang_fidelity_control_tests.erl) —
   checks all frozen controls, precise pointer/byte origins, duplicate and
   escape-field rejection, bounded failures, and source-controlled atom safety.
+- [`alang_fidelity_compiler.erl`](alang_fidelity_compiler.erl) — composes both
+  accepted frontend paths with the shared checker and lowering pass, and
+  enforces source-byte, frontend, and semantic-digest campaign provenance.
 - [`alang_fidelity_contract.erl`](alang_fidelity_contract.erl) — validates the
   closed task-comprehension and representation-neutral answer-key contracts
   and computes canonical semantic digests.
@@ -88,6 +94,9 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_integration_tests.erl`](alang_fidelity_integration_tests.erl)
   — runs the complete contract/corpus gate, mutant matrix, BEAM residency
   check, frozen-scope audit, and byte-for-byte digest reproduction.
+- [`alang_fidelity_ir.erl`](alang_fidelity_ir.erl) — lowers checked meaning and
+  inferred manifests to deterministic `alang_typed_task_ir_v2`, keeps source
+  maps separate, and safely validates and round-trips its ETF envelope.
 - [`alang_fidelity_json.erl`](alang_fidelity_json.erl) — provides bounded,
   duplicate-aware OTP JSON decoding and deterministic SHA-256 term digests.
 - [`alang_fidelity_json_pointer.erl`](alang_fidelity_json_pointer.erl) — scans
@@ -96,6 +105,9 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_lexer.erl`](alang_fidelity_lexer.erl) — tokenizes the frozen
   `alang-source-v2` surface with byte and line-column origins, bounded UTF-8
   strings, binary identifiers, and no source-controlled atoms.
+- [`alang_fidelity_lowering_tests.erl`](alang_fidelity_lowering_tests.erl) —
+  checks paired IR equality, exact authority, limit bounds, stable nodes and
+  effect ordinals, deterministic ETF, seeded mutants, and campaign gates.
 - [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
   source unchanged and parses v2 task declarations, authority, scopes, and
   limits, ordered actions, errors, child attenuation, and completion into the
