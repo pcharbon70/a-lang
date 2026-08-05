@@ -45,11 +45,10 @@ and retained trial datasets belong under a descriptive directory in
 [`assets`](../../assets/README.md). Each new implementation or asset directory
 must receive its own README when it is created.
 
-The reserved implementation namespace is `src/effectful-source-fidelity/` and
-the reserved corpus/evidence namespace is `assets/effectful-source-fidelity/`.
-They are not created by this planning-only change; the first implementation or
-dataset section must create the relevant directory and its local README in the
-same commit. Generated and secret-bearing intermediates stay below ignored
+The implementation now lives in the [stream-owned source directory](../../src/effectful-source-fidelity/README.md),
+and the frozen contracts, corpus, and campaign inputs live in the
+[stream-owned asset directory](../../assets/effectful-source-fidelity/README.md).
+Generated and secret-bearing intermediates stay below ignored
 `build/effectful-source-fidelity/` paths.
 
 ## Fixed experiment contract
@@ -242,8 +241,8 @@ Phase 1: freeze experiment, semantics, corpus, and decisions
 The stream is complete only when a clean checkout can reproduce all of the
 following, with live-only items backed by a recorded opt-in campaign:
 
-- [ ] Twenty-four hand-authored A-Lang/JSON pairs validate against frozen
-      semantic answer keys
+- [x] Twenty-four hand-authored A-Lang/JSON pairs validate against frozen
+      semantic answer keys — see the [Phase 1 evidence](../../src/effectful-source-fidelity/phase-01-integration-evidence.md)
 - [ ] Every pair produces the same normalized semantic digest without manual IR
 - [ ] Effectful source covers model, workspace, repair, child, and completion
       vocabulary with source-local diagnostics
@@ -272,8 +271,8 @@ following, with live-only items backed by a recorded opt-in campaign:
 ### Documents
 
 - [Phase 1 — Experiment contract and frozen corpus](phase-01-experiment-contract-and-frozen-corpus.md)
-  — fixes the semantic oracle, paired representations, campaign cells,
-  scoring, safety vetoes, and decision rule before implementation or live use.
+  — **complete**; fixes the semantic oracle, paired representations, campaign
+  cells, scoring, safety vetoes, and decision rule before parsing or live use.
 - [Phase 2 — Effectful source syntax and AST](phase-02-effectful-source-syntax-and-ast.md)
   — extends the BEAM-resident lexer and parser with the minimal model,
   workspace, repair, child, limit, and completion surface.

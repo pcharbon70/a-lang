@@ -11,6 +11,8 @@
     "design",
     "ceilings",
     "replacement",
+    "repair",
+    "submission_retry",
     "uncertain_outcomes",
     "retention"
   ],
@@ -22,10 +24,10 @@
       "additionalProperties": false,
       "required": ["environment_variable", "required_value", "credentials_required"],
       "properties": {
-        "environment_variable": { "const": "ALANG_FIDELITY_LIVE" },
-        "required_value": { "const": "I_UNDERSTAND_HOSTED_CALLS" },
+        "environment_variable": { "const": "ALANG_ALLOW_LIVE_MODEL_CALLS" },
+        "required_value": { "const": "1" },
         "credentials_required": {
-          "const": ["OPENAI_API_KEY", "ANTHROPIC_API_KEY"]
+          "const": ["ALANG_OPENAI_API_KEY", "ALANG_ANTHROPIC_API_KEY"]
         }
       }
     },
@@ -61,6 +63,27 @@
         "max_replacements_per_primary_cell": { "const": 1 },
         "allowed_only_when": { "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true },
         "forbidden_when": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true }
+      }
+    },
+    "repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_per_definitive_response", "allowed_for", "primary_score_changes", "counts_toward_all_calls"],
+      "properties": {
+        "max_per_definitive_response": { "const": 1 },
+        "allowed_for": { "const": ["malformed-json", "schema-invalid"] },
+        "primary_score_changes": { "const": false },
+        "counts_toward_all_calls": { "const": true }
+      }
+    },
+    "submission_retry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_per_primary_cell", "allowed_only_when", "counts_toward_all_calls"],
+      "properties": {
+        "max_per_primary_cell": { "const": 1 },
+        "allowed_only_when": { "const": "request-proved-not-submitted" },
+        "counts_toward_all_calls": { "const": true }
       }
     },
     "uncertain_outcomes": {

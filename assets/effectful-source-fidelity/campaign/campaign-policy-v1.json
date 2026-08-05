@@ -2,11 +2,11 @@
   "format": "alang-fidelity-campaign-policy-v1",
   "network_default": "disabled",
   "live_opt_in": {
-    "environment_variable": "ALANG_FIDELITY_LIVE",
-    "required_value": "I_UNDERSTAND_HOSTED_CALLS",
+    "environment_variable": "ALANG_ALLOW_LIVE_MODEL_CALLS",
+    "required_value": "1",
     "credentials_required": [
-      "OPENAI_API_KEY",
-      "ANTHROPIC_API_KEY"
+      "ALANG_OPENAI_API_KEY",
+      "ALANG_ANTHROPIC_API_KEY"
     ]
   },
   "design": {
@@ -36,6 +36,20 @@
       "malformed-json",
       "schema-invalid"
     ]
+  },
+  "repair": {
+    "max_per_definitive_response": 1,
+    "allowed_for": [
+      "malformed-json",
+      "schema-invalid"
+    ],
+    "primary_score_changes": false,
+    "counts_toward_all_calls": true
+  },
+  "submission_retry": {
+    "max_per_primary_cell": 1,
+    "allowed_only_when": "request-proved-not-submitted",
+    "counts_toward_all_calls": true
   },
   "uncertain_outcomes": [
     "connection-state-unknown",

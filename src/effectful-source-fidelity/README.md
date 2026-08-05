@@ -60,14 +60,23 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_decision_tests.erl`](alang_fidelity_decision_tests.erl) —
   covers promotion, JSON replacement, stop, invalid-campaign, interval, and
   safety-veto outcomes.
+- [`alang_fidelity_integration_tests.erl`](alang_fidelity_integration_tests.erl)
+  — runs the complete contract/corpus gate, mutant matrix, BEAM residency
+  check, frozen-scope audit, and byte-for-byte digest reproduction.
 - [`alang_fidelity_json.erl`](alang_fidelity_json.erl) — provides bounded,
   duplicate-aware OTP JSON decoding and deterministic SHA-256 term digests.
+- [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
+  the complete frozen input set and writes deterministic, content-addressed
+  pre-registration evidence under the ignored build tree.
 - [`alang_fidelity_representation.erl`](alang_fidelity_representation.erl) —
   decodes the typed-JSON control with JSON Pointer origins, normalizes away
   presentation metadata, and enforces the frozen source and trial contracts.
 - [`alang_fidelity_representation_tests.erl`](alang_fidelity_representation_tests.erl)
   — verifies source-v1 preservation, forbidden features, closed controls,
   semantic equality, origin separation, opaque scheduling, and leakage rules.
+- [Phase 1 experiment freeze evidence](phase-01-integration-evidence.md) —
+  records the final digest, corpus and profile inventory, campaign ceilings,
+  negative gates, scope audit, limitations, and reproduction commands.
 
 ## Maintaining this index
 

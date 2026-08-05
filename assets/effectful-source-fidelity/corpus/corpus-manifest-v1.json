@@ -2,22 +2,22 @@
   "cases": [
     {
       "answer_key": {
-        "content_sha256": "f829bcf6174fb81d49a8aa02b56458ae13e76db1e1dfa64d0a42e5ccfbab3b6d",
+        "content_sha256": "f72c967f817b2b03b8481dbbbfd80ea79faf6a073a83249cdc329c5cc0ee65fd",
         "format": "alang-answer-key-v1",
         "path": "attenuated-delegation/ad-constraint-heavy.answer.json"
       },
       "candidate": {
-        "content_sha256": "eed9b7a0db4c134b8c65a8cf601e033124886158ee4baba55987cd621fa34de7",
+        "content_sha256": "36bdc29c095869c0a5610cc8884c3419c5e36d66ef5ecc942b33170b8717a60e",
         "format": "alang-source-v2",
         "path": "attenuated-delegation/ad-constraint-heavy.alang",
-        "semantic_digest": "6ca0eefdfe8f986dcc133664ff7a9f36720db02d3da689e090dc8c4c18a57c0e"
+        "semantic_digest": "f7526a7d1a50c175d78466307e70fb84b2fd5e739ff5bd71f530d5edb052a428"
       },
       "case_id": "ad-constraint-heavy",
       "control": {
-        "content_sha256": "534846a506dceb263da0f469baa651a1112f2f8733e37026275f77bcada8bbc5",
+        "content_sha256": "532021de11c2ee612f0357c65581be942ed1c17bb3fdb6d552630c8e8c555f91",
         "format": "alang-task-json-v1",
         "path": "attenuated-delegation/ad-constraint-heavy.json",
-        "semantic_digest": "6ca0eefdfe8f986dcc133664ff7a9f36720db02d3da689e090dc8c4c18a57c0e"
+        "semantic_digest": "f7526a7d1a50c175d78466307e70fb84b2fd5e739ff5bd71f530d5edb052a428"
       },
       "family": "attenuated-delegation",
       "format": "alang-semantic-pair-v1",
@@ -27,27 +27,27 @@
         "no_answer_serialization": true,
         "no_condition_specific_demonstration": true
       },
-      "semantic_digest": "6ca0eefdfe8f986dcc133664ff7a9f36720db02d3da689e090dc8c4c18a57c0e",
+      "semantic_digest": "f7526a7d1a50c175d78466307e70fb84b2fd5e739ff5bd71f530d5edb052a428",
       "variant": "constraint-heavy"
     },
     {
       "answer_key": {
-        "content_sha256": "cae0157365344f06c68720886d9f21e1b1eff34f67722804eea40a00606ab929",
+        "content_sha256": "c20c6fece30421717abab6aad6dd54e5384516c2fd8149a1eac7ccd0e672f287",
         "format": "alang-answer-key-v1",
         "path": "attenuated-delegation/ad-error-branch.answer.json"
       },
       "candidate": {
-        "content_sha256": "a6c09a03fa6dbe64ad8b69a1da13f30c2501a3aa4ce68b857a28f69e0cb356f0",
+        "content_sha256": "e2cd50c249079f2b26f895198db78ff3e4a84c33903175422bb2741d45580cf6",
         "format": "alang-source-v2",
         "path": "attenuated-delegation/ad-error-branch.alang",
-        "semantic_digest": "71f959d17baa4b55d9589733a533ce15a97cc52cf6921d4bd0e172aa40361afc"
+        "semantic_digest": "cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b"
       },
       "case_id": "ad-error-branch",
       "control": {
-        "content_sha256": "1aef7f2ca67ad3b18728e4f0dac37fb5d06308d83535a3c6b563656d4ce9678b",
+        "content_sha256": "5382a7541b2ef9032b6d216fda12d0b47299efc79928d121faa314709f885903",
         "format": "alang-task-json-v1",
         "path": "attenuated-delegation/ad-error-branch.json",
-        "semantic_digest": "71f959d17baa4b55d9589733a533ce15a97cc52cf6921d4bd0e172aa40361afc"
+        "semantic_digest": "cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b"
       },
       "family": "attenuated-delegation",
       "format": "alang-semantic-pair-v1",
@@ -57,27 +57,27 @@
         "no_answer_serialization": true,
         "no_condition_specific_demonstration": true
       },
-      "semantic_digest": "71f959d17baa4b55d9589733a533ce15a97cc52cf6921d4bd0e172aa40361afc",
+      "semantic_digest": "cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b",
       "variant": "error-branch"
     },
     {
       "answer_key": {
-        "content_sha256": "bff957adabb9ace10ef4d38cfa01a44dab12d7d39c35edf613b397a5c9788547",
+        "content_sha256": "b1989fe3ee3aa1be1785243d109b620d7569aa1c6aa60e78ad3d0df86c8ca6b2",
         "format": "alang-answer-key-v1",
         "path": "attenuated-delegation/ad-irrelevant-context.answer.json"
       },
       "candidate": {
-        "content_sha256": "7e8e2fbdf4c1bcb1f5798358a467b2b320fa423bec05b53622061b92a04dba54",
+        "content_sha256": "40c1f62f4fd36880387ee0f05ce28cf906f8a531730e975c8f35d78b869cdff4",
         "format": "alang-source-v2",
         "path": "attenuated-delegation/ad-irrelevant-context.alang",
-        "semantic_digest": "45eb477b485c079b6d60b4977e3e99ceec94cfabdc7f159271b353406a50aa1b"
+        "semantic_digest": "97d21df54ec83278598bbf93db7182b46cf84c9290ca33fcda4e56f2a59a8bfd"
       },
       "case_id": "ad-irrelevant-context",
       "control": {
-        "content_sha256": "eaeee131df7d3c9cf30aeaebf4d1921308bf8b800425f77dc196745fa245a3d1",
+        "content_sha256": "3dc1344b4e077d1b4b11c0be0f19dc17c9c67fff5f2f0618c256b63ed359147a",
         "format": "alang-task-json-v1",
         "path": "attenuated-delegation/ad-irrelevant-context.json",
-        "semantic_digest": "45eb477b485c079b6d60b4977e3e99ceec94cfabdc7f159271b353406a50aa1b"
+        "semantic_digest": "97d21df54ec83278598bbf93db7182b46cf84c9290ca33fcda4e56f2a59a8bfd"
       },
       "family": "attenuated-delegation",
       "format": "alang-semantic-pair-v1",
@@ -87,7 +87,7 @@
         "no_answer_serialization": true,
         "no_condition_specific_demonstration": true
       },
-      "semantic_digest": "45eb477b485c079b6d60b4977e3e99ceec94cfabdc7f159271b353406a50aa1b",
+      "semantic_digest": "97d21df54ec83278598bbf93db7182b46cf84c9290ca33fcda4e56f2a59a8bfd",
       "variant": "irrelevant-context"
     },
     {
@@ -122,22 +122,22 @@
     },
     {
       "answer_key": {
-        "content_sha256": "ae6779149bf4f8184257e643184ba5ee76bcb1d58718df20f07390e4e5662c3d",
+        "content_sha256": "019a5d6bff055541ddd86d0c47415b4267e9e16f19da525a15491c6fbdb833b5",
         "format": "alang-answer-key-v1",
         "path": "attenuated-delegation/ad-prompt-injection.answer.json"
       },
       "candidate": {
-        "content_sha256": "a99ef75d3f1e93448bd2b7a9fede9ebaeadd0fada0ca8023290c0d86ed10b6e1",
+        "content_sha256": "37ea7655b2ab524e87d2bb044538e0f33a1c04f102776ffd8451b0b48a4eda51",
         "format": "alang-source-v2",
         "path": "attenuated-delegation/ad-prompt-injection.alang",
-        "semantic_digest": "1c84923d790e719948af87dd5c8129f03e9c608e86328d0b47fcdff98e30d5a2"
+        "semantic_digest": "81c5e6fd87b2efed11281cd0f63b49df739dbede43387e30638ad8cd615bcb78"
       },
       "case_id": "ad-prompt-injection",
       "control": {
-        "content_sha256": "987834a0937f4cd4e04e7320092f1be3955b3158624d49f224809c0a124d2d36",
+        "content_sha256": "5de83e4e44d99eb70a12532f1c7d10fe5ba264d02473fcb2baf17bb54d6aaebf",
         "format": "alang-task-json-v1",
         "path": "attenuated-delegation/ad-prompt-injection.json",
-        "semantic_digest": "1c84923d790e719948af87dd5c8129f03e9c608e86328d0b47fcdff98e30d5a2"
+        "semantic_digest": "81c5e6fd87b2efed11281cd0f63b49df739dbede43387e30638ad8cd615bcb78"
       },
       "family": "attenuated-delegation",
       "format": "alang-semantic-pair-v1",
@@ -147,27 +147,27 @@
         "no_answer_serialization": true,
         "no_condition_specific_demonstration": true
       },
-      "semantic_digest": "1c84923d790e719948af87dd5c8129f03e9c608e86328d0b47fcdff98e30d5a2",
+      "semantic_digest": "81c5e6fd87b2efed11281cd0f63b49df739dbede43387e30638ad8cd615bcb78",
       "variant": "prompt-injection"
     },
     {
       "answer_key": {
-        "content_sha256": "9a2b6cb63c9f05034b4656fe637ebcb87bbcd05ac4d232f40e713edcddbbc8a2",
+        "content_sha256": "c373452a3738559172ed80c4d1c909d949bc6be308ab375e9a8250e962fc2968",
         "format": "alang-answer-key-v1",
         "path": "attenuated-delegation/ad-scope-budget.answer.json"
       },
       "candidate": {
-        "content_sha256": "79685d265fb7df3b7b13bd35c403416c7d5264fa15725a437e526a1552de23d9",
+        "content_sha256": "a8406497f2807b86d20e421b88b2140f80fdf366b79c31ec826cfdef38abf3b3",
         "format": "alang-source-v2",
         "path": "attenuated-delegation/ad-scope-budget.alang",
-        "semantic_digest": "8104a51618106026c3a49e9cb4f56ee80184a6d452b2ad32d8a6e3e9f2f8ee71"
+        "semantic_digest": "1eb30252b6cd61251620a4f3bc370beee9890aa37ae7f4a50fd53b6859168de5"
       },
       "case_id": "ad-scope-budget",
       "control": {
-        "content_sha256": "b216e3d618683ee6be2ffa23c20ff6ee197a8d33d00862114ab9572eff9a740d",
+        "content_sha256": "afd9b692905499d87a9fed962f934f666d44cf8127f910f06d97ec50d1d2e6c3",
         "format": "alang-task-json-v1",
         "path": "attenuated-delegation/ad-scope-budget.json",
-        "semantic_digest": "8104a51618106026c3a49e9cb4f56ee80184a6d452b2ad32d8a6e3e9f2f8ee71"
+        "semantic_digest": "1eb30252b6cd61251620a4f3bc370beee9890aa37ae7f4a50fd53b6859168de5"
       },
       "family": "attenuated-delegation",
       "format": "alang-semantic-pair-v1",
@@ -177,27 +177,27 @@
         "no_answer_serialization": true,
         "no_condition_specific_demonstration": true
       },
-      "semantic_digest": "8104a51618106026c3a49e9cb4f56ee80184a6d452b2ad32d8a6e3e9f2f8ee71",
+      "semantic_digest": "1eb30252b6cd61251620a4f3bc370beee9890aa37ae7f4a50fd53b6859168de5",
       "variant": "scope-budget"
     },
     {
       "answer_key": {
-        "content_sha256": "641c0aa1618c5c2144720706dadd0d53745e96a14a5afb57f765533637409393",
+        "content_sha256": "a3016356e40b07cb28f4f58ddfbb79bdaefa25388f8a46f7faf8e85688293122",
         "format": "alang-answer-key-v1",
         "path": "attenuated-delegation/ad-semantic-perturbation.answer.json"
       },
       "candidate": {
-        "content_sha256": "001485eab7ce57119e442010f8668cbe2f1e64dfcb09758ba1a935e768068c01",
+        "content_sha256": "a12ad028ab485f425d1fe2745fd9f77291ab314666883b9358559db9264ebc15",
         "format": "alang-source-v2",
         "path": "attenuated-delegation/ad-semantic-perturbation.alang",
-        "semantic_digest": "169054ea56651de8a70995e8a27addfa4fe2a7fca55f927782b5583455c742bf"
+        "semantic_digest": "cb2d929d55da645b909356cdce17db9c94b7303b38d01653cc94cd7e01adb411"
       },
       "case_id": "ad-semantic-perturbation",
       "control": {
-        "content_sha256": "82dce65fa2970ef5ce6eee2ecbcd556e7c1eb66144f497422b017d4244601102",
+        "content_sha256": "b09c6d79c4da257d88ebb23eda48a7f906ab94c964ec378d52a3ed0489a6517d",
         "format": "alang-task-json-v1",
         "path": "attenuated-delegation/ad-semantic-perturbation.json",
-        "semantic_digest": "169054ea56651de8a70995e8a27addfa4fe2a7fca55f927782b5583455c742bf"
+        "semantic_digest": "cb2d929d55da645b909356cdce17db9c94b7303b38d01653cc94cd7e01adb411"
       },
       "family": "attenuated-delegation",
       "format": "alang-semantic-pair-v1",
@@ -207,27 +207,27 @@
         "no_answer_serialization": true,
         "no_condition_specific_demonstration": true
       },
-      "semantic_digest": "169054ea56651de8a70995e8a27addfa4fe2a7fca55f927782b5583455c742bf",
+      "semantic_digest": "cb2d929d55da645b909356cdce17db9c94b7303b38d01653cc94cd7e01adb411",
       "variant": "semantic-perturbation"
     },
     {
       "answer_key": {
-        "content_sha256": "c9add6b025b11c816cdbd66da30a37b18d986af6494a6a9565115547d4bafad2",
+        "content_sha256": "9041b449a0224f90c4eb1bb1746dbae828ea32f484f3966d3309930d21c71b9c",
         "format": "alang-answer-key-v1",
         "path": "attenuated-delegation/ad-simple.answer.json"
       },
       "candidate": {
-        "content_sha256": "606f1cbe9f4a5400d720778286c8bf9018f2872de0372e54684ce0bc47eb04cc",
+        "content_sha256": "1bde2c48fd26adc22f4462d8421c45a122b3343b12bf7d1c38e46fe5bd879642",
         "format": "alang-source-v2",
         "path": "attenuated-delegation/ad-simple.alang",
-        "semantic_digest": "4582c2716861bba24d88e806710f725c5947c151b69e00dec3acd03d0bb9a67e"
+        "semantic_digest": "fc3463e8963f4710cda9c4004f2d484f3ae0e5941429042697fd952102d18857"
       },
       "case_id": "ad-simple",
       "control": {
-        "content_sha256": "fd1f23554586431c907e9656e691afcd8808828a931f5f8202e0ea88f43d50f6",
+        "content_sha256": "7ec4732adef4e5190556df2100d0f1fc7b6ed0a46cd1fdb6e87158e8704616b5",
         "format": "alang-task-json-v1",
         "path": "attenuated-delegation/ad-simple.json",
-        "semantic_digest": "4582c2716861bba24d88e806710f725c5947c151b69e00dec3acd03d0bb9a67e"
+        "semantic_digest": "fc3463e8963f4710cda9c4004f2d484f3ae0e5941429042697fd952102d18857"
       },
       "family": "attenuated-delegation",
       "format": "alang-semantic-pair-v1",
@@ -237,7 +237,7 @@
         "no_answer_serialization": true,
         "no_condition_specific_demonstration": true
       },
-      "semantic_digest": "4582c2716861bba24d88e806710f725c5947c151b69e00dec3acd03d0bb9a67e",
+      "semantic_digest": "fc3463e8963f4710cda9c4004f2d484f3ae0e5941429042697fd952102d18857",
       "variant": "simple"
     },
     {

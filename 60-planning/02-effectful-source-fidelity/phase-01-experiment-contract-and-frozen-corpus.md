@@ -19,8 +19,8 @@ budget, and evidence policy before extending the compiler or observing a hosted
 model. This prevents the language or threshold from being tuned after results
 are known.
 
-**Status:** In progress — Sections 1.1–1.3 are complete and Section 1.4
-remains planned.
+**Status:** Complete — all four sections pass; the 86-file registration digest
+is frozen and no hosted model has been called.
 
 **Dependencies:** The [Phase 8 architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md)
 has authorized only this effectful-source fidelity question. The existing typed
@@ -243,7 +243,8 @@ scores, bounded metadata, and digests.
 **Description:** Prove the experiment is complete, internally coherent, and
 frozen before any compiler or hosted-model implementation begins.
 
-- [ ] **Section 1.4 Complete**
+- [x] **Section 1.4 Complete** — reproduce with
+  `make test-fidelity-section-1-4`; see the [Phase 1 integration evidence](../../src/effectful-source-fidelity/phase-01-integration-evidence.md).
 
 ### Task 1.4.1: Validate Contracts and Corpus Mechanically
 
@@ -251,7 +252,7 @@ frozen before any compiler or hosted-model implementation begins.
 semantic answer keys, pair counts, required variants, unique identities,
 bounded values, and equal normalized pair digests.
 
-- [ ] **Task 1.4.1 Complete**
+- [x] **Task 1.4.1 Complete**
 
 #### Subtask 1.4.1.1: Reject Contract and Corpus Mutants
 
@@ -259,7 +260,9 @@ bounded values, and equal normalized pair digests.
 answers, unequal semantics, unbounded limits, alias model identifiers, and
 post-freeze threshold changes and require specific failures.
 
-- [ ] **Subtask 1.4.1.1 Complete**
+- [x] **Subtask 1.4.1.1 Complete** — the integration matrix rejects unknown
+  fields, duplicate cases, missing cells, visible answer leakage, semantic
+  mismatch, unbounded limits, model aliases, and threshold drift.
 
 #### Subtask 1.4.1.2: Reproduce the Pre-Registration Digest
 
@@ -267,7 +270,8 @@ post-freeze threshold changes and require specific failures.
 profiles, prompt template, scoring rules, and decision rule twice from a clean
 checkout and require byte-identical pre-registration evidence.
 
-- [ ] **Subtask 1.4.1.2 Complete**
+- [x] **Subtask 1.4.1.2 Complete** — two isolated evidence writes produce the
+  same 86-file registration digest and byte-identical JSON evidence.
 
 ### Task 1.4.2: Audit Scope and Research Traceability
 
@@ -275,7 +279,7 @@ checkout and require byte-identical pre-registration evidence.
 every frozen feature stays absent, and every claimed metric maps to the active
 task-language inquiry.
 
-- [ ] **Task 1.4.2 Complete**
+- [x] **Task 1.4.2 Complete**
 
 #### Subtask 1.4.2.1: Run the Frozen-Scope Audit
 
@@ -284,7 +288,9 @@ parallelism, distribution, delegation protocols, extra effect families,
 self-hosting, package management, and user-visible categorical syntax and fail
 on any occurrence outside explicit non-goals.
 
-- [ ] **Subtask 1.4.2.1 Complete**
+- [x] **Subtask 1.4.2.1 Complete** — all 24 model-visible candidates pass the
+  frozen-feature scan, only three effect families remain, and every trusted
+  implementation module loads from BEAM with no foreign source.
 
 #### Subtask 1.4.2.2: Publish Phase 1 Evidence
 
@@ -292,18 +298,20 @@ on any occurrence outside explicit non-goals.
 profiles, cost/call bounds, metric definitions, decision outcomes, review
 findings, and exact commands needed to reproduce the phase gate.
 
-- [ ] **Subtask 1.4.2.2 Complete**
+- [x] **Subtask 1.4.2.2 Complete** — the evidence note records digest,
+  inventories, profiles, ceilings, metrics, mutants, audit, limitations, and
+  exact reproduction commands.
 
 ## Phase 1 Completion Evidence
 
 **Description:** Authorize source implementation only after the experiment can
 no longer be silently reshaped around observed results.
 
-- [ ] Closed comprehension and answer-key schemas validate
-- [ ] Twenty-four balanced semantic cases and forty-eight source documents exist
-- [ ] Every A-Lang/JSON pair has one equal normalized semantic digest
-- [ ] Exact model profiles, prompts, repetitions, call limits, and cost ceiling are frozen
-- [ ] Metrics, bootstrap method, safety vetoes, and outcomes are machine-readable
-- [ ] Negative contract and corpus mutants are detected
-- [ ] Pre-registration evidence reproduces byte-for-byte
-- [ ] No hosted model has been called before the pre-registration digest is frozen
+- [x] Closed comprehension and answer-key schemas validate
+- [x] Twenty-four balanced semantic cases and forty-eight source documents exist
+- [x] Every A-Lang/JSON pair has one equal normalized semantic digest
+- [x] Exact model profiles, prompts, repetitions, call limits, and cost ceiling are frozen
+- [x] Metrics, bootstrap method, safety vetoes, and outcomes are machine-readable
+- [x] Negative contract and corpus mutants are detected
+- [x] Pre-registration evidence reproduces byte-for-byte
+- [x] No hosted model has been called before the pre-registration digest is frozen

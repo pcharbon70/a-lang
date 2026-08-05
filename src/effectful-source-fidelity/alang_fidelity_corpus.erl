@@ -4,6 +4,7 @@
     validate/1,
     validate_campaign/1,
     validate_campaign_policy/1,
+    validate_candidate_binary/3,
     validate_corpus/1,
     validate_manifest/2,
     validate_provider_profiles/1
@@ -120,6 +121,15 @@ validate_provider_profiles(Value) ->
 validate_campaign_policy(Value) ->
     validate_exact_campaign(Value, expected_campaign_policy(), [<<"policy">>]).
 
+-spec validate_candidate_binary(binary(), binary(), binary()) -> {ok, map()} | {error, term()}.
+validate_candidate_binary(Binary, CaseId, Digest) ->
+    try
+        validate_candidate_document(Binary, CaseId, Digest, [<<"candidate">>]),
+        {ok, #{<<"case_id">> => CaseId, <<"semantic_digest">> => Digest}}
+    catch
+        throw:{corpus_error, Path, Reason} -> {error, {corpus_error, Path, Reason}}
+    end.
+
 validate_case(Case, CorpusDirectory, Index) ->
     Path = [<<"manifest">>, <<"cases">>, Index],
     Keys = [
@@ -203,6 +213,9 @@ validate_answer_ref(Value, Family, CaseId, Path) ->
 
 validate_candidate_source(Path, CaseId, Digest, ErrorPath) ->
     Binary = read_file(Path, ErrorPath),
+    validate_candidate_document(Binary, CaseId, Digest, ErrorPath).
+
+validate_candidate_document(Binary, CaseId, Digest, ErrorPath) ->
     ensure(byte_size(Binary) =< 8192, ErrorPath, source_document_too_large),
     ensure(valid_utf8(Binary), ErrorPath, invalid_utf8),
     [First | Lines] = binary:split(Binary, <<"\n">>, [global]),
@@ -295,6 +308,7 @@ validate_family(<<"repair-and-publish">>, _Variant, Expected, Path) ->
     ensure(lists:member(<<"workspace.write">>, Operations), Path ++ [<<"family">>], missing_workspace_publish);
 validate_family(<<"attenuated-delegation">>, _Variant, Expected, Path) ->
     Operations = operations(Expected),
+    ensure(lists:member(<<"model.generate">>, Operations), Path ++ [<<"family">>], missing_parent_model_judgment),
     ensure(lists:member(<<"child.run">>, Operations), Path ++ [<<"family">>], missing_child_run),
     ensure(is_map(maps:get(<<"child_attenuation">>, Expected)), Path ++ [<<"family">>], missing_child_attenuation).
 
@@ -363,9 +377,9 @@ expected_campaign_policy() ->
         <<"format">> => <<"alang-fidelity-campaign-policy-v1">>,
         <<"network_default">> => <<"disabled">>,
         <<"live_opt_in">> => #{
-            <<"environment_variable">> => <<"ALANG_FIDELITY_LIVE">>,
-            <<"required_value">> => <<"I_UNDERSTAND_HOSTED_CALLS">>,
-            <<"credentials_required">> => [<<"OPENAI_API_KEY">>, <<"ANTHROPIC_API_KEY">>]
+            <<"environment_variable">> => <<"ALANG_ALLOW_LIVE_MODEL_CALLS">>,
+            <<"required_value">> => <<"1">>,
+            <<"credentials_required">> => [<<"ALANG_OPENAI_API_KEY">>, <<"ALANG_ANTHROPIC_API_KEY">>]
         },
         <<"design">> => #{
             <<"semantic_cases">> => 24,
@@ -394,6 +408,17 @@ expected_campaign_policy() ->
                 <<"malformed-json">>,
                 <<"schema-invalid">>
             ]
+        },
+        <<"repair">> => #{
+            <<"max_per_definitive_response">> => 1,
+            <<"allowed_for">> => [<<"malformed-json">>, <<"schema-invalid">>],
+            <<"primary_score_changes">> => false,
+            <<"counts_toward_all_calls">> => true
+        },
+        <<"submission_retry">> => #{
+            <<"max_per_primary_cell">> => 1,
+            <<"allowed_only_when">> => <<"request-proved-not-submitted">>,
+            <<"counts_toward_all_calls">> => true
         },
         <<"uncertain_outcomes">> => [
             <<"connection-state-unknown">>,

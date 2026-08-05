@@ -39,8 +39,9 @@ here.
 ### Files
 
 - [`campaign-policy-v1.json`](campaign-policy-v1.json) — disables networking
-  by default and freezes consent, 288/576 call ceilings, the USD 200 ceiling,
-  replacement rules, uncertainty classes, and redacted evidence retention.
+  by default and freezes consent, credential names, 288/576 call ceilings, the
+  USD 200 ceiling, repair/retry/replacement rules, uncertainty classes, and
+  redacted evidence retention.
 - [`prompt-template-v1.txt`](prompt-template-v1.txt) — the shared, example-free
   comprehension prompt with one task-specification insertion boundary.
 - [`provider-profiles-v1.json`](provider-profiles-v1.json) — pins the OpenAI

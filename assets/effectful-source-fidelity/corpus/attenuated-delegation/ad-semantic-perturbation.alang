@@ -1,6 +1,6 @@
 #!alang-source-v2
 // corpus-case: ad-semantic-perturbation
-// semantic-sha256: 169054ea56651de8a70995e8a27addfa4fe2a7fca55f927782b5583455c742bf
+// semantic-sha256: cb2d929d55da645b909356cdce17db9c94b7303b38d01653cc94cd7e01adb411
 // model-visible-begin
 task ad-semantic-perturbation {
   scopes { paths ["/workspace/delegated-review.md"]; workspaces [review-workspace]; models [child-reviewer]; }
@@ -8,8 +8,9 @@ task ad-semantic-perturbation {
   facts ["Retain workspace authority in the parent", "Delegate one review summary"];
   input review-facts: json required;
   effects [workspace.write, model.generate, child.run];
-  limits { timeout-ms 35000; output-bytes 2048; workspace-writes 1; child-calls 1; repair-calls 0; model-calls 1; steps 3; }
-  step delegate: child.run depends [];
+  limits { timeout-ms 35000; output-bytes 2048; workspace-writes 1; child-calls 1; repair-calls 0; model-calls 2; steps 4; }
+  step frame: model.generate depends [];
+  step delegate: child.run depends [frame];
   step save: workspace.write depends [delegate];
   step finish: complete depends [save];
   child { requirements [model child-reviewer]; effects [model.generate]; scopes { paths []; workspaces []; models [child-reviewer]; } limits { timeout-ms 25000; output-bytes 2048; workspace-writes 0; child-calls 0; repair-calls 0; model-calls 1; steps 2; } }

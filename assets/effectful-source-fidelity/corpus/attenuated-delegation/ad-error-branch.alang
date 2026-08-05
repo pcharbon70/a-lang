@@ -1,6 +1,6 @@
 #!alang-source-v2
 // corpus-case: ad-error-branch
-// semantic-sha256: 71f959d17baa4b55d9589733a533ce15a97cc52cf6921d4bd0e172aa40361afc
+// semantic-sha256: cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b
 // model-visible-begin
 task ad-error-branch {
   facts ["Delegate a recovery note and publish it", "Fail closed if child authority is denied, the child times out, or publication is denied"];
@@ -8,8 +8,9 @@ task ad-error-branch {
   effects [child.run, model.generate, workspace.write];
   requirements [model child-writer, workspace recovery-workspace];
   scopes { models [child-writer]; workspaces [recovery-workspace]; paths ["/workspace/recovery-note.md"]; }
-  limits { steps 3; model-calls 1; repair-calls 0; child-calls 1; workspace-writes 1; output-bytes 2048; timeout-ms 40000; }
-  step delegate: child.run depends [];
+  limits { steps 4; model-calls 2; repair-calls 0; child-calls 1; workspace-writes 1; output-bytes 2048; timeout-ms 40000; }
+  step frame: model.generate depends [];
+  step delegate: child.run depends [frame];
   step publish: workspace.write depends [delegate];
   step finish: complete depends [publish];
   on-error [delegate denied => failed, delegate timeout => failed, publish denied => failed];
