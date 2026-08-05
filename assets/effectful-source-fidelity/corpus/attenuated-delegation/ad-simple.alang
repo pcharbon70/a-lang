@@ -1,0 +1,20 @@
+#!alang-source-v2
+// corpus-case: ad-simple
+// semantic-sha256: 4582c2716861bba24d88e806710f725c5947c151b69e00dec3acd03d0bb9a67e
+// model-visible-begin
+task ad-simple {
+  facts ["Delegate the draft to one attenuated child, then publish the child result", "The child may use only the declared model and no workspace"];
+  input brief: text required;
+  effects [child.run, model.generate, workspace.write];
+  requirements [model child-writer, workspace parent-workspace];
+  scopes { models [child-writer]; workspaces [parent-workspace]; paths ["/workspace/delegated-brief.md"]; }
+  limits { steps 3; model-calls 1; repair-calls 0; child-calls 1; workspace-writes 1; output-bytes 2048; timeout-ms 45000; }
+  step delegate: child.run depends [];
+  step publish: workspace.write depends [delegate];
+  step finish: complete depends [publish];
+  on-error [];
+  child { effects [model.generate]; requirements [model child-writer]; scopes { models [child-writer]; workspaces []; paths []; } limits { steps 2; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 0; output-bytes 2048; timeout-ms 30000; } }
+  complete [artifact-exists "/workspace/delegated-brief.md": true, journal-succeeded "publish": true];
+  clarify [];
+  terminal complete;
+}

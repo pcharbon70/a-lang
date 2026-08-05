@@ -50,12 +50,21 @@ their corresponding sibling directories.
 - [`alang-task-json-v1.schema.json`](alang-task-json-v1.schema.json) — defines
   the closed conventional JSON compiler input using the same semantic
   vocabulary as the candidate source.
+- [`campaign-policy-v1.schema.json`](campaign-policy-v1.schema.json) — closes
+  the offline consent, experimental design, call/cost limits, replacement,
+  uncertainty, and retention policy.
+- [`corpus-manifest-v1.schema.json`](corpus-manifest-v1.schema.json) — requires
+  the exact three families, eight variants, 24 reviewed semantic pairs, and
+  their content-addressed files.
 - [`metrics-and-decision-v1.json`](metrics-and-decision-v1.json) — freezes the
   primary and secondary metrics, invalid-response scoring, paired bootstrap,
   promotion and replacement thresholds, safety vetoes, and outcomes.
 - [`pairing-and-materialization-v1.json`](pairing-and-materialization-v1.json)
   — freezes semantic normalization, opaque identifiers, the randomized
   schedule seed, representation visibility, and model-visible exclusions.
+- [`provider-profiles-v1.schema.json`](provider-profiles-v1.schema.json) —
+  closes the two exact provider/model cells and their one-turn, no-tool,
+  no-schema, token, byte, and identifier requirements.
 - [`semantic-pair-v1.schema.json`](semantic-pair-v1.schema.json) — defines a
   reviewed candidate/control/answer-key triple with content and semantic
   digests for one corpus case.

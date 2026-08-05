@@ -1,0 +1,18 @@
+#!alang-source-v2
+// corpus-case: sma-missing-information
+// semantic-sha256: 6e6f85fe63c2cf95fdc802d961edf39288c977e0b260c079a23c02d168296409
+// model-visible-begin
+task sma-missing-information {
+  facts ["Do not generate or publish until the required source summary is supplied"];
+  input source-summary: text required;
+  effects [];
+  requirements [];
+  scopes { models []; workspaces []; paths []; }
+  limits { steps 1; model-calls 0; repair-calls 0; child-calls 0; workspace-writes 0; output-bytes 256; timeout-ms 5000; }
+  step finish: complete depends [];
+  on-error [];
+  child none;
+  complete [clarification-recorded "source-summary": true];
+  clarify ["Source summary is required before generation"];
+  terminal needs-clarification;
+}

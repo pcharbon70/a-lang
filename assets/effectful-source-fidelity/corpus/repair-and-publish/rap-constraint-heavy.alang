@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: rap-constraint-heavy
+// semantic-sha256: 5d5fb93f192003c22cd152f92709e24f5ce2bdb3c4e9c67440d97927a30bab49
+// model-visible-begin
+task rap-constraint-heavy {
+  facts ["Draft then repair a security advisory", "Use the H1 Security Advisory", "Preserve every supplied identifier", "Publish UTF-8 under 4096 bytes", "Do not publish the unverified draft"];
+  input advisory-facts: json required;
+  effects [model.generate, workspace.write];
+  requirements [model editor-model, workspace security-workspace];
+  scopes { models [editor-model]; workspaces [security-workspace]; paths ["/workspace/security-advisory.md"]; }
+  limits { steps 4; model-calls 2; repair-calls 1; child-calls 0; workspace-writes 1; output-bytes 4096; timeout-ms 60000; }
+  step draft: model.generate depends [];
+  step repair: model.repair depends [draft];
+  step publish: workspace.write depends [repair];
+  step finish: complete depends [publish];
+  on-error [];
+  child none;
+  complete [artifact-exists "/workspace/security-advisory.md": true, markdown-h1 "/workspace/security-advisory.md": "Security Advisory", utf8 "/workspace/security-advisory.md": true, max-bytes "/workspace/security-advisory.md": 4096, journal-succeeded "publish": true];
+  clarify [];
+  terminal complete;
+}

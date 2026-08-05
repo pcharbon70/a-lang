@@ -1,0 +1,20 @@
+#!alang-source-v2
+// corpus-case: ad-scope-budget
+// semantic-sha256: 8104a51618106026c3a49e9cb4f56ee80184a6d452b2ad32d8a6e3e9f2f8ee71
+// model-visible-begin
+task ad-scope-budget {
+  facts ["Delegate within one model call and one child call", "Keep workspace authority only in the parent and write one bounded artifact"];
+  input digest-facts: text required;
+  effects [workspace.write, child.run, model.generate];
+  requirements [workspace isolated-parent, model bounded-child];
+  scopes { models [bounded-child]; workspaces [isolated-parent]; paths ["/workspace/delegated-digest.md"]; }
+  limits { steps 3; model-calls 1; repair-calls 0; child-calls 1; workspace-writes 1; output-bytes 1536; timeout-ms 25000; }
+  step delegate: child.run depends [];
+  step save: workspace.write depends [delegate];
+  step finish: complete depends [save];
+  on-error [];
+  child { effects [model.generate]; requirements [model bounded-child]; scopes { models [bounded-child]; workspaces []; paths []; } limits { steps 1; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 0; output-bytes 1024; timeout-ms 15000; } }
+  complete [artifact-exists "/workspace/delegated-digest.md": true, max-bytes "/workspace/delegated-digest.md": 1536];
+  clarify [];
+  terminal complete;
+}

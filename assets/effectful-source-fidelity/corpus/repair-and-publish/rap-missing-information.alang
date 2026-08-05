@@ -1,0 +1,19 @@
+#!alang-source-v2
+// corpus-case: rap-missing-information
+// semantic-sha256: e858f5752f1c46f23eaa97e5a271f2b761c0cd8e417533441e36c52d4fc13549
+// model-visible-begin
+task rap-missing-information {
+  facts ["Do not generate, repair, or publish without both the draft facts and validation criteria"];
+  input draft-facts: text required;
+  input validation-criteria: json required;
+  effects [];
+  requirements [];
+  scopes { models []; workspaces []; paths []; }
+  limits { steps 1; model-calls 0; repair-calls 0; child-calls 0; workspace-writes 0; output-bytes 256; timeout-ms 5000; }
+  step finish: complete depends [];
+  on-error [];
+  child none;
+  complete [clarification-recorded "validation-criteria": true];
+  clarify ["Validation criteria are required before draft and repair"];
+  terminal needs-clarification;
+}

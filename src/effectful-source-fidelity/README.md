@@ -48,6 +48,12 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_contract_tests.erl`](alang_fidelity_contract_tests.erl) —
   checks accepted records and rejects duplicate keys, unknown fields, dynamic
   operations, excess bounds, bad digests, and authority widening.
+- [`alang_fidelity_corpus.erl`](alang_fidelity_corpus.erl) — validates all 24
+  family×variant cells, representation and answer-key hashes, reviewed semantic
+  equality, exact provider profiles, offline consent, ceilings, and retention.
+- [`alang_fidelity_corpus_tests.erl`](alang_fidelity_corpus_tests.erl) — checks
+  corpus balance, paired digests, exact model IDs, request bounds, campaign
+  ceilings, offline defaults, replacement policy, and credential exclusion.
 - [`alang_fidelity_decision.erl`](alang_fidelity_decision.erl) — validates the
   pre-registered metric and statistical rule and derives the closed experiment
   outcome from completed evidence.

@@ -1,0 +1,20 @@
+#!alang-source-v2
+// corpus-case: sma-error-branch
+// semantic-sha256: 1d28fe22eb600a248c78eeaaa2a1f6a95c2564ebeb9beafdd15a9e008efc3f6d
+// model-visible-begin
+task sma-error-branch {
+  facts ["Draft and publish an operator handoff", "Fail without publication if generation times out or the write is denied"];
+  input handoff-facts: text required;
+  effects [model.generate, workspace.write];
+  requirements [model writer-model, workspace operations-workspace];
+  scopes { models [writer-model]; workspaces [operations-workspace]; paths ["/workspace/operator-handoff.md"]; }
+  limits { steps 3; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 1; output-bytes 2048; timeout-ms 20000; }
+  step draft: model.generate depends [];
+  step publish: workspace.write depends [draft];
+  step finish: complete depends [publish];
+  on-error [draft timeout => failed, publish denied => failed];
+  child none;
+  complete [artifact-exists "/workspace/operator-handoff.md": true, journal-succeeded "publish": true];
+  clarify [];
+  terminal complete;
+}

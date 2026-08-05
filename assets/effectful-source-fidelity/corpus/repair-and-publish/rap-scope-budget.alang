@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: rap-scope-budget
+// semantic-sha256: db304de5499e655b32bf1bdf9d50f4b2628d68e5b49f86cfc8246325aa0961d6
+// model-visible-begin
+task rap-scope-budget {
+  facts ["Repair the generated runbook once and publish only to the bounded path", "Use exactly the declared model and workspace authority"];
+  input runbook-facts: text required;
+  effects [workspace.write, model.generate];
+  requirements [workspace bounded-workspace, model repair-model];
+  scopes { models [repair-model]; workspaces [bounded-workspace]; paths ["/workspace/runbook.md"]; }
+  limits { steps 4; model-calls 2; repair-calls 1; child-calls 0; workspace-writes 1; output-bytes 1536; timeout-ms 25000; }
+  step draft: model.generate depends [];
+  step repair: model.repair depends [draft];
+  step publish: workspace.write depends [repair];
+  step finish: complete depends [publish];
+  on-error [];
+  child none;
+  complete [artifact-exists "/workspace/runbook.md": true, max-bytes "/workspace/runbook.md": 1536];
+  clarify [];
+  terminal complete;
+}

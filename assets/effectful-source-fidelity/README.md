@@ -34,8 +34,13 @@ Secrets, hosted responses, caches, and derived evidence do not belong here.
 
 ### Subdirectories
 
+- [Campaign](campaign/README.md) — exact hosted model profiles, offline
+  consent boundary, call and cost ceilings, evidence policy, and shared prompt.
 - [Contracts](contracts/README.md) — closed comprehension and answer-key
   schemas plus the frozen metrics, bootstrap, safety, and decision rule.
+- [Corpus](corpus/README.md) — 24 balanced semantic cases, 48 paired source
+  documents, representation-neutral answer keys, and content-addressed review
+  metadata.
 
 ### Files
 

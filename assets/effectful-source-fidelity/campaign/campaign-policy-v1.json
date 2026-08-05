@@ -1,0 +1,59 @@
+{
+  "format": "alang-fidelity-campaign-policy-v1",
+  "network_default": "disabled",
+  "live_opt_in": {
+    "environment_variable": "ALANG_FIDELITY_LIVE",
+    "required_value": "I_UNDERSTAND_HOSTED_CALLS",
+    "credentials_required": [
+      "OPENAI_API_KEY",
+      "ANTHROPIC_API_KEY"
+    ]
+  },
+  "design": {
+    "semantic_cases": 24,
+    "conditions": 2,
+    "model_families": 2,
+    "paired_repetitions": 3
+  },
+  "ceilings": {
+    "primary_calls": 288,
+    "all_calls": 576,
+    "cost_usd": 200,
+    "accepted_source_bytes": 8192,
+    "accepted_response_bytes": 8192
+  },
+  "replacement": {
+    "blind_retry": false,
+    "max_replacements_per_primary_cell": 1,
+    "allowed_only_when": [
+      "transport-failure-before-response",
+      "timeout-before-response-metadata"
+    ],
+    "forbidden_when": [
+      "definitive-response-received",
+      "definitive-refusal",
+      "truncated",
+      "malformed-json",
+      "schema-invalid"
+    ]
+  },
+  "uncertain_outcomes": [
+    "connection-state-unknown",
+    "provider-accepted-request-without-definitive-response"
+  ],
+  "retention": {
+    "retain": [
+      "redacted-prompt",
+      "normalized-response",
+      "deterministic-score",
+      "bounded-request-metadata",
+      "content-digest"
+    ],
+    "exclude": [
+      "credential",
+      "authorization-header",
+      "unredacted-secret",
+      "provider-internal-trace"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/corpus-manifest-v1.schema.json",
+  "title": "A-Lang fidelity corpus manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "families", "variants", "cases"],
+  "properties": {
+    "format": { "const": "alang-fidelity-corpus-v1" },
+    "families": {
+      "const": [
+        "single-model-artifact",
+        "repair-and-publish",
+        "attenuated-delegation"
+      ]
+    },
+    "variants": {
+      "const": [
+        "simple",
+        "constraint-heavy",
+        "scope-budget",
+        "error-branch",
+        "missing-information",
+        "irrelevant-context",
+        "prompt-injection",
+        "semantic-perturbation"
+      ]
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 24,
+      "maxItems": 24,
+      "items": { "$ref": "semantic-pair-v1.schema.json" }
+    }
+  }
+}

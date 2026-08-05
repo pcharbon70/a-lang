@@ -19,8 +19,8 @@ budget, and evidence policy before extending the compiler or observing a hosted
 model. This prevents the language or threshold from being tuned after results
 are known.
 
-**Status:** In progress — Sections 1.1 and 1.2 are complete and Sections
-1.3–1.4 remain planned.
+**Status:** In progress — Sections 1.1–1.3 are complete and Section 1.4
+remains planned.
 
 **Dependencies:** The [Phase 8 architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md)
 has authorized only this effectful-source fidelity question. The existing typed
@@ -172,7 +172,9 @@ than claiming that the model is blind to it.
 **Description:** Pre-register all 24 cases, two exact model profiles, operational
 ceilings, and retained evidence before implementation can run a live campaign.
 
-- [ ] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete** — reproduce with
+  `make test-fidelity-section-1-3`; inspect the [frozen corpus](../../assets/effectful-source-fidelity/corpus/README.md)
+  and [campaign contract](../../assets/effectful-source-fidelity/campaign/README.md).
 
 ### Task 1.3.1: Author and Review the Twenty-Four Semantic Cases
 
@@ -180,7 +182,7 @@ ceilings, and retained evidence before implementation can run a live campaign.
 repair-and-publish, and attenuated-delegation families without generating an
 acceptance case from IR.
 
-- [ ] **Task 1.3.1 Complete**
+- [x] **Task 1.3.1 Complete**
 
 #### Subtask 1.3.1.1: Cover the Eight Required Variants per Family
 
@@ -189,7 +191,9 @@ missing-information, irrelevant-context, prompt-injection, and
 semantics-preserving perturbation cases, each with a declared expected
 terminal class.
 
-- [ ] **Subtask 1.3.1.1 Complete**
+- [x] **Subtask 1.3.1.1 Complete** — the manifest contains exactly one
+  validated cell for each of three families by eight variants, with an
+  explicit expected terminal class in every answer key.
 
 #### Subtask 1.3.1.2: Review Corpus Balance and Independence
 
@@ -197,7 +201,9 @@ terminal class.
 no copied answer-key serialization, no condition-specific demonstrations, and
 no topic or difficulty imbalance that predicts notation.
 
-- [ ] **Subtask 1.3.1.2 Complete**
+- [x] **Subtask 1.3.1.2 Complete** — 24 A-Lang candidates, 24 typed-JSON
+  controls, and 24 independent answer keys have unique content hashes, equal
+  per-pair semantic digests, equivalent detail review, and no prompt examples.
 
 ### Task 1.3.2: Register Hosted Profiles and Operational Bounds
 
@@ -205,7 +211,7 @@ no topic or difficulty imbalance that predicts notation.
 repair, timeout, cost, privacy, and retention behavior without making the
 default test suite network-dependent.
 
-- [ ] **Task 1.3.2 Complete**
+- [x] **Task 1.3.2 Complete**
 
 #### Subtask 1.3.2.1: Pin Exact Provider Profiles
 
@@ -214,7 +220,10 @@ default test suite network-dependent.
 constraint, 8,192-token provider output and 8,192-byte accepted-output bounds,
 and fail when an exact identifier is unavailable.
 
-- [ ] **Subtask 1.3.2.1 Complete**
+- [x] **Subtask 1.3.2.1 Complete** — exact OpenAI Responses
+  `gpt-5.6-terra` and Anthropic Messages `claude-sonnet-5` profiles require
+  medium effort, one turn, no tools or schema constraint, and 8,192-token and
+  accepted-byte limits.
 
 #### Subtask 1.3.2.2: Freeze Campaign and Evidence Ceilings
 
@@ -224,7 +233,10 @@ outcomes without blind retry, allow replacements only where no definitive model
 response exists, and retain only redacted prompts, normalized responses,
 scores, bounded metadata, and digests.
 
-- [ ] **Subtask 1.3.2.2 Complete**
+- [x] **Subtask 1.3.2.2 Complete** — networking is disabled by default;
+  explicit consent and both credentials are required, calls are capped at
+  288/576 and USD 200, blind retry is forbidden, and retained evidence is
+  bounded and redacted.
 
 ## Section 1.4: Phase 1 Integration Tests
 

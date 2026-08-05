@@ -1,0 +1,31 @@
+{
+  "format": "alang-fidelity-provider-profiles-v1",
+  "profiles": [
+    {
+      "family": "openai",
+      "provider": "OpenAI",
+      "api": "Responses",
+      "model_id": "gpt-5.6-terra",
+      "effort": "medium",
+      "turns": 1,
+      "tools_enabled": false,
+      "provider_schema_constraint": false,
+      "max_output_tokens": 8192,
+      "accepted_output_bytes": 8192,
+      "exact_identifier_required": true
+    },
+    {
+      "family": "anthropic",
+      "provider": "Anthropic",
+      "api": "Messages",
+      "model_id": "claude-sonnet-5",
+      "effort": "medium",
+      "turns": 1,
+      "tools_enabled": false,
+      "provider_schema_constraint": false,
+      "max_output_tokens": 8192,
+      "accepted_output_bytes": 8192,
+      "exact_identifier_required": true
+    }
+  ]
+}

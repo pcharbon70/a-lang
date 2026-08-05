@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: ad-irrelevant-context
+// semantic-sha256: 45eb477b485c079b6d60b4977e3e99ceec94cfabdc7f159271b353406a50aa1b
+// model-visible-begin
+task ad-irrelevant-context {
+  facts ["Delegate the current synthesis brief", "Do not pass the optional obsolete notes into the child context", "Keep all workspace authority in the parent"];
+  input synthesis-brief: text required;
+  input obsolete-notes: text optional;
+  effects [child.run, model.generate, workspace.write];
+  requirements [model child-writer, workspace synthesis-workspace];
+  scopes { models [child-writer]; workspaces [synthesis-workspace]; paths ["/workspace/synthesis.md"]; }
+  limits { steps 3; model-calls 1; repair-calls 0; child-calls 1; workspace-writes 1; output-bytes 2560; timeout-ms 45000; }
+  step delegate: child.run depends [];
+  step publish: workspace.write depends [delegate];
+  step finish: complete depends [publish];
+  on-error [];
+  child { effects [model.generate]; requirements [model child-writer]; scopes { models [child-writer]; workspaces []; paths []; } limits { steps 2; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 0; output-bytes 2560; timeout-ms 30000; } }
+  complete [artifact-exists "/workspace/synthesis.md": true, max-bytes "/workspace/synthesis.md": 2560];
+  clarify [];
+  terminal complete;
+}

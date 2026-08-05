@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/provider-profiles-v1.schema.json",
+  "title": "A-Lang fidelity provider profiles v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "profiles"],
+  "properties": {
+    "format": { "const": "alang-fidelity-provider-profiles-v1" },
+    "profiles": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/profile" }
+    }
+  },
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "provider",
+        "api",
+        "model_id",
+        "effort",
+        "turns",
+        "tools_enabled",
+        "provider_schema_constraint",
+        "max_output_tokens",
+        "accepted_output_bytes",
+        "exact_identifier_required"
+      ],
+      "properties": {
+        "family": { "enum": ["openai", "anthropic"] },
+        "provider": { "enum": ["OpenAI", "Anthropic"] },
+        "api": { "enum": ["Responses", "Messages"] },
+        "model_id": { "enum": ["gpt-5.6-terra", "claude-sonnet-5"] },
+        "effort": { "const": "medium" },
+        "turns": { "const": 1 },
+        "tools_enabled": { "const": false },
+        "provider_schema_constraint": { "const": false },
+        "max_output_tokens": { "const": 8192 },
+        "accepted_output_bytes": { "const": 8192 },
+        "exact_identifier_required": { "const": true }
+      }
+    }
+  }
+}
