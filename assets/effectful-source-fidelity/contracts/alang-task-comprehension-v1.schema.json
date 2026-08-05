@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/alang-task-comprehension-v1.schema.json",
+  "title": "A-Lang task comprehension v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "case_id",
+    "goal_facts",
+    "inputs",
+    "actions",
+    "effects",
+    "requirements",
+    "scopes",
+    "budgets",
+    "error_branches",
+    "child_attenuation",
+    "completion_predicates",
+    "clarification_needs",
+    "terminal_class"
+  ],
+  "properties": {
+    "format": { "const": "alang_task_comprehension_v1" },
+    "case_id": { "$ref": "#/$defs/identifier" },
+    "goal_facts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonemptyText" }
+    },
+    "inputs": {
+      "type": "array",
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/input" }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "effects": {
+      "type": "array",
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/effect" }
+    },
+    "requirements": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/requirement" }
+    },
+    "scopes": { "$ref": "#/$defs/scopes" },
+    "budgets": { "$ref": "#/$defs/budgets" },
+    "error_branches": {
+      "type": "array",
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/errorBranch" }
+    },
+    "child_attenuation": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/childAttenuation" }
+      ]
+    },
+    "completion_predicates": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/completionPredicate" }
+    },
+    "clarification_needs": {
+      "type": "array",
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonemptyText" }
+    },
+    "terminal_class": {
+      "enum": ["complete", "needs-clarification", "failed"]
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$"
+    },
+    "nonemptyText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "required"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "type": { "enum": ["text", "json", "path", "model-profile"] },
+        "required": { "type": "boolean" }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "operation", "depends_on"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "operation": {
+          "enum": ["model.generate", "model.repair", "workspace.write", "child.run", "complete"]
+        },
+        "depends_on": {
+          "type": "array",
+          "maxItems": 15,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "effect": {
+      "enum": ["model.generate", "workspace.write", "child.run"]
+    },
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "resource"],
+      "properties": {
+        "kind": { "enum": ["model", "workspace"] },
+        "resource": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "scopes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["models", "workspaces", "paths"],
+      "properties": {
+        "models": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 4096 }
+        },
+        "workspaces": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 4096 }
+        },
+        "paths": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 4096 }
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "steps",
+        "model_calls",
+        "repair_calls",
+        "child_calls",
+        "workspace_writes",
+        "output_bytes",
+        "timeout_ms"
+      ],
+      "properties": {
+        "steps": { "type": "integer", "minimum": 1, "maximum": 64 },
+        "model_calls": { "type": "integer", "minimum": 0, "maximum": 8 },
+        "repair_calls": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "child_calls": { "type": "integer", "minimum": 0, "maximum": 8 },
+        "workspace_writes": { "type": "integer", "minimum": 0, "maximum": 8 },
+        "output_bytes": { "type": "integer", "minimum": 1, "maximum": 8192 },
+        "timeout_ms": { "type": "integer", "minimum": 1, "maximum": 120000 }
+      }
+    },
+    "errorBranch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "on", "terminal_class"],
+      "properties": {
+        "action": { "$ref": "#/$defs/identifier" },
+        "on": { "enum": ["denied", "timeout", "invalid-output", "verification-failed"] },
+        "terminal_class": { "enum": ["needs-clarification", "failed"] }
+      }
+    },
+    "childAttenuation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effects", "requirements", "scopes", "budgets"],
+      "properties": {
+        "effects": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/effect" }
+        },
+        "requirements": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/requirement" }
+        },
+        "scopes": { "$ref": "#/$defs/scopes" },
+        "budgets": { "$ref": "#/$defs/budgets" }
+      }
+    },
+    "completionPredicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "target", "expected"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "artifact-exists",
+            "sha256",
+            "max-bytes",
+            "utf8",
+            "markdown-h1",
+            "journal-succeeded",
+            "clarification-recorded"
+          ]
+        },
+        "target": { "$ref": "#/$defs/shortText" },
+        "expected": {
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "integer", "minimum": 1, "maximum": 8192 },
+            { "type": "string", "minLength": 1, "maxLength": 256 }
+          ]
+        }
+      }
+    }
+  }
+}

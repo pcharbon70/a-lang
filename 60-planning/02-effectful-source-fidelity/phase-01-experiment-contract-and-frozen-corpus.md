@@ -19,8 +19,8 @@ budget, and evidence policy before extending the compiler or observing a hosted
 model. This prevents the language or threshold from being tuned after results
 are known.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** In progress — Section 1.1 is complete and Sections 1.2–1.4 remain
+planned.
 
 **Dependencies:** The [Phase 8 architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md)
 has authorized only this effectful-source fidelity question. The existing typed
@@ -32,7 +32,9 @@ the fixed substrate rather than experimental variables.
 **Description:** Turn “task-specification fidelity” into a closed record,
 deterministic observations, and a pre-registered architecture decision.
 
-- [ ] **Section 1.1 Complete**
+- [x] **Section 1.1 Complete** — reproduce with
+  `make test-fidelity-section-1-1`; inspect the [BEAM validators](../../src/effectful-source-fidelity/README.md)
+  and [frozen contracts](../../assets/effectful-source-fidelity/contracts/README.md).
 
 ### Task 1.1.1: Define the Comprehension Record and Semantic Oracle
 
@@ -40,7 +42,7 @@ deterministic observations, and a pre-registered architecture decision.
 surface and a representation-neutral answer key against which recovery can be
 scored without an LLM judge.
 
-- [ ] **Task 1.1.1 Complete**
+- [x] **Task 1.1.1 Complete**
 
 #### Subtask 1.1.1.1: Specify `alang_task_comprehension_v1`
 
@@ -50,7 +52,9 @@ requirements, scopes, budgets, error branches, child attenuation, completion
 predicates, clarification needs, and terminal class; reject unknown fields,
 duplicates, dynamic tags, and out-of-bound values.
 
-- [ ] **Subtask 1.1.1.1 Complete**
+- [x] **Subtask 1.1.1.1 Complete** — the closed schema and duplicate-aware
+  BEAM validator reject unknown fields, dynamic operations, invalid
+  dependencies, out-of-bound values, and child authority widening.
 
 #### Subtask 1.1.1.2: Specify Representation-Neutral Answer Keys
 
@@ -58,14 +62,15 @@ duplicates, dynamic tags, and out-of-bound values.
 digest independently from A-Lang and JSON origins, comments, key order, and
 spelling so only meaning contributes to the primary score.
 
-- [ ] **Subtask 1.1.1.2 Complete**
+- [x] **Subtask 1.1.1.2 Complete** — answer keys bind a case to the canonical
+  digest of its origin-free, presentation-normalized semantic record.
 
 ### Task 1.1.2: Freeze Metrics, Statistics, and Outcomes
 
 **Description:** Make every reported metric and the promote/replace/stop rule
 machine-readable before a hosted request can run.
 
-- [ ] **Task 1.1.2 Complete**
+- [x] **Task 1.1.2 Complete**
 
 #### Subtask 1.1.2.1: Register Primary and Secondary Metrics
 
@@ -76,7 +81,9 @@ with no hidden weighting or model-graded field. Score every definitive refusal,
 truncation, malformed JSON, and schema-invalid first response as zero exact
 fidelity rather than excluding or replacing it.
 
-- [ ] **Subtask 1.1.2.1 Complete**
+- [x] **Subtask 1.1.2.1 Complete** — the machine-readable contract freezes one
+  exact primary metric, nine secondary observations, and zero-credit invalid
+  first-response classes.
 
 #### Subtask 1.1.2.2: Encode the Frozen Decision Rule
 
@@ -87,7 +94,9 @@ using 10,000 resamples with seed `20260805`; otherwise replace with JSON when
 both families reach 80%, or stop surface expansion when they do not, with any
 safety regression acting as a veto.
 
-- [ ] **Subtask 1.1.2.2 Complete**
+- [x] **Subtask 1.1.2.2 Complete** — the BEAM decision module enforces the
+  per-family five-point and positive-interval gate, JSON floor, invalid-run
+  outcome, and safety veto without configurable thresholds.
 
 ## Section 1.2: Paired Representation Contract
 
