@@ -39,6 +39,10 @@ See the [archive guide](../README.md) for its structure and conventions.
   adding the BEAM-resident compiler frontend, supervised runtime, local capability broker,
   durable effects, bounded model and child-task execution, adversarial
   validation, and a final architecture decision.
+- [Effectful source fidelity plan](../60-planning/02-effectful-source-fidelity/README.md)
+  — the numbered successor that compares user-authored effectful A-Lang with
+  semantically matched typed JSON while holding the BEAM enforcement path
+  constant and applying a pre-registered decision rule.
 
 ## Unsettled threads
 

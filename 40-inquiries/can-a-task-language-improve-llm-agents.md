@@ -103,6 +103,10 @@ deeper semantic understanding in arbitrary pretrained LLMs.
 - The [architecture decision](../src/phase-08/proof-of-concept-architecture-decision.md)
   therefore narrows the demonstrated claim to executable contracts and makes
   effectful source-language fidelity the next decision boundary.
+- The [effectful source fidelity plan](../60-planning/02-effectful-source-fidelity/README.md)
+  pre-registers that comparison as 24 paired A-Lang/typed-JSON cases, three
+  repetitions, two hosted model families, deterministic exact-fidelity
+  scoring, safety vetoes, and a strict promote/replace/stop handoff.
 
 ## Outcome
 
@@ -110,4 +114,6 @@ The inquiry remains open. The prototype supports runtime-enforced task
 contracts, but the central language-understanding and source-notation questions
 remain untested. The next comparison must start from user-authored effectful
 source, hold the BEAM runtime constant, and measure fidelity against a strong
-conventional typed notation across declared model families.
+conventional typed notation across declared model families. The second
+planning stream defines the implementation and evidence needed to answer that
+bounded question; it is a plan, not yet a finding.

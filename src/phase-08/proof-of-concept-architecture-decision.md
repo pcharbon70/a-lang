@@ -78,6 +78,12 @@ The next prototype must retain all current broker, durability, adversarial,
 fault, and completion gates. Promotion requires a fidelity benefit without a
 weaker runtime boundary.
 
+The authorized work is specified by the
+[effectful source fidelity plan](../../60-planning/02-effectful-source-fidelity/README.md),
+which freezes the paired A-Lang/typed-JSON corpus, two hosted model families,
+deterministic scoring, safety vetoes, and promote/replace/stop threshold before
+implementation or live evaluation.
+
 ## Frozen scope
 
 Until that decision is made, do not add general recursion, polymorphism,
@@ -100,5 +106,6 @@ questions; it does not resolve general LLM-agent, categorical, or BEAM
 production claims. They will be reconciled with this decision in the final
 Phase 8 status ledger.
 
-See the [Phase 8 roadmap](../../60-planning/01-minimal-proof-of-concept/phase-08-end-to-end-demonstration-and-poc-decision.md)
-and [minimal PoC architectural contract](../../60-planning/01-minimal-proof-of-concept/README.md).
+See the [Phase 8 roadmap](../../60-planning/01-minimal-proof-of-concept/phase-08-end-to-end-demonstration-and-poc-decision.md),
+[minimal PoC architectural contract](../../60-planning/01-minimal-proof-of-concept/README.md),
+and [successor fidelity roadmap](../../60-planning/02-effectful-source-fidelity/README.md).

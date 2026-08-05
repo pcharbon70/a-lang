@@ -271,7 +271,8 @@ a clean checkout can reproduce all of the following:
 **Roadmap outcome:** Revised, not complete. Phase 8 closes the planned
 implementation and records the unmet OS-boundary gate rather than waiving it.
 The combined architecture is not approved for production; exactly one bounded
-effectful-source fidelity prototype may continue.
+effectful-source fidelity prototype may continue under the
+[second planning stream](../02-effectful-source-fidelity/README.md).
 
 ## Maintaining this index
 

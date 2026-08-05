@@ -48,6 +48,10 @@ Phase numbering restarts inside each planning stream.
   eight-phase BEAM-first roadmap from a directly executing ERTS vertical slice
   through the BEAM-resident compiler frontend, typed effects, local capability brokering,
   durable recovery, a bounded LLM loop, and falsifiable evaluation.
+- [02 — Effectful source fidelity](02-effectful-source-fidelity/README.md) — a
+  six-phase successor that holds the BEAM runtime constant while comparing
+  user-authored effectful A-Lang with semantically matched typed JSON across
+  two hosted model families and a frozen promote, replace, or stop rule.
 
 ### Documents
 
