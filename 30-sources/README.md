@@ -62,6 +62,43 @@ interpretation.
 - [SatLM](ye-et-al-2023-satlm.md) — declarative constraints paired with
   satisfiability solving.
 
+#### LLM code understanding and repository context
+
+- [Aider repository map](aider-2026-repository-map.md) — a current
+  implementation that extracts definition/reference tags, ranks a file graph,
+  and renders selected symbols to a token budget.
+- [AutoCodeRover](zhang-et-al-2024-autocoderover.md) — AST-aware iterative
+  search using distinct projections for class signatures, methods, code
+  windows, and test evidence.
+- [CrossCodeEval](ding-et-al-2023-crosscodeeval.md) — a multilingual benchmark
+  for completion that requires cross-file context and exposes retrieval noise.
+- [DocPrompting](zhou-et-al-2023-docprompting.md) — documentation retrieval for
+  unfamiliar API generation, including both accuracy gains and cascading
+  retrieval errors.
+- [Indirect prompt injection](greshake-et-al-2023-indirect-prompt-injection.md)
+  — security evidence that retrieved documents and source comments can act as
+  adversarial instructions.
+- [Language Server Protocol 3.18](microsoft-2026-language-server-protocol.md) —
+  a request-oriented vocabulary for definitions, references, symbols, and
+  linked source ranges.
+- [RepoCoder](zhang-et-al-2023-repocoder.md) — iterative retrieval and
+  generation for repository-level completion.
+- [Repoformer](wu-et-al-2024-repoformer.md) — selective retrieval evidence
+  showing that much cross-file context is neutral or harmful.
+- [RepoGraph](ouyang-et-al-2025-repograph.md) — typed repository neighborhoods
+  for localization and repair agents, with evidence against oversized graph
+  expansion.
+- [RepoQA](liu-et-al-2024-repoqa.md) — long-context function search and a
+  model-dependent comment-removal ablation.
+- [SCIP Code Intelligence Protocol](scip-code-2026-code-intelligence-protocol.md)
+  — a revision-specific index of symbols, occurrences, roles, signatures, and
+  navigation relationships.
+- [SWE-agent](yang-et-al-2024-swe-agent.md) — agent-computer interface
+  ablations for compact search, file viewing, editing, history, and feedback.
+- [SWE-QA](peng-et-al-2026-swe-qa.md) — repository-level questions spanning
+  intent, architecture, location, and multi-hop dependencies across multiple
+  context strategies.
+
 #### BEAM runtime and language implementation
 
 - [A Formalisation of Core Erlang, a Concurrent Actor Language](bereczky-et-al-2024-formalisation-concurrent-core-erlang.md)

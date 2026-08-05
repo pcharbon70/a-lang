@@ -92,6 +92,22 @@ trusted BEAM broker holds typed resource scope, budgets, deadlines, and
 revocation state; generated A-Lang processes receive only opaque local
 references and must route effects through the closed runtime ABI.
 
+## Symbol-aware repository context
+
+- [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
+  — separates compiler-derived symbol facts, authored semantic relations, and
+  selectively materialized model context, with a falsifiable promotion gate.
+- [Symbol-aware code context for LLM agents](symbol-aware-code-context-for-llm-agents.md)
+  — follows the evidence through cross-file completion, repository QA, code
+  graphs, agent interfaces, LSP, SCIP, generated maps, and prompt injection.
+- [Open source-reference inquiry](../40-inquiries/can-typed-source-references-improve-llm-code-understanding.md)
+  — asks whether source embedding adds value beyond an equal-budget generated
+  symbol map.
+
+This is deliberately separate from the active notation experiment. The current
+effectful source fidelity campaign compares A-Lang with typed JSON; it does not
+vary repository-navigation context or authorize a new reference form.
+
 ## Emerging design thesis
 
 The most promising language is layered:
@@ -133,3 +149,5 @@ exists, it is an experimental design rather than support for either notation.
   without making OTP compiler internals part of the language semantics?
 - Can opaque local grants and a closed BEAM effect ABI provide sufficient
   least-authority enforcement for the first proof of concept?
+- Do compiler-resolved authored source relations improve LLM understanding
+  beyond a generated symbol map under an equal context budget?

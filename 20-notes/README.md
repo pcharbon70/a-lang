@@ -46,6 +46,9 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
 - [Task languages for LLM agents: a deep dive](llm-agent-task-languages-deep-dive.md)
   — a synthesis of transformer behavior, task representation, agent
   programming, formal reasoning, and language-design implications.
+- [Typed source references for LLM code understanding](typed-source-references-for-llm-code-understanding.md)
+  — an evidence-bounded case for compiler-resolved semantic relationships,
+  selective context materialization, and an experiment before source syntax.
 
 ## Maintaining this index
 
