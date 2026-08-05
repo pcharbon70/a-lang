@@ -111,6 +111,15 @@ The unresolved question is how much of this should be one language, and how
 much should be a family of interoperating representations with a common task
 model.
 
+## Active implementation test
+
+The [effectful source fidelity plan](../60-planning/02-effectful-source-fidelity/README.md)
+turns the central notation question into a bounded experiment: A-Lang and a
+closed typed-JSON control express matched task semantics, compile through the
+same BEAM enforcement path, and are compared across two declared hosted model
+families with deterministic scoring and safety vetoes. Until its evidence
+exists, it is an experimental design rather than support for either notation.
+
 ## Open questions
 
 - Which semantic core generalizes across research, coding, web, and embodied
