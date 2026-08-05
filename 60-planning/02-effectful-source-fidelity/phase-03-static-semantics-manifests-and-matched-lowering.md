@@ -20,8 +20,9 @@ lowering that make the two representation conditions semantically comparable.
 Both paths must produce the same validated `alang_typed_task_ir_v2` meaning
 without accepting manually constructed IR as campaign input.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** Complete; the reproducible integration evidence records matched
+semantic and IR identities, equivalent rejection classes, seeded-mutant
+detection, and BEAM residency.
 
 **Dependencies:** Phase 1 has frozen the paired semantics and JSON schema;
 Phase 2 produces validated `alang_source_ast_v2` with exact origins. Existing
@@ -209,7 +210,7 @@ from acceptance execution.
 derive the same authority, and lower every frozen pair to one normalized IR
 meaning.
 
-- [ ] **Section 3.4 Complete**
+- [x] **Section 3.4 Complete**
 
 ### Task 3.4.1: Run Paired Differential and Negative Suites
 
@@ -217,7 +218,7 @@ meaning.
 effect, limit, child, path, and completion violations through both frontend
 paths.
 
-- [ ] **Task 3.4.1 Complete**
+- [x] **Task 3.4.1 Complete**
 
 #### Subtask 3.4.1.1: Require Pairwise Semantic Digest Equality
 
@@ -225,7 +226,7 @@ paths.
 checked semantic model and IR, and require equal digests, manifests, task
 limits, delegate bounds, and completion specifications for every valid pair.
 
-- [ ] **Subtask 3.4.1.1 Complete**
+- [x] **Subtask 3.4.1.1 Complete**
 
 #### Subtask 3.4.1.2: Require Equivalent Rejection Classes
 
@@ -233,7 +234,7 @@ limits, delegate bounds, and completion specifications for every valid pair.
 same stable error class at the appropriate A-Lang origin or JSON pointer,
 without requiring presentation-specific messages to be identical.
 
-- [ ] **Subtask 3.4.1.2 Complete**
+- [x] **Subtask 3.4.1.2 Complete**
 
 ### Task 3.4.2: Reassert IR Laws, Bounds, and Residency
 
@@ -241,7 +242,7 @@ without requiring presentation-specific messages to be identical.
 attenuation, node-reference, acyclic-call, and selected composition properties
 entirely as BEAM tests.
 
-- [ ] **Task 3.4.2 Complete**
+- [x] **Task 3.4.2 Complete**
 
 #### Subtask 3.4.2.1: Detect Seeded Checker and Lowering Defects
 
@@ -249,7 +250,7 @@ entirely as BEAM tests.
 child limits, ignored completion fields, condition-specific defaults,
 unstable node identities, and acceptance of direct IR.
 
-- [ ] **Subtask 3.4.2.1 Complete**
+- [x] **Subtask 3.4.2.1 Complete**
 
 #### Subtask 3.4.2.2: Publish Phase 3 Evidence
 
@@ -257,19 +258,19 @@ unstable node identities, and acceptance of direct IR.
 manifest/limit equality, negative-case equivalence, property counts, mutant
 detection, and exact commands needed to reproduce the phase gate.
 
-- [ ] **Subtask 3.4.2.2 Complete**
+- [x] **Subtask 3.4.2.2 Complete**
 
 ## Phase 3 Completion Evidence
 
 **Description:** Authorize backend integration only after both notations have
 one shared, statically enforced meaning.
 
-- [ ] Typed JSON is decoded and checked entirely on BEAM
-- [ ] JSON cannot inject IR, runtime, adapter, credential, or process terms
-- [ ] A-Lang and JSON use one resolver and static semantic core
-- [ ] Declared effects and requirements exactly match inferred authority
-- [ ] Limits cover finite static upper bounds and child limits are attenuated
-- [ ] Every valid pair yields equal normalized `alang_typed_task_ir_v2` digests
-- [ ] Equivalent semantic defects receive equivalent rejection classes
-- [ ] Direct IR and fixture constructors cannot enter campaign execution
-- [ ] Seeded semantic and lowering defects are detected
+- [x] Typed JSON is decoded and checked entirely on BEAM
+- [x] JSON cannot inject IR, runtime, adapter, credential, or process terms
+- [x] A-Lang and JSON use one resolver and static semantic core
+- [x] Declared effects and requirements exactly match inferred authority
+- [x] Limits cover finite static upper bounds and child limits are attenuated
+- [x] Every valid pair yields equal normalized `alang_typed_task_ir_v2` digests
+- [x] Equivalent semantic defects receive equivalent rejection classes
+- [x] Direct IR and fixture constructors cannot enter campaign execution
+- [x] Seeded semantic and lowering defects are detected

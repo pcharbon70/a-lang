@@ -243,8 +243,9 @@ following, with live-only items backed by a recorded opt-in campaign:
 
 - [x] Twenty-four hand-authored A-Lang/JSON pairs validate against frozen
       semantic answer keys — see the [Phase 1 evidence](../../src/effectful-source-fidelity/phase-01-integration-evidence.md)
-- [ ] Every pair produces the same normalized semantic digest without manual IR
-- [ ] Effectful source covers model, workspace, repair, child, and completion
+- [x] Every pair produces the same normalized semantic digest without manual IR
+      — see the [Phase 3 evidence](../../src/effectful-source-fidelity/phase-03-integration-evidence.md)
+- [x] Effectful source covers model, workspace, repair, child, and completion
       vocabulary with source-local diagnostics
 - [ ] Both frontend paths produce inspected BEAM artifacts and execute through
       the same broker, durability, workspace, and completion boundaries
@@ -278,8 +279,8 @@ following, with live-only items backed by a recorded opt-in campaign:
   model, workspace, repair, child, limit, and completion surface and records
   the reproducible [frontend evidence](../../src/effectful-source-fidelity/phase-02-integration-evidence.md).
 - [Phase 3 — Static semantics, manifests, and matched lowering](phase-03-static-semantics-manifests-and-matched-lowering.md)
-  — checks both A-Lang and typed JSON, derives authority, and proves matched
-  lowering into the existing typed task IR.
+  — **complete**; checks both A-Lang and typed JSON, derives authority, and
+  proves matched lowering through the reproducible [Phase 3 evidence](../../src/effectful-source-fidelity/phase-03-integration-evidence.md).
 - [Phase 4 — Source-to-BEAM enforcement integration](phase-04-source-to-beam-enforcement-integration.md)
   — compiles and executes every corpus family through the inspected BEAM
   backend and inherited runtime enforcement path.

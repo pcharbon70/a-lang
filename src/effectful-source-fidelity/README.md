@@ -115,6 +115,15 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_phase2_integration_tests.erl`](alang_fidelity_phase2_integration_tests.erl)
   — round-trips all 24 sources, freezes aggregate identities, reruns the v1
   suite, detects seeded mutants, and exercises PropEr-generated boundaries.
+- [`alang_fidelity_phase3_evidence.erl`](alang_fidelity_phase3_evidence.erl) —
+  builds and writes deterministic paired-digest, negative-case, law, mutation,
+  campaign-gate, and BEAM-residency evidence for the completed Phase 3 gate.
+- [`alang_fidelity_phase3_integration_tests.erl`](alang_fidelity_phase3_integration_tests.erl)
+  — freezes the Phase 3 evidence identities and checks all pairs, equivalent
+  rejections, IR laws, bounds, provenance, mutations, and generated cases.
+- [`alang_fidelity_phase3_mutation.erl`](alang_fidelity_phase3_mutation.erl) —
+  seeds effect inference, child limit, completion preservation, frontend
+  default, node identity, and direct-IR defects and records their detection.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -141,6 +150,9 @@ test path. Generated evidence belongs under the ignored
 - [Phase 2 effectful source frontend evidence](phase-02-integration-evidence.md)
   — records corpus and source-map identities, canonical and v1 compatibility,
   negative and generative gates, BEAM residency, and reproduction commands.
+- [Phase 3 matched lowering evidence](phase-03-integration-evidence.md) — records
+  the paired semantic and IR identities, exact authority and limits, equivalent
+  negative classes, law and mutant results, residency, and reproduction gate.
 
 ## Maintaining this index
 
