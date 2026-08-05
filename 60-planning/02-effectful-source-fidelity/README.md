@@ -274,8 +274,9 @@ following, with live-only items backed by a recorded opt-in campaign:
   — **complete**; fixes the semantic oracle, paired representations, campaign
   cells, scoring, safety vetoes, and decision rule before parsing or live use.
 - [Phase 2 — Effectful source syntax and AST](phase-02-effectful-source-syntax-and-ast.md)
-  — extends the BEAM-resident lexer and parser with the minimal model,
-  workspace, repair, child, limit, and completion surface.
+  — **complete**; extends the BEAM-resident lexer and parser with the minimal
+  model, workspace, repair, child, limit, and completion surface and records
+  the reproducible [frontend evidence](../../src/effectful-source-fidelity/phase-02-integration-evidence.md).
 - [Phase 3 — Static semantics, manifests, and matched lowering](phase-03-static-semantics-manifests-and-matched-lowering.md)
   — checks both A-Lang and typed JSON, derives authority, and proves matched
   lowering into the existing typed task IR.
