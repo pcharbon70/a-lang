@@ -88,6 +88,9 @@ deeper semantic understanding in arbitrary pretrained LLMs.
   task IR across different model families.
 - Explore learned, task-specific representations only after the authored
   semantics and evaluators are stable.
+- Test typed repository references only in a separate equal-budget experiment
+  against comments and a generated symbol map; do not add that variable to the
+  frozen effectful source fidelity campaign.
 
 ## Findings
 
@@ -107,6 +110,12 @@ deeper semantic understanding in arbitrary pretrained LLMs.
   pre-registers that comparison as 24 paired A-Lang/typed-JSON cases, three
   repetitions, two hosted model families, deterministic exact-fidelity
   scoring, safety vetoes, and a strict promote/replace/stop handoff.
+- [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
+  finds support for symbol-aware selective context but no direct evidence that
+  reference annotations should be embedded in source.
+- [Can typed source references improve LLM code understanding?](can-typed-source-references-improve-llm-code-understanding.md)
+  isolates that question as a future inquiry with a generated-map baseline,
+  equal context budgets, and prompt-injection vetoes.
 
 ## Outcome
 
@@ -116,4 +125,5 @@ remain untested. The next comparison must start from user-authored effectful
 source, hold the BEAM runtime constant, and measure fidelity against a strong
 conventional typed notation across declared model families. The second
 planning stream defines the implementation and evidence needed to answer that
-bounded question; it is a plan, not yet a finding.
+bounded question; it is a plan, not yet a finding. Symbol-aware source context
+is now tracked independently so it cannot confound that notation result.

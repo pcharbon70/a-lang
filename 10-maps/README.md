@@ -45,6 +45,9 @@ links belong together, not merely repeat a file listing.
 - [LLM agent task languages](llm-agent-task-languages.md) — paths through the
   transformer, task-representation, agent-language, and runtime-enforcement
   research.
+- [Symbol-aware code context for LLM agents](symbol-aware-code-context-for-llm-agents.md)
+  — evidence and design paths through cross-file retrieval, code graphs,
+  symbol protocols, compact repository maps, and indirect prompt injection.
 
 ## Maintaining this index
 
