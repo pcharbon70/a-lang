@@ -20,6 +20,14 @@ parse(Source) ->
 
 -spec parse_tokens(list()) -> {ok, map()} | {error, [map()]}.
 parse_tokens(Tokens) when is_list(Tokens) ->
+    case bounded_list(Tokens, 4096) of
+        true -> parse_bounded_tokens(Tokens);
+        false -> {error, [diagnostic(token_limit_exceeded, default_origin(), <<"token stream exceeds 4096 tokens">>)]}
+    end;
+parse_tokens(_) ->
+    {error, [diagnostic(invalid_token_stream, default_origin(), <<"token stream must be a list">>)]}.
+
+parse_bounded_tokens(Tokens) ->
     try
         {Version, VersionOrigin, Tokens1} = expect(source_version, Tokens),
         {_TaskKeyword, TaskOrigin, Tokens2} = expect(task_kw, Tokens1),
@@ -41,20 +49,21 @@ parse_tokens(Tokens) when is_list(Tokens) ->
         },
         {Task, Tokens5} = parse_declarations(Tokens4, State0, TaskName, TaskNameOrigin, TaskOrigin),
         {_Eof, _EofOrigin, []} = expect(eof, Tokens5),
-        {ok, #{
+        Ast = #{
             format => alang_source_ast_v2,
             kind => task_document,
             version => Version,
             task => Task,
             origin => VersionOrigin
-        }}
+        },
+        alang_fidelity_ast:validate(Ast)
     catch
         throw:{parse_error, Diagnostic} -> {error, [Diagnostic]};
         error:{badmatch, _} ->
+            {error, [diagnostic(invalid_token_stream, default_origin(), <<"invalid token stream">>)]};
+        _Class:_Reason ->
             {error, [diagnostic(invalid_token_stream, default_origin(), <<"invalid token stream">>)]}
-    end;
-parse_tokens(_) ->
-    {error, [diagnostic(invalid_token_stream, default_origin(), <<"token stream must be a list">>)]}.
+    end.
 
 parse_declarations([{rbrace, _, EndOrigin} | Rest], State, TaskName, TaskNameOrigin, TaskOrigin) ->
     {finalize_task(State, TaskName, TaskNameOrigin, TaskOrigin, EndOrigin), Rest};
@@ -643,6 +652,11 @@ expect_terminal(Tokens) ->
 
 token_origin([{_, _, Origin} | _]) -> Origin;
 token_origin([]) -> default_origin().
+
+bounded_list([], _Remaining) -> true;
+bounded_list([_ | Rest], Remaining) when Remaining > 0 -> bounded_list(Rest, Remaining - 1);
+bounded_list([_ | _], 0) -> false;
+bounded_list(_, _Remaining) -> false.
 
 fail(Code, Origin, Message) ->
     throw({parse_error, diagnostic(Code, Origin, Message)}).

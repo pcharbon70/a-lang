@@ -151,7 +151,7 @@ completion.
 **Description:** Preserve exact source meaning and local origins in a bounded,
 versioned AST that later semantic passes can consume deterministically.
 
-- [ ] **Section 2.3 Complete**
+- [x] **Section 2.3 Complete**
 
 ### Task 2.3.1: Define and Validate `alang_source_ast_v2`
 
@@ -159,15 +159,15 @@ versioned AST that later semantic passes can consume deterministically.
 child restriction, limit, and completion field an exact closed AST shape and
 origin.
 
-- [ ] **Task 2.3.1 Complete**
+- [x] **Task 2.3.1 Complete**
 
 #### Subtask 2.3.1.1: Reject Partial and Ambiguous AST Shapes
 
-**Description:** Require exact fields, bounded list and nesting depths, unique
-named arguments, one terminal return per branch, one completion clause per
-task, and no representation of unsupported constructs.
+**Description:** Require exact node fields, bounded collection and child
+depths, unique names and set entries, one instance of every singleton task
+clause, and no representation of unsupported constructs.
 
-- [ ] **Subtask 2.3.1.1 Complete**
+- [x] **Subtask 2.3.1.1 Complete**
 
 #### Subtask 2.3.1.2: Extend Deterministic Canonical ETF
 
@@ -175,7 +175,7 @@ task, and no representation of unsupported constructs.
 reject trailing or compressed data, revalidate after decoding, and keep v1 and
 v2 format identities distinct.
 
-- [ ] **Subtask 2.3.1.2 Complete**
+- [x] **Subtask 2.3.1.2 Complete**
 
 ### Task 2.3.2: Produce Stable Source-Local Diagnostics
 
@@ -183,15 +183,16 @@ v2 format identities distinct.
 origins for lexical, grammatical, version, duplicate-field, and structural
 errors without silently inserting or repairing syntax.
 
-- [ ] **Task 2.3.2 Complete**
+- [x] **Task 2.3.2 Complete**
 
 #### Subtask 2.3.2.1: Cover Every New Rejection Boundary
 
-**Description:** Add diagnostics for unknown effect or limit names, malformed
-result types, incomplete match arms, invalid named arguments, widened child
-syntax, unsafe completion paths, oversized values, and unsupported constructs.
+**Description:** Add diagnostics for unknown effects, operations, types, and
+limits; incomplete or duplicate clauses; widened child syntax; invalid
+completion values; unsafe workspace paths; oversized values; and unsupported
+constructs.
 
-- [ ] **Subtask 2.3.2.1 Complete**
+- [x] **Subtask 2.3.2.1 Complete**
 
 #### Subtask 2.3.2.2: Bound Malformed-Input Work
 
@@ -199,7 +200,7 @@ syntax, unsafe completion paths, oversized values, and unsupported constructs.
 truncation, and random bytes terminate within declared time and memory bounds
 without crashes, atom growth, partial acceptance, or filesystem/network work.
 
-- [ ] **Subtask 2.3.2.2 Complete**
+- [x] **Subtask 2.3.2.2 Complete**
 
 ## Section 2.4: Phase 2 Integration Tests
 

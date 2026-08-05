@@ -189,12 +189,15 @@ FIDELITY_PHASE2_BUILD := build/effectful-source-fidelity/phase-02
 FIDELITY_PHASE2_SOURCES := \
 	$(FIDELITY_DIR)/alang_fidelity_lexer.erl \
 	$(FIDELITY_DIR)/alang_fidelity_parser.erl \
+	$(FIDELITY_DIR)/alang_fidelity_ast.erl \
+	$(FIDELITY_DIR)/alang_fidelity_canonical.erl \
 	$(FIDELITY_DIR)/alang_fidelity_frontend_tests.erl \
-	$(FIDELITY_DIR)/alang_fidelity_body_tests.erl
+	$(FIDELITY_DIR)/alang_fidelity_body_tests.erl \
+	$(FIDELITY_DIR)/alang_fidelity_ast_tests.erl
 FIDELITY_PHASE2_STAMP := $(FIDELITY_PHASE2_BUILD)/.compiled
 
 .PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compare compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation compile-phase-8-release decide demo release-candidate run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2 test-section-7-3 test-section-7-4 test-section-7-5 test-section-8-1 test-section-8-2 test-section-8-3 test-section-8-4
-.PHONY: build-fidelity-phase-1-evidence compile-fidelity-phase-1 compile-fidelity-phase-2 test-fidelity-phase-1 test-fidelity-section-1-1 test-fidelity-section-1-2 test-fidelity-section-1-3 test-fidelity-section-1-4 test-fidelity-section-2-1 test-fidelity-section-2-2
+.PHONY: build-fidelity-phase-1-evidence compile-fidelity-phase-1 compile-fidelity-phase-2 test-fidelity-phase-1 test-fidelity-section-1-1 test-fidelity-section-1-2 test-fidelity-section-1-3 test-fidelity-section-1-4 test-fidelity-section-2-1 test-fidelity-section-2-2 test-fidelity-section-2-3
 
 compile-fidelity-phase-1: $(FIDELITY_PHASE1_STAMP)
 
@@ -232,6 +235,9 @@ test-fidelity-section-2-1: test-fidelity-phase-1 compile-fidelity-phase-2
 
 test-fidelity-section-2-2: test-fidelity-section-2-1
 	$(ERL) -noshell -pa $(FIDELITY_PHASE2_BUILD) -pa $(FIDELITY_BUILD) -pa $(PHASE2_BUILD) -eval 'case eunit:test(alang_fidelity_body_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-fidelity-section-2-3: test-fidelity-section-2-2
+	$(ERL) -noshell -pa $(FIDELITY_PHASE2_BUILD) -pa $(FIDELITY_BUILD) -pa $(PHASE2_BUILD) -eval 'case eunit:test(alang_fidelity_ast_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'

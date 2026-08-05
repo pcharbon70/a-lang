@@ -42,9 +42,18 @@ test path. Generated evidence belongs under the ignored
 
 ### Files
 
+- [`alang_fidelity_ast.erl`](alang_fidelity_ast.erl) — validates every v2 AST
+  node against exact fields, closed values, collection and budget bounds,
+  source origins, and safe workspace paths.
+- [`alang_fidelity_ast_tests.erl`](alang_fidelity_ast_tests.erl) — exercises
+  exact-shape, origin, path, canonical ETF, legacy compatibility, atom-growth,
+  and malformed-input rejection gates.
 - [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
   ordered effect and repair steps, explicit error results, attenuated child
   declarations, completion predicates, clarification, and terminal classes.
+- [`alang_fidelity_canonical.erl`](alang_fidelity_canonical.erl) — encodes the
+  v2 AST in a distinct deterministic ETF envelope, safely decodes and
+  revalidates it, rejects compressed or trailing data, and preserves v1 bytes.
 - [`alang_fidelity_contract.erl`](alang_fidelity_contract.erl) — validates the
   closed task-comprehension and representation-neutral answer-key contracts
   and computes canonical semantic digests.
