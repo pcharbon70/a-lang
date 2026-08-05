@@ -112,6 +112,17 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_representation_tests.erl`](alang_fidelity_representation_tests.erl)
   — verifies source-v1 preservation, forbidden features, closed controls,
   semantic equality, origin separation, opaque scheduling, and leakage rules.
+- [`alang_fidelity_semantics.erl`](alang_fidelity_semantics.erl) — resolves both
+  semantic-input envelopes through one checker, assigns stable task and binding
+  identities, proves the action graph, types closed operations, and validates
+  child, completion, path, and terminal contracts.
+- [`alang_fidelity_semantics_tests.erl`](alang_fidelity_semantics_tests.erl) —
+  compares all 24 checked meanings and exercises stable identities, unresolved
+  dependencies, reachability, completion paths and digests, child depth, and
+  clarification control.
+- [`alang_fidelity_source.erl`](alang_fidelity_source.erl) — translates the
+  closed v2 AST into the representation-neutral semantic-input envelope while
+  preserving source-local origins for every semantic field.
 - [Phase 1 experiment freeze evidence](phase-01-integration-evidence.md) —
   records the final digest, corpus and profile inventory, campaign ceilings,
   negative gates, scope audit, limitations, and reproduction commands.

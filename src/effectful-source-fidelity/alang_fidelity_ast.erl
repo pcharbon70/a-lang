@@ -203,12 +203,17 @@ validate_error_branch(Node) ->
     ensure(maps:get(kind, Node) =:= error_branch, invalid_ast_kind, origin_of(Node), <<"expected error branch">>),
     validate_identifier(maps:get(action, Node), origin_of(Node)),
     ensure(
-        lists:member(maps:get(reason, Node), [<<"denied">>, <<"invalid-output">>, <<"timeout">>]),
+        lists:member(maps:get(reason, Node), [<<"denied">>, <<"invalid-output">>, <<"timeout">>, <<"verification-failed">>]),
         unknown_error_reason,
         maps:get(reason_origin, Node),
         <<"error reason is outside the frozen set">>
     ),
-    ensure(maps:get(terminal_class, Node) =:= <<"failed">>, invalid_error_terminal, maps:get(terminal_origin, Node), <<"error branch must terminate as failed">>),
+    ensure(
+        lists:member(maps:get(terminal_class, Node), [<<"failed">>, <<"needs-clarification">>]),
+        invalid_error_terminal,
+        maps:get(terminal_origin, Node),
+        <<"error branch must terminate as failed or needs-clarification">>
+    ),
     validate_origins(Node, [reason_origin, terminal_origin, origin]).
 
 validate_child(#{value := none} = Node) ->
@@ -261,6 +266,7 @@ validate_predicate_target(Predicate, Target, Origin) when
     Predicate =:= <<"artifact-exists">>;
     Predicate =:= <<"markdown-h1">>;
     Predicate =:= <<"max-bytes">>;
+    Predicate =:= <<"sha256">>;
     Predicate =:= <<"utf8">>
 ->
     ensure(safe_workspace_path(Target), unsafe_completion_path, Origin, <<"completion path must remain below /workspace">>);
@@ -282,6 +288,13 @@ validate_predicate_expected(<<"markdown-h1">>, Value, string, Origin) ->
     validate_string(Value, Origin, false);
 validate_predicate_expected(<<"max-bytes">>, Value, integer, Origin) ->
     ensure(is_integer(Value) andalso Value >= 1 andalso Value =< 8192, invalid_completion_expected, Origin, <<"max-bytes must be within 1..8192">>);
+validate_predicate_expected(<<"sha256">>, Value, string, Origin) ->
+    ensure(
+        is_binary(Value) andalso re:run(Value, <<"^[0-9a-f]{64}$">>, [{capture, none}]) =:= match,
+        invalid_completion_expected,
+        Origin,
+        <<"sha256 must be 64 lowercase hexadecimal characters">>
+    );
 validate_predicate_expected(_Predicate, _Value, _Type, Origin) ->
     fail(invalid_completion_expected_type, Origin, <<"completion predicate expected value does not match its type">>).
 

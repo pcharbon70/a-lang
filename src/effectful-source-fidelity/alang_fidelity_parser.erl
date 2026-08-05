@@ -353,7 +353,7 @@ parse_more_error_branches(Tokens, _Acc) ->
 parse_error_branch(Tokens0) ->
     {Action, Origin, Tokens1} = expect(identifier, Tokens0),
     {Reason, ReasonOrigin, Tokens2} = expect(identifier, Tokens1),
-    case lists:member(Reason, [<<"denied">>, <<"invalid-output">>, <<"timeout">>]) of
+    case lists:member(Reason, [<<"denied">>, <<"invalid-output">>, <<"timeout">>, <<"verification-failed">>]) of
         true -> ok;
         false -> fail(unknown_error_reason, ReasonOrigin, <<"unknown error reason: ", Reason/binary>>)
     end,
@@ -468,6 +468,7 @@ checked_predicate_kind(Name, _Origin) when
     Name =:= <<"journal-succeeded">>;
     Name =:= <<"markdown-h1">>;
     Name =:= <<"max-bytes">>;
+    Name =:= <<"sha256">>;
     Name =:= <<"utf8">>
 ->
     ok;
@@ -483,6 +484,7 @@ check_predicate_expected(Name, boolean, _Origin) when
     ok;
 check_predicate_expected(<<"markdown-h1">>, string, _Origin) -> ok;
 check_predicate_expected(<<"max-bytes">>, integer, _Origin) -> ok;
+check_predicate_expected(<<"sha256">>, string, _Origin) -> ok;
 check_predicate_expected(_Name, _Type, Origin) ->
     fail(invalid_completion_expected_type, Origin, <<"completion predicate has the wrong expected value type">>).
 

@@ -92,7 +92,7 @@ paths, and limit violations without mentioning A-Lang grammar or backend terms.
 **Description:** Resolve and check both frontends through one semantic core so
 the comparison cannot hide different acceptance rules behind the two surfaces.
 
-- [ ] **Section 3.2 Complete**
+- [x] **Section 3.2 Complete**
 
 ### Task 3.2.1: Resolve Tasks, Bindings, Calls, and Branches
 
@@ -100,7 +100,7 @@ the comparison cannot hide different acceptance rules behind the two surfaces.
 statically named local tasks and registered intrinsics, and enforce lexical
 scope and total result branches.
 
-- [ ] **Task 3.2.1 Complete**
+- [x] **Task 3.2.1 Complete**
 
 #### Subtask 3.2.1.1: Reject Duplicate and Unresolved Identities
 
@@ -108,7 +108,7 @@ scope and total result branches.
 and child names plus unresolved variables or task references without creating
 source-controlled atoms or falling back to dynamic dispatch.
 
-- [ ] **Subtask 3.2.1.1 Complete**
+- [x] **Subtask 3.2.1.1 Complete**
 
 #### Subtask 3.2.1.2: Prove Sequential and Branch Reachability
 
@@ -117,7 +117,7 @@ to cover `ok` and `error` exactly once, each branch to terminate in the
 declared result type, and each task to have a finite acyclic call/delegation
 graph.
 
-- [ ] **Subtask 3.2.1.2 Complete**
+- [x] **Subtask 3.2.1.2 Complete**
 
 ### Task 3.2.2: Check Data, Operations, and Completion Specifications
 
@@ -125,7 +125,7 @@ graph.
 child inputs/outputs, and completion fields against closed compiler-owned
 contracts.
 
-- [ ] **Task 3.2.2 Complete**
+- [x] **Task 3.2.2 Complete**
 
 #### Subtask 3.2.2.1: Type the Effectful Expression Surface
 
@@ -134,7 +134,7 @@ bindings, result arms, local task calls, `model.complete`, and
 `workspace.write`; reject implicit conversions, exception-like errors, and
 branch result disagreement.
 
-- [ ] **Subtask 3.2.2.1 Complete**
+- [x] **Subtask 3.2.2.1 Complete**
 
 #### Subtask 3.2.2.2: Validate Child and Artifact Contracts Statically
 
@@ -143,7 +143,7 @@ closed subsets of the parent, and validate completion paths, canonical digest,
 byte bound, UTF-8/Markdown predicates, required section, and journal binding
 before lowering.
 
-- [ ] **Subtask 3.2.2.2 Complete**
+- [x] **Subtask 3.2.2.2 Complete**
 
 ## Section 3.3: Effect, Authority, Limit, and IR Derivation
 
