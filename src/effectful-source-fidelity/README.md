@@ -16,8 +16,9 @@ aliases: []
 
 This directory contains the BEAM-resident implementation of the effectful
 source-fidelity experiment authorized by the Phase 8 architecture decision.
-Its modules validate the frozen contracts, paired representations, corpus,
-campaign configuration, deterministic scores, and pre-registration evidence.
+Its modules validate the frozen contracts and corpus, parse the effectful
+source surface, preserve a closed canonical AST, and produce deterministic
+phase evidence.
 
 The experiment is a new numbered planning stream, not a replacement for the
 completed Phase 1–8 proof of concept. All executable validators here compile
@@ -75,6 +76,9 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_frontend_tests.erl`](alang_fidelity_frontend_tests.erl) —
   checks the versioned source lexer, closed task declarations, input bounds,
   stable origins, rejection diagnostics, and unchanged v1 delegation.
+- [`alang_fidelity_frontend_evidence.erl`](alang_fidelity_frontend_evidence.erl)
+  — builds path-independent Phase 2 corpus, AST, source-map, compatibility,
+  robustness, negative-case, and BEAM-residency evidence.
 - [`alang_fidelity_integration_tests.erl`](alang_fidelity_integration_tests.erl)
   — runs the complete contract/corpus gate, mutant matrix, BEAM residency
   check, frozen-scope audit, and byte-for-byte digest reproduction.
@@ -85,7 +89,11 @@ test path. Generated evidence belongs under the ignored
   strings, binary identifiers, and no source-controlled atoms.
 - [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
   source unchanged and parses v2 task declarations, authority, scopes, and
-  limits into the stream-owned AST boundary.
+  limits, ordered actions, errors, child attenuation, and completion into the
+  stream-owned AST boundary.
+- [`alang_fidelity_phase2_integration_tests.erl`](alang_fidelity_phase2_integration_tests.erl)
+  — round-trips all 24 sources, freezes aggregate identities, reruns the v1
+  suite, detects seeded mutants, and exercises PropEr-generated boundaries.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -98,6 +106,9 @@ test path. Generated evidence belongs under the ignored
 - [Phase 1 experiment freeze evidence](phase-01-integration-evidence.md) —
   records the final digest, corpus and profile inventory, campaign ceilings,
   negative gates, scope audit, limitations, and reproduction commands.
+- [Phase 2 effectful source frontend evidence](phase-02-integration-evidence.md)
+  — records corpus and source-map identities, canonical and v1 compatibility,
+  negative and generative gates, BEAM residency, and reproduction commands.
 
 ## Maintaining this index
 

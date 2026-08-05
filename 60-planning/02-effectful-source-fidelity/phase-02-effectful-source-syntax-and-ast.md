@@ -20,8 +20,8 @@ AST boundary from the pure `alang-source-v1` counter slice to the frozen
 model, workspace, repair, child, limit, result, and completion semantics without
 adding general-purpose language features or interpreting source.
 
-**Status:** In progress; completed sections link implementation state to
-reproducible BEAM-native tests, while later sections remain unchecked.
+**Status:** Complete; the reproducible results are recorded in the
+[Phase 2 frontend evidence](../../src/effectful-source-fidelity/phase-02-integration-evidence.md).
 
 **Dependencies:** Phase 1 complete with frozen representation and corpus
 contracts. The Phase 2 v1 frontend remains supported, and the Phase 3 IR/runtime
@@ -207,14 +207,14 @@ without crashes, atom growth, partial acceptance, or filesystem/network work.
 **Description:** Prove all 24 A-Lang corpus sources parse and round-trip on ERTS
 while negative and legacy inputs fail or succeed at the intended boundary.
 
-- [ ] **Section 2.4 Complete**
+- [x] **Section 2.4 Complete**
 
 ### Task 2.4.1: Run Golden, Round-Trip, and Compatibility Suites
 
 **Description:** Compile the lexer/parser modules to BEAM, parse every frozen
 source, reproduce AST digests, and rerun the complete v1 frontend suite.
 
-- [ ] **Task 2.4.1 Complete**
+- [x] **Task 2.4.1 Complete**
 
 #### Subtask 2.4.1.1: Validate the Frozen V2 Corpus
 
@@ -222,7 +222,7 @@ source, reproduce AST digests, and rerun the complete v1 frontend suite.
 AST identities and source maps with no hand-edited parser fixture or
 condition-specific parser branch.
 
-- [ ] **Subtask 2.4.1.1 Complete**
+- [x] **Subtask 2.4.1.1 Complete**
 
 #### Subtask 2.4.1.2: Reassert V1 Compatibility
 
@@ -230,22 +230,22 @@ condition-specific parser branch.
 diagnostics for the existing counter fixtures so v2 does not rewrite completed
 Phase 2 evidence.
 
-- [ ] **Subtask 2.4.1.2 Complete**
+- [x] **Subtask 2.4.1.2 Complete**
 
 ### Task 2.4.2: Run Negative and Generative Parser Tests
 
 **Description:** Exercise seeded syntax violations and generated bounded input
 against both text and canonical boundaries on the pinned ERTS runtime.
 
-- [ ] **Task 2.4.2 Complete**
+- [x] **Task 2.4.2 Complete**
 
 #### Subtask 2.4.2.1: Detect One Seeded Defect per New Construct
 
-**Description:** Prove tests fail when effect names become dynamic, a result arm
-is skipped, child restrictions widen, completion paths accept traversal,
-limits duplicate, or unsupported syntax is accepted.
+**Description:** Prove tests fail when effect or operation names become dynamic,
+the error table is omitted, child restrictions widen, completion paths accept
+traversal, limits duplicate, or unsupported control syntax is accepted.
 
-- [ ] **Subtask 2.4.2.1 Complete**
+- [x] **Subtask 2.4.2.1 Complete**
 
 #### Subtask 2.4.2.2: Publish Phase 2 Evidence
 
@@ -253,18 +253,18 @@ limits duplicate, or unsupported syntax is accepted.
 stable AST/canonical digests, legacy compatibility, resource bounds, and exact
 commands needed to reproduce the parser gate.
 
-- [ ] **Subtask 2.4.2.2 Complete**
+- [x] **Subtask 2.4.2.2 Complete**
 
 ## Phase 2 Completion Evidence
 
 **Description:** Authorize semantic checking only after effectful user source
 has one deterministic, bounded, BEAM-resident parse path.
 
-- [ ] All 24 A-Lang corpus documents parse as `alang_source_ast_v2`
-- [ ] Model, workspace, repair, delegation, limits, results, and completion have closed AST shapes
-- [ ] Every AST node and diagnostic retains a precise source origin
-- [ ] Canonical ETF round-trips safely and deterministically
-- [ ] V1 parsing and canonical evidence remain unchanged
-- [ ] Unsupported and widened syntax fails closed
-- [ ] Malformed and generated inputs remain bounded without atom growth
-- [ ] No parser path interprets source or performs a runtime effect
+- [x] All 24 A-Lang corpus documents parse as `alang_source_ast_v2`
+- [x] Model, workspace, repair, delegation, limits, results, and completion have closed AST shapes
+- [x] Every AST node and diagnostic retains a precise source origin
+- [x] Canonical ETF round-trips safely and deterministically
+- [x] V1 parsing and canonical evidence remain unchanged
+- [x] Unsupported and widened syntax fails closed
+- [x] Malformed and generated inputs remain bounded without atom growth
+- [x] No parser path interprets source or performs a runtime effect
