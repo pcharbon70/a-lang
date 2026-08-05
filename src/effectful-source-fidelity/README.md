@@ -55,6 +55,12 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_canonical.erl`](alang_fidelity_canonical.erl) — encodes the
   v2 AST in a distinct deterministic ETF envelope, safely decodes and
   revalidates it, rejects compressed or trailing data, and preserves v1 bytes.
+- [`alang_fidelity_control.erl`](alang_fidelity_control.erl) — decodes the
+  bounded typed-JSON condition into the representation-neutral semantic-input
+  envelope and converts schema failures into stable JSON-local diagnostics.
+- [`alang_fidelity_control_tests.erl`](alang_fidelity_control_tests.erl) —
+  checks all frozen controls, precise pointer/byte origins, duplicate and
+  escape-field rejection, bounded failures, and source-controlled atom safety.
 - [`alang_fidelity_contract.erl`](alang_fidelity_contract.erl) — validates the
   closed task-comprehension and representation-neutral answer-key contracts
   and computes canonical semantic digests.
@@ -84,6 +90,9 @@ test path. Generated evidence belongs under the ignored
   check, frozen-scope audit, and byte-for-byte digest reproduction.
 - [`alang_fidelity_json.erl`](alang_fidelity_json.erl) — provides bounded,
   duplicate-aware OTP JSON decoding and deterministic SHA-256 term digests.
+- [`alang_fidelity_json_pointer.erl`](alang_fidelity_json_pointer.erl) — scans
+  bounded JSON structure without atom creation to retain member order,
+  duplicate evidence, JSON Pointers, and original byte offsets.
 - [`alang_fidelity_lexer.erl`](alang_fidelity_lexer.erl) — tokenizes the frozen
   `alang-source-v2` surface with byte and line-column origins, bounded UTF-8
   strings, binary identifiers, and no source-controlled atoms.

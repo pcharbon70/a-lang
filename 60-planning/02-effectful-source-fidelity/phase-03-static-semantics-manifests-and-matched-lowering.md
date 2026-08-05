@@ -34,7 +34,7 @@ durability, repair, child attenuation, and completion behavior to preserve.
 bounded BEAM frontend while converging on the same checked semantic model as
 A-Lang.
 
-- [ ] **Section 3.1 Complete**
+- [x] **Section 3.1 Complete**
 
 ### Task 3.1.1: Decode and Validate `alang-task-json-v1`
 
@@ -42,7 +42,7 @@ A-Lang.
 depth/size/list bounds, exact schema fields, and JSON-pointer origins; never
 decode arbitrary ETF or create atoms from input strings.
 
-- [ ] **Task 3.1.1 Complete**
+- [x] **Task 3.1.1 Complete**
 
 #### Subtask 3.1.1.1: Preserve Duplicate and Origin Evidence
 
@@ -51,7 +51,7 @@ semantic keys and attach a stable JSON pointer plus byte offset to every
 decoded declaration and expression before converting closed tags through an
 allowlist.
 
-- [ ] **Subtask 3.1.1.1 Complete**
+- [x] **Subtask 3.1.1.1 Complete**
 
 #### Subtask 3.1.1.2: Reject IR and Runtime Escape Fields
 
@@ -60,7 +60,7 @@ adapter/endpoint selection, credentials, capability handles, process terms,
 raw grants, operation identities, and any unknown field instead of treating
 JSON as a direct IR or runtime command channel.
 
-- [ ] **Subtask 3.1.1.2 Complete**
+- [x] **Subtask 3.1.1.2 Complete**
 
 ### Task 3.1.2: Normalize JSON into the Shared Checked Input
 
@@ -68,7 +68,7 @@ JSON as a direct IR or runtime command channel.
 representation-neutral semantic input used by the A-Lang checker, preserving
 JSON origins for diagnostics but no condition-specific execution behavior.
 
-- [ ] **Task 3.1.2 Complete**
+- [x] **Task 3.1.2 Complete**
 
 #### Subtask 3.1.2.1: Map Closed JSON Forms to Semantic Forms
 
@@ -77,7 +77,7 @@ registered effects, limits, child restrictions, and artifact completion to
 closed semantic tags with exactly the same defaults and required fields as v2
 source.
 
-- [ ] **Subtask 3.1.2.1 Complete**
+- [x] **Subtask 3.1.2.1 Complete**
 
 #### Subtask 3.1.2.2: Produce JSON-Local Diagnostics
 
@@ -85,7 +85,7 @@ source.
 types, unknown names, malformed operations, widened child authority, unsafe
 paths, and limit violations without mentioning A-Lang grammar or backend terms.
 
-- [ ] **Subtask 3.1.2.2 Complete**
+- [x] **Subtask 3.1.2.2 Complete**
 
 ## Section 3.2: Shared Name, Type, Control, and Completion Semantics
 
