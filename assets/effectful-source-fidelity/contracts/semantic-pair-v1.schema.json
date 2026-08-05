@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/semantic-pair-v1.schema.json",
+  "title": "A-Lang source fidelity semantic pair v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "case_id",
+    "family",
+    "variant",
+    "candidate",
+    "control",
+    "answer_key",
+    "semantic_digest",
+    "review"
+  ],
+  "properties": {
+    "format": { "const": "alang-semantic-pair-v1" },
+    "case_id": {
+      "$ref": "alang-task-comprehension-v1.schema.json#/$defs/identifier"
+    },
+    "family": {
+      "enum": [
+        "single-model-artifact",
+        "repair-and-publish",
+        "attenuated-delegation"
+      ]
+    },
+    "variant": {
+      "enum": [
+        "simple",
+        "constraint-heavy",
+        "scope-budget",
+        "error-branch",
+        "missing-information",
+        "irrelevant-context",
+        "prompt-injection",
+        "semantic-perturbation"
+      ]
+    },
+    "candidate": { "$ref": "#/$defs/candidateFile" },
+    "control": { "$ref": "#/$defs/controlFile" },
+    "answer_key": { "$ref": "#/$defs/answerFile" },
+    "semantic_digest": { "$ref": "#/$defs/sha256" },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hand_authored",
+        "equivalent_detail",
+        "no_answer_serialization",
+        "no_condition_specific_demonstration"
+      ],
+      "properties": {
+        "hand_authored": { "const": true },
+        "equivalent_detail": { "const": true },
+        "no_answer_serialization": { "const": true },
+        "no_condition_specific_demonstration": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[a-z0-9][a-z0-9./-]*$"
+    },
+    "candidateFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "path", "content_sha256", "semantic_digest"],
+      "properties": {
+        "format": { "const": "alang-source-v2" },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "semantic_digest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "controlFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "path", "content_sha256", "semantic_digest"],
+      "properties": {
+        "format": { "const": "alang-task-json-v1" },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "content_sha256": { "$ref": "#/$defs/sha256" },
+        "semantic_digest": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "answerFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "path", "content_sha256"],
+      "properties": {
+        "format": { "const": "alang-answer-key-v1" },
+        "path": { "$ref": "#/$defs/relativePath" },
+        "content_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

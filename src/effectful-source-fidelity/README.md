@@ -56,6 +56,12 @@ test path. Generated evidence belongs under the ignored
   safety-veto outcomes.
 - [`alang_fidelity_json.erl`](alang_fidelity_json.erl) — provides bounded,
   duplicate-aware OTP JSON decoding and deterministic SHA-256 term digests.
+- [`alang_fidelity_representation.erl`](alang_fidelity_representation.erl) —
+  decodes the typed-JSON control with JSON Pointer origins, normalizes away
+  presentation metadata, and enforces the frozen source and trial contracts.
+- [`alang_fidelity_representation_tests.erl`](alang_fidelity_representation_tests.erl)
+  — verifies source-v1 preservation, forbidden features, closed controls,
+  semantic equality, origin separation, opaque scheduling, and leakage rules.
 
 ## Maintaining this index
 

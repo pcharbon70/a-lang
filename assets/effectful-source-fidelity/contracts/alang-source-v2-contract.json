@@ -1,0 +1,55 @@
+{
+  "format": "alang-source-v2-contract-v1",
+  "candidate_format": "alang-source-v2",
+  "preserves": {
+    "format": "alang-source-v1",
+    "accepted_unchanged": true
+  },
+  "types": [
+    "bool",
+    "json",
+    "model-profile",
+    "nat",
+    "path",
+    "text"
+  ],
+  "effects": [
+    "child.run",
+    "model.generate",
+    "workspace.write"
+  ],
+  "constructs": [
+    "attenuated-child",
+    "bounded-limit",
+    "completion-predicate",
+    "effect-declaration",
+    "error-branch",
+    "ordered-step",
+    "requirement-declaration",
+    "result-match",
+    "task-declaration",
+    "terminal-class",
+    "typed-input"
+  ],
+  "forbidden": [
+    "arbitrary-calls",
+    "categorical-surface-syntax",
+    "distribution",
+    "dynamic-operations",
+    "parallelism",
+    "polymorphism",
+    "recursion"
+  ],
+  "bounds": {
+    "max_actions": 16,
+    "max_child_depth": 1,
+    "max_document_bytes": 8192,
+    "max_output_bytes": 8192
+  },
+  "compiler_path": {
+    "backend": "otp-abstract-format-to-beam",
+    "executes_on": "erts",
+    "source_to_erlang": false,
+    "uses_erlang_ast_as_language_ir": false
+  }
+}

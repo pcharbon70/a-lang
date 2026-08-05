@@ -19,8 +19,8 @@ budget, and evidence policy before extending the compiler or observing a hosted
 model. This prevents the language or threshold from being tuned after results
 are known.
 
-**Status:** In progress — Section 1.1 is complete and Sections 1.2–1.4 remain
-planned.
+**Status:** In progress — Sections 1.1 and 1.2 are complete and Sections
+1.3–1.4 remain planned.
 
 **Dependencies:** The [Phase 8 architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md)
 has authorized only this effectful-source fidelity question. The existing typed
@@ -103,7 +103,8 @@ safety regression acting as a veto.
 **Description:** Define the user-authored A-Lang and typed-JSON conditions so
 they differ only in source notation and both remain compiler inputs.
 
-- [ ] **Section 1.2 Complete**
+- [x] **Section 1.2 Complete** — reproduce with
+  `make test-fidelity-section-1-2`; inspect the [source and pairing contracts](../../assets/effectful-source-fidelity/contracts/README.md).
 
 ### Task 1.2.1: Freeze the A-Lang and JSON Surface Roles
 
@@ -112,7 +113,7 @@ they differ only in source notation and both remain compiler inputs.
 same types, effects, requirements, limits, sequencing, result matching, child
 attenuation, and completion vocabulary.
 
-- [ ] **Task 1.2.1 Complete**
+- [x] **Task 1.2.1 Complete**
 
 #### Subtask 1.2.1.1: Define the Candidate Source Contract
 
@@ -121,7 +122,9 @@ parse, preserve `alang-source-v1`, and prohibit recursion, polymorphism,
 parallelism, dynamic operations, arbitrary calls, and categorical surface
 notation.
 
-- [ ] **Subtask 1.2.1.1 Complete**
+- [x] **Subtask 1.2.1.1 Complete** — the frozen contract preserves
+  `alang-source-v1`, bounds the effectful additions, prohibits the deferred
+  features, and keeps lowering on the trusted BEAM toolchain.
 
 #### Subtask 1.2.1.2: Define the Closed JSON Control Schema
 
@@ -129,7 +132,9 @@ notation.
 retain source pointers for diagnostics, reject unknown or duplicate semantic
 fields, and prohibit direct typed-IR node identifiers or backend terms.
 
-- [ ] **Subtask 1.2.1.2 Complete**
+- [x] **Subtask 1.2.1.2 Complete** — the closed control schema is decoded by
+  OTP JSON with duplicate rejection and retained JSON Pointer origins, then
+  validated through the same semantic contract without exposing IR terms.
 
 ### Task 1.2.2: Define Semantic Pairing and Leakage Controls
 
@@ -137,7 +142,7 @@ fields, and prohibit direct typed-IR node identifiers or backend terms.
 preventing either notation, prompt, filename, or ordering from revealing that
 answer.
 
-- [ ] **Task 1.2.2 Complete**
+- [x] **Task 1.2.2 Complete**
 
 #### Subtask 1.2.2.1: Specify Normalized Semantic Equality
 
@@ -146,7 +151,9 @@ presentation order but retains task order, dependencies, authority, budgets,
 branches, child bounds, and completion semantics; require equal digests before
 a pair enters the corpus.
 
-- [ ] **Subtask 1.2.2.1 Complete**
+- [x] **Subtask 1.2.2.1 Complete** — canonical ETF digests remove origins,
+  comments, object order, and set presentation while preserving ordered
+  actions, dependencies, authority, bounds, branches, children, and completion.
 
 #### Subtask 1.2.2.2: Specify Opaque Trial Materialization
 
@@ -156,7 +163,9 @@ keep notation labels and answer keys out of the model-visible prompt. Treat the
 surface representation itself as the visible experimental treatment rather
 than claiming that the model is blind to it.
 
-- [ ] **Subtask 1.2.2.2 Complete**
+- [x] **Subtask 1.2.2.2 Complete** — identifiers are assigned only after
+  validation with seed `2026080501`; prompts exclude labels, filenames,
+  digests, and answer keys while acknowledging that notation remains visible.
 
 ## Section 1.3: Corpus, Provider, and Evidence Registration
 

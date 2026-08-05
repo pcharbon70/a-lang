@@ -44,9 +44,21 @@ their corresponding sibling directories.
 - [`alang-task-comprehension-v1.schema.json`](alang-task-comprehension-v1.schema.json)
   — defines the closed, bounded semantic record recovered from either source
   representation.
+- [`alang-source-v2-contract.json`](alang-source-v2-contract.json) — freezes
+  the candidate source vocabulary, v1 preservation, bounded feature set,
+  exclusions, and BEAM-resident compilation invariant.
+- [`alang-task-json-v1.schema.json`](alang-task-json-v1.schema.json) — defines
+  the closed conventional JSON compiler input using the same semantic
+  vocabulary as the candidate source.
 - [`metrics-and-decision-v1.json`](metrics-and-decision-v1.json) — freezes the
   primary and secondary metrics, invalid-response scoring, paired bootstrap,
   promotion and replacement thresholds, safety vetoes, and outcomes.
+- [`pairing-and-materialization-v1.json`](pairing-and-materialization-v1.json)
+  — freezes semantic normalization, opaque identifiers, the randomized
+  schedule seed, representation visibility, and model-visible exclusions.
+- [`semantic-pair-v1.schema.json`](semantic-pair-v1.schema.json) — defines a
+  reviewed candidate/control/answer-key triple with content and semantic
+  digests for one corpus case.
 
 ## Maintaining this index
 
