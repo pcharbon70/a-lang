@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: rap-simple
+// semantic-sha256: a308390adf4c990731e70fdcb04b57075af80e9b4713cca7580efd9db08588b2
+// model-visible-begin
+task rap-simple {
+  facts ["Draft a changelog, repair it against the validation findings, then publish the repaired artifact"];
+  input change-set: json required;
+  effects [model.generate, workspace.write];
+  requirements [model editor-model, workspace release-workspace];
+  scopes { models [editor-model]; workspaces [release-workspace]; paths ["/workspace/changelog.md"]; }
+  limits { steps 4; model-calls 2; repair-calls 1; child-calls 0; workspace-writes 1; output-bytes 3072; timeout-ms 45000; }
+  step draft: model.generate depends [];
+  step repair: model.repair depends [draft];
+  step publish: workspace.write depends [repair];
+  step finish: complete depends [publish];
+  on-error [];
+  child none;
+  complete [artifact-exists "/workspace/changelog.md": true, journal-succeeded "publish": true];
+  clarify [];
+  terminal complete;
+}

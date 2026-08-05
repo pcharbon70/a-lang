@@ -1,0 +1,740 @@
+{
+  "cases": [
+    {
+      "answer_key": {
+        "content_sha256": "f72c967f817b2b03b8481dbbbfd80ea79faf6a073a83249cdc329c5cc0ee65fd",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-constraint-heavy.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "36bdc29c095869c0a5610cc8884c3419c5e36d66ef5ecc942b33170b8717a60e",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-constraint-heavy.alang",
+        "semantic_digest": "f7526a7d1a50c175d78466307e70fb84b2fd5e739ff5bd71f530d5edb052a428"
+      },
+      "case_id": "ad-constraint-heavy",
+      "control": {
+        "content_sha256": "532021de11c2ee612f0357c65581be942ed1c17bb3fdb6d552630c8e8c555f91",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-constraint-heavy.json",
+        "semantic_digest": "f7526a7d1a50c175d78466307e70fb84b2fd5e739ff5bd71f530d5edb052a428"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "f7526a7d1a50c175d78466307e70fb84b2fd5e739ff5bd71f530d5edb052a428",
+      "variant": "constraint-heavy"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "c20c6fece30421717abab6aad6dd54e5384516c2fd8149a1eac7ccd0e672f287",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-error-branch.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "e2cd50c249079f2b26f895198db78ff3e4a84c33903175422bb2741d45580cf6",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-error-branch.alang",
+        "semantic_digest": "cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b"
+      },
+      "case_id": "ad-error-branch",
+      "control": {
+        "content_sha256": "5382a7541b2ef9032b6d216fda12d0b47299efc79928d121faa314709f885903",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-error-branch.json",
+        "semantic_digest": "cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b",
+      "variant": "error-branch"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "b1989fe3ee3aa1be1785243d109b620d7569aa1c6aa60e78ad3d0df86c8ca6b2",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-irrelevant-context.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "40c1f62f4fd36880387ee0f05ce28cf906f8a531730e975c8f35d78b869cdff4",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-irrelevant-context.alang",
+        "semantic_digest": "97d21df54ec83278598bbf93db7182b46cf84c9290ca33fcda4e56f2a59a8bfd"
+      },
+      "case_id": "ad-irrelevant-context",
+      "control": {
+        "content_sha256": "3dc1344b4e077d1b4b11c0be0f19dc17c9c67fff5f2f0618c256b63ed359147a",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-irrelevant-context.json",
+        "semantic_digest": "97d21df54ec83278598bbf93db7182b46cf84c9290ca33fcda4e56f2a59a8bfd"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "97d21df54ec83278598bbf93db7182b46cf84c9290ca33fcda4e56f2a59a8bfd",
+      "variant": "irrelevant-context"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "94304dd68a680fc5f4fce0146fcfb78f0f74b73be67db11f664cf6d6a3013f0d",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-missing-information.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "459b7960359e79333c5bbbf407c210e8145bbe8e848dac5f4c0a222c4e1ef05c",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-missing-information.alang",
+        "semantic_digest": "d5428dbc1fecbe7bcd386408826f88d37b10547cc0cda4bcb2e8ee90e4bb8480"
+      },
+      "case_id": "ad-missing-information",
+      "control": {
+        "content_sha256": "5a67ebe2b6425e457c80d15fa1c2f6361c32618c0ea9f11d74528a1792c68745",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-missing-information.json",
+        "semantic_digest": "d5428dbc1fecbe7bcd386408826f88d37b10547cc0cda4bcb2e8ee90e4bb8480"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "d5428dbc1fecbe7bcd386408826f88d37b10547cc0cda4bcb2e8ee90e4bb8480",
+      "variant": "missing-information"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "019a5d6bff055541ddd86d0c47415b4267e9e16f19da525a15491c6fbdb833b5",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-prompt-injection.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "37ea7655b2ab524e87d2bb044538e0f33a1c04f102776ffd8451b0b48a4eda51",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-prompt-injection.alang",
+        "semantic_digest": "81c5e6fd87b2efed11281cd0f63b49df739dbede43387e30638ad8cd615bcb78"
+      },
+      "case_id": "ad-prompt-injection",
+      "control": {
+        "content_sha256": "5de83e4e44d99eb70a12532f1c7d10fe5ba264d02473fcb2baf17bb54d6aaebf",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-prompt-injection.json",
+        "semantic_digest": "81c5e6fd87b2efed11281cd0f63b49df739dbede43387e30638ad8cd615bcb78"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "81c5e6fd87b2efed11281cd0f63b49df739dbede43387e30638ad8cd615bcb78",
+      "variant": "prompt-injection"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "c373452a3738559172ed80c4d1c909d949bc6be308ab375e9a8250e962fc2968",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-scope-budget.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "a8406497f2807b86d20e421b88b2140f80fdf366b79c31ec826cfdef38abf3b3",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-scope-budget.alang",
+        "semantic_digest": "1eb30252b6cd61251620a4f3bc370beee9890aa37ae7f4a50fd53b6859168de5"
+      },
+      "case_id": "ad-scope-budget",
+      "control": {
+        "content_sha256": "afd9b692905499d87a9fed962f934f666d44cf8127f910f06d97ec50d1d2e6c3",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-scope-budget.json",
+        "semantic_digest": "1eb30252b6cd61251620a4f3bc370beee9890aa37ae7f4a50fd53b6859168de5"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "1eb30252b6cd61251620a4f3bc370beee9890aa37ae7f4a50fd53b6859168de5",
+      "variant": "scope-budget"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "a3016356e40b07cb28f4f58ddfbb79bdaefa25388f8a46f7faf8e85688293122",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-semantic-perturbation.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "a12ad028ab485f425d1fe2745fd9f77291ab314666883b9358559db9264ebc15",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-semantic-perturbation.alang",
+        "semantic_digest": "cb2d929d55da645b909356cdce17db9c94b7303b38d01653cc94cd7e01adb411"
+      },
+      "case_id": "ad-semantic-perturbation",
+      "control": {
+        "content_sha256": "b09c6d79c4da257d88ebb23eda48a7f906ab94c964ec378d52a3ed0489a6517d",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-semantic-perturbation.json",
+        "semantic_digest": "cb2d929d55da645b909356cdce17db9c94b7303b38d01653cc94cd7e01adb411"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "cb2d929d55da645b909356cdce17db9c94b7303b38d01653cc94cd7e01adb411",
+      "variant": "semantic-perturbation"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "9041b449a0224f90c4eb1bb1746dbae828ea32f484f3966d3309930d21c71b9c",
+        "format": "alang-answer-key-v1",
+        "path": "attenuated-delegation/ad-simple.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "1bde2c48fd26adc22f4462d8421c45a122b3343b12bf7d1c38e46fe5bd879642",
+        "format": "alang-source-v2",
+        "path": "attenuated-delegation/ad-simple.alang",
+        "semantic_digest": "fc3463e8963f4710cda9c4004f2d484f3ae0e5941429042697fd952102d18857"
+      },
+      "case_id": "ad-simple",
+      "control": {
+        "content_sha256": "7ec4732adef4e5190556df2100d0f1fc7b6ed0a46cd1fdb6e87158e8704616b5",
+        "format": "alang-task-json-v1",
+        "path": "attenuated-delegation/ad-simple.json",
+        "semantic_digest": "fc3463e8963f4710cda9c4004f2d484f3ae0e5941429042697fd952102d18857"
+      },
+      "family": "attenuated-delegation",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "fc3463e8963f4710cda9c4004f2d484f3ae0e5941429042697fd952102d18857",
+      "variant": "simple"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "ac85c282cdb5f32f48e393f4e4f96c5bbb3fae754f41663e1cdb05fcd49c4f95",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-constraint-heavy.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "e74a3006f8ff6ebd815772f2571f985bc2576dec15d1317ea79fb682072a29f4",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-constraint-heavy.alang",
+        "semantic_digest": "5d5fb93f192003c22cd152f92709e24f5ce2bdb3c4e9c67440d97927a30bab49"
+      },
+      "case_id": "rap-constraint-heavy",
+      "control": {
+        "content_sha256": "fcdf0e2340cb45be28c5735a63642be00eb5b9a1437c1aa1526a3fecbab14665",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-constraint-heavy.json",
+        "semantic_digest": "5d5fb93f192003c22cd152f92709e24f5ce2bdb3c4e9c67440d97927a30bab49"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "5d5fb93f192003c22cd152f92709e24f5ce2bdb3c4e9c67440d97927a30bab49",
+      "variant": "constraint-heavy"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "2bd44f82b1eae8691c4dda925fec1ae3d41314309e92270dea7d86ad118019bb",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-error-branch.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "0d6b5306cab5461c4a57715c3c51cad917f4f6f7f8b12e00ccea58de105a1558",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-error-branch.alang",
+        "semantic_digest": "7768f929b1429f0a167f5362b3b6043e7c645d04b58656d0b7032a875f633320"
+      },
+      "case_id": "rap-error-branch",
+      "control": {
+        "content_sha256": "027e581c3fea5cd9b7a9bc7cbe9cca463959e6c7b7975dc5b614f7bb07036d9d",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-error-branch.json",
+        "semantic_digest": "7768f929b1429f0a167f5362b3b6043e7c645d04b58656d0b7032a875f633320"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "7768f929b1429f0a167f5362b3b6043e7c645d04b58656d0b7032a875f633320",
+      "variant": "error-branch"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "ad34959811ff23e4a7a56ea081ee41bfb46bff70506de7280108d10aaf5e48ea",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-irrelevant-context.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "11ecfbf7da9e156a1aeb48b901ab7d0a4e56af545b2cf8dd4f7ff8197f2211ca",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-irrelevant-context.alang",
+        "semantic_digest": "e9075bdda7813258c13c76e9aeb2cefa9daf1b5e7a7355d0ab135d42d64d519b"
+      },
+      "case_id": "rap-irrelevant-context",
+      "control": {
+        "content_sha256": "092500ac61fe93d403d5059200e59e4dab296ad52f68ac8b1d48c1400a3a221e",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-irrelevant-context.json",
+        "semantic_digest": "e9075bdda7813258c13c76e9aeb2cefa9daf1b5e7a7355d0ab135d42d64d519b"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "e9075bdda7813258c13c76e9aeb2cefa9daf1b5e7a7355d0ab135d42d64d519b",
+      "variant": "irrelevant-context"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "e52c286f92f1e5fbc6f8bbef8f59455ca84e4c7128aea599aee6a8d2d3544cc5",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-missing-information.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "67ee5b79cf8876a5a6acc3c9f180629a80c7cd8b3f642895730120b943e96085",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-missing-information.alang",
+        "semantic_digest": "e858f5752f1c46f23eaa97e5a271f2b761c0cd8e417533441e36c52d4fc13549"
+      },
+      "case_id": "rap-missing-information",
+      "control": {
+        "content_sha256": "b9500ad850b999abef0aeab34561d192120e2626abbb440a8764cd3b45695dc8",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-missing-information.json",
+        "semantic_digest": "e858f5752f1c46f23eaa97e5a271f2b761c0cd8e417533441e36c52d4fc13549"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "e858f5752f1c46f23eaa97e5a271f2b761c0cd8e417533441e36c52d4fc13549",
+      "variant": "missing-information"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "525303b138d72e865de073dcc164217e6184862b5ce0fd60636ce009a6ce88f2",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-prompt-injection.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "60d10bf5dfb1cfbd1a4a35b1f8f59943375c3fdde61769b0220e15576127cbd3",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-prompt-injection.alang",
+        "semantic_digest": "7af737a1b5648ac1773f6c33f567629681553fc4c3adba6fdfb7cfdac7d41d1c"
+      },
+      "case_id": "rap-prompt-injection",
+      "control": {
+        "content_sha256": "ae7508087f688e5e32b058f2950b41fb1d11cf89761db8b89e73a6708ca25a5f",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-prompt-injection.json",
+        "semantic_digest": "7af737a1b5648ac1773f6c33f567629681553fc4c3adba6fdfb7cfdac7d41d1c"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "7af737a1b5648ac1773f6c33f567629681553fc4c3adba6fdfb7cfdac7d41d1c",
+      "variant": "prompt-injection"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "ef939303c874810e75a72c17b6eba77dab2b2fe1d25abc3d660e947eec547985",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-scope-budget.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "cafc5cfb54c4a1a03793744f27c6f213d19f035d7d0b9ff3b82585a821737b1c",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-scope-budget.alang",
+        "semantic_digest": "db304de5499e655b32bf1bdf9d50f4b2628d68e5b49f86cfc8246325aa0961d6"
+      },
+      "case_id": "rap-scope-budget",
+      "control": {
+        "content_sha256": "6124a8d92dd5d202b45e66fb9a15aa6205ca145a4d49222c195207c796050314",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-scope-budget.json",
+        "semantic_digest": "db304de5499e655b32bf1bdf9d50f4b2628d68e5b49f86cfc8246325aa0961d6"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "db304de5499e655b32bf1bdf9d50f4b2628d68e5b49f86cfc8246325aa0961d6",
+      "variant": "scope-budget"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "50c535f5da2463b62d3e2f08c8b2a2209d66e120f5b74bf4e91567718298e9d5",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-semantic-perturbation.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "d7e1551c5361d5809d504007c658811a4282eb13479359c14dda6f059b25f19d",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-semantic-perturbation.alang",
+        "semantic_digest": "a0fc60ed2cbce96737ed83112728dd5bf21e445b82c0c94f105e1461a52efcdc"
+      },
+      "case_id": "rap-semantic-perturbation",
+      "control": {
+        "content_sha256": "86ed5b6137824adc5085f5606bf600392892b33c8dc6d0b1e9d9ee4989695e39",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-semantic-perturbation.json",
+        "semantic_digest": "a0fc60ed2cbce96737ed83112728dd5bf21e445b82c0c94f105e1461a52efcdc"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "a0fc60ed2cbce96737ed83112728dd5bf21e445b82c0c94f105e1461a52efcdc",
+      "variant": "semantic-perturbation"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "21bad59d5e6b5e272f18a1fcd4460b7ac77883e13e67069b24bc2997fc99067e",
+        "format": "alang-answer-key-v1",
+        "path": "repair-and-publish/rap-simple.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "4cb342384f84af0d0f83577baed37da2cc52ff0f5dd191afbf8e192bcd9f504a",
+        "format": "alang-source-v2",
+        "path": "repair-and-publish/rap-simple.alang",
+        "semantic_digest": "a308390adf4c990731e70fdcb04b57075af80e9b4713cca7580efd9db08588b2"
+      },
+      "case_id": "rap-simple",
+      "control": {
+        "content_sha256": "978e8c53bd81fd04a9b81d15d1c7d8bc131881d63a039160281c24aa985dff6b",
+        "format": "alang-task-json-v1",
+        "path": "repair-and-publish/rap-simple.json",
+        "semantic_digest": "a308390adf4c990731e70fdcb04b57075af80e9b4713cca7580efd9db08588b2"
+      },
+      "family": "repair-and-publish",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "a308390adf4c990731e70fdcb04b57075af80e9b4713cca7580efd9db08588b2",
+      "variant": "simple"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "d70a305644daffff8fccccf7c30d0a4d3eebf927b04ce9412a02da9dd1187a0b",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-constraint-heavy.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "d7c003d429fb3da915ad0f188ab7a9c52e8fa79ab0d83feec90dfe2f5c35c89d",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-constraint-heavy.alang",
+        "semantic_digest": "d8f2fb57909c7d8e9718efa639ecc8c25d4e3c1bb0be5666784c9c3f5b889304"
+      },
+      "case_id": "sma-constraint-heavy",
+      "control": {
+        "content_sha256": "301c2cab0d61ec59882a777f0ad9c62c273073c7c9a3a3b7e02d1b8e81b1b491",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-constraint-heavy.json",
+        "semantic_digest": "d8f2fb57909c7d8e9718efa639ecc8c25d4e3c1bb0be5666784c9c3f5b889304"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "d8f2fb57909c7d8e9718efa639ecc8c25d4e3c1bb0be5666784c9c3f5b889304",
+      "variant": "constraint-heavy"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "2fc063180fc74414c07d07af137cd35b5f24a8294de7ffb7bad8f34af72f89b3",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-error-branch.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "c5c4ed8e5439968a85a591d959607c87ea87d5a8f620feea502942b76441fe6c",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-error-branch.alang",
+        "semantic_digest": "1d28fe22eb600a248c78eeaaa2a1f6a95c2564ebeb9beafdd15a9e008efc3f6d"
+      },
+      "case_id": "sma-error-branch",
+      "control": {
+        "content_sha256": "03e49b311aefd6cf7544d363f45fac90d95d75d24fb1b3beb3bd0204b9f91f86",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-error-branch.json",
+        "semantic_digest": "1d28fe22eb600a248c78eeaaa2a1f6a95c2564ebeb9beafdd15a9e008efc3f6d"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "1d28fe22eb600a248c78eeaaa2a1f6a95c2564ebeb9beafdd15a9e008efc3f6d",
+      "variant": "error-branch"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "54aec4375cb3dd73e55e87772454a0edc8b53e83f8c1599ce0793e3a9a6df467",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-irrelevant-context.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "4a04b56f8355c7cda9f9190cf222597cce963e0ebde3d04c0cbaa2fe64dccd60",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-irrelevant-context.alang",
+        "semantic_digest": "55d53dc090deca24a3e73c7237051e5ffc85a427dffbabf9cbe682b8a28b4e59"
+      },
+      "case_id": "sma-irrelevant-context",
+      "control": {
+        "content_sha256": "084052c8a8b56389147162c9632517af7feca4bd5086a0afd1d8ed90ecea2987",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-irrelevant-context.json",
+        "semantic_digest": "55d53dc090deca24a3e73c7237051e5ffc85a427dffbabf9cbe682b8a28b4e59"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "55d53dc090deca24a3e73c7237051e5ffc85a427dffbabf9cbe682b8a28b4e59",
+      "variant": "irrelevant-context"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "e58d15843de5451276d2be8bf85a7f5ff476dbeb268ae4035c8ff7d90ac213c1",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-missing-information.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "5699d0d330d187c922aba57b965efe2dc0e85d42154f21461a5d8f78d0b76852",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-missing-information.alang",
+        "semantic_digest": "6e6f85fe63c2cf95fdc802d961edf39288c977e0b260c079a23c02d168296409"
+      },
+      "case_id": "sma-missing-information",
+      "control": {
+        "content_sha256": "5a6c6689c0b847519f7de82a59045935f86783be4ffc3672fd55a99281260e49",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-missing-information.json",
+        "semantic_digest": "6e6f85fe63c2cf95fdc802d961edf39288c977e0b260c079a23c02d168296409"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "6e6f85fe63c2cf95fdc802d961edf39288c977e0b260c079a23c02d168296409",
+      "variant": "missing-information"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "653db3f8e00be09b858ab19fce0e9b0888b177d802c91376288428a808da5d92",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-prompt-injection.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "e0e10604ebb237ac6f80d2e307c76b33c1963940ff27c29c16a10b1f0d9b8def",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-prompt-injection.alang",
+        "semantic_digest": "5023e4a375f2647ed3c07aafa5f5b682137086dae4cf0bcdb7c7a6b9a60702b7"
+      },
+      "case_id": "sma-prompt-injection",
+      "control": {
+        "content_sha256": "7f177c013a1d2ec00016da95f149891e2b74727b67e14ce5311528f1b913df84",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-prompt-injection.json",
+        "semantic_digest": "5023e4a375f2647ed3c07aafa5f5b682137086dae4cf0bcdb7c7a6b9a60702b7"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "5023e4a375f2647ed3c07aafa5f5b682137086dae4cf0bcdb7c7a6b9a60702b7",
+      "variant": "prompt-injection"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "37d851ac9ce82a57cc66781ad2555bff3b3700e43b9a84e7f3d0bf5ba80baad3",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-scope-budget.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "5546bfd5039fce3e7c06f059735ab90e165297c8f16812e0e1c4b33cd3ca5fae",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-scope-budget.alang",
+        "semantic_digest": "1cf7c6e2c0f4ffa61928845071b1232979cbbe38932a2edc7db2f5c5293d3b40"
+      },
+      "case_id": "sma-scope-budget",
+      "control": {
+        "content_sha256": "6f29df28ebc6173cc8ede358d39fd4609b578b0a5b7b8d0be10dd2cddc9837a5",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-scope-budget.json",
+        "semantic_digest": "1cf7c6e2c0f4ffa61928845071b1232979cbbe38932a2edc7db2f5c5293d3b40"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "1cf7c6e2c0f4ffa61928845071b1232979cbbe38932a2edc7db2f5c5293d3b40",
+      "variant": "scope-budget"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "8e0c6ce12ebc23a9c2f9d82a5a093e8e36e9e1509113aca7ad757f0e897343c0",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-semantic-perturbation.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "7dabbae74e34d748ee32c297d310dc5802e208f7a0bb593e70a0994f21e642c7",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-semantic-perturbation.alang",
+        "semantic_digest": "d60169f098b6ba2254ddd563f8b3090ea151b78c94473103553a22d2ba4608e6"
+      },
+      "case_id": "sma-semantic-perturbation",
+      "control": {
+        "content_sha256": "35a0e11b103ba856ff1542658c0a0e8888a39ba5cc2098079c3137a49defead3",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-semantic-perturbation.json",
+        "semantic_digest": "d60169f098b6ba2254ddd563f8b3090ea151b78c94473103553a22d2ba4608e6"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "d60169f098b6ba2254ddd563f8b3090ea151b78c94473103553a22d2ba4608e6",
+      "variant": "semantic-perturbation"
+    },
+    {
+      "answer_key": {
+        "content_sha256": "2e11014702bd9caa958474e3846f1888631de4abe6abefcc034fb38bda1277e8",
+        "format": "alang-answer-key-v1",
+        "path": "single-model-artifact/sma-simple.answer.json"
+      },
+      "candidate": {
+        "content_sha256": "b041e59a39979a11d49dd136d719459efcd8222200fc30ade26c57c179de0191",
+        "format": "alang-source-v2",
+        "path": "single-model-artifact/sma-simple.alang",
+        "semantic_digest": "1901fc7f9ca639939733866c1c792a7c9c33de9c0b01769441ff06458a35b19d"
+      },
+      "case_id": "sma-simple",
+      "control": {
+        "content_sha256": "30a260416ac18f67f81a87688fcf70dde5c00a754a31428ae4f5e0fb53c99dd4",
+        "format": "alang-task-json-v1",
+        "path": "single-model-artifact/sma-simple.json",
+        "semantic_digest": "1901fc7f9ca639939733866c1c792a7c9c33de9c0b01769441ff06458a35b19d"
+      },
+      "family": "single-model-artifact",
+      "format": "alang-semantic-pair-v1",
+      "review": {
+        "equivalent_detail": true,
+        "hand_authored": true,
+        "no_answer_serialization": true,
+        "no_condition_specific_demonstration": true
+      },
+      "semantic_digest": "1901fc7f9ca639939733866c1c792a7c9c33de9c0b01769441ff06458a35b19d",
+      "variant": "simple"
+    }
+  ],
+  "families": [
+    "single-model-artifact",
+    "repair-and-publish",
+    "attenuated-delegation"
+  ],
+  "format": "alang-fidelity-corpus-v1",
+  "variants": [
+    "simple",
+    "constraint-heavy",
+    "scope-budget",
+    "error-branch",
+    "missing-information",
+    "irrelevant-context",
+    "prompt-injection",
+    "semantic-perturbation"
+  ]
+}

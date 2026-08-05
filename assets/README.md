@@ -31,11 +31,13 @@ archive when a link is sufficient.
 
 ### Subdirectories
 
-- None yet.
+- [Effectful source fidelity assets](effectful-source-fidelity/README.md) — the
+  frozen schemas, paired corpus, provider profiles, prompts, and campaign
+  inputs for the task-language source experiment.
 
 ### Files
 
-- No assets yet.
+- None yet.
 
 ## Maintaining this index
 

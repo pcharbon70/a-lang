@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/campaign-policy-v1.schema.json",
+  "title": "A-Lang fidelity campaign policy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "network_default",
+    "live_opt_in",
+    "design",
+    "ceilings",
+    "replacement",
+    "repair",
+    "submission_retry",
+    "uncertain_outcomes",
+    "retention"
+  ],
+  "properties": {
+    "format": { "const": "alang-fidelity-campaign-policy-v1" },
+    "network_default": { "const": "disabled" },
+    "live_opt_in": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["environment_variable", "required_value", "credentials_required"],
+      "properties": {
+        "environment_variable": { "const": "ALANG_ALLOW_LIVE_MODEL_CALLS" },
+        "required_value": { "const": "1" },
+        "credentials_required": {
+          "const": ["ALANG_OPENAI_API_KEY", "ALANG_ANTHROPIC_API_KEY"]
+        }
+      }
+    },
+    "design": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semantic_cases", "conditions", "model_families", "paired_repetitions"],
+      "properties": {
+        "semantic_cases": { "const": 24 },
+        "conditions": { "const": 2 },
+        "model_families": { "const": 2 },
+        "paired_repetitions": { "const": 3 }
+      }
+    },
+    "ceilings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary_calls", "all_calls", "cost_usd", "accepted_source_bytes", "accepted_response_bytes"],
+      "properties": {
+        "primary_calls": { "const": 288 },
+        "all_calls": { "const": 576 },
+        "cost_usd": { "const": 200 },
+        "accepted_source_bytes": { "const": 8192 },
+        "accepted_response_bytes": { "const": 8192 }
+      }
+    },
+    "replacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blind_retry", "max_replacements_per_primary_cell", "allowed_only_when", "forbidden_when"],
+      "properties": {
+        "blind_retry": { "const": false },
+        "max_replacements_per_primary_cell": { "const": 1 },
+        "allowed_only_when": { "type": "array", "minItems": 2, "maxItems": 2, "uniqueItems": true },
+        "forbidden_when": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true }
+      }
+    },
+    "repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_per_definitive_response", "allowed_for", "primary_score_changes", "counts_toward_all_calls"],
+      "properties": {
+        "max_per_definitive_response": { "const": 1 },
+        "allowed_for": { "const": ["malformed-json", "schema-invalid"] },
+        "primary_score_changes": { "const": false },
+        "counts_toward_all_calls": { "const": true }
+      }
+    },
+    "submission_retry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_per_primary_cell", "allowed_only_when", "counts_toward_all_calls"],
+      "properties": {
+        "max_per_primary_cell": { "const": 1 },
+        "allowed_only_when": { "const": "request-proved-not-submitted" },
+        "counts_toward_all_calls": { "const": true }
+      }
+    },
+    "uncertain_outcomes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["retain", "exclude"],
+      "properties": {
+        "retain": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true },
+        "exclude": { "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true }
+      }
+    }
+  }
+}

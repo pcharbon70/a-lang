@@ -1,0 +1,73 @@
+{
+  "format": "alang-fidelity-campaign-policy-v1",
+  "network_default": "disabled",
+  "live_opt_in": {
+    "environment_variable": "ALANG_ALLOW_LIVE_MODEL_CALLS",
+    "required_value": "1",
+    "credentials_required": [
+      "ALANG_OPENAI_API_KEY",
+      "ALANG_ANTHROPIC_API_KEY"
+    ]
+  },
+  "design": {
+    "semantic_cases": 24,
+    "conditions": 2,
+    "model_families": 2,
+    "paired_repetitions": 3
+  },
+  "ceilings": {
+    "primary_calls": 288,
+    "all_calls": 576,
+    "cost_usd": 200,
+    "accepted_source_bytes": 8192,
+    "accepted_response_bytes": 8192
+  },
+  "replacement": {
+    "blind_retry": false,
+    "max_replacements_per_primary_cell": 1,
+    "allowed_only_when": [
+      "transport-failure-before-response",
+      "timeout-before-response-metadata"
+    ],
+    "forbidden_when": [
+      "definitive-response-received",
+      "definitive-refusal",
+      "truncated",
+      "malformed-json",
+      "schema-invalid"
+    ]
+  },
+  "repair": {
+    "max_per_definitive_response": 1,
+    "allowed_for": [
+      "malformed-json",
+      "schema-invalid"
+    ],
+    "primary_score_changes": false,
+    "counts_toward_all_calls": true
+  },
+  "submission_retry": {
+    "max_per_primary_cell": 1,
+    "allowed_only_when": "request-proved-not-submitted",
+    "counts_toward_all_calls": true
+  },
+  "uncertain_outcomes": [
+    "connection-state-unknown",
+    "provider-accepted-request-without-definitive-response"
+  ],
+  "retention": {
+    "retain": [
+      "redacted-prompt",
+      "normalized-response",
+      "deterministic-score",
+      "bounded-request-metadata",
+      "content-digest"
+    ],
+    "exclude": [
+      "credential",
+      "authorization-header",
+      "unredacted-secret",
+      "provider-internal-trace"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: ad-error-branch
+// semantic-sha256: cf751b63f2dc78b6fd16fd0e73f7accf69d7d384daa5cbe9f2d8d69a7613ea0b
+// model-visible-begin
+task ad-error-branch {
+  facts ["Delegate a recovery note and publish it", "Fail closed if child authority is denied, the child times out, or publication is denied"];
+  input recovery-facts: json required;
+  effects [child.run, model.generate, workspace.write];
+  requirements [model child-writer, workspace recovery-workspace];
+  scopes { models [child-writer]; workspaces [recovery-workspace]; paths ["/workspace/recovery-note.md"]; }
+  limits { steps 4; model-calls 2; repair-calls 0; child-calls 1; workspace-writes 1; output-bytes 2048; timeout-ms 40000; }
+  step frame: model.generate depends [];
+  step delegate: child.run depends [frame];
+  step publish: workspace.write depends [delegate];
+  step finish: complete depends [publish];
+  on-error [delegate denied => failed, delegate timeout => failed, publish denied => failed];
+  child { effects [model.generate]; requirements [model child-writer]; scopes { models [child-writer]; workspaces []; paths []; } limits { steps 2; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 0; output-bytes 2048; timeout-ms 25000; } }
+  complete [artifact-exists "/workspace/recovery-note.md": true, journal-succeeded "publish": true];
+  clarify [];
+  terminal complete;
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/alang-task-json-v1.schema.json",
+  "title": "A-Lang typed JSON control v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "case_id", "task"],
+  "properties": {
+    "format": { "const": "alang-task-json-v1" },
+    "case_id": {
+      "$ref": "alang-task-comprehension-v1.schema.json#/$defs/identifier"
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "goal_facts",
+        "inputs",
+        "actions",
+        "effects",
+        "requirements",
+        "scopes",
+        "budgets",
+        "error_branches",
+        "child_attenuation",
+        "completion_predicates",
+        "clarification_needs",
+        "terminal_class"
+      ],
+      "properties": {
+        "goal_facts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/nonemptyText"
+          }
+        },
+        "inputs": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/input"
+          }
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/action"
+          }
+        },
+        "effects": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/effect"
+          }
+        },
+        "requirements": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/requirement"
+          }
+        },
+        "scopes": {
+          "$ref": "alang-task-comprehension-v1.schema.json#/$defs/scopes"
+        },
+        "budgets": {
+          "$ref": "alang-task-comprehension-v1.schema.json#/$defs/budgets"
+        },
+        "error_branches": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/errorBranch"
+          }
+        },
+        "child_attenuation": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "$ref": "alang-task-comprehension-v1.schema.json#/$defs/childAttenuation"
+            }
+          ]
+        },
+        "completion_predicates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/completionPredicate"
+          }
+        },
+        "clarification_needs": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "alang-task-comprehension-v1.schema.json#/$defs/nonemptyText"
+          }
+        },
+        "terminal_class": {
+          "enum": ["complete", "needs-clarification", "failed"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+#!alang-source-v2
+// corpus-case: sma-semantic-perturbation
+// semantic-sha256: d60169f098b6ba2254ddd563f8b3090ea151b78c94473103553a22d2ba4608e6
+// model-visible-begin
+task sma-semantic-perturbation {
+  requirements [workspace report-workspace, model writer-model];
+  facts ["Do not add recommendations", "Produce the supplied metric report"];
+  input metric-report: json required;
+  effects [workspace.write, model.generate];
+  scopes { paths ["/workspace/metric-report.md"]; workspaces [report-workspace]; models [writer-model]; }
+  limits { timeout-ms 25000; output-bytes 2048; workspace-writes 1; child-calls 0; repair-calls 0; model-calls 1; steps 3; }
+  step render: model.generate depends [];
+  step save: workspace.write depends [render];
+  step finish: complete depends [save];
+  child none;
+  on-error [];
+  complete [max-bytes "/workspace/metric-report.md": 2048, artifact-exists "/workspace/metric-report.md": true];
+  clarify [];
+  terminal complete;
+}

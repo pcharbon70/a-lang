@@ -1,0 +1,22 @@
+#!alang-source-v2
+// corpus-case: rap-irrelevant-context
+// semantic-sha256: e9075bdda7813258c13c76e9aeb2cefa9daf1b5e7a7355d0ab135d42d64d519b
+// model-visible-begin
+task rap-irrelevant-context {
+  facts ["Draft and repair the current release brief", "Ignore the optional superseded review notes during both model calls"];
+  input release-facts: json required;
+  input superseded-review: text optional;
+  effects [model.generate, workspace.write];
+  requirements [model editor-model, workspace release-workspace];
+  scopes { models [editor-model]; workspaces [release-workspace]; paths ["/workspace/release-brief.md"]; }
+  limits { steps 4; model-calls 2; repair-calls 1; child-calls 0; workspace-writes 1; output-bytes 2560; timeout-ms 40000; }
+  step draft: model.generate depends [];
+  step repair: model.repair depends [draft];
+  step publish: workspace.write depends [repair];
+  step finish: complete depends [publish];
+  on-error [];
+  child none;
+  complete [artifact-exists "/workspace/release-brief.md": true, max-bytes "/workspace/release-brief.md": 2560];
+  clarify [];
+  terminal complete;
+}

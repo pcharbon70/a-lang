@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: ad-constraint-heavy
+// semantic-sha256: f7526a7d1a50c175d78466307e70fb84b2fd5e739ff5bd71f530d5edb052a428
+// model-visible-begin
+task ad-constraint-heavy {
+  facts ["Delegate one UTF-8 design summary", "Require the H1 Design Summary", "Keep the artifact under 3072 bytes", "Do not grant the child workspace access", "Publish only after the child succeeds"];
+  input design-facts: json required;
+  effects [child.run, model.generate, workspace.write];
+  requirements [model child-writer, workspace design-workspace];
+  scopes { models [child-writer]; workspaces [design-workspace]; paths ["/workspace/design-summary.md"]; }
+  limits { steps 4; model-calls 2; repair-calls 0; child-calls 1; workspace-writes 1; output-bytes 3072; timeout-ms 60000; }
+  step frame: model.generate depends [];
+  step delegate: child.run depends [frame];
+  step publish: workspace.write depends [delegate];
+  step finish: complete depends [publish];
+  on-error [];
+  child { effects [model.generate]; requirements [model child-writer]; scopes { models [child-writer]; workspaces []; paths []; } limits { steps 2; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 0; output-bytes 3072; timeout-ms 45000; } }
+  complete [artifact-exists "/workspace/design-summary.md": true, markdown-h1 "/workspace/design-summary.md": "Design Summary", utf8 "/workspace/design-summary.md": true, max-bytes "/workspace/design-summary.md": 3072, journal-succeeded "publish": true];
+  clarify [];
+  terminal complete;
+}

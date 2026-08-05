@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: sma-irrelevant-context
+// semantic-sha256: 55d53dc090deca24a3e73c7237051e5ffc85a427dffbabf9cbe682b8a28b4e59
+// model-visible-begin
+task sma-irrelevant-context {
+  facts ["Write the status artifact using only the current status input", "Treat the optional historical memo as irrelevant context"];
+  input current-status: text required;
+  input historical-memo: text optional;
+  effects [model.generate, workspace.write];
+  requirements [model writer-model, workspace status-workspace];
+  scopes { models [writer-model]; workspaces [status-workspace]; paths ["/workspace/current-status.md"]; }
+  limits { steps 3; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 1; output-bytes 1536; timeout-ms 20000; }
+  step draft: model.generate depends [];
+  step publish: workspace.write depends [draft];
+  step finish: complete depends [publish];
+  on-error [];
+  child none;
+  complete [artifact-exists "/workspace/current-status.md": true, max-bytes "/workspace/current-status.md": 1536];
+  clarify [];
+  terminal complete;
+}

@@ -19,8 +19,8 @@ budget, and evidence policy before extending the compiler or observing a hosted
 model. This prevents the language or threshold from being tuned after results
 are known.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** Complete — all four sections pass; the 86-file registration digest
+is frozen and no hosted model has been called.
 
 **Dependencies:** The [Phase 8 architecture decision](../../src/phase-08/proof-of-concept-architecture-decision.md)
 has authorized only this effectful-source fidelity question. The existing typed
@@ -32,7 +32,9 @@ the fixed substrate rather than experimental variables.
 **Description:** Turn “task-specification fidelity” into a closed record,
 deterministic observations, and a pre-registered architecture decision.
 
-- [ ] **Section 1.1 Complete**
+- [x] **Section 1.1 Complete** — reproduce with
+  `make test-fidelity-section-1-1`; inspect the [BEAM validators](../../src/effectful-source-fidelity/README.md)
+  and [frozen contracts](../../assets/effectful-source-fidelity/contracts/README.md).
 
 ### Task 1.1.1: Define the Comprehension Record and Semantic Oracle
 
@@ -40,7 +42,7 @@ deterministic observations, and a pre-registered architecture decision.
 surface and a representation-neutral answer key against which recovery can be
 scored without an LLM judge.
 
-- [ ] **Task 1.1.1 Complete**
+- [x] **Task 1.1.1 Complete**
 
 #### Subtask 1.1.1.1: Specify `alang_task_comprehension_v1`
 
@@ -50,7 +52,9 @@ requirements, scopes, budgets, error branches, child attenuation, completion
 predicates, clarification needs, and terminal class; reject unknown fields,
 duplicates, dynamic tags, and out-of-bound values.
 
-- [ ] **Subtask 1.1.1.1 Complete**
+- [x] **Subtask 1.1.1.1 Complete** — the closed schema and duplicate-aware
+  BEAM validator reject unknown fields, dynamic operations, invalid
+  dependencies, out-of-bound values, and child authority widening.
 
 #### Subtask 1.1.1.2: Specify Representation-Neutral Answer Keys
 
@@ -58,14 +62,15 @@ duplicates, dynamic tags, and out-of-bound values.
 digest independently from A-Lang and JSON origins, comments, key order, and
 spelling so only meaning contributes to the primary score.
 
-- [ ] **Subtask 1.1.1.2 Complete**
+- [x] **Subtask 1.1.1.2 Complete** — answer keys bind a case to the canonical
+  digest of its origin-free, presentation-normalized semantic record.
 
 ### Task 1.1.2: Freeze Metrics, Statistics, and Outcomes
 
 **Description:** Make every reported metric and the promote/replace/stop rule
 machine-readable before a hosted request can run.
 
-- [ ] **Task 1.1.2 Complete**
+- [x] **Task 1.1.2 Complete**
 
 #### Subtask 1.1.2.1: Register Primary and Secondary Metrics
 
@@ -76,7 +81,9 @@ with no hidden weighting or model-graded field. Score every definitive refusal,
 truncation, malformed JSON, and schema-invalid first response as zero exact
 fidelity rather than excluding or replacing it.
 
-- [ ] **Subtask 1.1.2.1 Complete**
+- [x] **Subtask 1.1.2.1 Complete** — the machine-readable contract freezes one
+  exact primary metric, nine secondary observations, and zero-credit invalid
+  first-response classes.
 
 #### Subtask 1.1.2.2: Encode the Frozen Decision Rule
 
@@ -87,14 +94,17 @@ using 10,000 resamples with seed `20260805`; otherwise replace with JSON when
 both families reach 80%, or stop surface expansion when they do not, with any
 safety regression acting as a veto.
 
-- [ ] **Subtask 1.1.2.2 Complete**
+- [x] **Subtask 1.1.2.2 Complete** — the BEAM decision module enforces the
+  per-family five-point and positive-interval gate, JSON floor, invalid-run
+  outcome, and safety veto without configurable thresholds.
 
 ## Section 1.2: Paired Representation Contract
 
 **Description:** Define the user-authored A-Lang and typed-JSON conditions so
 they differ only in source notation and both remain compiler inputs.
 
-- [ ] **Section 1.2 Complete**
+- [x] **Section 1.2 Complete** — reproduce with
+  `make test-fidelity-section-1-2`; inspect the [source and pairing contracts](../../assets/effectful-source-fidelity/contracts/README.md).
 
 ### Task 1.2.1: Freeze the A-Lang and JSON Surface Roles
 
@@ -103,7 +113,7 @@ they differ only in source notation and both remain compiler inputs.
 same types, effects, requirements, limits, sequencing, result matching, child
 attenuation, and completion vocabulary.
 
-- [ ] **Task 1.2.1 Complete**
+- [x] **Task 1.2.1 Complete**
 
 #### Subtask 1.2.1.1: Define the Candidate Source Contract
 
@@ -112,7 +122,9 @@ parse, preserve `alang-source-v1`, and prohibit recursion, polymorphism,
 parallelism, dynamic operations, arbitrary calls, and categorical surface
 notation.
 
-- [ ] **Subtask 1.2.1.1 Complete**
+- [x] **Subtask 1.2.1.1 Complete** — the frozen contract preserves
+  `alang-source-v1`, bounds the effectful additions, prohibits the deferred
+  features, and keeps lowering on the trusted BEAM toolchain.
 
 #### Subtask 1.2.1.2: Define the Closed JSON Control Schema
 
@@ -120,7 +132,9 @@ notation.
 retain source pointers for diagnostics, reject unknown or duplicate semantic
 fields, and prohibit direct typed-IR node identifiers or backend terms.
 
-- [ ] **Subtask 1.2.1.2 Complete**
+- [x] **Subtask 1.2.1.2 Complete** — the closed control schema is decoded by
+  OTP JSON with duplicate rejection and retained JSON Pointer origins, then
+  validated through the same semantic contract without exposing IR terms.
 
 ### Task 1.2.2: Define Semantic Pairing and Leakage Controls
 
@@ -128,7 +142,7 @@ fields, and prohibit direct typed-IR node identifiers or backend terms.
 preventing either notation, prompt, filename, or ordering from revealing that
 answer.
 
-- [ ] **Task 1.2.2 Complete**
+- [x] **Task 1.2.2 Complete**
 
 #### Subtask 1.2.2.1: Specify Normalized Semantic Equality
 
@@ -137,7 +151,9 @@ presentation order but retains task order, dependencies, authority, budgets,
 branches, child bounds, and completion semantics; require equal digests before
 a pair enters the corpus.
 
-- [ ] **Subtask 1.2.2.1 Complete**
+- [x] **Subtask 1.2.2.1 Complete** — canonical ETF digests remove origins,
+  comments, object order, and set presentation while preserving ordered
+  actions, dependencies, authority, bounds, branches, children, and completion.
 
 #### Subtask 1.2.2.2: Specify Opaque Trial Materialization
 
@@ -147,14 +163,18 @@ keep notation labels and answer keys out of the model-visible prompt. Treat the
 surface representation itself as the visible experimental treatment rather
 than claiming that the model is blind to it.
 
-- [ ] **Subtask 1.2.2.2 Complete**
+- [x] **Subtask 1.2.2.2 Complete** — identifiers are assigned only after
+  validation with seed `2026080501`; prompts exclude labels, filenames,
+  digests, and answer keys while acknowledging that notation remains visible.
 
 ## Section 1.3: Corpus, Provider, and Evidence Registration
 
 **Description:** Pre-register all 24 cases, two exact model profiles, operational
 ceilings, and retained evidence before implementation can run a live campaign.
 
-- [ ] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete** — reproduce with
+  `make test-fidelity-section-1-3`; inspect the [frozen corpus](../../assets/effectful-source-fidelity/corpus/README.md)
+  and [campaign contract](../../assets/effectful-source-fidelity/campaign/README.md).
 
 ### Task 1.3.1: Author and Review the Twenty-Four Semantic Cases
 
@@ -162,7 +182,7 @@ ceilings, and retained evidence before implementation can run a live campaign.
 repair-and-publish, and attenuated-delegation families without generating an
 acceptance case from IR.
 
-- [ ] **Task 1.3.1 Complete**
+- [x] **Task 1.3.1 Complete**
 
 #### Subtask 1.3.1.1: Cover the Eight Required Variants per Family
 
@@ -171,7 +191,9 @@ missing-information, irrelevant-context, prompt-injection, and
 semantics-preserving perturbation cases, each with a declared expected
 terminal class.
 
-- [ ] **Subtask 1.3.1.1 Complete**
+- [x] **Subtask 1.3.1.1 Complete** — the manifest contains exactly one
+  validated cell for each of three families by eight variants, with an
+  explicit expected terminal class in every answer key.
 
 #### Subtask 1.3.1.2: Review Corpus Balance and Independence
 
@@ -179,7 +201,9 @@ terminal class.
 no copied answer-key serialization, no condition-specific demonstrations, and
 no topic or difficulty imbalance that predicts notation.
 
-- [ ] **Subtask 1.3.1.2 Complete**
+- [x] **Subtask 1.3.1.2 Complete** — 24 A-Lang candidates, 24 typed-JSON
+  controls, and 24 independent answer keys have unique content hashes, equal
+  per-pair semantic digests, equivalent detail review, and no prompt examples.
 
 ### Task 1.3.2: Register Hosted Profiles and Operational Bounds
 
@@ -187,7 +211,7 @@ no topic or difficulty imbalance that predicts notation.
 repair, timeout, cost, privacy, and retention behavior without making the
 default test suite network-dependent.
 
-- [ ] **Task 1.3.2 Complete**
+- [x] **Task 1.3.2 Complete**
 
 #### Subtask 1.3.2.1: Pin Exact Provider Profiles
 
@@ -196,7 +220,10 @@ default test suite network-dependent.
 constraint, 8,192-token provider output and 8,192-byte accepted-output bounds,
 and fail when an exact identifier is unavailable.
 
-- [ ] **Subtask 1.3.2.1 Complete**
+- [x] **Subtask 1.3.2.1 Complete** — exact OpenAI Responses
+  `gpt-5.6-terra` and Anthropic Messages `claude-sonnet-5` profiles require
+  medium effort, one turn, no tools or schema constraint, and 8,192-token and
+  accepted-byte limits.
 
 #### Subtask 1.3.2.2: Freeze Campaign and Evidence Ceilings
 
@@ -206,14 +233,18 @@ outcomes without blind retry, allow replacements only where no definitive model
 response exists, and retain only redacted prompts, normalized responses,
 scores, bounded metadata, and digests.
 
-- [ ] **Subtask 1.3.2.2 Complete**
+- [x] **Subtask 1.3.2.2 Complete** — networking is disabled by default;
+  explicit consent and both credentials are required, calls are capped at
+  288/576 and USD 200, blind retry is forbidden, and retained evidence is
+  bounded and redacted.
 
 ## Section 1.4: Phase 1 Integration Tests
 
 **Description:** Prove the experiment is complete, internally coherent, and
 frozen before any compiler or hosted-model implementation begins.
 
-- [ ] **Section 1.4 Complete**
+- [x] **Section 1.4 Complete** — reproduce with
+  `make test-fidelity-section-1-4`; see the [Phase 1 integration evidence](../../src/effectful-source-fidelity/phase-01-integration-evidence.md).
 
 ### Task 1.4.1: Validate Contracts and Corpus Mechanically
 
@@ -221,7 +252,7 @@ frozen before any compiler or hosted-model implementation begins.
 semantic answer keys, pair counts, required variants, unique identities,
 bounded values, and equal normalized pair digests.
 
-- [ ] **Task 1.4.1 Complete**
+- [x] **Task 1.4.1 Complete**
 
 #### Subtask 1.4.1.1: Reject Contract and Corpus Mutants
 
@@ -229,7 +260,9 @@ bounded values, and equal normalized pair digests.
 answers, unequal semantics, unbounded limits, alias model identifiers, and
 post-freeze threshold changes and require specific failures.
 
-- [ ] **Subtask 1.4.1.1 Complete**
+- [x] **Subtask 1.4.1.1 Complete** — the integration matrix rejects unknown
+  fields, duplicate cases, missing cells, visible answer leakage, semantic
+  mismatch, unbounded limits, model aliases, and threshold drift.
 
 #### Subtask 1.4.1.2: Reproduce the Pre-Registration Digest
 
@@ -237,7 +270,8 @@ post-freeze threshold changes and require specific failures.
 profiles, prompt template, scoring rules, and decision rule twice from a clean
 checkout and require byte-identical pre-registration evidence.
 
-- [ ] **Subtask 1.4.1.2 Complete**
+- [x] **Subtask 1.4.1.2 Complete** — two isolated evidence writes produce the
+  same 86-file registration digest and byte-identical JSON evidence.
 
 ### Task 1.4.2: Audit Scope and Research Traceability
 
@@ -245,7 +279,7 @@ checkout and require byte-identical pre-registration evidence.
 every frozen feature stays absent, and every claimed metric maps to the active
 task-language inquiry.
 
-- [ ] **Task 1.4.2 Complete**
+- [x] **Task 1.4.2 Complete**
 
 #### Subtask 1.4.2.1: Run the Frozen-Scope Audit
 
@@ -254,7 +288,9 @@ parallelism, distribution, delegation protocols, extra effect families,
 self-hosting, package management, and user-visible categorical syntax and fail
 on any occurrence outside explicit non-goals.
 
-- [ ] **Subtask 1.4.2.1 Complete**
+- [x] **Subtask 1.4.2.1 Complete** — all 24 model-visible candidates pass the
+  frozen-feature scan, only three effect families remain, and every trusted
+  implementation module loads from BEAM with no foreign source.
 
 #### Subtask 1.4.2.2: Publish Phase 1 Evidence
 
@@ -262,18 +298,20 @@ on any occurrence outside explicit non-goals.
 profiles, cost/call bounds, metric definitions, decision outcomes, review
 findings, and exact commands needed to reproduce the phase gate.
 
-- [ ] **Subtask 1.4.2.2 Complete**
+- [x] **Subtask 1.4.2.2 Complete** — the evidence note records digest,
+  inventories, profiles, ceilings, metrics, mutants, audit, limitations, and
+  exact reproduction commands.
 
 ## Phase 1 Completion Evidence
 
 **Description:** Authorize source implementation only after the experiment can
 no longer be silently reshaped around observed results.
 
-- [ ] Closed comprehension and answer-key schemas validate
-- [ ] Twenty-four balanced semantic cases and forty-eight source documents exist
-- [ ] Every A-Lang/JSON pair has one equal normalized semantic digest
-- [ ] Exact model profiles, prompts, repetitions, call limits, and cost ceiling are frozen
-- [ ] Metrics, bootstrap method, safety vetoes, and outcomes are machine-readable
-- [ ] Negative contract and corpus mutants are detected
-- [ ] Pre-registration evidence reproduces byte-for-byte
-- [ ] No hosted model has been called before the pre-registration digest is frozen
+- [x] Closed comprehension and answer-key schemas validate
+- [x] Twenty-four balanced semantic cases and forty-eight source documents exist
+- [x] Every A-Lang/JSON pair has one equal normalized semantic digest
+- [x] Exact model profiles, prompts, repetitions, call limits, and cost ceiling are frozen
+- [x] Metrics, bootstrap method, safety vetoes, and outcomes are machine-readable
+- [x] Negative contract and corpus mutants are detected
+- [x] Pre-registration evidence reproduces byte-for-byte
+- [x] No hosted model has been called before the pre-registration digest is frozen

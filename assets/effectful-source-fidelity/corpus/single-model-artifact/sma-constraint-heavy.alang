@@ -1,0 +1,20 @@
+#!alang-source-v2
+// corpus-case: sma-constraint-heavy
+// semantic-sha256: d8f2fb57909c7d8e9718efa639ecc8c25d4e3c1bb0be5666784c9c3f5b889304
+// model-visible-begin
+task sma-constraint-heavy {
+  facts ["Create a migration guide from the supplied changes", "Use one H1 named Migration Guide", "Keep the artifact UTF-8 and under 3072 bytes", "Do not claim unsupported compatibility"];
+  input migration-changes: json required;
+  effects [model.generate, workspace.write];
+  requirements [model writer-model, workspace artifact-workspace];
+  scopes { models [writer-model]; workspaces [artifact-workspace]; paths ["/workspace/migration-guide.md"]; }
+  limits { steps 3; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 1; output-bytes 3072; timeout-ms 40000; }
+  step draft: model.generate depends [];
+  step publish: workspace.write depends [draft];
+  step finish: complete depends [publish];
+  on-error [];
+  child none;
+  complete [artifact-exists "/workspace/migration-guide.md": true, markdown-h1 "/workspace/migration-guide.md": "Migration Guide", utf8 "/workspace/migration-guide.md": true, max-bytes "/workspace/migration-guide.md": 3072];
+  clarify [];
+  terminal complete;
+}

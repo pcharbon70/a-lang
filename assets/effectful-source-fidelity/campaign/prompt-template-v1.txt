@@ -1,0 +1,7 @@
+Recover the exact task semantics from the specification between the boundary lines.
+
+Return only one JSON object that conforms to alang_task_comprehension_v1. Do not execute the task, call tools, add prose, or infer authority that is not explicitly declared. Preserve ordered actions and dependencies. Record any missing information in clarification_needs and select the declared terminal class.
+
+--- BEGIN TASK SPECIFICATION ---
+@@TASK_SPECIFICATION@@
+--- END TASK SPECIFICATION ---

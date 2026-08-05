@@ -1,0 +1,21 @@
+#!alang-source-v2
+// corpus-case: rap-error-branch
+// semantic-sha256: 7768f929b1429f0a167f5362b3b6043e7c645d04b58656d0b7032a875f633320
+// model-visible-begin
+task rap-error-branch {
+  facts ["Generate, repair, and publish a deployment note", "Fail closed if repair remains invalid or publication is denied"];
+  input deployment-facts: json required;
+  effects [model.generate, workspace.write];
+  requirements [model repair-model, workspace deployment-workspace];
+  scopes { models [repair-model]; workspaces [deployment-workspace]; paths ["/workspace/deployment-note.md"]; }
+  limits { steps 4; model-calls 2; repair-calls 1; child-calls 0; workspace-writes 1; output-bytes 2048; timeout-ms 35000; }
+  step draft: model.generate depends [];
+  step repair: model.repair depends [draft];
+  step publish: workspace.write depends [repair];
+  step finish: complete depends [publish];
+  on-error [repair invalid-output => failed, publish denied => failed];
+  child none;
+  complete [artifact-exists "/workspace/deployment-note.md": true, journal-succeeded "publish": true];
+  clarify [];
+  terminal complete;
+}

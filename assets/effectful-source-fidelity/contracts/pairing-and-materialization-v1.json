@@ -1,0 +1,40 @@
+{
+  "format": "alang-fidelity-pairing-v1",
+  "candidate_format": "alang-source-v2",
+  "control_format": "alang-task-json-v1",
+  "semantic_digest": "sha-256-canonical-etf-v1",
+  "normalization": {
+    "remove": [
+      "comments",
+      "json-key-order",
+      "opaque-trial-identifiers",
+      "presentation-order-for-sets",
+      "source-origins"
+    ],
+    "retain": [
+      "action-order",
+      "authority",
+      "budgets",
+      "child-attenuation",
+      "completion-semantics",
+      "dependencies",
+      "error-branches"
+    ]
+  },
+  "trial_materialization": {
+    "schedule_seed": 2026080501,
+    "assign_identifiers_after": "complete-corpus-validation",
+    "case_identifiers": "opaque",
+    "condition_identifiers": "opaque",
+    "presentation_order": "balanced-randomized-within-model-family-and-repetition",
+    "same_prompt_template": true,
+    "representation_visible_treatment": true,
+    "model_visible_exclusions": [
+      "answer-key",
+      "condition-label",
+      "filename",
+      "semantic-digest",
+      "source-format-label"
+    ]
+  }
+}

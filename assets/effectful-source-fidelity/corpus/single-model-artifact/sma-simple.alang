@@ -1,0 +1,20 @@
+#!alang-source-v2
+// corpus-case: sma-simple
+// semantic-sha256: 1901fc7f9ca639939733866c1c792a7c9c33de9c0b01769441ff06458a35b19d
+// model-visible-begin
+task sma-simple {
+  facts ["Create a concise release note from the supplied change summary", "Do not invent changes"];
+  input change-summary: text required;
+  effects [model.generate, workspace.write];
+  requirements [model writer-model, workspace artifact-workspace];
+  scopes { models [writer-model]; workspaces [artifact-workspace]; paths ["/workspace/release-note.md"]; }
+  limits { steps 3; model-calls 1; repair-calls 0; child-calls 0; workspace-writes 1; output-bytes 2048; timeout-ms 30000; }
+  step draft: model.generate depends [];
+  step publish: workspace.write depends [draft];
+  step finish: complete depends [publish];
+  on-error [];
+  child none;
+  complete [artifact-exists "/workspace/release-note.md": true, utf8 "/workspace/release-note.md": true, max-bytes "/workspace/release-note.md": 2048];
+  clarify [];
+  terminal complete;
+}
