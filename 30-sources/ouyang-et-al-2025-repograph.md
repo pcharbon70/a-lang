@@ -75,3 +75,6 @@ generated as a revision-specific sidecar.
 - [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
 - [Can typed source references improve LLM code understanding?](../40-inquiries/can-typed-source-references-improve-llm-code-understanding.md)
 - [Symbol-aware code context for LLM agents](../10-maps/symbol-aware-code-context-for-llm-agents.md)
+- [Semantic code graphs for LLM understanding](../20-notes/semantic-code-graphs-for-llm-understanding.md)
+- [Can semantic code graphs improve LLM understanding?](../40-inquiries/can-semantic-code-graphs-improve-llm-understanding.md)
+- [Semantic code graphs for LLM agents](../10-maps/semantic-code-graphs-for-llm-agents.md)
