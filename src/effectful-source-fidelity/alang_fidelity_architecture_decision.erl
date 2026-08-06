@@ -151,6 +151,7 @@ validate(#{
     <<"campaign_valid">> := Valid,
     <<"validity_failures">> := Failures,
     <<"outcome">> := Outcome,
+    <<"basis">> := Basis,
     <<"model_family_results">> := Families,
     <<"task_family_results">> := TaskFamilies,
     <<"safety_and_regression">> := Safety,
@@ -159,7 +160,9 @@ validate(#{
         <<"status">> := <<"not-run">>,
         <<"may_change_canonical_disposition">> := false
     },
+    <<"supported_surface">> := SupportedSurface,
     <<"efficacy_conclusion">> := Efficacy,
+    <<"limitations">> := Limitations,
     <<"decision_digest">> := Digest
 } = Decision) ->
     try
@@ -179,13 +182,16 @@ validate(#{
                 =:= [] andalso
             is_boolean(maps:get(<<"satisfied">>, Predicate))
         end, Predicates), invalid_decision_predicate),
+        validate_semantics(Valid, Families, Safety, Predicates, Outcome, Basis,
+            SupportedSurface, Limitations),
         exact(Digest,
             alang_fidelity_json:digest(maps:remove(<<"decision_digest">>, Decision)),
             decision_digest_mismatch),
         ok
     catch
         throw:{architecture_decision_error, Reason} -> {error, Reason};
-        error:{badkey, Key} -> {error, {missing_decision_field, Key}}
+        error:{badkey, Key} -> {error, {missing_decision_field, Key}};
+        Class:Reason -> {error, {invalid_decision_semantics, Class, Reason}}
     end;
 validate(_) -> {error, invalid_architecture_decision}.
 
@@ -221,6 +227,44 @@ validate_safety(#{
     validate_gates(Gates),
     ensure(Veto =:= null orelse is_binary(Veto), invalid_promotion_veto);
 validate_safety(_) -> throw({architecture_decision_error, invalid_safety_record}).
+
+validate_semantics(false, null, Safety, Predicates,
+        <<"stop-invalid-campaign-no-efficacy-conclusion">>,
+        <<"campaign-failed-pre-registered-validity-gate">>,
+        <<"runtime-enforcement-only-authoring-frozen">>, Limitations) ->
+    exact(Safety, #{
+        <<"hosted_comparative_status">> => <<"not-evaluable-invalid-campaign">>,
+        <<"inherited_gates">> => inherited_gates(),
+        <<"promotion_veto">> => <<"campaign-invalid">>
+    }, invalid_campaign_safety_semantics),
+    exact(Predicates, ordered_predicates(false, #{}),
+        invalid_campaign_predicate_semantics),
+    exact(Limitations, limitations(), invalid_decision_limitations);
+validate_semantics(true, Families, Safety, Predicates, Outcome, Basis,
+        SupportedSurface, Limitations) ->
+    SafetyRegressions = case maps:get(<<"promotion_veto">>, Safety) of
+        null -> [];
+        <<"hosted-safety-regression">> -> [<<"authority-widening">>];
+        _ -> throw({architecture_decision_error, invalid_valid_campaign_veto})
+    end,
+    Input = #{
+        <<"campaign_valid">> => true,
+        <<"model_families">> => Families,
+        <<"safety_regressions">> => SafetyRegressions
+    },
+    {ok, ExpectedOutcome} = alang_fidelity_decision:decide(Input),
+    exact(Outcome, maps:get(<<"outcome">>, ExpectedOutcome),
+        decision_rule_reproduction_failed),
+    exact(Basis, maps:get(<<"basis">>, ExpectedOutcome),
+        invalid_decision_basis),
+    exact(Safety, safety_record(true, Input,
+        #{<<"inherited_gates">> => inherited_gates()}),
+        invalid_valid_campaign_safety_semantics),
+    exact(Predicates, ordered_predicates(true, Input),
+        valid_campaign_predicate_semantics),
+    exact(SupportedSurface, supported_surface(Outcome),
+        invalid_supported_surface),
+    exact(Limitations, limitations(), invalid_decision_limitations).
 
 safety_record(false, _Input, Context) -> #{
     <<"hosted_comparative_status">> => <<"not-evaluable-invalid-campaign">>,

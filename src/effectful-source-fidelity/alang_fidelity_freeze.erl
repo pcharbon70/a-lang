@@ -9,6 +9,8 @@
 -define(PRIMARY_CELLS, 288).
 -define(ALL_CALL_CEILING, 576).
 -define(COST_CEILING_MICROUSD, 200000000).
+-define(SCHEDULE_DIGEST,
+    <<"bb4b1544a038acd1c845d6575f326b890064f414678dd3a0ce1e175e0bdc07f7">>).
 
 -spec main() -> no_return().
 main() ->
@@ -128,8 +130,10 @@ read(Path) ->
 -spec validate(term()) -> ok | {error, term()}.
 validate(#{
     <<"format">> := <<"alang-fidelity-campaign-freeze-v1">>,
+    <<"campaign_id">> := CampaignId,
     <<"campaign_status">> := <<"invalid">>,
     <<"campaign_valid">> := false,
+    <<"closure_reason">> := ClosureReason,
     <<"accounting">> := Accounting,
     <<"missing_cells">> := Missing,
     <<"attempts">> := [],
@@ -138,22 +142,55 @@ validate(#{
     <<"validity_predicates">> := Predicates,
     <<"failing_predicates">> := Failures,
     <<"analysis">> := Analysis,
+    <<"digests">> := Digests,
+    <<"decision_contract_digest">> := DecisionContractDigest,
+    <<"provider_profiles_digest">> := ProviderProfilesDigest,
+    <<"campaign_policy_digest">> := CampaignPolicyDigest,
     <<"freeze_digest">> := Digest
 } = Freeze) ->
     try
         exact(maps:size(Freeze), 19, invalid_freeze_field_count),
+        ScheduleDigest = maps:get(<<"schedule_digest">>, Freeze),
+        exact(ScheduleDigest, ?SCHEDULE_DIGEST,
+            invalid_frozen_schedule_digest),
+        {ok, Closure} = alang_fidelity_json:decode_file(?DEFAULT_CLOSURE),
+        ok = validate_closure(Closure),
+        exact(CampaignId, maps:get(<<"campaign_id">>, Closure),
+            invalid_frozen_campaign_id),
+        exact(ClosureReason, maps:get(<<"closure_reason">>, Closure),
+            invalid_frozen_closure_reason),
+        validate_accounting(Accounting),
         exact(length(Missing), ?PRIMARY_CELLS, invalid_missing_record_count),
+        exact([maps:get(<<"index">>, Cell) || Cell <- Missing],
+            lists:seq(0, ?PRIMARY_CELLS - 1), invalid_missing_cell_indices),
         exact(length(lists:usort([maps:get(<<"trial_id">>, Cell) || Cell <- Missing])),
             ?PRIMARY_CELLS, duplicate_missing_trial),
-        exact(maps:get(<<"hosted_calls">>, Accounting), 0, hosted_calls_not_zero),
-        exact(maps:get(<<"missing_primary_cells">>, Accounting), ?PRIMARY_CELLS,
-            invalid_missing_accounting),
+        lists:foreach(fun validate_missing_record/1, Missing),
+        {ok, Registration} = alang_fidelity_preregister:build(?DEFAULT_BASE),
+        {ok, Schedule} = alang_fidelity_campaign:materialize(?DEFAULT_BASE),
+        exact(maps:get(schedule_digest, Schedule), ScheduleDigest,
+            frozen_schedule_reproduction_failed),
+        exact(Missing, [missing_record(Cell, ClosureReason)
+            || Cell <- maps:get(cells, Schedule)], missing_cell_reproduction_failed),
+        Profiles = load_json(?DEFAULT_BASE,
+            ["campaign", "provider-profiles-v1.json"]),
+        Policy = load_json(?DEFAULT_BASE, ["campaign", "campaign-policy-v1.json"]),
+        DecisionContract = load_json(?DEFAULT_BASE,
+            ["contracts", "metrics-and-decision-v1.json"]),
+        exact(Digests, input_digests(?DEFAULT_BASE, Registration,
+            ScheduleDigest, Closure), invalid_frozen_input_digests),
+        exact(DecisionContractDigest, alang_fidelity_json:digest(DecisionContract),
+            invalid_frozen_decision_contract_digest),
+        exact(ProviderProfilesDigest, alang_fidelity_json:digest(Profiles),
+            invalid_frozen_provider_profiles_digest),
+        exact(CampaignPolicyDigest, alang_fidelity_json:digest(Policy),
+            invalid_frozen_campaign_policy_digest),
         exact(Failures,
             [<<"live_authorization">>, <<"reproducible_scores">>,
                 <<"three_scorable_primary_observations_per_cell">>],
             invalid_failing_predicates),
-        exact([Name || {Name, false} <- lists:sort(maps:to_list(Predicates))],
-            Failures, predicate_failure_mismatch),
+        exact(Predicates, expected_invalid_predicates(),
+            invalid_validity_predicates),
         exact(Analysis, suppressed_analysis(), invalid_analysis_suppression),
         exact(Digest,
             alang_fidelity_json:digest(maps:remove(<<"freeze_digest">>, Freeze)),
@@ -161,9 +198,71 @@ validate(#{
         ok
     catch
         throw:{freeze_error, Reason} -> {error, Reason};
-        error:{badkey, Key} -> {error, {missing_freeze_field, Key}}
+        error:{badkey, Key} -> {error, {missing_freeze_field, Key}};
+        Class:Reason -> {error, {invalid_campaign_freeze_semantics, Class, Reason}}
     end;
 validate(_) -> {error, invalid_campaign_freeze}.
+
+validate_accounting(Accounting) ->
+    exact(Accounting, #{
+        <<"scheduled_primary_cells">> => ?PRIMARY_CELLS,
+        <<"observed_primary_cells">> => 0,
+        <<"missing_primary_cells">> => ?PRIMARY_CELLS,
+        <<"attempts">> => 0,
+        <<"hosted_calls">> => 0,
+        <<"repairs">> => 0,
+        <<"replacements">> => 0,
+        <<"input_tokens">> => 0,
+        <<"output_tokens">> => 0,
+        <<"cost_microusd">> => 0,
+        <<"all_call_ceiling">> => ?ALL_CALL_CEILING,
+        <<"cost_ceiling_microusd">> => ?COST_CEILING_MICROUSD
+    }, invalid_closed_campaign_accounting).
+
+validate_missing_record(Record) ->
+    Keys = [<<"case_id">>, <<"condition">>, <<"failure_cause">>, <<"index">>,
+        <<"model_family">>, <<"model_id">>, <<"pair_id">>, <<"repetition">>,
+        <<"request_digest">>, <<"status">>, <<"task_family">>, <<"trial_id">>],
+    exact(lists:sort(maps:keys(Record)), Keys, invalid_missing_record_fields),
+    exact(maps:get(<<"status">>, Record), <<"missing">>, invalid_missing_status),
+    exact(maps:get(<<"failure_cause">>, Record),
+        <<"live-authorization-not-granted">>, invalid_missing_failure_cause),
+    Family = maps:get(<<"model_family">>, Record),
+    ensure(lists:member(Family, [<<"anthropic">>, <<"openai">>]),
+        invalid_missing_model_family),
+    ExpectedModel = case Family of
+        <<"anthropic">> -> <<"claude-sonnet-5">>;
+        <<"openai">> -> <<"gpt-5.6-terra">>
+    end,
+    exact(maps:get(<<"model_id">>, Record), ExpectedModel,
+        missing_model_substitution),
+    ensure(lists:member(maps:get(<<"condition">>, Record),
+        [<<"alang">>, <<"json">>]), invalid_missing_condition),
+    Repetition = maps:get(<<"repetition">>, Record),
+    ensure(is_integer(Repetition) andalso Repetition >= 1 andalso Repetition =< 3,
+        invalid_missing_repetition),
+    lists:foreach(fun(Key) ->
+        Value = maps:get(Key, Record),
+        ensure(is_binary(Value) andalso byte_size(Value) > 0,
+            {invalid_missing_identifier, Key})
+    end, [<<"case_id">>, <<"pair_id">>, <<"task_family">>, <<"trial_id">>]),
+    Digest = maps:get(<<"request_digest">>, Record),
+    ensure(is_binary(Digest) andalso byte_size(Digest) =:= 64,
+        invalid_missing_request_digest).
+
+expected_invalid_predicates() -> #{
+    <<"authorized_transitions">> => true,
+    <<"byte_stable_prompts">> => true,
+    <<"clean_redaction">> => true,
+    <<"complete_cost_accounting">> => true,
+    <<"exact_registered_models">> => true,
+    <<"live_authorization">> => false,
+    <<"matched_semantic_pairs">> => true,
+    <<"reproducible_scores">> => false,
+    <<"three_scorable_primary_observations_per_cell">> => false,
+    <<"within_call_ceiling">> => true,
+    <<"within_cost_ceiling">> => true
+}.
 
 validate_closure(Closure) when is_map(Closure) ->
     Keys = [
@@ -324,3 +423,6 @@ owned_path(Path) ->
 
 exact(Value, Value, _Reason) -> ok;
 exact(_Value, _Expected, Reason) -> throw({freeze_error, Reason}).
+
+ensure(true, _Reason) -> ok;
+ensure(false, Reason) -> throw({freeze_error, Reason}).

@@ -260,6 +260,20 @@ test path. Generated evidence belongs under the ignored
   the complete deterministic campaign in a clean ERTS process and writes its
   frozen corpus, journal, observations, scores, intervals, accounting,
   validity, provenance, and implementation digests as redacted evidence.
+- [`alang_fidelity_phase6_integration_tests.erl`](alang_fidelity_phase6_integration_tests.erl)
+  — replays the actual invalid campaign in clean ERTS processes, exercises
+  every ordered decision branch and inherited Phase 5 defect, rejects
+  corrupted evidence and aliases, validates archive handoff and secrets, and
+  reasserts BEAM residency.
+- [`alang_fidelity_phase6_mutation.erl`](alang_fidelity_phase6_mutation.erl) —
+  seeds missing-cell, schedule-record, model-alias, ceiling, digest, decision-
+  basis, invalid-promotion, efficacy-smuggling, safety-veto, predicate,
+  sensitivity, OTP-identity, artifact-identity, and residency defects while
+  recomputing outer digests so semantic validation must detect each mutant.
+- [`alang_fidelity_phase6_worker.erl`](alang_fidelity_phase6_worker.erl) —
+  rebuilds the campaign freeze, canonical decision, and human report in a
+  clean offline ERTS process and writes a safely decoded deterministic replay
+  bundle with content digests and module-residency evidence.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -327,6 +341,10 @@ test path. Generated evidence belongs under the ignored
   — records the adapter fault matrix, complete 288-cell fixture campaign,
   every-transition replay, seeded mutations, clean-ERTS reproduction, and the
   still-unmet authorization boundary for the actual hosted campaign.
+- [Phase 6 fidelity decision and handoff evidence](phase-06-integration-evidence.md)
+  — records the fully accounted invalid-campaign closure, ordered decision and
+  mutation gates, absent efficacy outputs, byte-identical clean-ERTS replay,
+  exact content identities, BEAM residency, and archive handoff.
 
 ## Maintaining this index
 

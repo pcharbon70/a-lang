@@ -45,9 +45,9 @@ The validity gate fails exactly three predicates:
 Consequently, the analysis contains no OpenAI, Anthropic, pooled, task-family,
 component, safety-difference, effect-size, bootstrap-interval, or sensitivity
 result. The deterministic decision digest is
-`966f58887b1a6bf4624265733be6ab803f5e55e344aa297b74071d067d660920`;
+`185756c9b9dcec2c63a5d03f14085fa39e957e6d242869eee778db81014bbb06`;
 its campaign-freeze digest is
-`690cbcfb6db631840d00584d15a68441c5a7c811ac2fe3746a7eefb8e880d369`.
+`c08454cf2887639d5012633472c36445cdc7467711686d865835d1a99f9a16a0`.
 
 ## Retained implementation
 
@@ -93,5 +93,6 @@ production scope.
 - [Phase 6 implementation plan](../../60-planning/02-effectful-source-fidelity/phase-06-fidelity-decision-and-roadmap-handoff.md)
 - [Effectful source fidelity roadmap](../../60-planning/02-effectful-source-fidelity/README.md)
 - [Phase 5 offline evidence](phase-05-offline-integration-evidence.md)
+- [Phase 6 decision and handoff evidence](phase-06-integration-evidence.md)
 - [Original Phase 8 architecture decision](../phase-08/proof-of-concept-architecture-decision.md)
 - [LLM agent task-language map](../../10-maps/llm-agent-task-languages.md)

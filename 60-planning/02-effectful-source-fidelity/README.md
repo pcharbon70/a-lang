@@ -255,10 +255,13 @@ their explicit absence enforced by an invalid-campaign closure:
       gates remain green — see the [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md)
 - [x] Exactly 288 primary hosted trials, or an explicitly recorded invalid
       campaign, are accounted for under the call and cost ceilings
-- [ ] Offline replay reproduces normalized trials, scores, bootstrap intervals,
-      and the final decision byte-for-byte
-- [ ] OpenAI and Anthropic results are reported separately as well as pooled
-- [ ] No credentials, raw HTTP envelopes, hidden reasoning, or secret-bearing
+- [x] Offline replay reproduces the retained closure, expanded missing-cell
+      ledger, validity result, enforced absence of scores and intervals, and
+      final decision byte-for-byte — see the [Phase 6 evidence](../../src/effectful-source-fidelity/phase-06-integration-evidence.md)
+- [x] A valid campaign requires separate OpenAI and Anthropic results; the
+      retained invalid campaign explicitly contains no per-model or pooled
+      efficacy result
+- [x] No credentials, raw HTTP envelopes, hidden reasoning, or secret-bearing
       diagnostics appear in retained artifacts
 - [x] The promote, replace, or stop rule is applied without post-hoc threshold
       changes
@@ -295,9 +298,10 @@ their explicit absence enforced by an invalid-campaign closure:
   retained closure accounts every cell as missing and no hosted retry is
   authorized in this stream.
 - [Phase 6 — Fidelity decision and roadmap handoff](phase-06-fidelity-decision-and-roadmap-handoff.md)
-  — **in progress through Section 6.3**; applies the invalid-campaign branch,
-  freezes both authoring paths, retains bounded BEAM enforcement, and
-  reconciles the archive without implying efficacy or production readiness.
+  — **complete through the invalid-campaign stop**; applies the frozen rule,
+  freezes both authoring paths, retains bounded BEAM enforcement, reconciles
+  the archive, and records reproducible [Phase 6 evidence](../../src/effectful-source-fidelity/phase-06-integration-evidence.md)
+  without implying efficacy or production readiness.
 
 ## Maintaining this index
 

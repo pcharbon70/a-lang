@@ -20,9 +20,9 @@ changes, and reconcile the implementation and research archive with the
 result. This phase decides the next disposition of the user-facing notation;
 it does not convert a prototype into production approval.
 
-**Status:** In progress; Sections 6.1–6.3 are implemented against the
-explicitly closed invalid campaign. No hosted observation or efficacy
-comparison exists.
+**Status:** Complete through the pre-registered invalid-campaign stop. No
+hosted observation or efficacy comparison exists; the completed integration
+gate reproduces that absence and the conservative disposition.
 
 **Dependencies:** Phase 5 either complete with a valid, fully accounted hosted
 campaign and byte-reproducible offline analysis or closed through an explicitly
@@ -226,7 +226,7 @@ approval.
 checkout, test every decision branch and evidence failure, and verify that the
 archive handoff is internally consistent and free of secrets.
 
-- [ ] **Section 6.4 Complete**
+- [x] **Section 6.4 Complete**
 
 ### Task 6.4.1: Run Decision, Mutation, and Clean-Replay Suites
 
@@ -235,7 +235,7 @@ invalid campaign, safety veto, model-family disagreement, threshold boundary,
 digest mismatch, missing cell, and corrupted evidence, then replay the actual
 campaign without network access.
 
-- [ ] **Task 6.4.1 Complete**
+- [x] **Task 6.4.1 Complete**
 
 #### Subtask 6.4.1.1: Detect Seeded Decision and Evidence Defects
 
@@ -245,16 +245,17 @@ changes the bootstrap seed, ignores a safety veto, accepts a model alias,
 drops or replaces an unfavorable definitive response, exceeds a ceiling, or
 promotes an invalid campaign.
 
-- [ ] **Subtask 6.4.1.1 Complete**
+- [x] **Subtask 6.4.1.1 Complete**
 
 #### Subtask 6.4.1.2: Reproduce the Canonical Decision Byte-for-Byte
 
 **Description:** Starting only from committed redacted evidence, rebuild the
-BEAM analysis modules, validate all digests, regenerate metrics and intervals,
-and require the machine decision, human report tables, validity result, and
-content digests to match the release evidence exactly.
+BEAM analysis modules and validate all digests. Regenerate metrics and
+intervals when a valid campaign supplies them; for an invalid campaign,
+reproduce their enforced absence. Require the machine decision, human report,
+validity result, and content digests to match the release evidence exactly.
 
-- [ ] **Subtask 6.4.1.2 Complete**
+- [x] **Subtask 6.4.1.2 Complete**
 
 ### Task 6.4.2: Validate the Roadmap and Archive Handoff
 
@@ -262,7 +263,7 @@ content digests to match the release evidence exactly.
 runtime residency and evidence retention, and prove that every changed
 document, index, and local link agrees with the final disposition.
 
-- [ ] **Task 6.4.2 Complete**
+- [x] **Task 6.4.2 Complete**
 
 #### Subtask 6.4.2.1: Reassert End-to-End Technical Gates
 
@@ -272,7 +273,7 @@ trusted modules load from `.beam`, default tests remain offline, and no
 interpreter, foreign compiler, provider SDK, or raw transport artifact enters
 the acceptance path.
 
-- [ ] **Subtask 6.4.2.1 Complete**
+- [x] **Subtask 6.4.2.1 Complete**
 
 #### Subtask 6.4.2.2: Validate Metadata, Links, Indexes, and Secret Absence
 
@@ -281,7 +282,7 @@ check every directory README inventory, scan retained evidence and Git history
 introduced by this stream for credentials and headers, and publish an evidence
 index mapping every roadmap gate to a reproducible command or artifact.
 
-- [ ] **Subtask 6.4.2.2 Complete**
+- [x] **Subtask 6.4.2.2 Complete**
 
 ## Phase 6 Completion Evidence
 
@@ -289,15 +290,18 @@ index mapping every roadmap gate to a reproducible command or artifact.
 is reproducible, conservatively scoped, and reflected consistently throughout
 the code and archive.
 
-- [ ] Campaign validity is machine-evaluated from a complete attempt and evidence ledger
-- [ ] Frozen inputs, provider profiles, records, analysis code, and outputs have verified digests
-- [ ] OpenAI and Anthropic decision inputs and intervals are reported separately
-- [ ] Safety and inherited regression vetoes are evaluated before promotion
-- [ ] One deterministic promote, replace, or stop record follows the pre-registered ordered rule
-- [ ] An invalid campaign cannot produce an efficacy comparison or promotion
-- [ ] The human report explains every decision predicate and labels descriptive sensitivity analysis
-- [ ] Implementation status, risks, deferred work, inquiries, maps, and indexes reflect the outcome
-- [ ] No result claims production readiness, general model/task validity, or human-usability benefit
-- [ ] Clean offline replay reproduces the actual validity, metrics, intervals, and decision byte-for-byte
-- [ ] All inherited and stream-specific technical, archive, and secret-retention gates pass
-- [ ] Any later work is left to an explicitly authorized, newly numbered planning stream
+- [x] Campaign validity is machine-evaluated from the complete no-run closure and 288-cell missing-evidence ledger
+- [x] Frozen inputs, provider profiles, closure records, analysis code, and outputs have verified digests
+- [x] A valid campaign requires separate OpenAI and Anthropic inputs and intervals; the invalid record explicitly contains neither
+- [x] Safety and inherited regression vetoes are evaluated before promotion
+- [x] One deterministic stop record follows the pre-registered ordered rule
+- [x] An invalid campaign cannot produce an efficacy comparison or promotion
+- [x] The human report explains every decision predicate and records sensitivity analysis as not run
+- [x] Implementation status, risks, deferred work, inquiries, maps, and indexes reflect the outcome
+- [x] No result claims production readiness, general model/task validity, or human-usability benefit
+- [x] Clean offline replay reproduces validity, enforced metric and interval absence, and the decision byte-for-byte
+- [x] All inherited and stream-specific technical, archive, and secret-retention gates pass
+- [x] Any later work is left to an explicitly authorized, newly numbered planning stream
+
+The reproducible results and content identities are recorded in the
+[Phase 6 integration evidence](../../src/effectful-source-fidelity/phase-06-integration-evidence.md).
