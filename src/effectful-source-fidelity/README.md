@@ -63,6 +63,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
   ordered effect and repair steps, explicit error results, attenuated child
   declarations, completion predicates, clarification, and terminal classes.
+- [`alang_fidelity_bootstrap.erl`](alang_fidelity_bootstrap.erl) — performs the
+  registered 10,000 paired resamples with seed `20260805`, samples eight cases
+  inside each task family, retains all paired repetitions, and emits exact
+  nearest-rank percentile intervals separately for each model family.
 - [`alang_fidelity_campaign.erl`](alang_fidelity_campaign.erl) — materializes
   the frozen 288-cell paired campaign, uses seed `2026080501` to balance
   conditions and task families within each model, assigns opaque identities,
@@ -121,6 +125,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_decision_tests.erl`](alang_fidelity_decision_tests.erl) —
   covers promotion, JSON replacement, stop, invalid-campaign, interval, and
   safety-veto outcomes.
+- [`alang_fidelity_evidence.erl`](alang_fidelity_evidence.erl) — joins frozen
+  corpus bytes, answer keys, prompts, schedule, normalized observations,
+  scores, statistics, provenance, and BEAM implementation digests into a
+  bounded redacted ETF bundle with safe replay and owned-path writes.
 - [`alang_fidelity_frontend_tests.erl`](alang_fidelity_frontend_tests.erl) —
   checks the versioned source lexer, closed task declarations, input bounds,
   stable origins, rejection diagnostics, and unchanged v1 delegation.
@@ -142,7 +150,8 @@ test path. Generated evidence belongs under the ignored
   inferred manifests to deterministic `alang_typed_task_ir_v2`, keeps source
   maps separate, and safely validates and round-trips its ETF envelope.
 - [`alang_fidelity_json.erl`](alang_fidelity_json.erl) — provides bounded,
-  duplicate-aware OTP JSON decoding and deterministic SHA-256 term digests.
+  duplicate-aware OTP JSON decoding, sorted-key canonical JSON encoding, and
+  deterministic SHA-256 term digests.
 - [`alang_fidelity_json_pointer.erl`](alang_fidelity_json_pointer.erl) — scans
   bounded JSON structure without atom creation to retain member order,
   duplicate evidence, JSON Pointers, and original byte offsets.
@@ -164,6 +173,10 @@ test path. Generated evidence belongs under the ignored
   compares all 24 paired executions, exercises matched failure, incomplete,
   cancellation, and uncertain outcomes, detects v2-specific mutants, and
   reasserts the inherited BEAM-resident implementation boundary.
+- [`alang_fidelity_observation.erl`](alang_fidelity_observation.erl) — reduces
+  provider results to a closed classification, canonicalizes valid semantic
+  records, preserves definitive primary failures, and attaches at most one
+  syntax-or-schema repair as a separate secondary observation.
 - [`alang_fidelity_openai_adapter.erl`](alang_fidelity_openai_adapter.erl) —
   renders the fixed text-only Responses API request, keeps the API key inside
   the adapter boundary, rejects model substitution, and normalizes only
@@ -227,6 +240,14 @@ test path. Generated evidence belongs under the ignored
   direct, repair, delegation, and clarification programs through generated
   BEAM and rejects binding widening, supplied limits, out-of-order ABI calls,
   and model-authored completion or authority claims.
+- [`alang_fidelity_score.erl`](alang_fidelity_score.erl) — compares primary
+  observations with representation-neutral answer keys and aggregates exact,
+  component, omission, invention, safety, repair, token, latency, and cost
+  results across every registered campaign dimension.
+- [`alang_fidelity_scoring_tests.erl`](alang_fidelity_scoring_tests.erl) —
+  proves the closed observation taxonomy, repair separation, exact and safety
+  scoring, dimensional aggregation, deterministic bootstrap, and secret-free
+  evidence replay.
 - [`alang_fidelity_semantics.erl`](alang_fidelity_semantics.erl) — resolves both
   semantic-input envelopes through one checker, assigns stable task and binding
   identities, proves the action graph, types closed operations, and validates

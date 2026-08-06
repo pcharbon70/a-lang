@@ -1,6 +1,6 @@
 -module(alang_fidelity_json).
 
--export([decode/1, decode_file/1, digest/1, hex/1]).
+-export([decode/1, decode_file/1, digest/1, encode_canonical/1, hex/1]).
 
 -define(MAX_DOCUMENT_BYTES, 1048576).
 -define(MAX_DEPTH, 32).
@@ -46,6 +46,19 @@ decode_file(Path) ->
 -spec digest(term()) -> binary().
 digest(Term) ->
     hex(crypto:hash(sha256, term_to_binary(Term, [deterministic]))).
+
+-spec encode_canonical(term()) -> {ok, binary()} | {error, term()}.
+encode_canonical(Value) ->
+    case bounded(Value, 0) of
+        ok ->
+            try iolist_to_binary(canonical(Value)) of
+                Binary -> {ok, Binary}
+            catch
+                throw:{canonical_json_error, Reason} -> {error, Reason};
+                Class:Reason -> {error, {json_encode_failed, Class, Reason}}
+            end;
+        {error, _} = Error -> Error
+    end.
 
 -spec hex(binary()) -> binary().
 hex(Binary) ->
@@ -114,3 +127,27 @@ trim_ascii(Binary) ->
 
 hex_digit(Value) when Value < 10 -> $0 + Value;
 hex_digit(Value) -> $a + Value - 10.
+
+canonical(Value) when is_map(Value) ->
+    Pairs = lists:sort(maps:to_list(Value)),
+    [${, join([
+        begin
+            ensure_binary_key(Key),
+            [json:encode(Key), $:, canonical(Item)]
+        end
+        || {Key, Item} <- Pairs
+    ], $,), $}];
+canonical(Value) when is_list(Value) ->
+    [$[, join([canonical(Item) || Item <- Value], $,), $]];
+canonical(Value) when is_binary(Value) -> json:encode(Value);
+canonical(Value) when is_integer(Value); is_float(Value);
+                           is_boolean(Value); Value =:= null ->
+    json:encode(Value);
+canonical(Value) -> throw({canonical_json_error, {unsupported_json_value, Value}}).
+
+join([], _Separator) -> [];
+join([Only], _Separator) -> Only;
+join([Head | Rest], Separator) -> [Head, Separator, join(Rest, Separator)].
+
+ensure_binary_key(Key) when is_binary(Key) -> ok;
+ensure_binary_key(Key) -> throw({canonical_json_error, {invalid_json_key, Key}}).

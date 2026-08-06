@@ -20,7 +20,7 @@ BEAM sidecars, then retain enough redacted evidence for deterministic offline
 scoring and replay. Hosted variability may affect observations, but it may not
 change the corpus, prompts, answer keys, metrics, thresholds, or runtime path.
 
-**Status:** In progress; Sections 5.1–5.2 are implemented and reproducible
+**Status:** In progress; Sections 5.1–5.3 are implemented and reproducible
 offline. The hosted campaign remains separately gated and has not been
 authorized.
 
@@ -161,7 +161,7 @@ attempt toward 576 calls and USD 200.
 neutral comprehension records, exact scores, uncertainty intervals, and a
 repository-safe evidence bundle without an LLM judge or post-hoc exclusions.
 
-- [ ] **Section 5.3 Complete**
+- [x] **Section 5.3 Complete**
 
 ### Task 5.3.1: Normalize Responses Without Hiding First-Attempt Failure
 
@@ -171,7 +171,7 @@ classify every response or provider failure through a closed outcome taxonomy.
 A definitive non-record response remains a zero-fidelity primary observation
 and can never be converted into missing data.
 
-- [ ] **Task 5.3.1 Complete**
+- [x] **Task 5.3.1 Complete**
 
 #### Subtask 5.3.1.1: Apply the Registered Single-Repair Boundary
 
@@ -180,7 +180,7 @@ request to the same exact model profile after a definitive syntax-or-schema
 failure, derive a new operation identity, forbid semantic coaching, and report
 repaired fidelity separately rather than replacing the primary score.
 
-- [ ] **Subtask 5.3.1.1 Complete**
+- [x] **Subtask 5.3.1.1 Complete**
 
 #### Subtask 5.3.1.2: Canonicalize and Classify Every Observation
 
@@ -189,7 +189,7 @@ records and closed classifications for refusal, truncation, schema failure,
 transport failure, uncertain submission, repair failure, and missing cell;
 never infer absent fields or hand-correct a response.
 
-- [ ] **Subtask 5.3.1.2 Complete**
+- [x] **Subtask 5.3.1.2 Complete**
 
 ### Task 5.3.2: Score the Frozen Metrics and Build Replayable Evidence
 
@@ -197,7 +197,7 @@ never infer absent fields or hand-correct a response.
 keys, compute the pre-registered per-model statistics, and retain only bounded
 redacted material needed to reproduce those results.
 
-- [ ] **Task 5.3.2 Complete**
+- [x] **Task 5.3.2 Complete**
 
 #### Subtask 5.3.2.1: Compute Exact, Component, Safety, and Cost Results
 
@@ -206,7 +206,7 @@ omission, invention, authority-widening, false-completion, validity, repair,
 token, latency, and cost metric by model, condition, family, case, and
 repetition; pooled results remain descriptive only.
 
-- [ ] **Subtask 5.3.2.1 Complete**
+- [x] **Subtask 5.3.2.1 Complete**
 
 #### Subtask 5.3.2.2: Compute Paired Intervals and Emit Redacted Records
 
@@ -218,7 +218,7 @@ schedules, normalized responses, scores, bounded usage metadata, provenance,
 and digests while excluding keys, authorization headers, raw HTTP envelopes,
 hidden reasoning, and unrelated provider identifiers.
 
-- [ ] **Subtask 5.3.2.2 Complete**
+- [x] **Subtask 5.3.2.2 Complete**
 
 ## Section 5.4: Phase 5 Integration Tests
 
