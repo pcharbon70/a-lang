@@ -57,6 +57,10 @@ test path. Generated evidence belongs under the ignored
   — renders the fixed Claude Messages request, keeps the API key inside the
   adapter boundary, rejects model substitution, and maps bounded provider
   envelopes into the shared result algebra without retaining raw responses.
+- [`alang_fidelity_adapter_fault_tests.erl`](alang_fidelity_adapter_fault_tests.erl)
+  — drives both provider adapters through scripted HTTPS outcomes covering
+  identity, TLS, redirect, timeout, response, crash, secret, call, cost, and
+  projection failures without credentials or network access.
 - [`alang_fidelity_authority.erl`](alang_fidelity_authority.erl) — infers exact
   registered effects, least static resource requirements, child attenuation,
   and finite direct-plus-delegated usage bounds without embedding grants.
@@ -127,8 +131,9 @@ test path. Generated evidence belongs under the ignored
   safety-veto outcomes.
 - [`alang_fidelity_evidence.erl`](alang_fidelity_evidence.erl) — joins frozen
   corpus bytes, answer keys, prompts, schedule, normalized observations,
-  scores, statistics, provenance, and BEAM implementation digests into a
-  bounded redacted ETF bundle with safe replay and owned-path writes.
+  scores, statistics, campaign journal, provenance, and BEAM implementation
+  digests into a bounded redacted ETF bundle with safe replay and owned-path
+  writes.
 - [`alang_fidelity_frontend_tests.erl`](alang_fidelity_frontend_tests.erl) —
   checks the versioned source lexer, closed task declarations, input bounds,
   stable origins, rejection diagnostics, and unchanged v1 delegation.
@@ -139,6 +144,10 @@ test path. Generated evidence belongs under the ignored
   OTP HTTPS transport with peer and hostname verification, disabled redirects,
   campaign deadlines, bounded response envelopes, and conservative submission
   certainty for errors.
+- [`alang_fidelity_https_fixture.erl`](alang_fidelity_https_fixture.erl) —
+  validates production-shaped adapter requests at the local HTTPS fixture seam
+  and supplies bounded provider envelopes, transport failures, or contained
+  secret-bearing crashes to the offline fault suite.
 - [`alang_fidelity_forms_v2.erl`](alang_fidelity_forms_v2.erl) — owns the
   deterministic metadata envelope and recursively validates the small
   Abstract Format subset and four fixed runtime ABI calls accepted for
@@ -169,6 +178,11 @@ test path. Generated evidence belongs under the ignored
   executes every A-Lang/typed-JSON pair independently with deterministic model
   fixtures, normalizes runtime observations, and checks trusted counter
   accounting before producing the offline matrix.
+- [`alang_fidelity_offline_campaign.erl`](alang_fidelity_offline_campaign.erl)
+  — executes the complete 288-cell hosted-evaluation schedule with
+  deterministic exact, malformed, schema, refusal, truncation, retry,
+  replacement, and semantic-miss outcomes and independently revalidates every
+  score, interval, journal transition, and accounting total.
 - [`alang_fidelity_offline_tests.erl`](alang_fidelity_offline_tests.erl) —
   compares all 24 paired executions, exercises matched failure, incomplete,
   cancellation, and uncertain outcomes, detects v2-specific mutants, and
@@ -213,6 +227,18 @@ test path. Generated evidence belongs under the ignored
   recompiles and executes one pair per family in a fresh ERTS process and
   writes safely decodable deterministic evidence containing actual BEAM,
   metadata, trace, artifact, and completion-witness bytes.
+- [`alang_fidelity_phase5_integration_tests.erl`](alang_fidelity_phase5_integration_tests.erl)
+  — runs and replays all 288 offline cells, resumes copies of every journal
+  prefix, detects seeded defects, checks clean-process evidence bytes and
+  redaction, and reasserts the BEAM-only offline path.
+- [`alang_fidelity_phase5_mutation.erl`](alang_fidelity_phase5_mutation.erl) —
+  seeds primary/repair conflation, omission, condition, accounting, bootstrap,
+  and journal defects while recomputing outer digests so independent replay
+  must detect the semantic change.
+- [`alang_fidelity_phase5_worker.erl`](alang_fidelity_phase5_worker.erl) — runs
+  the complete deterministic campaign in a clean ERTS process and writes its
+  frozen corpus, journal, observations, scores, intervals, accounting,
+  validity, provenance, and implementation digests as redacted evidence.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -272,6 +298,10 @@ test path. Generated evidence belongs under the ignored
   — records all 48 inspected executions, paired positive and negative
   observations, inherited gates, v2 mutants, compiler residency, and
   byte-identical clean-process reproduction.
+- [Phase 5 offline hosted-evaluation evidence](phase-05-offline-integration-evidence.md)
+  — records the adapter fault matrix, complete 288-cell fixture campaign,
+  every-transition replay, seeded mutations, clean-ERTS reproduction, and the
+  still-unmet authorization boundary for the actual hosted campaign.
 
 ## Maintaining this index
 

@@ -12,6 +12,8 @@ build(Base, Schedule, Observations, Scores, Statistics, Options)
         validate_options(Options),
         {ok, Registration} = checked_registration(Base),
         {ok, _} = checked_schedule(Schedule),
+        CampaignJournal = maps:get(campaign_journal, Options, none),
+        validate_campaign_journal(CampaignJournal, maps:get(schedule_digest, Schedule)),
         Cells = maps:get(cells, Schedule),
         validate_records(Cells, Observations, Scores),
         Corpus = load_corpus_snapshot(Base),
@@ -36,6 +38,7 @@ build(Base, Schedule, Observations, Scores, Statistics, Options)
             observations => OrderedObservations,
             scores => OrderedScores,
             statistics => Statistics,
+            campaign_journal => CampaignJournal,
             missing_trial_ids => Missing,
             completeness => #{
                 scheduled => length(Cells),
@@ -45,9 +48,16 @@ build(Base, Schedule, Observations, Scores, Statistics, Options)
             },
             provenance => Provenance,
             implementation_digests => #{
+                anthropic_adapter_beam_sha256 => module_digest(alang_fidelity_anthropic_adapter),
                 observation_beam_sha256 => module_digest(alang_fidelity_observation),
                 scorer_beam_sha256 => module_digest(alang_fidelity_score),
-                bootstrap_beam_sha256 => module_digest(alang_fidelity_bootstrap)
+                bootstrap_beam_sha256 => module_digest(alang_fidelity_bootstrap),
+                campaign_beam_sha256 => module_digest(alang_fidelity_campaign),
+                campaign_journal_beam_sha256 => module_digest(alang_fidelity_campaign_journal),
+                campaign_runner_beam_sha256 => module_digest(alang_fidelity_campaign_runner),
+                evidence_beam_sha256 => module_digest(alang_fidelity_evidence),
+                offline_campaign_beam_sha256 => module_digest(alang_fidelity_offline_campaign),
+                openai_adapter_beam_sha256 => module_digest(alang_fidelity_openai_adapter)
             }
         },
         validate_safe(Evidence0, maps:get(secrets, Options, [])),
@@ -94,6 +104,7 @@ read(Path) ->
         SafePath = safe_evidence_path(Path),
         case file:read_file(SafePath) of
             {ok, Binary} when byte_size(Binary) =< ?MAX_EVIDENCE_BYTES ->
+                ensure_reader_modules(),
                 try binary_to_term(Binary, [safe]) of
                     Evidence when is_map(Evidence) ->
                         ensure(term_to_binary(Evidence, [deterministic]) =:= Binary,
@@ -124,7 +135,7 @@ checked_schedule(Schedule) ->
     end.
 
 validate_options(Options) ->
-    Allowed = [campaign_status, provenance, secrets],
+    Allowed = [campaign_journal, campaign_status, provenance, secrets],
     ensure(lists:sort(maps:keys(Options)) -- Allowed =:= [], invalid_evidence_options),
     Status = maps:get(campaign_status, Options, partial),
     ensure(lists:member(Status, [offline_fixture, live_complete, partial, invalid]),
@@ -132,6 +143,18 @@ validate_options(Options) ->
     Secrets = maps:get(secrets, Options, []),
     ensure(is_list(Secrets) andalso lists:all(fun is_binary/1, Secrets), invalid_secret_list),
     validate_provenance(maps:get(provenance, Options, #{})).
+
+validate_campaign_journal(none, _ScheduleDigest) -> ok;
+validate_campaign_journal(Journal, ScheduleDigest) when is_map(Journal) ->
+    ensure(maps:get(campaign_digest, Journal, invalid) =:= ScheduleDigest,
+        campaign_journal_digest_mismatch),
+    case alang_fidelity_campaign_journal:validate(maps:get(records, Journal, []), ScheduleDigest) of
+        {ok, Validated} ->
+            ensure(Validated =:= Journal, campaign_journal_state_mismatch);
+        {error, Reason} -> throw({evidence_error, {invalid_campaign_journal, Reason}})
+    end;
+validate_campaign_journal(_, _ScheduleDigest) ->
+    throw({evidence_error, invalid_campaign_journal}).
 
 validate_provenance(Provenance) when is_map(Provenance) ->
     Allowed = [campaign_mode, otp_release, price_record_digest, provider_profiles_verified],
@@ -231,6 +254,27 @@ module_digest(Module) ->
             end;
         {error, Reason} -> throw({evidence_error, {missing_beam_module, Module, Reason}})
     end.
+
+ensure_reader_modules() ->
+    Modules = [
+        alang_fidelity_anthropic_adapter,
+        alang_fidelity_bootstrap,
+        alang_fidelity_campaign,
+        alang_fidelity_campaign_journal,
+        alang_fidelity_campaign_runner,
+        alang_fidelity_observation,
+        alang_fidelity_offline_campaign,
+        alang_fidelity_openai_adapter,
+        alang_fidelity_phase5_worker,
+        alang_fidelity_score
+    ],
+    lists:foreach(fun(Module) ->
+        case code:ensure_loaded(Module) of
+            {module, Module} -> ok;
+            {error, Reason} -> throw({evidence_error,
+                {missing_evidence_schema_module, Module, Reason}})
+        end
+    end, Modules).
 
 validate_safe(Value, Secrets) when is_map(Value) ->
     lists:foreach(fun({Key, Item}) ->

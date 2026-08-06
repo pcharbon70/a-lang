@@ -20,9 +20,9 @@ BEAM sidecars, then retain enough redacted evidence for deterministic offline
 scoring and replay. Hosted variability may affect observations, but it may not
 change the corpus, prompts, answer keys, metrics, thresholds, or runtime path.
 
-**Status:** In progress; Sections 5.1–5.3 are implemented and reproducible
-offline. The hosted campaign remains separately gated and has not been
-authorized.
+**Status:** In progress; Sections 5.1–5.3 and Task 5.4.1 are implemented and
+reproducible offline. Task 5.4.2, Section 5.4, and Phase 5 remain incomplete
+because the separately gated hosted campaign has not been authorized.
 
 **Dependencies:** Phase 4 complete with all 48 representation files compiling
 to inspected BEAM and producing matched offline observations. Phase 1's frozen
@@ -235,7 +235,7 @@ and run the complete 288-cell schedule with deterministic responses and faults
 so all state transitions and scoring can be tested without credentials or
 network access.
 
-- [ ] **Task 5.4.1 Complete**
+- [x] **Task 5.4.1 Complete**
 
 #### Subtask 5.4.1.1: Detect Transport, Identity, Secret, and Bound Failures
 
@@ -245,7 +245,7 @@ bodies, rate limits, partial usage, budget exhaustion, secret-bearing errors,
 and sidecar crashes; require fail-closed classifications and zero secret
 retention.
 
-- [ ] **Subtask 5.4.1.1 Complete**
+- [x] **Subtask 5.4.1.1 Complete**
 
 #### Subtask 5.4.1.2: Prove Resume, Retry, Repair, and Scoring Determinism
 
@@ -254,7 +254,7 @@ copies, reject duplicate or selective trials, detect seeded scorer defects,
 and require byte-identical normalized records, scores, intervals, accounting,
 and decisions across clean ERTS processes.
 
-- [ ] **Subtask 5.4.1.2 Complete**
+- [x] **Subtask 5.4.1.2 Complete**
 
 ### Task 5.4.2: Run and Replay the Authorized Hosted Campaign
 
@@ -290,14 +290,14 @@ validity result byte-for-byte.
 hosted experiment is complete and replayable, or when its invalidity is fully
 accounted for without manufacturing a comparative conclusion.
 
-- [ ] Both fixed provider adapters are BEAM modules using OTP HTTPS and the shared sidecar protocol
-- [ ] Default builds and tests make no hosted request and require no credential
-- [ ] Preflight rejects aliases, substitutions, unavailable profiles, and ceiling violations
-- [ ] The frozen schedule contains exactly 288 primary cells with a reproducible digest
+- [x] Both fixed provider adapters are BEAM modules using OTP HTTPS and the shared sidecar protocol
+- [x] Default builds and tests make no hosted request and require no credential
+- [x] Preflight rejects aliases, substitutions, unavailable profiles, and ceiling violations
+- [x] The frozen schedule contains exactly 288 primary cells with a reproducible digest
 - [ ] Every call, retry, repair, uncertain effect, replacement, token, and cost is durably accounted for
-- [ ] No selective rerun, silent exclusion, or post-response corpus change is possible
-- [ ] Exact and component metrics preserve first-attempt and repaired results separately
-- [ ] Per-model paired bootstrap intervals reproduce with 10,000 resamples and seed `20260805`
-- [ ] Redacted evidence contains no credential, header, raw envelope, hidden reasoning, or unrelated identifier
+- [x] No selective rerun, silent exclusion, or post-response corpus change is possible
+- [x] Exact and component metrics preserve first-attempt and repaired results separately
+- [x] Per-model paired bootstrap intervals reproduce with 10,000 resamples and seed `20260805`
+- [x] Redacted evidence contains no credential, header, raw envelope, hidden reasoning, or unrelated identifier
 - [ ] Offline replay reproduces all scores and campaign-validity evidence byte-for-byte
 - [ ] The campaign has all required scorable cells or is explicitly marked invalid

@@ -23,7 +23,14 @@ request(Method, Url, Headers, Body, DeadlineMs, Options)
     case maps:get(transport, Options, otp_https) of
         otp_https -> otp_request(Method, Url, Headers, Body, DeadlineMs, Started);
         Transport when is_function(Transport, 5) ->
-            normalize_fixture_result(Transport(Method, Url, Headers, Body, DeadlineMs), Started)
+            fixture_request(Transport, Method, Url, Headers, Body, DeadlineMs, Started)
+    end.
+
+fixture_request(Transport, Method, Url, Headers, Body, DeadlineMs, Started) ->
+    try Transport(Method, Url, Headers, Body, DeadlineMs) of
+        Result -> normalize_fixture_result(Result, Started)
+    catch
+        _Class:_Reason -> {error, sidecar_crash, uncertain, elapsed(Started)}
     end.
 
 otp_request(Method, Url, Headers, Body, DeadlineMs, Started) ->
