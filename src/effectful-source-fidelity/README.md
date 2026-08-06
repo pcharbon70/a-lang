@@ -53,6 +53,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_ast_tests.erl`](alang_fidelity_ast_tests.erl) — exercises
   exact-shape, origin, path, canonical ETF, legacy compatibility, atom-growth,
   and malformed-input rejection gates.
+- [`alang_fidelity_anthropic_adapter.erl`](alang_fidelity_anthropic_adapter.erl)
+  — renders the fixed Claude Messages request, keeps the API key inside the
+  adapter boundary, rejects model substitution, and maps bounded provider
+  envelopes into the shared result algebra without retaining raw responses.
 - [`alang_fidelity_authority.erl`](alang_fidelity_authority.erl) — infers exact
   registered effects, least static resource requirements, child attenuation,
   and finite direct-plus-delegated usage bounds without embedding grants.
@@ -107,6 +111,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_frontend_evidence.erl`](alang_fidelity_frontend_evidence.erl)
   — builds path-independent Phase 2 corpus, AST, source-map, compatibility,
   robustness, negative-case, and BEAM-residency evidence.
+- [`alang_fidelity_https.erl`](alang_fidelity_https.erl) — provides the single
+  OTP HTTPS transport with peer and hostname verification, disabled redirects,
+  campaign deadlines, bounded response envelopes, and conservative submission
+  certainty for errors.
 - [`alang_fidelity_forms_v2.erl`](alang_fidelity_forms_v2.erl) — owns the
   deterministic metadata envelope and recursively validates the small
   Abstract Format subset and four fixed runtime ABI calls accepted for
@@ -125,6 +133,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_lexer.erl`](alang_fidelity_lexer.erl) — tokenizes the frozen
   `alang-source-v2` surface with byte and line-column origins, bounded UTF-8
   strings, binary identifiers, and no source-controlled atoms.
+- [`alang_fidelity_live_gate.erl`](alang_fidelity_live_gate.erl) — computes the
+  price-provenanced maximum campaign projection and requires exact profiles,
+  both adapter-owned credentials, explicit live opt-in, and confirmation of
+  that projection before issuing a content-addressed authorization token.
 - [`alang_fidelity_lowering_tests.erl`](alang_fidelity_lowering_tests.erl) —
   checks paired IR equality, exact authority, limit bounds, stable nodes and
   effect ordinals, deterministic ETF, seeded mutants, and campaign gates.
@@ -136,6 +148,10 @@ test path. Generated evidence belongs under the ignored
   compares all 24 paired executions, exercises matched failure, incomplete,
   cancellation, and uncertain outcomes, detects v2-specific mutants, and
   reasserts the inherited BEAM-resident implementation boundary.
+- [`alang_fidelity_openai_adapter.erl`](alang_fidelity_openai_adapter.erl) —
+  renders the fixed text-only Responses API request, keeps the API key inside
+  the adapter boundary, rejects model substitution, and normalizes only
+  bounded output text and usage metadata.
 - [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
   source unchanged and parses v2 task declarations, authority, scopes, and
   limits, ordered actions, errors, child attenuation, and completion into the
@@ -171,6 +187,13 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
+- [`alang_fidelity_provider_protocol.erl`](alang_fidelity_provider_protocol.erl)
+  — defines the closed provider-neutral request/result algebra, exact profile
+  identities, transport certainty, retry eligibility, cost arithmetic,
+  redaction, and deterministic result digests.
+- [`alang_fidelity_provider_tests.erl`](alang_fidelity_provider_tests.erl) —
+  proves fixed text-only payloads, exact profile probes, conservative transport
+  handling, secret non-retention, and the live authorization and ceiling gate.
 - [`alang_fidelity_representation.erl`](alang_fidelity_representation.erl) —
   decodes the typed-JSON control with JSON Pointer origins, normalizes away
   presentation metadata, and enforces the frozen source and trial contracts.

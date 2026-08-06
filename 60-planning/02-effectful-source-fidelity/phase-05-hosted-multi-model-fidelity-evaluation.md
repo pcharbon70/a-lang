@@ -20,8 +20,8 @@ BEAM sidecars, then retain enough redacted evidence for deterministic offline
 scoring and replay. Hosted variability may affect observations, but it may not
 change the corpus, prompts, answer keys, metrics, thresholds, or runtime path.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** In progress; Section 5.1 is implemented and reproducible offline.
+The hosted campaign remains separately gated and has not been authorized.
 
 **Dependencies:** Phase 4 complete with all 48 representation files compiling
 to inspected BEAM and producing matched offline observations. Phase 1's frozen
@@ -34,7 +34,7 @@ ceiling, and decision contract are immutable inputs to this phase.
 BEAM adapters while keeping credentials, transport details, and live network
 access outside the compiler and default test path.
 
-- [ ] **Section 5.1 Complete**
+- [x] **Section 5.1 Complete**
 
 ### Task 5.1.1: Define the Provider-Neutral Sidecar Protocol
 
@@ -42,7 +42,7 @@ access outside the compiler and default test path.
 covering model identity, prompt bytes, effort, token ceiling, deadline, usage,
 latency, cost inputs, transport certainty, and normalized provider errors.
 
-- [ ] **Task 5.1.1 Complete**
+- [x] **Task 5.1.1 Complete**
 
 #### Subtask 5.1.1.1: Implement the OpenAI Responses Adapter
 
@@ -51,7 +51,7 @@ latency, cost inputs, transport certainty, and normalized provider errors.
 structured-output constraint, an 8,192-token output ceiling, bounded body
 bytes, strict TLS verification, and a campaign-owned deadline.
 
-- [ ] **Subtask 5.1.1.1 Complete**
+- [x] **Subtask 5.1.1.1 Complete**
 
 #### Subtask 5.1.1.2: Implement the Anthropic Messages Adapter
 
@@ -60,7 +60,7 @@ bytes, strict TLS verification, and a campaign-owned deadline.
 envelopes, and prove that provider-specific response shapes cannot alter task
 semantics or scoring.
 
-- [ ] **Subtask 5.1.1.2 Complete**
+- [x] **Subtask 5.1.1.2 Complete**
 
 ### Task 5.1.2: Enforce Explicit Live Authorization and Preflight
 
@@ -68,7 +68,7 @@ semantics or scoring.
 enables it, both provider profiles pass preflight, and the projected request
 and cost bounds fit the frozen campaign ceilings.
 
-- [ ] **Task 5.1.2 Complete**
+- [x] **Task 5.1.2 Complete**
 
 #### Subtask 5.1.2.1: Isolate Secrets and Reject Profile Substitution
 
@@ -78,7 +78,7 @@ and cost bounds fit the frozen campaign ceilings.
 all diagnostics, and fail closed if an endpoint returns or resolves to a model
 identifier other than the registered exact profile.
 
-- [ ] **Subtask 5.1.2.1 Complete**
+- [x] **Subtask 5.1.2.1 Complete**
 
 #### Subtask 5.1.2.2: Confirm Availability, Prices, and Campaign Ceilings
 
@@ -87,7 +87,7 @@ declared per-token prices with provenance and time, show projected primary and
 maximum call counts and cost, require explicit confirmation, and stop before a
 request that would exceed 576 calls or USD 200.
 
-- [ ] **Subtask 5.1.2.2 Complete**
+- [x] **Subtask 5.1.2.2 Complete**
 
 ## Section 5.2: Frozen Trial Materialization and Durable Orchestration
 
