@@ -137,6 +137,14 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_frontend_tests.erl`](alang_fidelity_frontend_tests.erl) —
   checks the versioned source lexer, closed task declarations, input bounds,
   stable origins, rejection diagnostics, and unchanged v1 delegation.
+- [`alang_fidelity_freeze.erl`](alang_fidelity_freeze.erl) — joins the frozen
+  registration, schedule, provider profiles, campaign policy, decision
+  contract, no-run closure, implementation identities, and all 288 explicit
+  missing-cell records into a content-addressed invalid-campaign manifest that
+  suppresses efficacy analysis.
+- [`alang_fidelity_freeze_tests.erl`](alang_fidelity_freeze_tests.erl) — proves
+  complete missing-cell accounting, exact closure validation, analysis
+  suppression, canonical replay, tamper rejection, and BEAM residency.
 - [`alang_fidelity_frontend_evidence.erl`](alang_fidelity_frontend_evidence.erl)
   — builds path-independent Phase 2 corpus, AST, source-map, compatibility,
   robustness, negative-case, and BEAM-residency evidence.

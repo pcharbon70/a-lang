@@ -20,8 +20,8 @@ changes, and reconcile the implementation and research archive with the
 result. This phase decides the next disposition of the user-facing notation;
 it does not convert a prototype into production approval.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** In progress; Section 6.1 is implemented against the explicitly
+closed invalid campaign. No hosted observation or efficacy comparison exists.
 
 **Dependencies:** Phase 5 complete with either a valid, fully accounted hosted
 campaign and byte-reproducible offline analysis or an explicitly invalid
@@ -34,7 +34,7 @@ contracts and inherited security gates remain unchanged.
 prove that retained records correspond to the pre-registered design, and state
 whether the campaign can support an efficacy decision.
 
-- [ ] **Section 6.1 Complete**
+- [x] **Section 6.1 Complete**
 
 ### Task 6.1.1: Reconcile Pre-Registration, Calls, and Retained Records
 
@@ -42,7 +42,7 @@ whether the campaign can support an efficacy decision.
 provider attempt, repair, replacement, normalized response, score, and cost
 into one append-only evidence manifest with no unexplained gap or duplicate.
 
-- [ ] **Task 6.1.1 Complete**
+- [x] **Task 6.1.1 Complete**
 
 #### Subtask 6.1.1.1: Verify Contract and Content Digests
 
@@ -51,7 +51,7 @@ representations, answer keys, prompt, result schema, schedule, normalized
 responses, scorer, bootstrap implementation, and provider-profile record and
 reject evidence produced under a changed input or analysis contract.
 
-- [ ] **Subtask 6.1.1.1 Complete**
+- [x] **Subtask 6.1.1.1 Complete**
 
 #### Subtask 6.1.1.2: Account for Attempts, Missingness, and Cost
 
@@ -60,7 +60,7 @@ records, classify every retry, repair, uncertain submission, replacement,
 refusal, truncation, and missing cell, and require totals to remain within the
 576-call and USD 200 ceilings.
 
-- [ ] **Subtask 6.1.1.2 Complete**
+- [x] **Subtask 6.1.1.2 Complete**
 
 ### Task 6.1.2: Determine Campaign Validity Mechanically
 
@@ -68,7 +68,7 @@ refusal, truncation, and missing cell, and require totals to remain within the
 code so a reviewer cannot selectively exclude trials, forgive a model
 substitution, or reinterpret an operational failure after seeing results.
 
-- [ ] **Task 6.1.2 Complete**
+- [x] **Task 6.1.2 Complete**
 
 #### Subtask 6.1.2.1: Evaluate Validity Predicates
 
@@ -79,7 +79,7 @@ matched semantic pairs, authorized call and replacement transitions, complete
 cost accounting, clean redaction, and reproducible scores; emit each failing
 predicate explicitly.
 
-- [ ] **Subtask 6.1.2.1 Complete**
+- [x] **Subtask 6.1.2.1 Complete**
 
 #### Subtask 6.1.2.2: Freeze the Analysis Dataset
 
@@ -88,7 +88,7 @@ analysis tables and their digests; for an invalid campaign, emit only the
 accounting and validity report and forbid efficacy intervals or a claim that
 one representation performed better.
 
-- [ ] **Subtask 6.1.2.2 Complete**
+- [x] **Subtask 6.1.2.2 Complete**
 
 ## Section 6.2: Frozen Architecture Decision
 
