@@ -57,6 +57,15 @@ test path. Generated evidence belongs under the ignored
   — renders the fixed Claude Messages request, keeps the API key inside the
   adapter boundary, rejects model substitution, and maps bounded provider
   envelopes into the shared result algebra without retaining raw responses.
+- [`alang_fidelity_architecture_decision.erl`](alang_fidelity_architecture_decision.erl)
+  — applies the frozen ordered rule separately across model families for valid
+  inputs or selects the conservative invalid-campaign stop without accepting
+  efficacy inputs, then binds the outcome to validity, inherited gates, scope,
+  limitations, and a canonical digest.
+- [`alang_fidelity_architecture_decision_tests.erl`](alang_fidelity_architecture_decision_tests.erl)
+  — covers promote, replace, stop, safety-veto, family disagreement, strict
+  interval boundaries, the actual invalid closure, deterministic machine and
+  human outputs, and BEAM residency.
 - [`alang_fidelity_adapter_fault_tests.erl`](alang_fidelity_adapter_fault_tests.erl)
   — drives both provider adapters through scripted HTTPS outcomes covering
   identity, TLS, redirect, timeout, response, crash, secret, call, cost, and
@@ -128,7 +137,11 @@ test path. Generated evidence belongs under the ignored
   outcome from completed evidence.
 - [`alang_fidelity_decision_tests.erl`](alang_fidelity_decision_tests.erl) —
   covers promotion, JSON replacement, stop, invalid-campaign, interval, and
-  safety-veto outcomes.
+  safety-veto outcomes and rejects efficacy fields on an invalid campaign.
+- [`alang_fidelity_decision_report.erl`](alang_fidelity_decision_report.erl) —
+  renders the human decision rationale from the validated canonical record,
+  explaining each ordered predicate while keeping invalid-campaign model,
+  task-family, interval, and sensitivity results explicitly absent.
 - [`alang_fidelity_evidence.erl`](alang_fidelity_evidence.erl) — joins frozen
   corpus bytes, answer keys, prompts, schedule, normalized observations,
   scores, statistics, campaign journal, provenance, and BEAM implementation

@@ -34,9 +34,19 @@ safety_regression_vetoes_promotion_test() ->
     ?assertEqual(<<"stop-surface-expansion">>, outcome(Evidence)).
 
 invalid_campaign_has_no_efficacy_outcome_test() ->
-    Base = evidence(86, 80, 1.2, 88, 82, 0.1),
-    Evidence = Base#{<<"campaign_valid">> => false},
+    Evidence = #{
+        <<"campaign_valid">> => false,
+        <<"validity_failures">> => [<<"missing-primary-cells">>]
+    },
     ?assertEqual(<<"stop-invalid-campaign-no-efficacy-conclusion">>, outcome(Evidence)).
+
+invalid_campaign_rejects_efficacy_inputs_test() ->
+    Base = evidence(86, 80, 1.2, 88, 82, 0.1),
+    Evidence = Base#{
+        <<"campaign_valid">> => false,
+        <<"validity_failures">> => [<<"missing-primary-cells">>]
+    },
+    ?assertMatch({error, _}, alang_fidelity_decision:decide(Evidence)).
 
 evidence(OpenAiAlang, OpenAiJson, OpenAiLower, AnthropicAlang, AnthropicJson, AnthropicLower) ->
     #{

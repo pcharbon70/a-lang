@@ -20,8 +20,9 @@ changes, and reconcile the implementation and research archive with the
 result. This phase decides the next disposition of the user-facing notation;
 it does not convert a prototype into production approval.
 
-**Status:** In progress; Section 6.1 is implemented against the explicitly
-closed invalid campaign. No hosted observation or efficacy comparison exists.
+**Status:** In progress; Sections 6.1–6.2 are implemented against the
+explicitly closed invalid campaign. No hosted observation or efficacy
+comparison exists.
 
 **Dependencies:** Phase 5 complete with either a valid, fully accounted hosted
 campaign and byte-reproducible offline analysis or an explicitly invalid
@@ -96,7 +97,7 @@ one representation performed better.
 including per-model effect sizes and safety vetoes, or conservatively stop
 surface expansion when the campaign cannot support comparison.
 
-- [ ] **Section 6.2 Complete**
+- [x] **Section 6.2 Complete**
 
 ### Task 6.2.1: Generate the Per-Model Decision Inputs
 
@@ -105,7 +106,7 @@ fidelity rates, paired difference, task-family-stratified 95% interval,
 component results, unauthorized-effect count, false-completion count, and all
 inherited regression-gate outcomes.
 
-- [ ] **Task 6.2.1 Complete**
+- [x] **Task 6.2.1 Complete**
 
 #### Subtask 6.2.1.1: Reproduce Paired Statistics Independently
 
@@ -115,7 +116,7 @@ task family while retaining paired repetitions, compare the percentile
 interval byte-for-byte with Phase 5 evidence, and keep pooled statistics
 descriptive rather than using them to override a failing model family.
 
-- [ ] **Subtask 6.2.1.1 Complete**
+- [x] **Subtask 6.2.1.1 Complete**
 
 #### Subtask 6.2.1.2: Evaluate Safety and Regression Vetoes
 
@@ -124,7 +125,7 @@ completions for A-Lang relative to JSON and require all compiler, broker,
 durability, adversarial, fault, mutation, child, workspace, and completion
 gates to remain green before promotion is possible.
 
-- [ ] **Subtask 6.2.1.2 Complete**
+- [x] **Subtask 6.2.1.2 Complete**
 
 ### Task 6.2.2: Apply Promote, Replace, or Stop Without Human Override
 
@@ -132,7 +133,7 @@ gates to remain green before promotion is possible.
 decision module and emit both a canonical machine record and an explained
 human report from the same inputs.
 
-- [ ] **Task 6.2.2 Complete**
+- [x] **Task 6.2.2 Complete**
 
 #### Subtask 6.2.2.1: Evaluate the Ordered Outcome Rule
 
@@ -144,7 +145,7 @@ no unresolved safety veto prevents use; otherwise stop user-facing language
 expansion. An invalid campaign also yields stop-without-efficacy-conclusion,
 not promotion, replacement, or evidence that either condition is superior.
 
-- [ ] **Subtask 6.2.2.1 Complete**
+- [x] **Subtask 6.2.2.1 Complete**
 
 #### Subtask 6.2.2.2: Publish Decision Rationale and Sensitivity Context
 
@@ -153,7 +154,7 @@ level and task-family results, distinguish registered inference from clearly
 labeled descriptive sensitivity checks, and forbid sensitivity results from
 changing the canonical disposition.
 
-- [ ] **Subtask 6.2.2.2 Complete**
+- [x] **Subtask 6.2.2.2 Complete**
 
 ## Section 6.3: Implementation and Research Handoff
 
