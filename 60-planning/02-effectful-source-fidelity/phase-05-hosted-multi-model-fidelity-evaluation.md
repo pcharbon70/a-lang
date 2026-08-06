@@ -20,8 +20,9 @@ BEAM sidecars, then retain enough redacted evidence for deterministic offline
 scoring and replay. Hosted variability may affect observations, but it may not
 change the corpus, prompts, answer keys, metrics, thresholds, or runtime path.
 
-**Status:** In progress; Section 5.1 is implemented and reproducible offline.
-The hosted campaign remains separately gated and has not been authorized.
+**Status:** In progress; Sections 5.1–5.2 are implemented and reproducible
+offline. The hosted campaign remains separately gated and has not been
+authorized.
 
 **Dependencies:** Phase 4 complete with all 48 representation files compiling
 to inspected BEAM and producing matched offline observations. Phase 1's frozen
@@ -95,7 +96,7 @@ request that would exceed 576 calls or USD 200.
 cells without revealing pair identity to a model or permitting selective
 reruns to improve an experimental result.
 
-- [ ] **Section 5.2 Complete**
+- [x] **Section 5.2 Complete**
 
 ### Task 5.2.1: Materialize the Opaque-Identity Paired Campaign
 
@@ -104,7 +105,7 @@ and three repetitions into immutable trial manifests whose opaque identifiers
 do not disclose condition names, semantic pairs, answer keys, or expected
 outcomes beyond the necessarily visible representation treatment itself.
 
-- [ ] **Task 5.2.1 Complete**
+- [x] **Task 5.2.1 Complete**
 
 #### Subtask 5.2.1.1: Generate the Fixed Randomized Schedule
 
@@ -114,7 +115,7 @@ schedule seed to `2026080501`, record the resulting schedule digest, and make
 order changes invalidate the campaign rather than silently creating a new
 schedule.
 
-- [ ] **Subtask 5.2.1.1 Complete**
+- [x] **Subtask 5.2.1.1 Complete**
 
 #### Subtask 5.2.1.2: Render Byte-Stable Model-Visible Requests
 
@@ -123,7 +124,7 @@ document, and the common `alang_task_comprehension_v1` result schema with fixed
 encoding and line endings; prove that condition-specific wording, filenames,
 comments, or answer-key data do not leak into the request.
 
-- [ ] **Subtask 5.2.1.2 Complete**
+- [x] **Subtask 5.2.1.2 Complete**
 
 ### Task 5.2.2: Execute with Durable Accounting and Conservative Retry Rules
 
@@ -131,7 +132,7 @@ comments, or answer-key data do not leak into the request.
 schedule so interruption can resume exactly once without discarding difficult
 responses or duplicating uncertain effects.
 
-- [ ] **Task 5.2.2 Complete**
+- [x] **Task 5.2.2 Complete**
 
 #### Subtask 5.2.2.1: Persist Trial State and Resume Deterministically
 
@@ -140,7 +141,7 @@ provider/model identity, timestamps, transport certainty, normalized response
 digest, token usage, latency, price inputs, and cost in an append-only bounded
 journal that reconstructs the next legal action after restart.
 
-- [ ] **Subtask 5.2.2.1 Complete**
+- [x] **Subtask 5.2.2.1 Complete**
 
 #### Subtask 5.2.2.2: Bound Retries, Repairs, and Replacement Slots
 
@@ -152,7 +153,7 @@ failure as the first-attempt fidelity result; and use a new linked replacement
 identity only when no definitive model response exists, while counting every
 attempt toward 576 calls and USD 200.
 
-- [ ] **Subtask 5.2.2.2 Complete**
+- [x] **Subtask 5.2.2.2 Complete**
 
 ## Section 5.3: Deterministic Scoring, Statistics, and Redacted Evidence
 

@@ -63,6 +63,22 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
   ordered effect and repair steps, explicit error results, attenuated child
   declarations, completion predicates, clarification, and terminal classes.
+- [`alang_fidelity_campaign.erl`](alang_fidelity_campaign.erl) — materializes
+  the frozen 288-cell paired campaign, uses seed `2026080501` to balance
+  conditions and task families within each model, assigns opaque identities,
+  and renders byte-stable requests containing the common result schema.
+- [`alang_fidelity_campaign_journal.erl`](alang_fidelity_campaign_journal.erl)
+  — persists bounded hash-chained intent, result, replacement, and closure
+  records as canonical ETF in an append-only stream and safely reconstructs
+  the stream after restart.
+- [`alang_fidelity_campaign_runner.erl`](alang_fidelity_campaign_runner.erl) —
+  enforces the frozen call and cost ceilings, exact trial order, one eligible
+  retry, repair, or linked replacement, and deterministic state reconstruction
+  without selective reruns.
+- [`alang_fidelity_campaign_tests.erl`](alang_fidelity_campaign_tests.erl) —
+  freezes the balanced schedule shape and tests opaque identities, request
+  leakage, order mutation, retry/repair/replacement bounds, durable replay,
+  and duplicate-result rejection.
 - [`alang_fidelity_backend_v2.erl`](alang_fidelity_backend_v2.erl) — lowers
   checked IR v2 actions into static calls in allowlisted Abstract Format,
   compiles deterministically on BEAM with strong validation, and emits

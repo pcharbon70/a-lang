@@ -287,9 +287,9 @@ following, with live-only items backed by a recorded opt-in campaign:
   inspected BEAM backend and inherited runtime enforcement path, with
   reproducible [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md).
 - [Phase 5 — Hosted multi-model fidelity evaluation](phase-05-hosted-multi-model-fidelity-evaluation.md)
-  — **in progress**; Section 5.1 adds bounded BEAM provider adapters, exact
-  profile and cost preflight, secret isolation, and explicit opt-in while the
-  default path remains offline.
+  — **in progress**; Sections 5.1–5.2 add bounded BEAM provider adapters,
+  exact profile and cost preflight, the reproducible 288-cell schedule, and
+  append-only campaign accounting while the default path remains offline.
 - [Phase 6 — Fidelity decision and roadmap handoff](phase-06-fidelity-decision-and-roadmap-handoff.md)
   — applies the frozen threshold, records promote/replace/stop, and reconciles
   the archive without implying production readiness.
