@@ -43,6 +43,10 @@ test path. Generated evidence belongs under the ignored
 
 ### Files
 
+- [`alang_fidelity_artifact_v2.erl`](alang_fidelity_artifact_v2.erl) — inspects
+  generated IR v2 BEAM containers, permits only the fixed module, exports,
+  imports, chunks, compiler profile, and metadata contract, and binds loaded
+  artifacts back to exact compiler evidence.
 - [`alang_fidelity_ast.erl`](alang_fidelity_ast.erl) — validates every v2 AST
   node against exact fields, closed values, collection and budget bounds,
   source origins, and safe workspace paths.
@@ -55,6 +59,14 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
   ordered effect and repair steps, explicit error results, attenuated child
   declarations, completion predicates, clarification, and terminal classes.
+- [`alang_fidelity_backend_v2.erl`](alang_fidelity_backend_v2.erl) — lowers
+  checked IR v2 actions into static calls in allowlisted Abstract Format,
+  compiles deterministically on BEAM with strong validation, and emits
+  representation-local backend diagnostics.
+- [`alang_fidelity_backend_v2_tests.erl`](alang_fidelity_backend_v2_tests.erl)
+  — compiles all 48 frozen representations, compares paired executable
+  identities, and detects forbidden calls, metadata tampering, bad imports,
+  nondeterminism, and diagnostic-origin loss.
 - [`alang_fidelity_canonical.erl`](alang_fidelity_canonical.erl) — encodes the
   v2 AST in a distinct deterministic ETF envelope, safely decodes and
   revalidates it, rejects compressed or trailing data, and preserves v1 bytes.
@@ -91,6 +103,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_frontend_evidence.erl`](alang_fidelity_frontend_evidence.erl)
   — builds path-independent Phase 2 corpus, AST, source-map, compatibility,
   robustness, negative-case, and BEAM-residency evidence.
+- [`alang_fidelity_forms_v2.erl`](alang_fidelity_forms_v2.erl) — owns the
+  deterministic metadata envelope and recursively validates the small
+  Abstract Format subset and four fixed runtime ABI calls accepted for
+  generated effectful programs.
 - [`alang_fidelity_integration_tests.erl`](alang_fidelity_integration_tests.erl)
   — runs the complete contract/corpus gate, mutant matrix, BEAM residency
   check, frozen-scope audit, and byte-for-byte digest reproduction.

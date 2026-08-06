@@ -20,8 +20,8 @@ the same generated-code, model, broker, durability, child, workspace, and
 completion boundaries. Offline deterministic evidence must prove the complete
 path before hosted-model variability is introduced.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** In progress; Section 4.1 has reproducible compiler and artifact
+evidence, while runtime binding and the complete integration gate remain open.
 
 **Dependencies:** Phase 3 complete with matched IR and manifests for all 24
 pairs. The Phase 3 backend and artifact inspector plus Phase 4–8 runtime and
@@ -33,7 +33,7 @@ validation evidence remain the implementation baseline and may not be bypassed.
 metadata only where v2 semantics require it, retaining deterministic output and
 fixed generated-module discipline.
 
-- [ ] **Section 4.1 Complete**
+- [x] **Section 4.1 Complete**
 
 ### Task 4.1.1: Lower V2 Control and Delegation Through Closed Runtime Calls
 
@@ -41,7 +41,7 @@ fixed generated-module discipline.
 map the new delegate node and completion metadata only to fixed versioned A-Lang
 runtime ABI calls.
 
-- [ ] **Task 4.1.1 Complete**
+- [x] **Task 4.1.1 Complete**
 
 #### Subtask 4.1.1.1: Extend Abstract Format Lowering Conservatively
 
@@ -52,7 +52,7 @@ contract requires it, and reject arbitrary remote calls, dynamic apply,
 unbounded receive, direct spawn, ports, ETS, filesystem, network, and dynamic
 module/function values in generated forms.
 
-- [ ] **Subtask 4.1.1.1 Complete**
+- [x] **Subtask 4.1.1.1 Complete**
 
 #### Subtask 4.1.1.2: Preserve Source and JSON Diagnostics
 
@@ -60,7 +60,7 @@ module/function values in generated forms.
 frontend identity and source map so A-Lang reports byte/line/column and JSON
 reports JSON pointer/offset without leaking Abstract Format internals.
 
-- [ ] **Subtask 4.1.1.2 Complete**
+- [x] **Subtask 4.1.1.2 Complete**
 
 ### Task 4.1.2: Version and Inspect V2 Artifact Metadata
 
@@ -68,7 +68,7 @@ reports JSON pointer/offset without leaking Abstract Format internals.
 frontend/source digest, manifest, task limits, child restrictions, completion
 specification, compiler identity, and pinned OTP profile.
 
-- [ ] **Task 4.1.2 Complete**
+- [x] **Task 4.1.2 Complete**
 
 #### Subtask 4.1.2.1: Encode Metadata Deterministically
 
@@ -76,7 +76,7 @@ specification, compiler identity, and pinned OTP profile.
 canonical field ordering, and bounded decoded shapes so repeated clean ERTS
 processes produce byte-identical artifacts for the same representation.
 
-- [ ] **Subtask 4.1.2.1 Complete**
+- [x] **Subtask 4.1.2.1 Complete**
 
 #### Subtask 4.1.2.2: Reject Tampered or Widened Artifacts
 
@@ -85,7 +85,7 @@ manifest, limits, child bounds, completion predicates, source/semantic digests,
 IR version, compiler profile, or metadata encoding differ from the compiler
 evidence.
 
-- [ ] **Subtask 4.1.2.2 Complete**
+- [x] **Subtask 4.1.2.2 Complete**
 
 ## Section 4.2: Runtime Binding for Model, Repair, Child, and Completion
 
