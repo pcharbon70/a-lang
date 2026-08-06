@@ -1,0 +1,22 @@
+{
+  "format": "alang-fidelity-hosted-campaign-closure-v1",
+  "campaign_id": "hosted-campaign-20260806-closed-without-calls",
+  "closed_on": "2026-08-06",
+  "status": "invalid",
+  "closure_reason": "live-authorization-not-granted",
+  "operator_authorized": false,
+  "schedule_digest": "bb4b1544a038acd1c845d6575f326b890064f414678dd3a0ce1e175e0bdc07f7",
+  "expected_primary_cells": 288,
+  "observed_primary_cells": 0,
+  "missing_primary_cells": 288,
+  "attempt_count": 0,
+  "hosted_call_count": 0,
+  "repair_count": 0,
+  "replacement_count": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cost_microusd": 0,
+  "attempts": [],
+  "observations": [],
+  "scores": []
+}

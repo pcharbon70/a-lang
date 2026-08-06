@@ -30,6 +30,9 @@ See the [archive guide](../README.md) for its structure and conventions.
 
 ## Recently developed
 
+- [Effectful source fidelity architecture decision](../src/effectful-source-fidelity/effectful-source-fidelity-architecture-decision.md)
+  — stops both experimental authoring surfaces after the hosted campaign
+  closed invalid, while retaining bounded BEAM compiler/runtime evidence.
 - [BEAM as the runtime for a native agent language](../20-notes/beam-runtime-for-native-agent-language.md)
 - [Set and category principles for an agent programming language](../20-notes/set-and-category-principles-for-agent-programming-language.md)
 - [Task languages for LLM agents: a deep dive](../20-notes/llm-agent-task-languages-deep-dive.md)
@@ -43,9 +46,9 @@ See the [archive guide](../README.md) for its structure and conventions.
   durable effects, bounded model and child-task execution, adversarial
   validation, and a final architecture decision.
 - [Effectful source fidelity plan](../60-planning/02-effectful-source-fidelity/README.md)
-  — the numbered successor that compares user-authored effectful A-Lang with
-  semantically matched typed JSON while holding the BEAM enforcement path
-  constant and applying a pre-registered decision rule.
+  — the numbered successor implemented matched A-Lang and typed-JSON BEAM
+  paths, then conservatively stopped both authoring surfaces when the hosted
+  campaign closed invalid without calls or efficacy evidence.
 
 ## Unsettled threads
 

@@ -110,6 +110,11 @@ deeper semantic understanding in arbitrary pretrained LLMs.
   pre-registers that comparison as 24 paired A-Lang/typed-JSON cases, three
   repetitions, two hosted model families, deterministic exact-fidelity
   scoring, safety vetoes, and a strict promote/replace/stop handoff.
+- The [effectful source fidelity decision](../src/effectful-source-fidelity/effectful-source-fidelity-architecture-decision.md)
+  records a bounded but non-comparative result: the complete closed source and
+  typed-JSON paths run through matched BEAM enforcement, but live authorization
+  was not granted. All 288 hosted cells are explicitly missing, the campaign
+  is invalid, and no model-family or notation efficacy result exists.
 - [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
   finds support for symbol-aware selective context but no direct evidence that
   reference annotations should be embedded in source.
@@ -120,10 +125,11 @@ deeper semantic understanding in arbitrary pretrained LLMs.
 ## Outcome
 
 The inquiry remains open. The prototype supports runtime-enforced task
-contracts, but the central language-understanding and source-notation questions
-remain untested. The next comparison must start from user-authored effectful
-source, hold the BEAM runtime constant, and measure fidelity against a strong
-conventional typed notation across declared model families. The second
-planning stream defines the implementation and evidence needed to answer that
-bounded question; it is a plan, not yet a finding. Symbol-aware source context
-is now tracked independently so it cannot confound that notation result.
+contracts and now includes user-authored effectful source for a closed subset,
+but the central language-understanding and notation questions remain untested.
+The second planning stream was closed through its pre-registered
+invalid-campaign branch: it cannot support promotion, JSON replacement, or a
+claim that either representation is superior. Both authoring paths are frozen.
+A later comparison would require explicit approval and a newly numbered,
+freshly pre-registered stream. Symbol-aware source context remains independent
+so it cannot be mistaken for evidence from this notation experiment.

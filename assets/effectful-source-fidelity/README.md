@@ -14,12 +14,13 @@ aliases: []
 
 ## Purpose
 
-This directory preserves the immutable, non-generated inputs to the effectful
-source-fidelity experiment: closed contracts, hand-authored paired source
-documents, answer keys, provider profiles, prompts, and campaign ceilings.
+This directory preserves the immutable inputs and repository-safe retained
+records for the effectful source-fidelity experiment: closed contracts,
+hand-authored paired source documents, answer keys, provider profiles, prompts,
+campaign ceilings, and the actual hosted-campaign closure.
 
-Generated trial schedules, responses, scores, and evidence bundles belong
-under the ignored `build/effectful-source-fidelity/` directory instead.
+Generated schedules, manifests, reports, and intermediate evidence bundles
+belong under the ignored `build/effectful-source-fidelity/` directory instead.
 
 ## What belongs here
 
@@ -27,8 +28,9 @@ under the ignored `build/effectful-source-fidelity/` directory instead.
 - Hand-authored A-Lang and typed-JSON corpus representations.
 - Representation-neutral semantic oracles and reviewed pair manifests.
 - Frozen prompt, provider, schedule, call, cost, and retention configuration.
+- Redacted, immutable records needed to reproduce the actual campaign outcome.
 
-Secrets, hosted responses, caches, and derived evidence do not belong here.
+Secrets, raw hosted responses, caches, and derived evidence do not belong here.
 
 ## Index
 
@@ -41,6 +43,8 @@ Secrets, hosted responses, caches, and derived evidence do not belong here.
 - [Corpus](corpus/README.md) — 24 balanced semantic cases, 48 paired source
   documents, representation-neutral answer keys, and content-addressed review
   metadata.
+- [Evidence](evidence/README.md) — repository-safe closure or normalized
+  observation records used to reproduce the actual validity and decision path.
 
 ### Files
 

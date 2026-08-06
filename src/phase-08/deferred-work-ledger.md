@@ -15,11 +15,11 @@ aliases: []
 
 ## Rule
 
-Deferred means unimplemented and unauthorized for the next bounded prototype
-unless its trigger is met. It does not mean “nearly complete.” The immediate
-prototype may implement only the effectful source-to-IR vocabulary and matched
-task-fidelity evaluation defined by the
-[architecture decision](proof-of-concept-architecture-decision.md).
+Deferred means unimplemented and unauthorized unless its trigger is met and a
+new planning stream is explicitly approved. It does not mean “nearly
+complete.” The effectful source-to-IR successor authorized by the original
+[architecture decision](proof-of-concept-architecture-decision.md) has ended
+with a conservative invalid-campaign stop; it authorizes no further expansion.
 
 ## Language and semantics
 
@@ -47,7 +47,7 @@ task-fidelity evaluation defined by the
 
 | Work | Why deferred | Reconsider only when |
 | --- | --- | --- |
-| Live-provider integration and hardening | Mock-first semantics isolate deterministic control; provider behavior is unmeasured | The next fidelity study declares providers, privacy policy, cost, and replay rules |
+| Live-provider integration and hardening | Fixed adapters exist, but the closed campaign made zero hosted calls and provider behavior remains unmeasured | A newly authorized study declares providers, privacy policy, prices, cost, and replay rules |
 | Provider routing and model fallback | Would confound language evaluation | Single-provider fidelity evidence exists |
 | Distributed or external durable store | Local file evidence is sufficient for bounded recovery | Recovery objectives require host-loss tolerance |
 | Exactly-once external effects | Generally unavailable without resource cooperation | A resource exposes transactional or idempotent semantics that can be specified |
@@ -63,11 +63,13 @@ task-fidelity evaluation defined by the
 | Representative alternative-runtime study | Current typed baselines characterize components, not runtime superiority | A workload and equivalent runtime are specified |
 | Broad performance and scale campaign | One host and small fixtures cannot define service capacity | Representative task arrival, state, effect, and retention distributions exist |
 | Human authoring/reviewer study | No current human-benefit claim is accepted | Such a claim is required for promotion |
-| Broader model-family task study | Central language-fidelity question remains next | Effectful source tasks no longer require constructed IR |
+| Broader model-family task study | The source subset no longer requires constructed IR, but the first hosted campaign was closed invalid | A new question, budget, providers, and pre-registration receive explicit authorization |
 
-## Explicitly not deferred
+## Completed boundary disposition
 
-The effectful source-language gap is the authorized next decision boundary,
-not a miscellaneous backlog item. It must be answered before any expansion in
-this ledger. A negative result should replace or stop the novel surface rather
-than trigger more runtime features.
+The effectful source-language mechanics were implemented, while the hosted
+comparison was closed invalid without efficacy evidence. The canonical
+[successor decision](../effectful-source-fidelity/effectful-source-fidelity-architecture-decision.md)
+therefore stops both experimental authoring surfaces and retains the bounded
+runtime-enforcement evidence. Nothing in this ledger becomes authorized as a
+consequence.

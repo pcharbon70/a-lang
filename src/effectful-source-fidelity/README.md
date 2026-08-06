@@ -57,6 +57,15 @@ test path. Generated evidence belongs under the ignored
   — renders the fixed Claude Messages request, keeps the API key inside the
   adapter boundary, rejects model substitution, and maps bounded provider
   envelopes into the shared result algebra without retaining raw responses.
+- [`alang_fidelity_architecture_decision.erl`](alang_fidelity_architecture_decision.erl)
+  — applies the frozen ordered rule separately across model families for valid
+  inputs or selects the conservative invalid-campaign stop without accepting
+  efficacy inputs, then binds the outcome to validity, inherited gates, scope,
+  limitations, and a canonical digest.
+- [`alang_fidelity_architecture_decision_tests.erl`](alang_fidelity_architecture_decision_tests.erl)
+  — covers promote, replace, stop, safety-veto, family disagreement, strict
+  interval boundaries, the actual invalid closure, deterministic machine and
+  human outputs, and BEAM residency.
 - [`alang_fidelity_adapter_fault_tests.erl`](alang_fidelity_adapter_fault_tests.erl)
   — drives both provider adapters through scripted HTTPS outcomes covering
   identity, TLS, redirect, timeout, response, crash, secret, call, cost, and
@@ -128,7 +137,11 @@ test path. Generated evidence belongs under the ignored
   outcome from completed evidence.
 - [`alang_fidelity_decision_tests.erl`](alang_fidelity_decision_tests.erl) —
   covers promotion, JSON replacement, stop, invalid-campaign, interval, and
-  safety-veto outcomes.
+  safety-veto outcomes and rejects efficacy fields on an invalid campaign.
+- [`alang_fidelity_decision_report.erl`](alang_fidelity_decision_report.erl) —
+  renders the human decision rationale from the validated canonical record,
+  explaining each ordered predicate while keeping invalid-campaign model,
+  task-family, interval, and sensitivity results explicitly absent.
 - [`alang_fidelity_evidence.erl`](alang_fidelity_evidence.erl) — joins frozen
   corpus bytes, answer keys, prompts, schedule, normalized observations,
   scores, statistics, campaign journal, provenance, and BEAM implementation
@@ -137,6 +150,14 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_frontend_tests.erl`](alang_fidelity_frontend_tests.erl) —
   checks the versioned source lexer, closed task declarations, input bounds,
   stable origins, rejection diagnostics, and unchanged v1 delegation.
+- [`alang_fidelity_freeze.erl`](alang_fidelity_freeze.erl) — joins the frozen
+  registration, schedule, provider profiles, campaign policy, decision
+  contract, no-run closure, implementation identities, and all 288 explicit
+  missing-cell records into a content-addressed invalid-campaign manifest that
+  suppresses efficacy analysis.
+- [`alang_fidelity_freeze_tests.erl`](alang_fidelity_freeze_tests.erl) — proves
+  complete missing-cell accounting, exact closure validation, analysis
+  suppression, canonical replay, tamper rejection, and BEAM residency.
 - [`alang_fidelity_frontend_evidence.erl`](alang_fidelity_frontend_evidence.erl)
   — builds path-independent Phase 2 corpus, AST, source-map, compatibility,
   robustness, negative-case, and BEAM-residency evidence.
@@ -239,6 +260,20 @@ test path. Generated evidence belongs under the ignored
   the complete deterministic campaign in a clean ERTS process and writes its
   frozen corpus, journal, observations, scores, intervals, accounting,
   validity, provenance, and implementation digests as redacted evidence.
+- [`alang_fidelity_phase6_integration_tests.erl`](alang_fidelity_phase6_integration_tests.erl)
+  — replays the actual invalid campaign in clean ERTS processes, exercises
+  every ordered decision branch and inherited Phase 5 defect, rejects
+  corrupted evidence and aliases, validates archive handoff and secrets, and
+  reasserts BEAM residency.
+- [`alang_fidelity_phase6_mutation.erl`](alang_fidelity_phase6_mutation.erl) —
+  seeds missing-cell, schedule-record, model-alias, ceiling, digest, decision-
+  basis, invalid-promotion, efficacy-smuggling, safety-veto, predicate,
+  sensitivity, OTP-identity, artifact-identity, and residency defects while
+  recomputing outer digests so semantic validation must detect each mutant.
+- [`alang_fidelity_phase6_worker.erl`](alang_fidelity_phase6_worker.erl) —
+  rebuilds the campaign freeze, canonical decision, and human report in a
+  clean offline ERTS process and writes a safely decoded deterministic replay
+  bundle with content digests and module-residency evidence.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -282,6 +317,10 @@ test path. Generated evidence belongs under the ignored
   compares all 24 checked meanings and exercises stable identities, unresolved
   dependencies, reachability, completion paths and digests, child depth, and
   clarification control.
+- [Effectful source fidelity architecture decision](effectful-source-fidelity-architecture-decision.md)
+  — records the canonical invalid-campaign stop, retained BEAM implementation,
+  absent efficacy evidence, frozen authoring surfaces, limitations, and the
+  explicit authorization boundary for any later experiment.
 - [`alang_fidelity_source.erl`](alang_fidelity_source.erl) — translates the
   closed v2 AST into the representation-neutral semantic-input envelope while
   preserving source-local origins for every semantic field.
@@ -302,6 +341,10 @@ test path. Generated evidence belongs under the ignored
   — records the adapter fault matrix, complete 288-cell fixture campaign,
   every-transition replay, seeded mutations, clean-ERTS reproduction, and the
   still-unmet authorization boundary for the actual hosted campaign.
+- [Phase 6 fidelity decision and handoff evidence](phase-06-integration-evidence.md)
+  — records the fully accounted invalid-campaign closure, ordered decision and
+  mutation gates, absent efficacy outputs, byte-identical clean-ERTS replay,
+  exact content identities, BEAM residency, and archive handoff.
 
 ## Maintaining this index
 

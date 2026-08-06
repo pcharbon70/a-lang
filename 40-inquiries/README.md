@@ -44,7 +44,8 @@ inquiry as the final synthesis.
   languages.
 - [Can a task language improve LLM agents?](can-a-task-language-improve-llm-agents.md)
   — an open inquiry into whether structured task representations improve
-  understanding, reliability, and execution.
+  understanding, reliability, and execution, now preserving the explicitly
+  invalid first hosted comparison without treating absence as a result.
 - [Can typed source references improve LLM code understanding?](can-typed-source-references-improve-llm-code-understanding.md)
   — an open equal-budget comparison of authored typed relations, ordinary
   hints, generated symbol maps, and selective graph context.

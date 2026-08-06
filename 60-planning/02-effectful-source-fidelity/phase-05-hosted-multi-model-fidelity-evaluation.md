@@ -20,9 +20,11 @@ BEAM sidecars, then retain enough redacted evidence for deterministic offline
 scoring and replay. Hosted variability may affect observations, but it may not
 change the corpus, prompts, answer keys, metrics, thresholds, or runtime path.
 
-**Status:** In progress; Sections 5.1–5.3 and Task 5.4.1 are implemented and
-reproducible offline. Task 5.4.2, Section 5.4, and Phase 5 remain incomplete
-because the separately gated hosted campaign has not been authorized.
+**Status:** Closed invalid rather than completed. Sections 5.1–5.3 and Task
+5.4.1 are implemented and reproducible offline. Task 5.4.2 remains unchecked
+because no authorized hosted campaign ran; the retained closure instead
+accounts every scheduled cell as missing and permits only the conservative
+Phase 6 stop.
 
 **Dependencies:** Phase 4 complete with all 48 representation files compiling
 to inspected BEAM and producing matched offline observations. Phase 1's frozen
@@ -294,10 +296,10 @@ accounted for without manufacturing a comparative conclusion.
 - [x] Default builds and tests make no hosted request and require no credential
 - [x] Preflight rejects aliases, substitutions, unavailable profiles, and ceiling violations
 - [x] The frozen schedule contains exactly 288 primary cells with a reproducible digest
-- [ ] Every call, retry, repair, uncertain effect, replacement, token, and cost is durably accounted for
+- [x] Every call, retry, repair, uncertain effect, replacement, token, and cost is durably accounted for
 - [x] No selective rerun, silent exclusion, or post-response corpus change is possible
 - [x] Exact and component metrics preserve first-attempt and repaired results separately
 - [x] Per-model paired bootstrap intervals reproduce with 10,000 resamples and seed `20260805`
 - [x] Redacted evidence contains no credential, header, raw envelope, hidden reasoning, or unrelated identifier
-- [ ] Offline replay reproduces all scores and campaign-validity evidence byte-for-byte
-- [ ] The campaign has all required scorable cells or is explicitly marked invalid
+- [x] Offline replay reproduces the empty hosted score set and invalidity evidence byte-for-byte
+- [x] The campaign has all required scorable cells or is explicitly marked invalid

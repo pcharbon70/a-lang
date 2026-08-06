@@ -127,14 +127,16 @@ The unresolved question is how much of this should be one language, and how
 much should be a family of interoperating representations with a common task
 model.
 
-## Active implementation test
+## Bounded implementation test and disposition
 
 The [effectful source fidelity plan](../60-planning/02-effectful-source-fidelity/README.md)
-turns the central notation question into a bounded experiment: A-Lang and a
-closed typed-JSON control express matched task semantics, compile through the
-same BEAM enforcement path, and are compared across two declared hosted model
-families with deterministic scoring and safety vetoes. Until its evidence
-exists, it is an experimental design rather than support for either notation.
+implemented a bounded experiment in which A-Lang and a closed typed-JSON
+control express matched task semantics and compile through the same BEAM
+enforcement path. The hosted portion was never authorized, so the
+[architecture decision](../src/effectful-source-fidelity/effectful-source-fidelity-architecture-decision.md)
+accounts all 288 cells as missing and stops both experimental authoring
+surfaces without an efficacy conclusion. The compiler and runtime results are
+real; comparative model-understanding evidence is absent.
 
 ## Open questions
 

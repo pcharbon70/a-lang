@@ -785,6 +785,22 @@ The hypothesis should be rejected or narrowed if:
 - [Provable Coordination via Message Sequence Charts](https://arxiv.org/abs/2604.17612)
   — projected multi-agent protocols with structural guarantees.
 
+## Bounded A-Lang implementation result
+
+The local proof of concept now separates implementation feasibility from
+comparative language value. A closed effectful A-Lang subset and a matched
+typed-JSON control both parse, check, lower, compile, and execute through the
+same BEAM enforcement path. Fixed hosted-provider adapters and the complete
+offline scoring/replay machinery also exist.
+
+That work did not produce model evidence. Live authorization was not granted,
+no hosted call was made, and all 288 registered cells were closed as missing.
+The [canonical fidelity decision](../src/effectful-source-fidelity/effectful-source-fidelity-architecture-decision.md)
+therefore stops both experimental authoring surfaces without concluding that
+either notation improves task understanding. This is consistent with the
+synthesis's evidence standard: executable structure can be valuable while a
+claim about representation-level understanding remains unproven.
+
 ## Connections
 
 - [Can a task language improve LLM agents?](../40-inquiries/can-a-task-language-improve-llm-agents.md)

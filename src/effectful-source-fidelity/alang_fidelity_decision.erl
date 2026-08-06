@@ -48,23 +48,41 @@ validate_contract(Contract) ->
 -spec decide(term()) -> {ok, map()} | {error, term()}.
 decide(Evidence) ->
     try
-        closed(
-            Evidence,
-            [<<"campaign_valid">>, <<"safety_regressions">>, <<"model_families">>],
-            [<<"campaign_valid">>, <<"safety_regressions">>, <<"model_families">>],
-            []
-        ),
+        closed(Evidence,
+            [<<"campaign_valid">>, <<"validity_failures">>,
+                <<"safety_regressions">>, <<"model_families">>],
+            [<<"campaign_valid">>], []),
         CampaignValid = maps:get(<<"campaign_valid">>, Evidence),
         boolean(CampaignValid, [<<"campaign_valid">>]),
-        Safety = maps:get(<<"safety_regressions">>, Evidence),
-        enum_list(Safety, ?SAFETY_VETOES, [<<"safety_regressions">>]),
-        Families = maps:get(<<"model_families">>, Evidence),
-        validate_families(Families),
-        {ok, choose(CampaignValid, Safety, Families)}
+        decide_validity_branch(CampaignValid, Evidence)
     catch
         throw:{decision_evidence_error, Path, Reason} ->
             {error, {decision_evidence_error, Path, Reason}}
     end.
+
+decide_validity_branch(false, Evidence) ->
+    closed(Evidence, [<<"campaign_valid">>, <<"validity_failures">>],
+        [<<"campaign_valid">>, <<"validity_failures">>], []),
+    Failures = maps:get(<<"validity_failures">>, Evidence),
+    evidence_ensure(is_list(Failures) andalso Failures =/= [],
+        [<<"validity_failures">>], expected_nonempty_array),
+    evidence_ensure(length(Failures) =:= length(lists:usort(Failures)),
+        [<<"validity_failures">>], duplicate_value),
+    lists:foreach(fun(Failure) ->
+        evidence_ensure(is_binary(Failure) andalso byte_size(Failure) > 0,
+            [<<"validity_failures">>], expected_nonempty_string)
+    end, Failures),
+    {ok, choose(false, [], #{})};
+decide_validity_branch(true, Evidence) ->
+    closed(Evidence,
+        [<<"campaign_valid">>, <<"safety_regressions">>, <<"model_families">>],
+        [<<"campaign_valid">>, <<"safety_regressions">>, <<"model_families">>],
+        []),
+    Safety = maps:get(<<"safety_regressions">>, Evidence),
+    enum_list(Safety, ?SAFETY_VETOES, [<<"safety_regressions">>]),
+    Families = maps:get(<<"model_families">>, Evidence),
+    validate_families(Families),
+    {ok, choose(true, Safety, Families)}.
 
 validate_contract_checked(Contract) ->
     Keys = [

@@ -84,9 +84,23 @@ which freezes the paired A-Lang/typed-JSON corpus, two hosted model families,
 deterministic scoring, safety vetoes, and promote/replace/stop threshold before
 implementation or live evaluation.
 
+## Successor disposition
+
+The successor implemented the closed effectful source and typed-JSON
+frontends, matched lowering, inspected BEAM execution, provider adapters,
+campaign accounting, deterministic scoring, and offline replay. Live
+authorization was not granted, however, so no hosted request was made and all
+288 registered cells were explicitly closed as missing.
+
+The resulting [effectful source fidelity decision](../effectful-source-fidelity/effectful-source-fidelity-architecture-decision.md)
+is `stop-invalid-campaign-no-efficacy-conclusion`. It freezes both experimental
+authoring paths and retains only the independently supported compiler and
+runtime-enforcement results. It provides no comparison between A-Lang and
+typed JSON and no provider-behavior evidence.
+
 ## Frozen scope
 
-Until that decision is made, do not add general recursion, polymorphism,
+After that conservative stop, do not add general recursion, polymorphism,
 parallel composition, distribution, portable delegation, more effect families,
 package management, self-hosting, or user-visible categorical notation. These
 features would enlarge the system while leaving the central language-value
@@ -94,12 +108,11 @@ question unresolved.
 
 ## Consequences
 
-The next implementation effort should concentrate on the missing surface-to-IR
-path and its evaluation, not on runtime breadth. BEAM, the broker, durability,
-and verification remain controlled infrastructure. A negative source-fidelity
-result should stop language expansion or replace the novel surface with the
-best-performing conventional typed notation while preserving independently
-valuable runtime enforcement.
+The surface-to-IR path now exists for the frozen subset, but its hosted-model
+value was not evaluated. BEAM, the broker, durability, and verification remain
+bounded proof-of-concept infrastructure; neither experimental authoring
+surface advances. No further implementation stream is authorized by this
+decision.
 
 The active research inquiries remain open because this prototype narrows their
 questions; it does not resolve general LLM-agent, categorical, or BEAM
