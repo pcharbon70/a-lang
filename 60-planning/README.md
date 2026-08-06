@@ -51,7 +51,9 @@ Phase numbering restarts inside each planning stream.
 - [02 — Effectful source fidelity](02-effectful-source-fidelity/README.md) — a
   six-phase successor that holds the BEAM runtime constant while comparing
   user-authored effectful A-Lang with semantically matched typed JSON across
-  two hosted model families and a frozen promote, replace, or stop rule.
+  two declared hosted model families and a frozen rule; the hosted campaign
+  closed invalid without calls, so both experimental authoring paths stop
+  without an efficacy conclusion.
 
 ### Documents
 

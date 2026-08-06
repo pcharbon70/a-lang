@@ -239,7 +239,8 @@ Phase 1: freeze experiment, semantics, corpus, and decisions
 ## Roadmap completion gate
 
 The stream is complete only when a clean checkout can reproduce all of the
-following, with live-only items backed by a recorded opt-in campaign:
+following, with live efficacy items backed by a recorded opt-in campaign or
+their explicit absence enforced by an invalid-campaign closure:
 
 - [x] Twenty-four hand-authored A-Lang/JSON pairs validate against frozen
       semantic answer keys — see the [Phase 1 evidence](../../src/effectful-source-fidelity/phase-01-integration-evidence.md)
@@ -252,16 +253,16 @@ following, with live-only items backed by a recorded opt-in campaign:
       the [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md)
 - [x] All inherited Phase 1–8 offline, law, adversarial, fault, and mutation
       gates remain green — see the [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md)
-- [ ] Exactly 288 primary hosted trials, or an explicitly recorded invalid
+- [x] Exactly 288 primary hosted trials, or an explicitly recorded invalid
       campaign, are accounted for under the call and cost ceilings
 - [ ] Offline replay reproduces normalized trials, scores, bootstrap intervals,
       and the final decision byte-for-byte
 - [ ] OpenAI and Anthropic results are reported separately as well as pooled
 - [ ] No credentials, raw HTTP envelopes, hidden reasoning, or secret-bearing
       diagnostics appear in retained artifacts
-- [ ] The promote, replace, or stop rule is applied without post-hoc threshold
+- [x] The promote, replace, or stop rule is applied without post-hoc threshold
       changes
-- [ ] Research inquiries, maps, implementation status, and deferred work are
+- [x] Research inquiries, maps, implementation status, and deferred work are
       reconciled with the result
 
 ## Index
@@ -287,13 +288,16 @@ following, with live-only items backed by a recorded opt-in campaign:
   inspected BEAM backend and inherited runtime enforcement path, with
   reproducible [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md).
 - [Phase 5 — Hosted multi-model fidelity evaluation](phase-05-hosted-multi-model-fidelity-evaluation.md)
-  — **in progress**; Sections 5.1–5.3 and Task 5.4.1 add bounded BEAM adapters,
+  — **closed invalid**; Sections 5.1–5.3 and Task 5.4.1 add bounded BEAM adapters,
   exact preflight, the reproducible 288-cell schedule, durable accounting,
   deterministic scoring, bootstrap intervals, redacted replay evidence, and a
-  complete offline fault gate. The authorized hosted campaign remains pending.
+  complete offline fault gate. No live authorization was granted, so the
+  retained closure accounts every cell as missing and no hosted retry is
+  authorized in this stream.
 - [Phase 6 — Fidelity decision and roadmap handoff](phase-06-fidelity-decision-and-roadmap-handoff.md)
-  — applies the frozen threshold, records promote/replace/stop, and reconciles
-  the archive without implying production readiness.
+  — **in progress through Section 6.3**; applies the invalid-campaign branch,
+  freezes both authoring paths, retains bounded BEAM enforcement, and
+  reconciles the archive without implying efficacy or production readiness.
 
 ## Maintaining this index
 

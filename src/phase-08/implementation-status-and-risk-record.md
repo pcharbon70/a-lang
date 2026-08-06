@@ -54,6 +54,10 @@ test-only.
   evidence-backed completion.
 - Validation uses BEAM-native EUnit and PropEr laws, state models, adversarial
   inputs, a 63-case fault matrix, pressure measurements, and 17 seeded defects.
+- The successor fidelity stream adds a closed `alang-source-v2` effectful
+  frontend, an independent `alang-task-json-v1` frontend, matched v2 IR,
+  inspected BEAM execution, fixed provider adapters, and deterministic
+  campaign analysis. Its hosted campaign was closed invalid before any call.
 
 The exact artifact metadata, effect ABI, grant, journal, model, child,
 completion, comparison, decision, and release-record format atoms are asserted
@@ -67,11 +71,12 @@ long-term compatibility promise.
 | BEAM-resident trusted compiler path | Implemented for the accepted subset | Phase 2/3 compiler, residency check, and artifact inspection |
 | Pure A-Lang source task | Implemented | Counter source compiles and runs to result 42 |
 | Products, results, branching, sequencing, calls, and closed effect nodes in typed IR | Implemented in IR/backend | Generated differential and law tests |
-| Effectful A-Lang source syntax | Partial | Effects compile from promoted typed IR fixtures, not accepted source text |
+| Effectful A-Lang source syntax | Implemented for the frozen experimental subset | All 24 source cases parse, check, lower, compile, and execute through inspected BEAM; the surface is frozen because comparative fidelity was not measured |
 | Runtime effects and local authority | Implemented locally | Broker/sidecar tests and Phase 8 direct-handler ablation |
 | Durable workspace effect | Implemented for the local file-backed slice | Phase 5 recovery and Phase 8 verified artifact |
-| Model completion | Partial | Deterministic offline mock only; live-provider gate remains disabled |
-| More-restricted child task | Implemented as runtime/IR fixture | No source-level spawn construct |
+| Model completion | Partial | Deterministic offline model plus fixed, fault-tested provider adapters; zero hosted calls and no provider-behavior evidence |
+| More-restricted child task | Implemented for the frozen source/runtime subset | Source-declared child attenuation lowers to the existing supervised restricted-child boundary |
+| User-facing task notation | Stopped | Invalid hosted campaign produced no A-Lang-versus-JSON efficacy result; both authoring paths remain experimental and frozen |
 | Categorical laws | Partial | Selected laws are executable; no formal proof or categorical advantage |
 | Completion verification | Implemented for the Markdown workspace artifact | Digest, bound, syntax, section, and journal predicates |
 | Supported release matrix | Partial | One pinned OTP/ERTS/architecture environment |
@@ -84,10 +89,10 @@ long-term compatibility promise.
 
 | Risk | Current consequence | Treatment |
 | --- | --- | --- |
-| Effectful source gap | The demo does not prove a complete user-facing language | Highest-priority next decision boundary; no manual IR in future acceptance tasks |
+| Source-notation value is unmeasured | The closed source subset exists, but no hosted campaign tested whether models recover it better than typed JSON | Freeze both authoring paths; any later comparison requires a newly authorized and pre-registered stream |
 | Same-node code is trusted | A malicious BEAM module can exceed language-level intent | Generated imports are closed, but hostile execution requires a disposable OS sandbox |
 | Workspace sidecar shares the host account | Path containment is not tenant isolation | Treat as a bounded adapter PoC, not a multi-tenant sandbox |
-| Model adapter is a mock | Provider drift, latency, privacy, and failures are unmeasured | No live-provider reliability claim |
+| Hosted provider behavior is unmeasured | Fixed adapters pass offline faults, but availability, output, latency, price, privacy, and drift were never observed | No efficacy or live-provider reliability claim; do not infer from fixtures |
 | File-backed durability is local | Disk loss, distributed races, and operational restore are untested | Keep production status rejected |
 | One fixed generated module | Concurrent code-version and high-churn artifact operation are unresolved | Measure an artifact-cache/module-lifecycle design before broad workloads |
 | One OTP environment | Backend maintenance across releases is unknown | Add an explicit compatibility matrix before release claims |
@@ -96,4 +101,6 @@ long-term compatibility promise.
 
 The [architecture decision](proof-of-concept-architecture-decision.md) retains
 only claims that survive these limits. The [deferred-work ledger](deferred-work-ledger.md)
-keeps expansion visible without treating it as implemented.
+keeps expansion visible without treating it as implemented. The successor
+[fidelity decision](../effectful-source-fidelity/effectful-source-fidelity-architecture-decision.md)
+records why the authoring surfaces did not advance.

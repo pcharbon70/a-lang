@@ -45,7 +45,8 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
   agent DSL.
 - [Task languages for LLM agents: a deep dive](llm-agent-task-languages-deep-dive.md)
   — a synthesis of transformer behavior, task representation, agent
-  programming, formal reasoning, and language-design implications.
+  programming, formal reasoning, language-design implications, and the
+  bounded invalid-campaign result of the local A-Lang experiment.
 - [Typed source references for LLM code understanding](typed-source-references-for-llm-code-understanding.md)
   — an evidence-bounded case for compiler-resolved semantic relationships,
   selective context materialization, and an experiment before source syntax.

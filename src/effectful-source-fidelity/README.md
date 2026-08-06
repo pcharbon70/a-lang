@@ -303,6 +303,10 @@ test path. Generated evidence belongs under the ignored
   compares all 24 checked meanings and exercises stable identities, unresolved
   dependencies, reachability, completion paths and digests, child depth, and
   clarification control.
+- [Effectful source fidelity architecture decision](effectful-source-fidelity-architecture-decision.md)
+  — records the canonical invalid-campaign stop, retained BEAM implementation,
+  absent efficacy evidence, frozen authoring surfaces, limitations, and the
+  explicit authorization boundary for any later experiment.
 - [`alang_fidelity_source.erl`](alang_fidelity_source.erl) — translates the
   closed v2 AST into the representation-neutral semantic-input envelope while
   preserving source-local origins for every semantic field.

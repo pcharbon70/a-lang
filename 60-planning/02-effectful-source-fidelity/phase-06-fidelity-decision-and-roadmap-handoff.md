@@ -20,14 +20,15 @@ changes, and reconcile the implementation and research archive with the
 result. This phase decides the next disposition of the user-facing notation;
 it does not convert a prototype into production approval.
 
-**Status:** In progress; Sections 6.1–6.2 are implemented against the
+**Status:** In progress; Sections 6.1–6.3 are implemented against the
 explicitly closed invalid campaign. No hosted observation or efficacy
 comparison exists.
 
-**Dependencies:** Phase 5 complete with either a valid, fully accounted hosted
-campaign and byte-reproducible offline analysis or an explicitly invalid
-campaign whose missing cells and failure causes are preserved. All Phase 1–4
-contracts and inherited security gates remain unchanged.
+**Dependencies:** Phase 5 either complete with a valid, fully accounted hosted
+campaign and byte-reproducible offline analysis or closed through an explicitly
+invalid campaign whose missing cells and failure causes are preserved. The
+latter branch applies here. All Phase 1–4 contracts and inherited security
+gates remain unchanged.
 
 ## Section 6.1: Evidence Freeze and Campaign Validity
 
@@ -162,7 +163,7 @@ changing the canonical disposition.
 archive while preserving rejected claims, operational limits, deferred work,
 and the evidence trail that supports the outcome.
 
-- [ ] **Section 6.3 Complete**
+- [x] **Section 6.3 Complete**
 
 ### Task 6.3.1: Reconcile Architecture, Status, Risks, and Deferred Work
 
@@ -170,7 +171,7 @@ and the evidence trail that supports the outcome.
 from the canonical outcome, clearly separating what was implemented, what the
 experiment supports, and what remains untested or rejected.
 
-- [ ] **Task 6.3.1 Complete**
+- [x] **Task 6.3.1 Complete**
 
 #### Subtask 6.3.1.1: Apply the Outcome to the Supported Surface
 
@@ -180,7 +181,7 @@ input and remove the novel surface from future acceptance claims; on stop,
 freeze both experimental authoring paths while retaining evidence-supported
 BEAM runtime enforcement and test fixtures.
 
-- [ ] **Subtask 6.3.1.1 Complete**
+- [x] **Subtask 6.3.1.1 Complete**
 
 #### Subtask 6.3.1.2: Preserve Scope, Security, and Production Boundaries
 
@@ -189,7 +190,7 @@ durability, fixed-module lifecycle, single-OTP support, provider variability,
 formal-proof limits, and absent human-usability evidence visible; do not label
 any disposition production-ready or extrapolate to untested models and tasks.
 
-- [ ] **Subtask 6.3.1.2 Complete**
+- [x] **Subtask 6.3.1.2 Complete**
 
 ### Task 6.3.2: Reconcile Inquiries, Maps, Indexes, and the Next Boundary
 
@@ -197,7 +198,7 @@ any disposition production-ready or extrapolate to untested models and tasks.
 planning indexes, source indexes, and relevant synthesis links so readers can
 trace the question from research through code, hosted evidence, and decision.
 
-- [ ] **Task 6.3.2 Complete**
+- [x] **Task 6.3.2 Complete**
 
 #### Subtask 6.3.2.1: Record Findings Without Over-Resolving Research
 
@@ -206,7 +207,7 @@ and syntheses, keep broader questions open unless their stated criteria are
 actually satisfied, and identify limitations or contradictory evidence rather
 than turning a local result into a universal language claim.
 
-- [ ] **Subtask 6.3.2.1 Complete**
+- [x] **Subtask 6.3.2.1 Complete**
 
 #### Subtask 6.3.2.2: Define Any Later Work as a New Authorization
 
@@ -217,7 +218,7 @@ self-hosting, categorical syntax, human-usability claims, or production scope;
 materially new work requires a later numbered planning stream and explicit
 approval.
 
-- [ ] **Subtask 6.3.2.2 Complete**
+- [x] **Subtask 6.3.2.2 Complete**
 
 ## Section 6.4: Phase 6 Integration Tests
 
