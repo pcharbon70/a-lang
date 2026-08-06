@@ -108,15 +108,20 @@ run_observation(Product, Frontend, Base, Scenario) ->
             Outcome = alang_fidelity_runtime:run(Handle, task_inputs(Metadata)),
             Snapshot = alang_fidelity_runtime:snapshot(Handle),
             Inspection = maps:get(inspection, Product),
+            Artifact = observed_artifact(Outcome, Options),
             #{
                 format => alang_fidelity_offline_observation_v1,
                 frontend => Frontend,
                 source_sha256 => maps:get(source_sha256, Metadata),
+                raw_beam => maps:get(beam, Product),
                 raw_beam_sha256 => maps:get(beam_sha256, Inspection),
+                metadata => Metadata,
+                metadata_sha256 => maps:get(metadata_sha256, Inspection),
                 semantic_artifact_sha256 => maps:get(semantic_artifact_sha256, Inspection),
                 semantic_sha256 => maps:get(semantic_sha256, Metadata),
                 execution_plan => maps:get(execution_plan, Metadata),
                 child => maps:get(child, Metadata),
+                artifact => Artifact,
                 outcome => Outcome,
                 snapshot => Snapshot
             }
@@ -171,6 +176,25 @@ runtime_options(Product, Base, Responses, Fault, TestMode) ->
         test_mode => TestMode,
         test_fault => Fault
     }.
+
+observed_artifact({ok, #{artifact := #{relative_path := Relative}}}, Options)
+        when is_binary(Relative), Relative =/= <<>> ->
+    Workspaces = maps:values(maps:get(workspaces, maps:get(bindings, Options))),
+    case Workspaces of
+        [#{root := Root}] ->
+            Path = filename:join(binary_to_list(Root), binary_to_list(Relative)),
+            case file:read_file(Path) of
+                {ok, Content} -> #{
+                    relative_path => Relative,
+                    bytes => byte_size(Content),
+                    sha256 => hex(crypto:hash(sha256, Content)),
+                    content => Content
+                };
+                {error, Reason} -> {error, Reason}
+            end;
+        [] -> none
+    end;
+observed_artifact(_Outcome, _Options) -> none.
 
 positive_responses(Metadata) ->
     Plan = maps:get(execution_plan, Metadata),

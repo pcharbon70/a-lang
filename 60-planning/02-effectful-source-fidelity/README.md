@@ -247,10 +247,11 @@ following, with live-only items backed by a recorded opt-in campaign:
       — see the [Phase 3 evidence](../../src/effectful-source-fidelity/phase-03-integration-evidence.md)
 - [x] Effectful source covers model, workspace, repair, child, and completion
       vocabulary with source-local diagnostics
-- [ ] Both frontend paths produce inspected BEAM artifacts and execute through
-      the same broker, durability, workspace, and completion boundaries
-- [ ] All inherited Phase 1–8 offline, law, adversarial, fault, and mutation
-      gates remain green
+- [x] Both frontend paths produce inspected BEAM artifacts and execute through
+      the same broker, durability, workspace, and completion boundaries — see
+      the [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md)
+- [x] All inherited Phase 1–8 offline, law, adversarial, fault, and mutation
+      gates remain green — see the [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md)
 - [ ] Exactly 288 primary hosted trials, or an explicitly recorded invalid
       campaign, are accounted for under the call and cost ceilings
 - [ ] Offline replay reproduces normalized trials, scores, bootstrap intervals,
@@ -282,8 +283,9 @@ following, with live-only items backed by a recorded opt-in campaign:
   — **complete**; checks both A-Lang and typed JSON, derives authority, and
   proves matched lowering through the reproducible [Phase 3 evidence](../../src/effectful-source-fidelity/phase-03-integration-evidence.md).
 - [Phase 4 — Source-to-BEAM enforcement integration](phase-04-source-to-beam-enforcement-integration.md)
-  — compiles and executes every corpus family through the inspected BEAM
-  backend and inherited runtime enforcement path.
+  — **complete**; compiles and executes every corpus family through the
+  inspected BEAM backend and inherited runtime enforcement path, with
+  reproducible [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md).
 - [Phase 5 — Hosted multi-model fidelity evaluation](phase-05-hosted-multi-model-fidelity-evaluation.md)
   — adds bounded BEAM provider sidecars, the opt-in campaign, deterministic
   scoring, redacted evidence, and offline replay.

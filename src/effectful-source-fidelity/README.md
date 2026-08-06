@@ -152,10 +152,22 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_phase3_mutation.erl`](alang_fidelity_phase3_mutation.erl) —
   seeds effect inference, child limit, completion preservation, frontend
   default, node identity, and direct-IR defects and records their detection.
+- [`alang_fidelity_phase4_evidence.erl`](alang_fidelity_phase4_evidence.erl) —
+  aggregates all 48 inspected executions, paired failure classes,
+  clean-process reproduction, BEAM residency, compiler-boundary checks,
+  inherited gates, mutants, and retained limitations into deterministic ETF.
+- [`alang_fidelity_phase4_integration_tests.erl`](alang_fidelity_phase4_integration_tests.erl)
+  — freezes the Phase 4 evidence identities and verifies the complete matrix,
+  exact negative classes, cross-process bytes, residency, and owned evidence
+  paths.
 - [`alang_fidelity_phase4_mutation.erl`](alang_fidelity_phase4_mutation.erl) —
   seeds ignored manifests, JSON frontend bypass, widened runtime limits,
   skipped repair accounting, swapped source maps, widened child authority, and
   condition-specific runtime-handler defects for the Phase 4 gate.
+- [`alang_fidelity_phase4_worker.erl`](alang_fidelity_phase4_worker.erl) —
+  recompiles and executes one pair per family in a fresh ERTS process and
+  writes safely decodable deterministic evidence containing actual BEAM,
+  metadata, trace, artifact, and completion-witness bytes.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -196,6 +208,10 @@ test path. Generated evidence belongs under the ignored
 - [Phase 3 matched lowering evidence](phase-03-integration-evidence.md) — records
   the paired semantic and IR identities, exact authority and limits, equivalent
   negative classes, law and mutant results, residency, and reproduction gate.
+- [Phase 4 source-to-BEAM enforcement evidence](phase-04-integration-evidence.md)
+  — records all 48 inspected executions, paired positive and negative
+  observations, inherited gates, v2 mutants, compiler residency, and
+  byte-identical clean-process reproduction.
 
 ## Maintaining this index
 

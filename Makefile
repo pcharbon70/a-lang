@@ -227,11 +227,19 @@ FIDELITY_PHASE4_SOURCES := \
 	$(FIDELITY_DIR)/alang_fidelity_runtime_tests.erl \
 	$(FIDELITY_DIR)/alang_fidelity_offline.erl \
 	$(FIDELITY_DIR)/alang_fidelity_phase4_mutation.erl \
-	$(FIDELITY_DIR)/alang_fidelity_offline_tests.erl
+	$(FIDELITY_DIR)/alang_fidelity_offline_tests.erl \
+	$(FIDELITY_DIR)/alang_fidelity_phase4_worker.erl \
+	$(FIDELITY_DIR)/alang_fidelity_phase4_evidence.erl \
+	$(FIDELITY_DIR)/alang_fidelity_phase4_integration_tests.erl
 FIDELITY_PHASE4_STAMP := $(FIDELITY_PHASE4_BUILD)/.compiled
+FIDELITY_PHASE4_EVIDENCE_DIR := $(FIDELITY_PHASE4_BUILD)/evidence
+FIDELITY_PHASE4_REPRODUCTION_A := $(FIDELITY_PHASE4_EVIDENCE_DIR)/reproduction-a.etf
+FIDELITY_PHASE4_REPRODUCTION_B := $(FIDELITY_PHASE4_EVIDENCE_DIR)/reproduction-b.etf
+FIDELITY_PHASE4_EVIDENCE := $(FIDELITY_PHASE4_EVIDENCE_DIR)/source-to-beam-evidence.etf
+FIDELITY_PHASE4_ERL_PATHS := -pa $(FIDELITY_PHASE4_BUILD) -pa $(FIDELITY_PHASE3_BUILD) -pa $(FIDELITY_PHASE2_BUILD) -pa $(FIDELITY_BUILD) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD)
 
 .PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compare compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation compile-phase-8-release decide demo release-candidate run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2 test-section-7-3 test-section-7-4 test-section-7-5 test-section-8-1 test-section-8-2 test-section-8-3 test-section-8-4
-.PHONY: build-fidelity-phase-1-evidence build-fidelity-phase-2-evidence build-fidelity-phase-3-evidence compile-fidelity-phase-1 compile-fidelity-phase-2 compile-fidelity-phase-3 compile-fidelity-phase-4 test-fidelity-phase-1 test-fidelity-phase-2 test-fidelity-phase-3 test-fidelity-section-1-1 test-fidelity-section-1-2 test-fidelity-section-1-3 test-fidelity-section-1-4 test-fidelity-section-2-1 test-fidelity-section-2-2 test-fidelity-section-2-3 test-fidelity-section-2-4 test-fidelity-section-3-1 test-fidelity-section-3-2 test-fidelity-section-3-3 test-fidelity-section-3-4 test-fidelity-section-4-1 test-fidelity-section-4-2 test-fidelity-section-4-3
+.PHONY: build-fidelity-phase-1-evidence build-fidelity-phase-2-evidence build-fidelity-phase-3-evidence build-fidelity-phase-4-evidence build-fidelity-phase-4-reproduction compile-fidelity-phase-1 compile-fidelity-phase-2 compile-fidelity-phase-3 compile-fidelity-phase-4 test-fidelity-phase-1 test-fidelity-phase-2 test-fidelity-phase-3 test-fidelity-phase-4 test-fidelity-section-1-1 test-fidelity-section-1-2 test-fidelity-section-1-3 test-fidelity-section-1-4 test-fidelity-section-2-1 test-fidelity-section-2-2 test-fidelity-section-2-3 test-fidelity-section-2-4 test-fidelity-section-3-1 test-fidelity-section-3-2 test-fidelity-section-3-3 test-fidelity-section-3-4 test-fidelity-section-4-1 test-fidelity-section-4-2 test-fidelity-section-4-3 test-fidelity-section-4-4
 
 compile-fidelity-phase-1: $(FIDELITY_PHASE1_STAMP)
 
@@ -321,6 +329,20 @@ test-fidelity-section-4-2: test-fidelity-section-4-1
 
 test-fidelity-section-4-3: test-fidelity-section-4-2 test-phase-8
 	$(ERL) -noshell -pa $(FIDELITY_PHASE4_BUILD) -pa $(FIDELITY_PHASE3_BUILD) -pa $(FIDELITY_PHASE2_BUILD) -pa $(FIDELITY_BUILD) -pa $(PHASE1_BUILD) -pa $(PHASE2_BUILD) -pa $(PHASE3_BUILD) -pa $(PHASE4_BUILD) -pa $(PHASE5_BUILD) -pa $(PHASE6_BUILD) -pa $(PHASE7_BUILD) -pa $(PHASE8_BUILD) -eval 'case eunit:test(alang_fidelity_offline_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+build-fidelity-phase-4-reproduction: compile-fidelity-phase-4
+	mkdir -p $(FIDELITY_PHASE4_EVIDENCE_DIR)
+	$(ERL) -noshell $(FIDELITY_PHASE4_ERL_PATHS) -s alang_fidelity_phase4_worker main -extra $(FIDELITY_PHASE4_REPRODUCTION_A)
+	$(ERL) -noshell $(FIDELITY_PHASE4_ERL_PATHS) -s alang_fidelity_phase4_worker main -extra $(FIDELITY_PHASE4_REPRODUCTION_B)
+	cmp $(FIDELITY_PHASE4_REPRODUCTION_A) $(FIDELITY_PHASE4_REPRODUCTION_B)
+
+build-fidelity-phase-4-evidence: test-fidelity-section-4-3 build-fidelity-phase-4-reproduction
+	$(ERL) -noshell $(FIDELITY_PHASE4_ERL_PATHS) -s alang_fidelity_phase4_evidence main -extra $(FIDELITY_PHASE4_EVIDENCE)
+
+test-fidelity-section-4-4: build-fidelity-phase-4-evidence
+	$(ERL) -noshell $(FIDELITY_PHASE4_ERL_PATHS) -eval 'case eunit:test(alang_fidelity_phase4_integration_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-fidelity-phase-4: test-fidelity-section-4-4
 
 check-toolchain: $(COMPILER_MODULE)
 	$(ERL) -noshell -pa $(PHASE1_BUILD) -eval 'case alang_phase1_compiler:check_toolchain("$(TOOLCHAIN_CONFIG)") of {ok, Actual} -> io:format("toolchain_ok ~tp~n", [Actual]), halt(0); {error, Reason} -> io:format(standard_error, "toolchain_error ~tp~n", [Reason]), halt(1) end.'
@@ -536,7 +558,7 @@ test-section-8-4: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase
 
 test-phase-8: test-section-8-4
 
-test: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8 test-fidelity-phase-1 test-fidelity-phase-2 test-fidelity-phase-3
+test: test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8 test-fidelity-phase-1 test-fidelity-phase-2 test-fidelity-phase-3 test-fidelity-phase-4
 
 $(PHASE1_BUILD):
 	mkdir -p $(PHASE1_BUILD)

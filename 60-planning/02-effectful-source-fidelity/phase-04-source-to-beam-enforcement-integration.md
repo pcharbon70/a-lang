@@ -20,9 +20,9 @@ the same generated-code, model, broker, durability, child, workspace, and
 completion boundaries. Offline deterministic evidence must prove the complete
 path before hosted-model variability is introduced.
 
-**Status:** In progress; Sections 4.1–4.3 have compiler, runtime, paired
-offline-execution, inherited-gate, and mutation evidence. The clean-process
-integration and published-evidence gate remains open.
+**Status:** Complete; all four sections pass from source, and the reproducible
+[Phase 4 integration evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md)
+records the complete offline source-to-BEAM enforcement gate.
 
 **Dependencies:** Phase 3 complete with matched IR and manifests for all 24
 pairs. The Phase 3 backend and artifact inspector plus Phase 4–8 runtime and
@@ -213,7 +213,7 @@ completion from model text, and condition-specific runtime handlers.
 BEAM artifacts and only those artifacts satisfy the complete offline execution
 gate.
 
-- [ ] **Section 4.4 Complete**
+- [x] **Section 4.4 Complete**
 
 ### Task 4.4.1: Run the Offline Source-to-Evidence Matrix
 
@@ -222,7 +222,7 @@ compiles all 48 representation files, checks pair semantics, executes the three
 families with frozen mock responses, and writes deterministic evidence below an
 owned build directory.
 
-- [ ] **Task 4.4.1 Complete**
+- [x] **Task 4.4.1 Complete**
 
 #### Subtask 4.4.1.1: Reproduce Artifacts Across Clean ERTS Processes
 
@@ -230,7 +230,7 @@ owned build directory.
 condition in separate pinned ERTS processes and require byte-identical BEAM,
 metadata, normalized traces, artifacts, and completion evidence.
 
-- [ ] **Subtask 4.4.1.1 Complete**
+- [x] **Subtask 4.4.1.1 Complete**
 
 #### Subtask 4.4.1.2: Reassert Compiler Residency and No Interpreter
 
@@ -238,14 +238,14 @@ metadata, normalized traces, artifacts, and completion evidence.
 `.beam` file, no foreign executable in the compiler graph, no emitted Erlang
 source or Core Erlang, and no reference/JSON evaluator accepted as execution.
 
-- [ ] **Subtask 4.4.1.2 Complete**
+- [x] **Subtask 4.4.1.2 Complete**
 
 ### Task 4.4.2: Publish Phase 4 Integration Evidence
 
 **Description:** Reconcile artifact, manifest, runtime, security, recovery,
 completion, and regression evidence for the complete offline paired matrix.
 
-- [ ] **Task 4.4.2 Complete**
+- [x] **Task 4.4.2 Complete**
 
 #### Subtask 4.4.2.1: Index Positive and Negative Evidence
 
@@ -253,7 +253,7 @@ completion, and regression evidence for the complete offline paired matrix.
 broker audit, journal, child record, completion witness, or seeded-defect
 result and leave any unsupported claim unchecked.
 
-- [ ] **Subtask 4.4.2.1 Complete**
+- [x] **Subtask 4.4.2.1 Complete**
 
 #### Subtask 4.4.2.2: Record Remaining Runtime Risks
 
@@ -261,20 +261,20 @@ result and leave any unsupported claim unchecked.
 single-OTP, provider-mock, and non-production limitations instead of treating
 successful effectful source compilation as their resolution.
 
-- [ ] **Subtask 4.4.2.2 Complete**
+- [x] **Subtask 4.4.2.2 Complete**
 
 ## Phase 4 Completion Evidence
 
 **Description:** Authorize hosted evaluation only after representation is the
 sole experimental variable in a fully enforced offline path.
 
-- [ ] IR v2 lowers only through allowlisted Abstract Format and runtime ABI calls
-- [ ] Artifact inspection binds source, semantic, manifest, limit, child, and completion evidence
-- [ ] All 48 representation files compile to inspected BEAM without manual IR
-- [ ] All three task families execute as supervised generated BEAM processes
-- [ ] Paired positive, negative, incomplete, and uncertain observations agree
-- [ ] Runtime grants and counters are derived from inspected static metadata
-- [ ] Model text cannot mark completion or widen authority
-- [ ] All inherited Phase 1–8 gates pass unchanged
-- [ ] V2-specific mutants and faults are detected
-- [ ] Offline artifacts and evidence reproduce across clean ERTS processes
+- [x] IR v2 lowers only through allowlisted Abstract Format and runtime ABI calls
+- [x] Artifact inspection binds source, semantic, manifest, limit, child, and completion evidence
+- [x] All 48 representation files compile to inspected BEAM without manual IR
+- [x] All three task families execute as supervised generated BEAM processes
+- [x] Paired positive, negative, incomplete, and uncertain observations agree
+- [x] Runtime grants and counters are derived from inspected static metadata
+- [x] Model text cannot mark completion or widen authority
+- [x] All inherited Phase 1–8 gates pass unchanged
+- [x] V2-specific mutants and faults are detected
+- [x] Offline artifacts and evidence reproduce across clean ERTS processes
