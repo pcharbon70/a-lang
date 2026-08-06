@@ -187,11 +187,15 @@ execute_effect(Kind, Token, Ordinal, ActionId, Operation, Dependencies, Caller, 
         operation => Operation, dependencies => Dependencies},
     case preflight_step(Token, Caller, Expected, Supplied, State) of
         ok ->
-            case reserve_effect(Operation, State) of
-                {ok, Reserved} ->
-                    execute_reserved_effect(Expected, Reserved);
-                {error, Reason} ->
-                    {{error, Reason}, fail_state(Reason, State)}
+            case injected_pre_effect_failure(Operation, State) of
+                none ->
+                    case reserve_effect(Operation, State) of
+                        {ok, Reserved} ->
+                            execute_reserved_effect(Expected, Reserved);
+                        {error, Reason} ->
+                            {{error, Reason}, fail_state(Reason, State)}
+                    end;
+                Reason -> {{error, Reason}, fail_state(Reason, State)}
             end;
         {error, Reason} -> {{error, Reason}, fail_state(Reason, State)}
     end.
@@ -209,8 +213,8 @@ execute_model_generate(Step, State) ->
     Request = original_model_request(Step, State),
     Fixture = response_fixture(maps:get(action_id, Step), State),
     case invoke_parent_model(Request, Fixture, State) of
-        {ok, #{status := success, output := Output} = Result, Updated} ->
-            finish_step(Step, {model, success, digest(Result)}, Output, Updated);
+        {ok, #{status := success, output := Output}, Updated} ->
+            finish_step(Step, {model, success, digest_binary(Output)}, Output, Updated);
         {ok, #{status := Status} = Failure, Updated} when
                 Status =:= invalid_syntax; Status =:= schema_failure ->
             RepairLimit = maps:get(repair_calls, maps:get(task_limits,
@@ -219,7 +223,9 @@ execute_model_generate(Step, State) ->
             Gate = #{consequential_effects => false, cancelled => false, authorized => true},
             case alang_phase6_repair:plan(Repair0, Failure, Gate) of
                 {ok, RepairRequest, RepairState} ->
-                    finish_step(Step, {model, Status, digest(Failure)},
+                    Diagnostic = maps:get(diagnostic, Failure),
+                    StableFailure = maps:with([code, fragment, offset], Diagnostic),
+                    finish_step(Step, {model, Status, digest(StableFailure)},
                         none, Updated#{repair := #{request => RepairRequest,
                             state => RepairState}});
                 {terminal, Reason, _} ->
@@ -240,7 +246,7 @@ execute_model_repair(Step, #{repair := #{request := Request,
                 {ok, Recorded} ->
                     case maps:get(status, Result) of
                         success -> finish_step(Step,
-                            {repair, accepted, digest(alang_phase6_repair:snapshot(Recorded))},
+                            {repair, accepted, digest_binary(maps:get(output, Result))},
                             maps:get(output, Result), Updated#{repair := Recorded});
                         _ ->
                             {{error, repair_failed}, fail_state(repair_failed,
@@ -268,6 +274,7 @@ execute_workspace(Step, #{last_output := Output, workflow := Workflow} = State)
         deadline => maps:get(deadline, State),
         correlation_id => correlation_id(OperationId)
     },
+    ok = maybe_inject_workspace_fault(State),
     case alang_phase5_workflow:handle_effect(
             Workflow, <<"workspace.write">>, Arguments, GatewayContext) of
         {ok, ResultDigest} ->
@@ -383,11 +390,16 @@ completion_evidence(_Durable, #{workspace := none, metadata := Metadata}) ->
         clarifications => Clarifications
     };
 completion_evidence(_Durable, #{workspace := Workspace, last_output := Output} = State) ->
+    ArtifactDigest = case test_fault(State) of
+        wrong_digest ->
+            <<"0000000000000000000000000000000000000000000000000000000000000000">>;
+        _ -> digest_binary(Output)
+    end,
     #{
         format => alang_fidelity_completion_evidence_v1,
         workspace_root => binary_to_list(maps:get(root, Workspace)),
         relative_path => artifact_relative_path(maps:get(metadata, State)),
-        artifact_digest => digest_binary(Output),
+        artifact_digest => ArtifactDigest,
         artifact_bytes => byte_size(Output),
         journal_result => maps:get(journal_result, State),
         journal_action_id => maps:get(journal_action_id, State),
@@ -501,8 +513,12 @@ invoke_model(Request, Fixture, Grant, Binding, State) ->
     Broker = maps:get(broker, State),
     Profile = maps:get(profile, Request),
     OperationId = maps:get(operation_id, Request),
+    ModelId = case test_fault(State) of
+        denied_scope -> <<"undeclared-model">>;
+        _ -> maps:get(model, Profile)
+    end,
     Arguments = {alang_data_v1, product, {
-        maps:get(model, Profile), maps:get(instruction, Request),
+        ModelId, maps:get(instruction, Request),
         maps:get(max_bytes, maps:get(output_schema, Request)), OperationId
     }},
     Context = broker_context(Broker, Binding, maps:get(deadline, State), OperationId),
@@ -663,14 +679,16 @@ response_fixture(ActionId, State) ->
         #{status => permanent}).
 
 validate_options(Options, Metadata) when is_map(Options) ->
-    Keys = [format, session_id, bindings, responses, store_root, test_mode],
+    Keys = [format, session_id, bindings, responses, store_root, test_mode, test_fault],
     case lists:sort(maps:keys(Options)) =:= lists:sort(Keys) andalso
             maps:get(format, Options, invalid) =:= alang_fidelity_runtime_options_v1 andalso
             valid_id(maps:get(session_id, Options, invalid)) andalso
             is_map(maps:get(responses, Options, invalid)) andalso
             is_list(maps:get(store_root, Options, invalid)) andalso
             filename:pathtype(maps:get(store_root, Options, invalid)) =:= absolute andalso
-            is_boolean(maps:get(test_mode, Options, invalid)) of
+            is_boolean(maps:get(test_mode, Options, invalid)) andalso
+            valid_test_fault(maps:get(test_fault, Options, invalid),
+                maps:get(test_mode, Options, false)) of
         true -> validate_bindings(Options, Metadata);
         false -> {error, invalid_fidelity_runtime_options}
     end;
@@ -736,6 +754,11 @@ valid_fixture(#{status := Status, fragment := Fragment} = Fixture) when
     map_size(Fixture) =:= 2 andalso is_binary(Fragment) andalso byte_size(Fragment) =< 4096;
 valid_fixture(_) -> false.
 
+valid_test_fault(none, _TestMode) -> true;
+valid_test_fault(Fault, true) -> lists:member(Fault,
+    [denied_scope, cancel_before_child, workspace_outcome_unknown, wrong_digest]);
+valid_test_fault(_Fault, _TestMode) -> false.
+
 validate_inputs(Inputs, Metadata) when is_map(Inputs) ->
     Parameters = maps:get(parameters, Metadata),
     Names = lists:sort([maps:get(name, Parameter) || Parameter <- Parameters]),
@@ -775,7 +798,7 @@ start_broker(_Metadata, Config) ->
         maps:values(maps:get(workspaces, Bindings))]),
     Adapter = case maps:to_list(maps:get(workspaces, Bindings)) of
         [] -> disabled;
-        [{_Logical, Workspace}] -> workspace_adapter_options(Workspace)
+        [{_Logical, Workspace}] -> workspace_adapter_options(Workspace, Config)
     end,
     Options0 = #{
         limits => #{max_pending => 16, max_pending_per_session => 8,
@@ -796,11 +819,11 @@ ensure_workspace_roots(Workspaces) ->
     end, maps:values(Workspaces)),
     ok.
 
-workspace_adapter_options(Workspace) -> #{
+workspace_adapter_options(Workspace, Config) -> #{
     workspace_id => maps:get(workspace_id, Workspace),
     root => maps:get(root, Workspace),
     beam_dir => list_to_binary(filename:absname("build/phase-04/runtime")),
-    test_faults => false,
+    test_faults => maps:get(test_mode, Config),
     limits => #{max_request_bytes => 98304, max_response_bytes => 4096,
         max_content_bytes => 65536, max_cache_entries => 128,
         request_timeout_ms => 3000, address_space_bytes => 2147483648,
@@ -995,6 +1018,23 @@ child_session_id(State) ->
 
 correlation_id(OperationId) -> <<"corr-", OperationId/binary>>.
 
+injected_pre_effect_failure(<<"child.run">>, State) ->
+    case test_fault(State) of
+        cancel_before_child -> cancelled;
+        _ -> none
+    end;
+injected_pre_effect_failure(_Operation, _State) -> none.
+
+maybe_inject_workspace_fault(State) ->
+    case test_fault(State) of
+        workspace_outcome_unknown ->
+            alang_phase4_broker:inject_adapter_test_fault(
+                maps:get(broker, State), crash_after_mutation);
+        _ -> ok
+    end.
+
+test_fault(State) -> maps:get(test_fault, maps:get(config, State), none).
+
 bounded_prompt(IoData) ->
     Binary = iolist_to_binary(IoData),
     case byte_size(Binary) =< 16384 of
@@ -1002,11 +1042,28 @@ bounded_prompt(IoData) ->
         false -> binary:part(Binary, 0, 16384)
     end.
 
-normalize_effect_error({alang_effect_denied_v1, Reason, _Operation, _Resource,
+normalize_effect_error(Reason) ->
+    case contains_outcome_unknown(Reason) of
+        true -> outcome_unknown;
+        false -> normalize_definitive_error(Reason)
+    end.
+
+normalize_definitive_error({alang_effect_denied_v1, Reason, _Operation, _Resource,
         _DecisionId}) -> Reason;
-normalize_effect_error({Reason, _}) when is_atom(Reason) -> Reason;
-normalize_effect_error(Reason) when is_atom(Reason) -> Reason;
-normalize_effect_error(_) -> effect_failed.
+normalize_definitive_error({alang_broker_denial_v1, Reason}) -> Reason;
+normalize_definitive_error({Reason, _}) when is_atom(Reason) -> Reason;
+normalize_definitive_error(Reason) when is_atom(Reason) -> Reason;
+normalize_definitive_error(_) -> effect_failed.
+
+contains_outcome_unknown(outcome_unknown) -> true;
+contains_outcome_unknown(<<"adapter-outcome-unknown">>) -> true;
+contains_outcome_unknown(Term) when is_tuple(Term) ->
+    contains_outcome_unknown(tuple_to_list(Term));
+contains_outcome_unknown(Term) when is_list(Term) ->
+    lists:any(fun contains_outcome_unknown/1, Term);
+contains_outcome_unknown(Term) when is_map(Term) ->
+    contains_outcome_unknown(maps:keys(Term) ++ maps:values(Term));
+contains_outcome_unknown(_) -> false.
 
 runtime_snapshot(State) ->
     BrokerAudit = case maps:get(broker, State) of

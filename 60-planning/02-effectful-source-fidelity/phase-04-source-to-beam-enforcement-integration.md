@@ -20,8 +20,9 @@ the same generated-code, model, broker, durability, child, workspace, and
 completion boundaries. Offline deterministic evidence must prove the complete
 path before hosted-model variability is introduced.
 
-**Status:** In progress; Section 4.1 has reproducible compiler and artifact
-evidence, while runtime binding and the complete integration gate remain open.
+**Status:** In progress; Sections 4.1–4.3 have compiler, runtime, paired
+offline-execution, inherited-gate, and mutation evidence. The clean-process
+integration and published-evidence gate remains open.
 
 **Dependencies:** Phase 3 complete with matched IR and manifests for all 24
 pairs. The Phase 3 backend and artifact inspector plus Phase 4–8 runtime and
@@ -153,7 +154,7 @@ matching journal result before emitting a complete witness.
 **Description:** Run both representation paths against deterministic model and
 replay fixtures while preserving all negative evidence from the first roadmap.
 
-- [ ] **Section 4.3 Complete**
+- [x] **Section 4.3 Complete**
 
 ### Task 4.3.1: Execute All Three Families Through the Same Runtime
 
@@ -162,7 +163,7 @@ run each condition with matched offline responses, and compare normalized
 results, effect traces, broker decisions, journals, child evidence, artifacts,
 and completion witnesses.
 
-- [ ] **Task 4.3.1 Complete**
+- [x] **Task 4.3.1 Complete**
 
 #### Subtask 4.3.1.1: Prove Positive Observation Equality
 
@@ -172,7 +173,7 @@ semantic digest, terminal class, and completion-witness digest after removing
 representation-specific source provenance; raw artifacts retain their distinct
 frontend/source metadata.
 
-- [ ] **Subtask 4.3.1.1 Complete**
+- [x] **Subtask 4.3.1.1 Complete**
 
 #### Subtask 4.3.1.2: Prove Matched Failure and Incomplete Outcomes
 
@@ -181,14 +182,14 @@ repair failure, child widening, cancellation, uncertain workspace outcome,
 wrong digest, and missing-information cases and require the same fail-closed
 classification in both conditions.
 
-- [ ] **Subtask 4.3.1.2 Complete**
+- [x] **Subtask 4.3.1.2 Complete**
 
 ### Task 4.3.2: Reuse the Full Security, Fault, and Law Campaign
 
 **Description:** Run the established Phase 7/8 suites against the extended
 compiler and runtime and add only v2-specific mutants and fault transitions.
 
-- [ ] **Task 4.3.2 Complete**
+- [x] **Task 4.3.2 Complete**
 
 #### Subtask 4.3.2.1: Reassert Existing Enforcement and Recovery Evidence
 
@@ -196,7 +197,7 @@ compiler and runtime and add only v2-specific mutants and fault transitions.
 workspace-isolation, durability, fault, pressure, leak, mutation, and completion
 tests to pass without weakening expected denials or uncertainty.
 
-- [ ] **Subtask 4.3.2.1 Complete**
+- [x] **Subtask 4.3.2.1 Complete**
 
 #### Subtask 4.3.2.2: Add V2-Specific Mutants and Faults
 
@@ -204,7 +205,7 @@ tests to pass without weakening expected denials or uncertainty.
 limits, child authority widening, skipped repair accounting, source-map swaps,
 completion from model text, and condition-specific runtime handlers.
 
-- [ ] **Subtask 4.3.2.2 Complete**
+- [x] **Subtask 4.3.2.2 Complete**
 
 ## Section 4.4: Phase 4 Integration Tests
 

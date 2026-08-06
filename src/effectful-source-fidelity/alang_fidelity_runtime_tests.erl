@@ -169,7 +169,8 @@ runtime_options(Product, Base, Responses) ->
         bindings => #{models => Models, workspaces => Workspaces},
         responses => Responses,
         store_root => filename:absname(Store),
-        test_mode => true
+        test_mode => true,
+        test_fault => none
     }.
 
 model_binding() -> #{model_id => <<"fixture-model-v1">>, profile => profile()}.

@@ -128,6 +128,14 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_lowering_tests.erl`](alang_fidelity_lowering_tests.erl) —
   checks paired IR equality, exact authority, limit bounds, stable nodes and
   effect ordinals, deterministic ETF, seeded mutants, and campaign gates.
+- [`alang_fidelity_offline.erl`](alang_fidelity_offline.erl) — compiles and
+  executes every A-Lang/typed-JSON pair independently with deterministic model
+  fixtures, normalizes runtime observations, and checks trusted counter
+  accounting before producing the offline matrix.
+- [`alang_fidelity_offline_tests.erl`](alang_fidelity_offline_tests.erl) —
+  compares all 24 paired executions, exercises matched failure, incomplete,
+  cancellation, and uncertain outcomes, detects v2-specific mutants, and
+  reasserts the inherited BEAM-resident implementation boundary.
 - [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
   source unchanged and parses v2 task declarations, authority, scopes, and
   limits, ordered actions, errors, child attenuation, and completion into the
@@ -144,6 +152,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_phase3_mutation.erl`](alang_fidelity_phase3_mutation.erl) —
   seeds effect inference, child limit, completion preservation, frontend
   default, node identity, and direct-IR defects and records their detection.
+- [`alang_fidelity_phase4_mutation.erl`](alang_fidelity_phase4_mutation.erl) —
+  seeds ignored manifests, JSON frontend bypass, widened runtime limits,
+  skipped repair accounting, swapped source maps, widened child authority, and
+  condition-specific runtime-handler defects for the Phase 4 gate.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.

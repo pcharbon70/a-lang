@@ -19,24 +19,26 @@ validate_witness(#{
     terminal_class := TerminalClass,
     artifact := Artifact,
     predicates := Predicates,
+    phase6_status := Phase6Status,
     phase6_witness_digest := Phase6Digest,
     journal_digest := JournalDigest,
     semantic_digest := SemanticDigest,
     model_completion_claim_accepted := false,
     witness_digest := WitnessDigest
-} = Witness) when map_size(Witness) =:= 10, is_list(Predicates) ->
+} = Witness) when map_size(Witness) =:= 11, is_list(Predicates) ->
     Base = maps:remove(witness_digest, Witness),
     PredicatesValid = lists:all(fun valid_predicate_result/1, Predicates),
     AllPassed = PredicatesValid andalso
         lists:all(fun(#{passed := Passed}) -> Passed end, Predicates),
-    StatusMatches = case {TerminalClass, AllPassed} of
+    VerificationPassed = AllPassed andalso Phase6Status =:= complete,
+    StatusMatches = case {TerminalClass, VerificationPassed} of
         {<<"complete">>, true} -> Status =:= complete;
         {<<"complete">>, false} -> Status =:= incomplete;
         {<<"needs-clarification">>, _} -> Status =:= incomplete;
         {<<"failed">>, _} -> Status =:= failed
     end,
     case PredicatesValid andalso StatusMatches andalso valid_artifact(Artifact) andalso
-        valid_optional_digest(Phase6Digest) andalso
+        valid_phase6_evidence(Phase6Status, Phase6Digest) andalso
         valid_optional_digest(JournalDigest) andalso valid_digest(SemanticDigest) andalso
         valid_digest(WitnessDigest) andalso digest(Base) =:= WitnessDigest of
         true -> ok;
@@ -81,6 +83,7 @@ build_witness(Metadata, Evidence) ->
         terminal_class => Terminal,
         artifact => Artifact,
         predicates => PredicateResults,
+        phase6_status => optional_witness_status(Phase6),
         phase6_witness_digest => optional_witness_digest(Phase6),
         journal_digest => optional_journal_digest(maps:get(journal_result, Evidence)),
         semantic_digest => maps:get(semantic_sha256, Metadata),
@@ -217,6 +220,9 @@ valid_utf8(Content) ->
 optional_witness_digest(none) -> none;
 optional_witness_digest(Witness) -> maps:get(witness_digest, Witness).
 
+optional_witness_status(none) -> none;
+optional_witness_status(Witness) -> maps:get(status, Witness).
+
 optional_journal_digest(none) -> none;
 optional_journal_digest(Journal) when is_map(Journal) -> digest(Journal).
 
@@ -233,6 +239,11 @@ valid_artifact(_) -> false.
 
 valid_optional_digest(none) -> true;
 valid_optional_digest(Digest) -> valid_digest(Digest).
+
+valid_phase6_evidence(none, none) -> true;
+valid_phase6_evidence(Status, Digest) when Status =:= complete; Status =:= incomplete ->
+    valid_digest(Digest);
+valid_phase6_evidence(_Status, _Digest) -> false.
 
 valid_optional_bytes(none) -> true;
 valid_optional_bytes(Bytes) -> is_integer(Bytes) andalso Bytes >= 0.
