@@ -11,6 +11,7 @@
     complete/3,
     dispatch/3,
     describe_grant/2,
+    inject_adapter_test_fault/2,
     issue_grant/2,
     lookup_workspace/3,
     pending_count/1,
@@ -95,6 +96,10 @@ adapter_status(Broker) -> gen_server:call(Broker, adapter_status, ?MAX_CALL_TIME
 
 -spec adapter_events(pid()) -> {ok, [map()]} | {error, atom()}.
 adapter_events(Broker) -> gen_server:call(Broker, adapter_events, ?MAX_CALL_TIMEOUT).
+
+-spec inject_adapter_test_fault(pid(), atom()) -> ok | {error, atom()}.
+inject_adapter_test_fault(Broker, Fault) ->
+    gen_server:call(Broker, {inject_adapter_test_fault, Fault}, ?MAX_CALL_TIMEOUT).
 
 init(Options) ->
     case validate_options(Options) of
@@ -182,6 +187,8 @@ handle_call(adapter_status, _From, State) ->
     {reply, owned_adapter_call(status, State), State};
 handle_call(adapter_events, _From, State) ->
     {reply, owned_adapter_call(events, State), State};
+handle_call({inject_adapter_test_fault, Fault}, _From, State) ->
+    {reply, owned_adapter_inject_fault(Fault, State), State};
 handle_call(_Request, _From, State) -> {reply, {error, unsupported_broker_call}, State}.
 
 handle_cast(_Message, State) -> {noreply, State}.
@@ -646,6 +653,15 @@ owned_adapter_call(status, #{adapter := #{pid := Adapter}}) ->
     end;
 owned_adapter_call(events, #{adapter := #{pid := Adapter}}) ->
     try {ok, alang_phase4_workspace_adapter:events(Adapter)}
+    catch
+        exit:_Reason -> {error, adapter_unavailable}
+    end.
+
+owned_adapter_inject_fault(_Fault, #{adapter := disabled}) ->
+    {error, adapter_unavailable};
+owned_adapter_inject_fault(Fault, #{adapter := #{pid := Adapter, seal := Seal}}) ->
+    try alang_phase4_workspace_adapter:inject_test_fault(Adapter, Seal, Fault) of
+        Result -> Result
     catch
         exit:_Reason -> {error, adapter_unavailable}
     end.

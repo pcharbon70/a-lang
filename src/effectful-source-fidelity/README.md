@@ -43,6 +43,10 @@ test path. Generated evidence belongs under the ignored
 
 ### Files
 
+- [`alang_fidelity_artifact_v2.erl`](alang_fidelity_artifact_v2.erl) — inspects
+  generated IR v2 BEAM containers, permits only the fixed module, exports,
+  imports, chunks, compiler profile, and metadata contract, and binds loaded
+  artifacts back to exact compiler evidence.
 - [`alang_fidelity_ast.erl`](alang_fidelity_ast.erl) — validates every v2 AST
   node against exact fields, closed values, collection and budget bounds,
   source origins, and safe workspace paths.
@@ -55,6 +59,14 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
   ordered effect and repair steps, explicit error results, attenuated child
   declarations, completion predicates, clarification, and terminal classes.
+- [`alang_fidelity_backend_v2.erl`](alang_fidelity_backend_v2.erl) — lowers
+  checked IR v2 actions into static calls in allowlisted Abstract Format,
+  compiles deterministically on BEAM with strong validation, and emits
+  representation-local backend diagnostics.
+- [`alang_fidelity_backend_v2_tests.erl`](alang_fidelity_backend_v2_tests.erl)
+  — compiles all 48 frozen representations, compares paired executable
+  identities, and detects forbidden calls, metadata tampering, bad imports,
+  nondeterminism, and diagnostic-origin loss.
 - [`alang_fidelity_canonical.erl`](alang_fidelity_canonical.erl) — encodes the
   v2 AST in a distinct deterministic ETF envelope, safely decodes and
   revalidates it, rejects compressed or trailing data, and preserves v1 bytes.
@@ -67,6 +79,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_compiler.erl`](alang_fidelity_compiler.erl) — composes both
   accepted frontend paths with the shared checker and lowering pass, and
   enforces source-byte, frontend, and semantic-digest campaign provenance.
+- [`alang_fidelity_completion.erl`](alang_fidelity_completion.erl) — evaluates
+  source-declared artifact, digest, byte, UTF-8, Markdown, journal, and
+  clarification predicates and combines them with the independent Phase 6
+  filesystem verifier into a content-addressed completion witness.
 - [`alang_fidelity_contract.erl`](alang_fidelity_contract.erl) — validates the
   closed task-comprehension and representation-neutral answer-key contracts
   and computes canonical semantic digests.
@@ -91,6 +107,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_frontend_evidence.erl`](alang_fidelity_frontend_evidence.erl)
   — builds path-independent Phase 2 corpus, AST, source-map, compatibility,
   robustness, negative-case, and BEAM-residency evidence.
+- [`alang_fidelity_forms_v2.erl`](alang_fidelity_forms_v2.erl) — owns the
+  deterministic metadata envelope and recursively validates the small
+  Abstract Format subset and four fixed runtime ABI calls accepted for
+  generated effectful programs.
 - [`alang_fidelity_integration_tests.erl`](alang_fidelity_integration_tests.erl)
   — runs the complete contract/corpus gate, mutant matrix, BEAM residency
   check, frozen-scope audit, and byte-for-byte digest reproduction.
@@ -108,6 +128,14 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_lowering_tests.erl`](alang_fidelity_lowering_tests.erl) —
   checks paired IR equality, exact authority, limit bounds, stable nodes and
   effect ordinals, deterministic ETF, seeded mutants, and campaign gates.
+- [`alang_fidelity_offline.erl`](alang_fidelity_offline.erl) — compiles and
+  executes every A-Lang/typed-JSON pair independently with deterministic model
+  fixtures, normalizes runtime observations, and checks trusted counter
+  accounting before producing the offline matrix.
+- [`alang_fidelity_offline_tests.erl`](alang_fidelity_offline_tests.erl) —
+  compares all 24 paired executions, exercises matched failure, incomplete,
+  cancellation, and uncertain outcomes, detects v2-specific mutants, and
+  reasserts the inherited BEAM-resident implementation boundary.
 - [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
   source unchanged and parses v2 task declarations, authority, scopes, and
   limits, ordered actions, errors, child attenuation, and completion into the
@@ -124,6 +152,22 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_phase3_mutation.erl`](alang_fidelity_phase3_mutation.erl) —
   seeds effect inference, child limit, completion preservation, frontend
   default, node identity, and direct-IR defects and records their detection.
+- [`alang_fidelity_phase4_evidence.erl`](alang_fidelity_phase4_evidence.erl) —
+  aggregates all 48 inspected executions, paired failure classes,
+  clean-process reproduction, BEAM residency, compiler-boundary checks,
+  inherited gates, mutants, and retained limitations into deterministic ETF.
+- [`alang_fidelity_phase4_integration_tests.erl`](alang_fidelity_phase4_integration_tests.erl)
+  — freezes the Phase 4 evidence identities and verifies the complete matrix,
+  exact negative classes, cross-process bytes, residency, and owned evidence
+  paths.
+- [`alang_fidelity_phase4_mutation.erl`](alang_fidelity_phase4_mutation.erl) —
+  seeds ignored manifests, JSON frontend bypass, widened runtime limits,
+  skipped repair accounting, swapped source maps, widened child authority, and
+  condition-specific runtime-handler defects for the Phase 4 gate.
+- [`alang_fidelity_phase4_worker.erl`](alang_fidelity_phase4_worker.erl) —
+  recompiles and executes one pair per family in a fresh ERTS process and
+  writes safely decodable deterministic evidence containing actual BEAM,
+  metadata, trace, artifact, and completion-witness bytes.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -133,6 +177,17 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_representation_tests.erl`](alang_fidelity_representation_tests.erl)
   — verifies source-v1 preservation, forbidden features, closed controls,
   semantic equality, origin separation, opaque scheduling, and leakage rules.
+- [`alang_fidelity_runtime.erl`](alang_fidelity_runtime.erl) — binds inspected
+  artifact metadata to exact operator resources, opaque broker grants, static
+  counters and deadlines, durable workspace state, bounded repair, attenuated
+  children, and verifier-only completion.
+- [`alang_fidelity_runtime_abi.erl`](alang_fidelity_runtime_abi.erl) — exposes
+  the four fixed calls available to generated BEAM while validating the opaque
+  runtime context and containing process failure or timeout.
+- [`alang_fidelity_runtime_tests.erl`](alang_fidelity_runtime_tests.erl) — runs
+  direct, repair, delegation, and clarification programs through generated
+  BEAM and rejects binding widening, supplied limits, out-of-order ABI calls,
+  and model-authored completion or authority claims.
 - [`alang_fidelity_semantics.erl`](alang_fidelity_semantics.erl) — resolves both
   semantic-input envelopes through one checker, assigns stable task and binding
   identities, proves the action graph, types closed operations, and validates
@@ -153,6 +208,10 @@ test path. Generated evidence belongs under the ignored
 - [Phase 3 matched lowering evidence](phase-03-integration-evidence.md) — records
   the paired semantic and IR identities, exact authority and limits, equivalent
   negative classes, law and mutant results, residency, and reproduction gate.
+- [Phase 4 source-to-BEAM enforcement evidence](phase-04-integration-evidence.md)
+  — records all 48 inspected executions, paired positive and negative
+  observations, inherited gates, v2 mutants, compiler residency, and
+  byte-identical clean-process reproduction.
 
 ## Maintaining this index
 
