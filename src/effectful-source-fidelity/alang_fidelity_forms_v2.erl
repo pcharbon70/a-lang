@@ -52,7 +52,7 @@ validate_metadata(Metadata) when is_map(Metadata) ->
         format, module, abi, ir_format, frontend, source_sha256,
         semantic_sha256, ir_sha256, manifest, task_id, parameters,
         task_limits, static_bounds, child, completion, error_branches,
-        terminal_class, source_map, line_map, compiler, toolchain,
+        terminal_class, execution_plan, source_map, line_map, compiler, toolchain,
         reproducibility
     ],
     case lists:sort(maps:keys(Metadata)) =:= lists:sort(Keys) of
@@ -82,6 +82,7 @@ validate_metadata_values(Metadata) ->
         is_list(maps:get(error_branches, Metadata)),
         lists:member(maps:get(terminal_class, Metadata),
             [<<"complete">>, <<"failed">>, <<"needs-clarification">>]),
+        valid_execution_plan(maps:get(execution_plan, Metadata)),
         valid_source_map(maps:get(source_map, Metadata)),
         valid_line_map(maps:get(line_map, Metadata)),
         maps:get(compiler, Metadata) =:= #{
@@ -147,6 +148,25 @@ valid_line_map(LineMap) when is_list(LineMap), length(LineMap) =< 16 ->
         (_) -> false
     end, LineMap);
 valid_line_map(_) -> false.
+
+valid_execution_plan(Plan) when is_list(Plan), Plan =/= [], length(Plan) =< 16 ->
+    lists:all(fun
+        (#{node_id := NodeId, action_id := ActionId, kind := complete,
+                dependencies := Dependencies}) ->
+            is_binary(NodeId) andalso is_binary(ActionId) andalso
+                is_list(Dependencies);
+        (#{node_id := NodeId, action_id := ActionId, kind := Kind,
+                operation := Operation, effect_ordinal := Ordinal,
+                dependencies := Dependencies}) ->
+            is_binary(NodeId) andalso is_binary(ActionId) andalso
+                lists:member(Kind, [effect_request, delegate]) andalso
+                lists:member(Operation, [<<"model.generate">>, <<"model.repair">>,
+                    <<"workspace.write">>, <<"child.run">>]) andalso
+                is_integer(Ordinal) andalso Ordinal >= 0 andalso
+                is_list(Dependencies);
+        (_) -> false
+    end, Plan) andalso maps:get(kind, lists:last(Plan)) =:= complete;
+valid_execution_plan(_) -> false.
 
 limit_keys() -> [steps, model_calls, repair_calls, child_calls,
     workspace_writes, output_bytes, timeout_ms].

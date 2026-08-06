@@ -93,7 +93,7 @@ evidence.
 supervised runtime so source declarations become enforced limits rather than
 documentation.
 
-- [ ] **Section 4.2 Complete**
+- [x] **Section 4.2 Complete**
 
 ### Task 4.2.1: Instantiate Runtime State and Local Authority from Artifacts
 
@@ -101,7 +101,7 @@ documentation.
 deadlines, and durable session identities from inspected metadata and
 operator-owned resource bindings only.
 
-- [ ] **Task 4.2.1 Complete**
+- [x] **Task 4.2.1 Complete**
 
 #### Subtask 4.2.1.1: Bind Model and Workspace Resources
 
@@ -110,7 +110,7 @@ against the closed operator policy, issue opaque local grants with exact
 operation/resource/budget/deadline scope, and reject absent, extra, or widened
 bindings before generated code starts.
 
-- [ ] **Subtask 4.2.1.1 Complete**
+- [x] **Subtask 4.2.1.1 Complete**
 
 #### Subtask 4.2.1.2: Bind Limits to Durable Task State
 
@@ -120,7 +120,7 @@ effects, derive stable operation identities from trusted session, transition,
 and effect-site state, and reject runtime attempts to supply, increase, reset,
 or reuse those values inconsistently.
 
-- [ ] **Subtask 4.2.1.2 Complete**
+- [x] **Subtask 4.2.1.2 Complete**
 
 ### Task 4.2.2: Execute Repair, Delegation, and Completion Semantics
 
@@ -128,7 +128,7 @@ or reuse those values inconsistently.
 diagnostic repair, run a statically named more-restricted child, and let only
 the independent artifact verifier produce completion.
 
-- [ ] **Task 4.2.2 Complete**
+- [x] **Task 4.2.2 Complete**
 
 #### Subtask 4.2.2.1: Connect Source Metadata to Existing Repair and Child APIs
 
@@ -137,7 +137,7 @@ repair, derive a fresh operation identity, mechanically restrict the child's
 grant and shared budget, fence replies, and propagate cancellation without
 exposing grants or process identities to model-visible data.
 
-- [ ] **Subtask 4.2.2.1 Complete**
+- [x] **Subtask 4.2.2.1 Complete**
 
 #### Subtask 4.2.2.2: Bind Canonical Output to Completion Evidence
 
@@ -146,7 +146,7 @@ write it through the broker and durable workspace adapter, and require the
 declared path, answer-key digest, byte/UTF-8/Markdown/section predicates, and
 matching journal result before emitting a complete witness.
 
-- [ ] **Subtask 4.2.2.2 Complete**
+- [x] **Subtask 4.2.2.2 Complete**
 
 ## Section 4.3: Offline Paired Execution and Inherited Gates
 

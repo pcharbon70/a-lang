@@ -87,6 +87,7 @@ metadata(Lowered, Ir, Task, LineMap, Toolchain) ->
         completion => maps:get(completion, Task),
         error_branches => maps:get(error_branches, Task),
         terminal_class => maps:get(terminal_class, Task),
+        execution_plan => [execution_step(Node) || Node <- maps:get(nodes, Ir)],
         source_map => maps:get(source_map, Lowered),
         line_map => LineMap,
         compiler => #{
@@ -99,6 +100,23 @@ metadata(Lowered, Ir, Task, LineMap, Toolchain) ->
             forms_encoding => deterministic_etf,
             compiler_profile => alang_fidelity_otp29_v1
         }
+    }.
+
+execution_step(#{kind := complete} = Node) ->
+    #{
+        node_id => maps:get(id, Node),
+        action_id => maps:get(action_id, Node),
+        kind => complete,
+        dependencies => maps:get(dependencies, Node)
+    };
+execution_step(Node) ->
+    #{
+        node_id => maps:get(id, Node),
+        action_id => maps:get(action_id, Node),
+        kind => maps:get(kind, Node),
+        operation => maps:get(operation, Node),
+        effect_ordinal => maps:get(effect_ordinal, Node),
+        dependencies => maps:get(dependencies, Node)
     }.
 
 metadata_from_lowered(Lowered) when is_map(Lowered) ->

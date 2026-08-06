@@ -79,6 +79,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_compiler.erl`](alang_fidelity_compiler.erl) — composes both
   accepted frontend paths with the shared checker and lowering pass, and
   enforces source-byte, frontend, and semantic-digest campaign provenance.
+- [`alang_fidelity_completion.erl`](alang_fidelity_completion.erl) — evaluates
+  source-declared artifact, digest, byte, UTF-8, Markdown, journal, and
+  clarification predicates and combines them with the independent Phase 6
+  filesystem verifier into a content-addressed completion witness.
 - [`alang_fidelity_contract.erl`](alang_fidelity_contract.erl) — validates the
   closed task-comprehension and representation-neutral answer-key contracts
   and computes canonical semantic digests.
@@ -149,6 +153,17 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_representation_tests.erl`](alang_fidelity_representation_tests.erl)
   — verifies source-v1 preservation, forbidden features, closed controls,
   semantic equality, origin separation, opaque scheduling, and leakage rules.
+- [`alang_fidelity_runtime.erl`](alang_fidelity_runtime.erl) — binds inspected
+  artifact metadata to exact operator resources, opaque broker grants, static
+  counters and deadlines, durable workspace state, bounded repair, attenuated
+  children, and verifier-only completion.
+- [`alang_fidelity_runtime_abi.erl`](alang_fidelity_runtime_abi.erl) — exposes
+  the four fixed calls available to generated BEAM while validating the opaque
+  runtime context and containing process failure or timeout.
+- [`alang_fidelity_runtime_tests.erl`](alang_fidelity_runtime_tests.erl) — runs
+  direct, repair, delegation, and clarification programs through generated
+  BEAM and rejects binding widening, supplied limits, out-of-order ABI calls,
+  and model-authored completion or authority claims.
 - [`alang_fidelity_semantics.erl`](alang_fidelity_semantics.erl) — resolves both
   semantic-input envelopes through one checker, assigns stable task and binding
   identities, proves the action graph, types closed operations, and validates
