@@ -99,6 +99,39 @@ interpretation.
   intent, architecture, location, and multi-hop dependencies across multiple
   context strategies.
 
+#### Code graphs and semantic software knowledge
+
+- [CGBridge](chen-et-al-2026-cgbridge.md) — an inference-time learned bridge
+  from code property graphs to compact soft prefixes, including negative
+  evidence for graph-as-text prompting.
+- [CODENS](kelious-et-al-2026-codens.md) — a preliminary living software
+  knowledge graph built from framework structure and pull-request history.
+- [CodeOntology](atzeni-atzori-2017-codeontology.md) — an OWL ontology and Java
+  extractor demonstrating large-scale RDF source queries without an
+  understanding evaluation.
+- [CodexGraph](liu-et-al-2025-codexgraph.md) — an LLM-agent interface to a
+  Python code graph database, with graph-edge gains, query-agent dependence,
+  and high token costs.
+- [From Local to Global: GraphRAG](edge-et-al-2024-graphrag.md) — graph
+  community summaries for global corpus questions and an important comparison
+  with graph-free global summarization.
+- [Global Relational Models of Source Code](hellendoorn-et-al-2020-global-relational-models.md)
+  — relational graph-sequence hybrids for variable-misuse repair, including a
+  synthetic-to-real bug gap.
+- [GraphCodeBERT](guo-et-al-2021-graphcodebert.md) — data-flow-aware
+  pre-training and ablations showing gains from compact derived code structure.
+- [GraphCoder](liu-et-al-2024-graphcoder.md) — bounded control- and
+  data-dependence retrieval for repository-level code completion.
+- [Modeling and Discovering Vulnerabilities with Code Property Graphs](yamaguchi-et-al-2014-code-property-graphs.md)
+  — the foundational overlay of syntax, control, and program dependence for
+  graph traversal over code.
+- [Semantically Reflected Programs](kamburjan-et-al-2026-semantically-reflected-programs.md)
+  — a formal language design that lifts runtime state into a queryable
+  knowledge graph, exposing typing and runtime consequences.
+- [Talk Like a Graph](fatemi-et-al-2024-talk-like-a-graph.md) — evidence that
+  textual graph reasoning depends strongly on encoding, wording, topology,
+  omissions, and distractors.
+
 #### BEAM runtime and language implementation
 
 - [A Formalisation of Core Erlang, a Concurrent Actor Language](bereczky-et-al-2024-formalisation-concurrent-core-erlang.md)

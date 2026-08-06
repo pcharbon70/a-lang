@@ -27,6 +27,9 @@ code-intelligence index.
   falsifiable experiment.
 - [Can typed source references improve LLM code understanding?](../40-inquiries/can-typed-source-references-improve-llm-code-understanding.md)
   — the open decision and promotion gate.
+- [Semantic code graphs for LLM agents](semantic-code-graphs-for-llm-agents.md)
+  — the continuation from exact targets to derived paths, authored semantic
+  claims, graph-query interfaces, and knowledge-graph boundaries.
 
 ## Trail 1: Why repository context matters
 
@@ -113,3 +116,5 @@ resolver, checker, indexer, and materializer must remain BEAM-resident.
 - Can selective materialization resist prompt injection without discarding the
   natural-language contracts that make a reference useful?
 - Does a generated sidecar win strongly enough that no source syntax is needed?
+- Do bounded graph queries or authored semantic claims add value after exact
+  target resolution and the generated-map baseline are held constant?

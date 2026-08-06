@@ -394,6 +394,9 @@ decides whether their contents belong in the current model context.
 
 ## Connections
 
+- [Semantic code graphs for LLM understanding](semantic-code-graphs-for-llm-understanding.md)
+  continues from individual references to derived relationship graphs, authored
+  semantic claims, graph queries, and the separate question of inline placement.
 - [Can typed source references improve LLM code understanding?](../40-inquiries/can-typed-source-references-improve-llm-code-understanding.md)
   keeps the untested comparison open.
 - [Symbol-aware code context for LLM agents](../10-maps/symbol-aware-code-context-for-llm-agents.md)

@@ -94,6 +94,9 @@ or interpret that campaign as evidence about repository context.
 
 ## Findings
 
+- [Can semantic code graphs improve LLM understanding?](can-semantic-code-graphs-improve-llm-understanding.md)
+  continues the inquiry by separating derived topology, semantic relation
+  labels, authored claims, graph presentation, and inline source ownership.
 - [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
   synthesizes the primary research, proposes a non-normative `source_ref`
   model, and defines the controlled comparison.
@@ -129,6 +132,7 @@ the smallest compatible language addition.
 ## Outcome
 
 The inquiry remains open. Existing work supports typed symbol navigation and
-bounded context selection, not source embedding itself. No A-Lang grammar,
-schema, compiler, runtime, or API change has been made, and no hosted model
-evaluation has been run.
+bounded context selection, not source embedding itself. The follow-on semantic
+graph inquiry asks whether relationship paths or authored claims add a further
+benefit. No A-Lang grammar, schema, compiler, runtime, or API change has been
+made, and no hosted model evaluation has been run.

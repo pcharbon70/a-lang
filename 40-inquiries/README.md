@@ -45,6 +45,9 @@ inquiry as the final synthesis.
 - [Can a task language improve LLM agents?](can-a-task-language-improve-llm-agents.md)
   — an open inquiry into whether structured task representations improve
   understanding, reliability, and execution.
+- [Can semantic code graphs improve LLM understanding?](can-semantic-code-graphs-improve-llm-understanding.md)
+  — an open staged comparison of a generated flat map, derived graph queries,
+  provenance-bearing authored semantics, and inline versus sidecar ownership.
 - [Can typed source references improve LLM code understanding?](can-typed-source-references-improve-llm-code-understanding.md)
   — an open equal-budget comparison of authored typed relations, ordinary
   hints, generated symbol maps, and selective graph context.
