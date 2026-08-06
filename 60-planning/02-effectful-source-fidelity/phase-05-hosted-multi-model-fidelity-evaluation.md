@@ -20,8 +20,9 @@ BEAM sidecars, then retain enough redacted evidence for deterministic offline
 scoring and replay. Hosted variability may affect observations, but it may not
 change the corpus, prompts, answer keys, metrics, thresholds, or runtime path.
 
-**Status:** Planned; every item remains unchecked until reproducible evidence
-exists.
+**Status:** In progress; Sections 5.1–5.3 and Task 5.4.1 are implemented and
+reproducible offline. Task 5.4.2, Section 5.4, and Phase 5 remain incomplete
+because the separately gated hosted campaign has not been authorized.
 
 **Dependencies:** Phase 4 complete with all 48 representation files compiling
 to inspected BEAM and producing matched offline observations. Phase 1's frozen
@@ -34,7 +35,7 @@ ceiling, and decision contract are immutable inputs to this phase.
 BEAM adapters while keeping credentials, transport details, and live network
 access outside the compiler and default test path.
 
-- [ ] **Section 5.1 Complete**
+- [x] **Section 5.1 Complete**
 
 ### Task 5.1.1: Define the Provider-Neutral Sidecar Protocol
 
@@ -42,7 +43,7 @@ access outside the compiler and default test path.
 covering model identity, prompt bytes, effort, token ceiling, deadline, usage,
 latency, cost inputs, transport certainty, and normalized provider errors.
 
-- [ ] **Task 5.1.1 Complete**
+- [x] **Task 5.1.1 Complete**
 
 #### Subtask 5.1.1.1: Implement the OpenAI Responses Adapter
 
@@ -51,7 +52,7 @@ latency, cost inputs, transport certainty, and normalized provider errors.
 structured-output constraint, an 8,192-token output ceiling, bounded body
 bytes, strict TLS verification, and a campaign-owned deadline.
 
-- [ ] **Subtask 5.1.1.1 Complete**
+- [x] **Subtask 5.1.1.1 Complete**
 
 #### Subtask 5.1.1.2: Implement the Anthropic Messages Adapter
 
@@ -60,7 +61,7 @@ bytes, strict TLS verification, and a campaign-owned deadline.
 envelopes, and prove that provider-specific response shapes cannot alter task
 semantics or scoring.
 
-- [ ] **Subtask 5.1.1.2 Complete**
+- [x] **Subtask 5.1.1.2 Complete**
 
 ### Task 5.1.2: Enforce Explicit Live Authorization and Preflight
 
@@ -68,7 +69,7 @@ semantics or scoring.
 enables it, both provider profiles pass preflight, and the projected request
 and cost bounds fit the frozen campaign ceilings.
 
-- [ ] **Task 5.1.2 Complete**
+- [x] **Task 5.1.2 Complete**
 
 #### Subtask 5.1.2.1: Isolate Secrets and Reject Profile Substitution
 
@@ -78,7 +79,7 @@ and cost bounds fit the frozen campaign ceilings.
 all diagnostics, and fail closed if an endpoint returns or resolves to a model
 identifier other than the registered exact profile.
 
-- [ ] **Subtask 5.1.2.1 Complete**
+- [x] **Subtask 5.1.2.1 Complete**
 
 #### Subtask 5.1.2.2: Confirm Availability, Prices, and Campaign Ceilings
 
@@ -87,7 +88,7 @@ declared per-token prices with provenance and time, show projected primary and
 maximum call counts and cost, require explicit confirmation, and stop before a
 request that would exceed 576 calls or USD 200.
 
-- [ ] **Subtask 5.1.2.2 Complete**
+- [x] **Subtask 5.1.2.2 Complete**
 
 ## Section 5.2: Frozen Trial Materialization and Durable Orchestration
 
@@ -95,7 +96,7 @@ request that would exceed 576 calls or USD 200.
 cells without revealing pair identity to a model or permitting selective
 reruns to improve an experimental result.
 
-- [ ] **Section 5.2 Complete**
+- [x] **Section 5.2 Complete**
 
 ### Task 5.2.1: Materialize the Opaque-Identity Paired Campaign
 
@@ -104,7 +105,7 @@ and three repetitions into immutable trial manifests whose opaque identifiers
 do not disclose condition names, semantic pairs, answer keys, or expected
 outcomes beyond the necessarily visible representation treatment itself.
 
-- [ ] **Task 5.2.1 Complete**
+- [x] **Task 5.2.1 Complete**
 
 #### Subtask 5.2.1.1: Generate the Fixed Randomized Schedule
 
@@ -114,7 +115,7 @@ schedule seed to `2026080501`, record the resulting schedule digest, and make
 order changes invalidate the campaign rather than silently creating a new
 schedule.
 
-- [ ] **Subtask 5.2.1.1 Complete**
+- [x] **Subtask 5.2.1.1 Complete**
 
 #### Subtask 5.2.1.2: Render Byte-Stable Model-Visible Requests
 
@@ -123,7 +124,7 @@ document, and the common `alang_task_comprehension_v1` result schema with fixed
 encoding and line endings; prove that condition-specific wording, filenames,
 comments, or answer-key data do not leak into the request.
 
-- [ ] **Subtask 5.2.1.2 Complete**
+- [x] **Subtask 5.2.1.2 Complete**
 
 ### Task 5.2.2: Execute with Durable Accounting and Conservative Retry Rules
 
@@ -131,7 +132,7 @@ comments, or answer-key data do not leak into the request.
 schedule so interruption can resume exactly once without discarding difficult
 responses or duplicating uncertain effects.
 
-- [ ] **Task 5.2.2 Complete**
+- [x] **Task 5.2.2 Complete**
 
 #### Subtask 5.2.2.1: Persist Trial State and Resume Deterministically
 
@@ -140,7 +141,7 @@ provider/model identity, timestamps, transport certainty, normalized response
 digest, token usage, latency, price inputs, and cost in an append-only bounded
 journal that reconstructs the next legal action after restart.
 
-- [ ] **Subtask 5.2.2.1 Complete**
+- [x] **Subtask 5.2.2.1 Complete**
 
 #### Subtask 5.2.2.2: Bound Retries, Repairs, and Replacement Slots
 
@@ -152,7 +153,7 @@ failure as the first-attempt fidelity result; and use a new linked replacement
 identity only when no definitive model response exists, while counting every
 attempt toward 576 calls and USD 200.
 
-- [ ] **Subtask 5.2.2.2 Complete**
+- [x] **Subtask 5.2.2.2 Complete**
 
 ## Section 5.3: Deterministic Scoring, Statistics, and Redacted Evidence
 
@@ -160,7 +161,7 @@ attempt toward 576 calls and USD 200.
 neutral comprehension records, exact scores, uncertainty intervals, and a
 repository-safe evidence bundle without an LLM judge or post-hoc exclusions.
 
-- [ ] **Section 5.3 Complete**
+- [x] **Section 5.3 Complete**
 
 ### Task 5.3.1: Normalize Responses Without Hiding First-Attempt Failure
 
@@ -170,7 +171,7 @@ classify every response or provider failure through a closed outcome taxonomy.
 A definitive non-record response remains a zero-fidelity primary observation
 and can never be converted into missing data.
 
-- [ ] **Task 5.3.1 Complete**
+- [x] **Task 5.3.1 Complete**
 
 #### Subtask 5.3.1.1: Apply the Registered Single-Repair Boundary
 
@@ -179,7 +180,7 @@ request to the same exact model profile after a definitive syntax-or-schema
 failure, derive a new operation identity, forbid semantic coaching, and report
 repaired fidelity separately rather than replacing the primary score.
 
-- [ ] **Subtask 5.3.1.1 Complete**
+- [x] **Subtask 5.3.1.1 Complete**
 
 #### Subtask 5.3.1.2: Canonicalize and Classify Every Observation
 
@@ -188,7 +189,7 @@ records and closed classifications for refusal, truncation, schema failure,
 transport failure, uncertain submission, repair failure, and missing cell;
 never infer absent fields or hand-correct a response.
 
-- [ ] **Subtask 5.3.1.2 Complete**
+- [x] **Subtask 5.3.1.2 Complete**
 
 ### Task 5.3.2: Score the Frozen Metrics and Build Replayable Evidence
 
@@ -196,7 +197,7 @@ never infer absent fields or hand-correct a response.
 keys, compute the pre-registered per-model statistics, and retain only bounded
 redacted material needed to reproduce those results.
 
-- [ ] **Task 5.3.2 Complete**
+- [x] **Task 5.3.2 Complete**
 
 #### Subtask 5.3.2.1: Compute Exact, Component, Safety, and Cost Results
 
@@ -205,7 +206,7 @@ omission, invention, authority-widening, false-completion, validity, repair,
 token, latency, and cost metric by model, condition, family, case, and
 repetition; pooled results remain descriptive only.
 
-- [ ] **Subtask 5.3.2.1 Complete**
+- [x] **Subtask 5.3.2.1 Complete**
 
 #### Subtask 5.3.2.2: Compute Paired Intervals and Emit Redacted Records
 
@@ -217,7 +218,7 @@ schedules, normalized responses, scores, bounded usage metadata, provenance,
 and digests while excluding keys, authorization headers, raw HTTP envelopes,
 hidden reasoning, and unrelated provider identifiers.
 
-- [ ] **Subtask 5.3.2.2 Complete**
+- [x] **Subtask 5.3.2.2 Complete**
 
 ## Section 5.4: Phase 5 Integration Tests
 
@@ -234,7 +235,7 @@ and run the complete 288-cell schedule with deterministic responses and faults
 so all state transitions and scoring can be tested without credentials or
 network access.
 
-- [ ] **Task 5.4.1 Complete**
+- [x] **Task 5.4.1 Complete**
 
 #### Subtask 5.4.1.1: Detect Transport, Identity, Secret, and Bound Failures
 
@@ -244,7 +245,7 @@ bodies, rate limits, partial usage, budget exhaustion, secret-bearing errors,
 and sidecar crashes; require fail-closed classifications and zero secret
 retention.
 
-- [ ] **Subtask 5.4.1.1 Complete**
+- [x] **Subtask 5.4.1.1 Complete**
 
 #### Subtask 5.4.1.2: Prove Resume, Retry, Repair, and Scoring Determinism
 
@@ -253,7 +254,7 @@ copies, reject duplicate or selective trials, detect seeded scorer defects,
 and require byte-identical normalized records, scores, intervals, accounting,
 and decisions across clean ERTS processes.
 
-- [ ] **Subtask 5.4.1.2 Complete**
+- [x] **Subtask 5.4.1.2 Complete**
 
 ### Task 5.4.2: Run and Replay the Authorized Hosted Campaign
 
@@ -289,14 +290,14 @@ validity result byte-for-byte.
 hosted experiment is complete and replayable, or when its invalidity is fully
 accounted for without manufacturing a comparative conclusion.
 
-- [ ] Both fixed provider adapters are BEAM modules using OTP HTTPS and the shared sidecar protocol
-- [ ] Default builds and tests make no hosted request and require no credential
-- [ ] Preflight rejects aliases, substitutions, unavailable profiles, and ceiling violations
-- [ ] The frozen schedule contains exactly 288 primary cells with a reproducible digest
+- [x] Both fixed provider adapters are BEAM modules using OTP HTTPS and the shared sidecar protocol
+- [x] Default builds and tests make no hosted request and require no credential
+- [x] Preflight rejects aliases, substitutions, unavailable profiles, and ceiling violations
+- [x] The frozen schedule contains exactly 288 primary cells with a reproducible digest
 - [ ] Every call, retry, repair, uncertain effect, replacement, token, and cost is durably accounted for
-- [ ] No selective rerun, silent exclusion, or post-response corpus change is possible
-- [ ] Exact and component metrics preserve first-attempt and repaired results separately
-- [ ] Per-model paired bootstrap intervals reproduce with 10,000 resamples and seed `20260805`
-- [ ] Redacted evidence contains no credential, header, raw envelope, hidden reasoning, or unrelated identifier
+- [x] No selective rerun, silent exclusion, or post-response corpus change is possible
+- [x] Exact and component metrics preserve first-attempt and repaired results separately
+- [x] Per-model paired bootstrap intervals reproduce with 10,000 resamples and seed `20260805`
+- [x] Redacted evidence contains no credential, header, raw envelope, hidden reasoning, or unrelated identifier
 - [ ] Offline replay reproduces all scores and campaign-validity evidence byte-for-byte
 - [ ] The campaign has all required scorable cells or is explicitly marked invalid

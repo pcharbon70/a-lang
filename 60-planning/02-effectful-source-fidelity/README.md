@@ -287,8 +287,10 @@ following, with live-only items backed by a recorded opt-in campaign:
   inspected BEAM backend and inherited runtime enforcement path, with
   reproducible [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md).
 - [Phase 5 — Hosted multi-model fidelity evaluation](phase-05-hosted-multi-model-fidelity-evaluation.md)
-  — adds bounded BEAM provider sidecars, the opt-in campaign, deterministic
-  scoring, redacted evidence, and offline replay.
+  — **in progress**; Sections 5.1–5.3 and Task 5.4.1 add bounded BEAM adapters,
+  exact preflight, the reproducible 288-cell schedule, durable accounting,
+  deterministic scoring, bootstrap intervals, redacted replay evidence, and a
+  complete offline fault gate. The authorized hosted campaign remains pending.
 - [Phase 6 — Fidelity decision and roadmap handoff](phase-06-fidelity-decision-and-roadmap-handoff.md)
   — applies the frozen threshold, records promote/replace/stop, and reconciles
   the archive without implying production readiness.

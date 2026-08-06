@@ -53,12 +53,40 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_ast_tests.erl`](alang_fidelity_ast_tests.erl) — exercises
   exact-shape, origin, path, canonical ETF, legacy compatibility, atom-growth,
   and malformed-input rejection gates.
+- [`alang_fidelity_anthropic_adapter.erl`](alang_fidelity_anthropic_adapter.erl)
+  — renders the fixed Claude Messages request, keeps the API key inside the
+  adapter boundary, rejects model substitution, and maps bounded provider
+  envelopes into the shared result algebra without retaining raw responses.
+- [`alang_fidelity_adapter_fault_tests.erl`](alang_fidelity_adapter_fault_tests.erl)
+  — drives both provider adapters through scripted HTTPS outcomes covering
+  identity, TLS, redirect, timeout, response, crash, secret, call, cost, and
+  projection failures without credentials or network access.
 - [`alang_fidelity_authority.erl`](alang_fidelity_authority.erl) — infers exact
   registered effects, least static resource requirements, child attenuation,
   and finite direct-plus-delegated usage bounds without embedding grants.
 - [`alang_fidelity_body_tests.erl`](alang_fidelity_body_tests.erl) — exercises
   ordered effect and repair steps, explicit error results, attenuated child
   declarations, completion predicates, clarification, and terminal classes.
+- [`alang_fidelity_bootstrap.erl`](alang_fidelity_bootstrap.erl) — performs the
+  registered 10,000 paired resamples with seed `20260805`, samples eight cases
+  inside each task family, retains all paired repetitions, and emits exact
+  nearest-rank percentile intervals separately for each model family.
+- [`alang_fidelity_campaign.erl`](alang_fidelity_campaign.erl) — materializes
+  the frozen 288-cell paired campaign, uses seed `2026080501` to balance
+  conditions and task families within each model, assigns opaque identities,
+  and renders byte-stable requests containing the common result schema.
+- [`alang_fidelity_campaign_journal.erl`](alang_fidelity_campaign_journal.erl)
+  — persists bounded hash-chained intent, result, replacement, and closure
+  records as canonical ETF in an append-only stream and safely reconstructs
+  the stream after restart.
+- [`alang_fidelity_campaign_runner.erl`](alang_fidelity_campaign_runner.erl) —
+  enforces the frozen call and cost ceilings, exact trial order, one eligible
+  retry, repair, or linked replacement, and deterministic state reconstruction
+  without selective reruns.
+- [`alang_fidelity_campaign_tests.erl`](alang_fidelity_campaign_tests.erl) —
+  freezes the balanced schedule shape and tests opaque identities, request
+  leakage, order mutation, retry/repair/replacement bounds, durable replay,
+  and duplicate-result rejection.
 - [`alang_fidelity_backend_v2.erl`](alang_fidelity_backend_v2.erl) — lowers
   checked IR v2 actions into static calls in allowlisted Abstract Format,
   compiles deterministically on BEAM with strong validation, and emits
@@ -101,12 +129,25 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_decision_tests.erl`](alang_fidelity_decision_tests.erl) —
   covers promotion, JSON replacement, stop, invalid-campaign, interval, and
   safety-veto outcomes.
+- [`alang_fidelity_evidence.erl`](alang_fidelity_evidence.erl) — joins frozen
+  corpus bytes, answer keys, prompts, schedule, normalized observations,
+  scores, statistics, campaign journal, provenance, and BEAM implementation
+  digests into a bounded redacted ETF bundle with safe replay and owned-path
+  writes.
 - [`alang_fidelity_frontend_tests.erl`](alang_fidelity_frontend_tests.erl) —
   checks the versioned source lexer, closed task declarations, input bounds,
   stable origins, rejection diagnostics, and unchanged v1 delegation.
 - [`alang_fidelity_frontend_evidence.erl`](alang_fidelity_frontend_evidence.erl)
   — builds path-independent Phase 2 corpus, AST, source-map, compatibility,
   robustness, negative-case, and BEAM-residency evidence.
+- [`alang_fidelity_https.erl`](alang_fidelity_https.erl) — provides the single
+  OTP HTTPS transport with peer and hostname verification, disabled redirects,
+  campaign deadlines, bounded response envelopes, and conservative submission
+  certainty for errors.
+- [`alang_fidelity_https_fixture.erl`](alang_fidelity_https_fixture.erl) —
+  validates production-shaped adapter requests at the local HTTPS fixture seam
+  and supplies bounded provider envelopes, transport failures, or contained
+  secret-bearing crashes to the offline fault suite.
 - [`alang_fidelity_forms_v2.erl`](alang_fidelity_forms_v2.erl) — owns the
   deterministic metadata envelope and recursively validates the small
   Abstract Format subset and four fixed runtime ABI calls accepted for
@@ -118,13 +159,18 @@ test path. Generated evidence belongs under the ignored
   inferred manifests to deterministic `alang_typed_task_ir_v2`, keeps source
   maps separate, and safely validates and round-trips its ETF envelope.
 - [`alang_fidelity_json.erl`](alang_fidelity_json.erl) — provides bounded,
-  duplicate-aware OTP JSON decoding and deterministic SHA-256 term digests.
+  duplicate-aware OTP JSON decoding, sorted-key canonical JSON encoding, and
+  deterministic SHA-256 term digests.
 - [`alang_fidelity_json_pointer.erl`](alang_fidelity_json_pointer.erl) — scans
   bounded JSON structure without atom creation to retain member order,
   duplicate evidence, JSON Pointers, and original byte offsets.
 - [`alang_fidelity_lexer.erl`](alang_fidelity_lexer.erl) — tokenizes the frozen
   `alang-source-v2` surface with byte and line-column origins, bounded UTF-8
   strings, binary identifiers, and no source-controlled atoms.
+- [`alang_fidelity_live_gate.erl`](alang_fidelity_live_gate.erl) — computes the
+  price-provenanced maximum campaign projection and requires exact profiles,
+  both adapter-owned credentials, explicit live opt-in, and confirmation of
+  that projection before issuing a content-addressed authorization token.
 - [`alang_fidelity_lowering_tests.erl`](alang_fidelity_lowering_tests.erl) —
   checks paired IR equality, exact authority, limit bounds, stable nodes and
   effect ordinals, deterministic ETF, seeded mutants, and campaign gates.
@@ -132,10 +178,23 @@ test path. Generated evidence belongs under the ignored
   executes every A-Lang/typed-JSON pair independently with deterministic model
   fixtures, normalizes runtime observations, and checks trusted counter
   accounting before producing the offline matrix.
+- [`alang_fidelity_offline_campaign.erl`](alang_fidelity_offline_campaign.erl)
+  — executes the complete 288-cell hosted-evaluation schedule with
+  deterministic exact, malformed, schema, refusal, truncation, retry,
+  replacement, and semantic-miss outcomes and independently revalidates every
+  score, interval, journal transition, and accounting total.
 - [`alang_fidelity_offline_tests.erl`](alang_fidelity_offline_tests.erl) —
   compares all 24 paired executions, exercises matched failure, incomplete,
   cancellation, and uncertain outcomes, detects v2-specific mutants, and
   reasserts the inherited BEAM-resident implementation boundary.
+- [`alang_fidelity_observation.erl`](alang_fidelity_observation.erl) — reduces
+  provider results to a closed classification, canonicalizes valid semantic
+  records, preserves definitive primary failures, and attaches at most one
+  syntax-or-schema repair as a separate secondary observation.
+- [`alang_fidelity_openai_adapter.erl`](alang_fidelity_openai_adapter.erl) —
+  renders the fixed text-only Responses API request, keeps the API key inside
+  the adapter boundary, rejects model substitution, and normalizes only
+  bounded output text and usage metadata.
 - [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
   source unchanged and parses v2 task declarations, authority, scopes, and
   limits, ordered actions, errors, child attenuation, and completion into the
@@ -168,9 +227,28 @@ test path. Generated evidence belongs under the ignored
   recompiles and executes one pair per family in a fresh ERTS process and
   writes safely decodable deterministic evidence containing actual BEAM,
   metadata, trace, artifact, and completion-witness bytes.
+- [`alang_fidelity_phase5_integration_tests.erl`](alang_fidelity_phase5_integration_tests.erl)
+  — runs and replays all 288 offline cells, resumes copies of every journal
+  prefix, detects seeded defects, checks clean-process evidence bytes and
+  redaction, and reasserts the BEAM-only offline path.
+- [`alang_fidelity_phase5_mutation.erl`](alang_fidelity_phase5_mutation.erl) —
+  seeds primary/repair conflation, omission, condition, accounting, bootstrap,
+  and journal defects while recomputing outer digests so independent replay
+  must detect the semantic change.
+- [`alang_fidelity_phase5_worker.erl`](alang_fidelity_phase5_worker.erl) — runs
+  the complete deterministic campaign in a clean ERTS process and writes its
+  frozen corpus, journal, observations, scores, intervals, accounting,
+  validity, provenance, and implementation digests as redacted evidence.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
+- [`alang_fidelity_provider_protocol.erl`](alang_fidelity_provider_protocol.erl)
+  — defines the closed provider-neutral request/result algebra, exact profile
+  identities, transport certainty, retry eligibility, cost arithmetic,
+  redaction, and deterministic result digests.
+- [`alang_fidelity_provider_tests.erl`](alang_fidelity_provider_tests.erl) —
+  proves fixed text-only payloads, exact profile probes, conservative transport
+  handling, secret non-retention, and the live authorization and ceiling gate.
 - [`alang_fidelity_representation.erl`](alang_fidelity_representation.erl) —
   decodes the typed-JSON control with JSON Pointer origins, normalizes away
   presentation metadata, and enforces the frozen source and trial contracts.
@@ -188,6 +266,14 @@ test path. Generated evidence belongs under the ignored
   direct, repair, delegation, and clarification programs through generated
   BEAM and rejects binding widening, supplied limits, out-of-order ABI calls,
   and model-authored completion or authority claims.
+- [`alang_fidelity_score.erl`](alang_fidelity_score.erl) — compares primary
+  observations with representation-neutral answer keys and aggregates exact,
+  component, omission, invention, safety, repair, token, latency, and cost
+  results across every registered campaign dimension.
+- [`alang_fidelity_scoring_tests.erl`](alang_fidelity_scoring_tests.erl) —
+  proves the closed observation taxonomy, repair separation, exact and safety
+  scoring, dimensional aggregation, deterministic bootstrap, and secret-free
+  evidence replay.
 - [`alang_fidelity_semantics.erl`](alang_fidelity_semantics.erl) — resolves both
   semantic-input envelopes through one checker, assigns stable task and binding
   identities, proves the action graph, types closed operations, and validates
@@ -212,6 +298,10 @@ test path. Generated evidence belongs under the ignored
   — records all 48 inspected executions, paired positive and negative
   observations, inherited gates, v2 mutants, compiler residency, and
   byte-identical clean-process reproduction.
+- [Phase 5 offline hosted-evaluation evidence](phase-05-offline-integration-evidence.md)
+  — records the adapter fault matrix, complete 288-cell fixture campaign,
+  every-transition replay, seeded mutations, clean-ERTS reproduction, and the
+  still-unmet authorization boundary for the actual hosted campaign.
 
 ## Maintaining this index
 
