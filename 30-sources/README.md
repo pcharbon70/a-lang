@@ -79,8 +79,8 @@ interpretation.
   — security evidence that retrieved documents and source comments can act as
   adversarial instructions.
 - [Language Server Protocol 3.18](microsoft-2026-language-server-protocol.md) —
-  a request-oriented vocabulary for definitions, references, symbols, and
-  linked source ranges.
+  a request-oriented vocabulary for definitions, references, symbols, linked
+  source ranges, and versioned incremental document synchronization.
 - [RepoCoder](zhang-et-al-2023-repocoder.md) — iterative retrieval and
   generation for repository-level completion.
 - [Repoformer](wu-et-al-2024-repoformer.md) — selective retrieval evidence
@@ -128,6 +128,9 @@ interpretation.
 - [Semantically Reflected Programs](kamburjan-et-al-2026-semantically-reflected-programs.md)
   — a formal language design that lifts runtime state into a queryable
   knowledge graph, exposing typing and runtime consequences.
+- [Stack Graphs](creager-van-antwerpen-2023-stack-graphs.md) — file-incremental
+  graph construction and query-time cross-file name resolution over reusable
+  source-version fragments.
 - [Talk Like a Graph](fatemi-et-al-2024-talk-like-a-graph.md) — evidence that
   textual graph reasoning depends strongly on encoding, wording, topology,
   omissions, and distractors.

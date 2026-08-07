@@ -47,7 +47,8 @@ links belong together, not merely repeat a file listing.
   research.
 - [Semantic code graphs for LLM agents](semantic-code-graphs-for-llm-agents.md)
   — paths through derived program graphs, graph-aware models and retrieval,
-  semantic software knowledge, provenance, and language-embedding boundaries.
+  live workspace maintenance, semantic software knowledge, provenance, and
+  executing-program runtime boundaries.
 - [Symbol-aware code context for LLM agents](symbol-aware-code-context-for-llm-agents.md)
   — evidence and design paths through cross-file retrieval, code graphs,
   symbol protocols, compact repository maps, and indirect prompt injection.
