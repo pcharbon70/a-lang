@@ -3,8 +3,10 @@ title: "Semantic Code Graphs for LLM Agents"
 kind: map
 created: 2026-08-06
 tags:
+  - agent-runtime
   - code-graphs
   - code-understanding
+  - incremental-analysis
   - knowledge-graphs
   - llm-agents
 aliases:
@@ -17,14 +19,15 @@ aliases:
 
 This map follows the continuation from exact source references to graphs of
 repository relationships. It distinguishes compiler-derived program facts,
-graph-aware model integration, graph-based retrieval, authored semantic claims,
-and runtime semantic reflection.
+graph-aware model integration, graph-based retrieval, the verified compile
+graph, the live workspace graph maintained while an agent edits, authored
+semantic claims, and executing-program runtime reflection.
 
 ## Starting points
 
 - [Semantic code graphs for LLM understanding](../20-notes/semantic-code-graphs-for-llm-understanding.md)
-  — the evidence synthesis, layered A-Lang graph, trust boundary, and staged
-  experiment.
+  — the evidence synthesis, layered A-Lang graph, verified-base and live-
+  workspace distinction, trust boundary, and staged experiment.
 - [Can semantic code graphs improve LLM understanding?](../40-inquiries/can-semantic-code-graphs-improve-llm-understanding.md)
   — the open causal questions and separate promotion gates.
 - [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
@@ -86,7 +89,22 @@ equal-budget text baseline.
 This trail motivates claim provenance, contradiction checks, and a direct test
 of authored semantics beyond compiler facts.
 
-## Trail 5: Keep static context separate from runtime reflection
+## Trail 5: Keep the editing agent's graph current
+
+- [Language Server Protocol 3.18](../30-sources/microsoft-2026-language-server-protocol.md)
+  requires writable document versions to be synchronized before reliable
+  language queries and supports both full and incremental change delivery.
+- [Stack Graphs](../30-sources/creager-van-antwerpen-2023-stack-graphs.md)
+  constructs isolated per-file subgraphs, reuses previously analyzed file
+  versions, and completes cross-file paths at query time.
+
+Together they support two parts of the design without proving the whole: edits
+need ordered version synchronization, and graph analysis can reuse unchanged
+source fragments. The A-Lang proposal adds a repository-wide snapshot digest,
+atomic graph publication, conservative invalidation, explicit partial states,
+and full-rebuild equivalence.
+
+## Trail 6: Keep live workspace context separate from runtime reflection
 
 - [Semantically Reflected Programs](../30-sources/kamburjan-et-al-2026-semantically-reflected-programs.md)
   formalizes a language whose runtime state is lifted into a knowledge graph and
@@ -94,13 +112,18 @@ of authored semantics beyond compiler facts.
   and garbage-collection consequences show why this is a separate feature.
 
 For A-Lang’s present question, the graph remains revision-bound, read-only
-repository data. It cannot change effects, capabilities, control flow, or
-runtime reachability.
+knowledge about repository and working-tree source. It can be updated by
+trusted compiler analysis while the agent runs without becoming a graph of
+executing values or processes. It cannot change effects, capabilities, control
+flow, or runtime reachability.
 
 ## Local A-Lang trail
 
 - The [typed task IR](../src/phase-02/typed-task-ir.md) is the starting point for
   compiler-owned node identities and source origins.
+- The [workspace adapter contract](../src/phase-04/workspace-adapter-contract.md)
+  supplies atomic source writes, operation identities, and content digests that
+  can advance a live graph revision.
 - The [context slicer](../src/phase-06/task-orchestration-and-context.md) is the
   materialization boundary for visibility, provenance, trust, and byte budgets.
 - The [symbol-aware context map](symbol-aware-code-context-for-llm-agents.md)
@@ -108,14 +131,22 @@ runtime reachability.
 - The [effectful source fidelity plan](../60-planning/02-effectful-source-fidelity/README.md)
   is a separate frozen experiment and cannot answer the graph question.
 
-The trusted graph extractor, validator, and query layer must compile to BEAM and
-run on ERTS. External graph stores or semantic-web tools can only be optional
-untrusted caches or export targets.
+The trusted graph extractor, incremental updater, validator, snapshot service,
+and query layer must compile to BEAM and run on ERTS. External graph stores or
+semantic-web tools can only be optional untrusted caches or export targets.
 
 ## Open questions
 
 - Does a bounded graph query beat an equal-fact flat edge table, or does it only
   retrieve additional information?
+- Can every ready incremental graph be made equivalent to a clean rebuild while
+  meeting an interactive update bound?
+- What facts, if any, remain safe to expose when the current edit is syntactically
+  or semantically invalid?
+- How should a query racing an edit wait, fail, or return a partial result
+  without mixing revisions?
+- Which edge families admit file-local reuse, and which require conservative
+  transitive invalidation?
 - Which edge families help location, explanation, impact, and verified edits?
 - Do natural-language predicate labels matter after exact endpoints and source
   projections are controlled?

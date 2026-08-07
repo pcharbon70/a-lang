@@ -4,8 +4,10 @@ kind: note
 created: 2026-08-06
 maturity: developing
 tags:
+  - agent-runtime
   - code-graphs
   - code-understanding
+  - incremental-analysis
   - knowledge-graphs
   - llm-agents
   - programming-languages
@@ -35,12 +37,23 @@ budgets.
 
 The defensible A-Lang direction is therefore:
 
-1. build a deterministic, BEAM-native graph from compiler-owned facts;
-2. expose bounded, typed graph queries and compact evidence projections;
-3. add authored semantic edges in an experimental manifest, where each edge is
+1. build a deterministic, BEAM-native verified graph from compiler-owned facts;
+2. maintain a versioned live workspace graph as an agent changes source,
+   incrementally replacing invalidated facts rather than waiting for a final
+   whole-project build;
+3. expose bounded, typed graph queries for an exact workspace snapshot, with
+   compact evidence projections and explicit incomplete states;
+4. add authored semantic edges in an experimental manifest, where each edge is
    explicitly a claim with provenance and revision state;
-4. measure whether those claims add value beyond the derived graph; and
-5. only then consider the smallest source-level relation declaration.
+5. measure whether those claims add value beyond the derived graph; and
+6. only then consider the smallest source-level relation declaration.
+
+The compiler is the authority that derives and validates graph facts, not a
+schedule that permits updates only at the end of a build. A successful compile
+or check creates a verified base snapshot. During an agent session, the same
+BEAM parser, resolver, checker, and graph passes should maintain a working
+snapshot over the current edits. This live workspace service is runtime tooling
+for the agent; it is not semantic reflection over the executing program.
 
 “Embedded in code” should mean that the source owns a small number of
 non-inferable claims near the symbol they describe. It should not mean copying
@@ -49,18 +62,22 @@ or allowing semantic inference to change runtime effects or authority.
 
 ## Question, scope, and operational standard
 
-This continuation asks three related but separable questions:
+This continuation asks four related but separable questions:
 
-1. Does graph topology and traversal improve repository understanding beyond a
+1. Can a compiler-owned graph remain synchronized with the exact working state
+   an agent is reading and changing, including temporarily invalid source?
+2. Does graph topology and traversal improve repository understanding beyond a
    flat symbol map?
-2. Do semantic relation types and authored intent improve it beyond a derived
+3. Do semantic relation types and authored intent improve it beyond a derived
    program graph?
-3. Does storing those authored relations in source improve agent reading,
+4. Does storing those authored relations in source improve agent reading,
    writing, and maintenance beyond an equivalent sidecar manifest?
 
 For this inquiry, an agent understands a repository when it can, on an unseen
-revision:
+committed or in-progress workspace revision:
 
+- identify the exact workspace and graph snapshot to which its evidence
+  belongs;
 - locate the exact symbols, paths, and evidence relevant to a question;
 - explain control, data, call, dependency, contract, and rationale paths without
   inventing intermediate edges;
@@ -71,9 +88,10 @@ revision:
 - reject, qualify, or repair stale, ambiguous, contradictory, unauthorized, or
   adversarial graph content.
 
-The first experiment is about static repository knowledge. Runtime object
-graphs, graph-mutating application logic, semantic reflection, remote linked
-data, and capability delegation are out of scope.
+The first experiment includes static knowledge about a live, possibly
+uncommitted workspace. Runtime objects, processes, messages, values,
+graph-mutating application logic, semantic reflection, remote linked data, and
+capability delegation remain out of scope.
 
 ## “Semantic graph” names several different things
 
@@ -135,6 +153,7 @@ A-Lang relation syntax.
 | Derived graph relations can improve trained code representations. | [GraphCodeBERT](../30-sources/guo-et-al-2021-graphcodebert.md) gains from data flow and relation-aware objectives; [GREAT](../30-sources/hellendoorn-et-al-2020-global-relational-models.md) improves variable-misuse repair with relational hybrids. | The benefit depends on training and architecture, and real-bug results are much lower than synthetic results. |
 | A learned bridge can exploit graphs better than plain graph text. | [CGBridge](../30-sources/chen-et-al-2026-cgbridge.md) improves several semantic and functional measures with a learned soft prefix, while its GraphText baseline is often harmful. | It adds training and a substantial module; it is not available to an unmodified hosted model. |
 | Program graphs can improve retrieval for black-box LLMs. | [GraphCoder](../30-sources/liu-et-al-2024-graphcoder.md) uses bounded control/data slices for completion; [RepoGraph](../30-sources/ouyang-et-al-2025-repograph.md) improves localization and repair systems; [CodexGraph](../30-sources/liu-et-al-2025-codexgraph.md) lets agents formulate graph queries. | Systems bundle indexing, ranking, query agents, and extra tokens. Edge-removal ablations are not equal-information comparisons. |
+| Versioned, incremental analysis can keep interactive code intelligence current without rebuilding every unchanged file. | [LSP 3.18](../30-sources/microsoft-2026-language-server-protocol.md) requires writable document state to be synchronized before reliable queries; [Stack Graphs](../30-sources/creager-van-antwerpen-2023-stack-graphs.md) reuses isolated subgraphs for unchanged file versions and performs cross-file work at query time. | LSP synchronizes text rather than graph facts, while Stack Graphs covers name resolution over file versions rather than arbitrary semantic edges or malformed editing states. |
 | More graph is not automatically more understanding. | RepoGraph’s two-hop rendering falls below its baseline; [Talk Like a Graph](../30-sources/fatemi-et-al-2024-talk-like-a-graph.md) shows large effects from encoding, wording, topology, omissions, and distractors. | The latter uses synthetic non-code graphs, so it is a representation warning rather than code-task evidence. |
 | A formal semantic code ontology is feasible at scale. | [CodeOntology](../30-sources/atzeni-atzori-2017-codeontology.md) emits millions of RDF triples and supports expressive source queries. | It evaluates extraction and example queries, not human or LLM understanding. |
 | A living semantic software graph can retain intent-like history. | [CODENS](../30-sources/kelious-et-al-2026-codens.md) incrementally stores purpose, behavior, provenance, and typed relations from pull requests and answers repository questions. | Its 11-question, one-repository evaluation has no retrieval-mode control and no semantic-truth audit. |
@@ -142,10 +161,98 @@ A-Lang relation syntax.
 | Embedding a runtime knowledge graph in a language is possible but semantically consequential. | [Semantically Reflected Programs](../30-sources/kamburjan-et-al-2026-semantically-reflected-programs.md) formalizes graph lifting, typed queries, virtualization, and source controls in SMOL. | Runtime reflection affects typing, consistency, performance, and object lifetime and does not test LLMs. |
 
 The cross-paper conclusion is asymmetric. There is meaningful evidence for a
-compact derived graph and a query layer. There is suggestive engineering
-evidence for semantic software graphs. There is no controlled evidence yet that
-authored semantic triples improve an LLM agent over the same derived graph, or
-that inline placement is better than a revision-bound manifest.
+compact derived graph and a query layer, plus concrete precedent for versioned
+document synchronization and file-incremental graph construction. There is no
+controlled evidence that a full A-Lang program graph can remain correct through
+arbitrary agent edits, that authored semantic triples improve an LLM agent over
+the same derived graph, or that inline placement is better than a
+revision-bound manifest.
+
+## Compile authority, live workspace state, and program runtime
+
+“Compile-time graph” is too easy to read as “graph rebuilt only after the agent
+finishes editing.” That would leave the agent reasoning over stale structure
+after its first write. The design needs four distinct lifecycles:
+
+| State | Contents | Update rule | May guide the agent? |
+| --- | --- | --- | --- |
+| Verified compile graph | Immutable derived facts and checked claims for the last successful source snapshot | Replaced only by a successful check or compile | Yes, for that exact snapshot |
+| Live workspace graph | Verified base plus validated additions, replacements, deletions, diagnostics, and unresolved facts for current edits | Incrementally rebuilt after every accepted workspace change | Yes, only with its revision and completeness state |
+| Task retrieval view | Bounded paths, rankings, summaries, and source projections selected from one graph snapshot | Recreated for each task or query | Yes, as untrusted `data_only` context |
+| Executing-program graph | Processes, messages, values, dynamic objects, traces, and runtime reachability | Would change as the generated program executes | No; this is a separate language/runtime feature |
+
+The live graph can be understood as a revisioned overlay:
+
+```text
+verified graph Gv + ordered workspace delta Δn = live graph Gn
+```
+
+This equation does not permit an arbitrary patch to mutate graph facts
+directly. The edit changes source; trusted BEAM analysis derives the delta. A
+deleted or changed source digest immediately invalidates dependent facts, while
+unchanged content-addressed fragments may be reused. Stack Graphs demonstrates
+this reuse for file-local name-resolution subgraphs; applying it to call,
+control-flow, data-flow, effect, and semantic edges is an A-Lang design proposal
+that still requires testing.
+
+### Snapshot contract
+
+The graph service needs a repository-wide snapshot identity in addition to
+per-document versions. The following is an abstract protocol record, not A-Lang
+syntax:
+
+```text
+graph_snapshot {
+  workspace_id:       authorized_workspace
+  base_revision:      verified_source_revision
+  workspace_revision: ordered_edit_revision
+  parent_revision:    optional_workspace_revision
+  source_root_digest: digest_of_visible_source_state
+  status:             updating | ready | partial | invalid
+  diagnostics:        bounded_list<diagnostic_identity>
+}
+```
+
+LSP document versions establish ordering but are not content identities. The
+A-Lang workspace revision should therefore bind ordered edit receipts to source
+digests. Every graph result must repeat the snapshot identity, source digest,
+status, and analysis precision from which it was produced.
+
+An update protocol should be atomic at the snapshot boundary:
+
+1. The authorized workspace adapter applies an edit and returns its operation
+   identity, resulting content digest, and new workspace revision.
+2. The graph service marks that revision `updating`, reparses affected files,
+   invalidates dependent facts, reuses only fragments whose inputs remain
+   valid, reruns affected semantic passes, and re-resolves authored claims.
+3. It publishes one immutable `ready`, `partial`, or `invalid` snapshot after
+   all graph changes and diagnostics for that revision are available. Queries
+   never observe a mixture of parent and child facts.
+4. A query names the workspace revision it expects. The service answers for
+   that revision, waits within a declared deadline, or returns an explicit
+   `content_modified`, `updating`, or unavailable result.
+5. A successful whole-workspace check promotes the same source state to a new
+   verified base. A failed check leaves it as a working snapshot rather than
+   relabeling old facts as current.
+
+Temporarily broken code does not justify silent fallback to the last verified
+graph. Parseable fragments and facts whose full dependency inputs remain valid
+can be exposed as `partial`; unresolved or invalidated edges are withheld and
+diagnosed. An agent may explicitly request the last verified snapshot for
+comparison, but its results must remain labeled with that older revision.
+
+### What “runtime” means here
+
+The live graph service runs on ERTS during the agent's task runtime because the
+agent can inspect, edit, check, and inspect again. It is read-only from the
+model's perspective: only accepted source changes and trusted analysis advance
+durable graph state. It cannot grant capabilities, add effects, or change the
+meaning of generated code.
+
+An executing-program graph would instead reflect dynamic program state and
+would raise typing, consistency, lifetime, performance, and authority questions.
+Nothing about keeping the agent's workspace index fresh requires that stronger
+form of runtime semantic reflection.
 
 ## The graph should be an index, not the prompt
 
@@ -183,9 +290,11 @@ single undifferentiated triple store would obscure that distinction.
 ### Layer 0: identities and occurrences
 
 The compiler owns canonical identities for modules, tasks, nodes, types,
-effects, contracts, definitions, and occurrences. Each identity is scoped to a
-repository revision and resolves to source spans and content digests. Paths and
-line numbers are locators and evidence, not identities.
+effects, contracts, definitions, and occurrences. Each identity is scoped to an
+immutable graph snapshot and resolves to source spans and content digests.
+Committed repository revisions and in-progress workspace revisions are both
+valid snapshot coordinates. Paths and line numbers are locators and evidence,
+not identities.
 
 This extends the direction already present in the [typed task
 IR](../src/phase-02/typed-task-ir.md), which provides deterministic identities
@@ -205,7 +314,10 @@ The parser, resolver, checker, and IR passes generate facts such as:
 
 These facts should carry the analysis that produced them and its declared
 precision. A conservative `may_call` edge must not be rendered as a definite
-runtime call.
+runtime call. When an input changes, affected derived facts disappear from the
+new snapshot until the responsible pass recomputes or explicitly revalidates
+them; parent-snapshot facts are not assumed current merely because analysis is
+still running.
 
 ### Layer 2: authored semantic claims
 
@@ -238,7 +350,8 @@ graph_edge {
   assertion_id:  stable_edge_identity
   asserted_by:   compiler_pass | author_identity | agent_run
   source_span:   optional_source_location
-  revision:      repository_revision
+  revision:      graph_snapshot_identity
+  source_digest: digest_of_derivation_inputs
   object_digest: resolved_target_digest
   status:        derived | claimed | checked | contradicted | stale
   evidence:      bounded_list<evidence_identity>
@@ -301,22 +414,34 @@ for tools and agents; source spelling remains an authoring interface.
 
 ## Query interface for agents
 
-The first useful surface is a small set of deterministic read-only operations:
+The first useful surface is a small set of deterministic read-only operations.
+Every operation names an expected `workspace_revision`; omitting it would allow
+an edit and query race to return structurally valid evidence for the wrong
+source state.
 
-- `definition(id)` and `references(id)` for exact navigation;
-- `neighbors(id, relations, direction, depth, budget)` for bounded local views;
-- `path(from, to, relations, max_depth)` for a witnessed relationship path;
-- `impact(id, relation_profile, budget)` for potential consumers, effects, and
-  tests;
-- `evidence(edge_id)` for the source, test, document, or analysis behind a
-  relationship;
-- `explain_edge(edge_id)` for origin, status, revision, and precision; and
-- `conflicts(id)` for stale, contradictory, unresolved, or incompatible claims.
+- `graph_status(workspace_revision)` for readiness, completeness, diagnostics,
+  and source-root digest;
+- `definition(workspace_revision, id)` and
+  `references(workspace_revision, id)` for exact navigation;
+- `neighbors(workspace_revision, id, relations, direction, depth, budget)` for
+  bounded local views;
+- `path(workspace_revision, from, to, relations, max_depth)` for a witnessed
+  relationship path;
+- `impact(workspace_revision, id, relation_profile, budget)` for potential
+  consumers, effects, and tests;
+- `evidence(workspace_revision, edge_id)` for the source, test, document, or
+  analysis behind a relationship;
+- `explain_edge(workspace_revision, edge_id)` for origin, status, snapshot, and
+  precision; and
+- `conflicts(workspace_revision, id)` for stale, contradictory, unresolved, or
+  incompatible claims.
 
 Every result is ordered deterministically and reports omitted counts when a
 budget truncates it. Direction and edge types are explicit. Depth defaults to
 one, cycles are detected, and cumulative nodes, edges, bytes, and source slices
-are bounded.
+are bounded. The response repeats the workspace revision, snapshot status, and
+source-root digest. A source projection must come from the same snapshot as its
+edge; the materializer cannot reopen a newer file under an older graph result.
 
 The tool returns graph structure first and source text only on request. For
 example, an agent might receive “`submit` is `specified_by`
@@ -329,26 +454,39 @@ all its tests, and all callers.
 The implementation must preserve A-Lang’s whole-toolchain BEAM invariant:
 
 ```text
-A-Lang source + archive documents
-             |
-             v
-BEAM parser / resolver / checker
-             |
-             +--> compiler-derived edge extractor
-             +--> authored-claim resolver
-                         |
-                         v
-              revision-bound graph manifest
-                         |
-                         v
-              BEAM validator and query layer
-                         |
-                         v
-            bounded selector and materializer
-                         |
-                         v
-              Phase 6 data_only context
+verified source snapshot
+          |
+          v
+BEAM parser / resolver / checker ----> immutable verified graph Gv
+          ^                                      |
+          |                                      |
+authorized workspace edit                       |
+  + operation receipt                            |
+  + content digest                               |
+  + workspace revision                           |
+          |                                      |
+          v                                      v
+BEAM incremental analysis ----> working delta Δn + validator
+                                             |
+                                             v
+                                  atomic live snapshot Gn
+                                             |
+                                             v
+                              revision-bound query layer
+                                             |
+                                             v
+                            bounded selector / materializer
+                                             |
+                                             v
+                                  Phase 6 data_only context
 ```
+
+`Gv` and `Gn` are logical states, not necessarily duplicated stores. An
+implementation may structurally share immutable nodes, edges, and per-file
+fragments as long as snapshot isolation and dependency invalidation remain
+observable. The graph updater and query service are supervised BEAM processes;
+parser, resolver, checker, extractor, validator, and promotion logic still
+compile to `.beam` and execute on ERTS.
 
 RDF, OWL, property graphs, Cypher, and SPARQL are useful design references and
 possible export formats. A-Lang does not need to adopt their complete semantics
@@ -357,9 +495,10 @@ compiler path. Any later external graph database would be an optional,
 untrusted cache whose results are checked against the BEAM-generated manifest.
 
 The graph cannot grant capabilities, add effects, change completion criteria,
-or make retrieved text authoritative. Runtime semantic reflection is a separate
-language feature with much larger consequences, as the SMOL work demonstrates;
-it should not enter this research path.
+or make retrieved text authoritative. Running the live index during an agent
+session does not make it part of generated-program semantics. Runtime semantic
+reflection is a separate language feature with much larger consequences, as
+the SMOL work demonstrates; it should not enter this research path.
 
 ## Integrity, security, and maintenance requirements
 
@@ -369,6 +508,16 @@ makes a false relationship easier to amplify. Minimum invariants are:
 - resolve targets exactly within the canonical repository root;
 - reject missing, ambiguous, wrong-kind, out-of-root, and digest-mismatched
   targets;
+- serialize or causally order accepted workspace changes and bind each one to
+  an operation receipt, content digest, parent revision, and child revision;
+- serve a query only from one atomic snapshot, never from a mix of graph facts
+  or source slices across revisions;
+- return `updating`, `content_modified`, `partial`, or `invalid` explicitly
+  instead of silently substituting the last verified graph;
+- invalidate transitive dependents conservatively and reuse a fragment only
+  when all inputs named by its derivation digest remain valid;
+- treat file-system notifications as invalidation hints rather than evidence of
+  content, and reconcile them against actual source digests;
 - distinguish open-world claims from the compiler’s closed, revision-scoped
   inventory—absence of an authored claim does not mean the relationship is
   false;
@@ -383,13 +532,15 @@ makes a false relationship easier to amplify. Minimum invariants are:
 - surface contradictions between claims, types, tests, and compiler facts;
 - prevent task-local relevance edges and model-generated summaries from
   entering durable graph state without review; and
-- make graph reconstruction deterministic and incremental from repository
-  inputs.
+- make graph reconstruction deterministic and incremental from repository and
+  working-tree inputs, with a full rebuild as the equivalence oracle.
 
 These controls extend the [context slicer](../src/phase-06/task-orchestration-and-context.md),
 which already enforces provenance, visibility, trust, and byte bounds. They do
 not eliminate indirect prompt injection; they keep retrieved evidence from
-acquiring action authority.
+acquiring action authority. The [workspace adapter](../src/phase-04/workspace-adapter-contract.md)
+already provides operation identities, atomic file replacement, and result
+digests that can anchor the edit side of this protocol.
 
 ## Evaluation: isolate what the graph adds
 
@@ -397,10 +548,33 @@ No hosted evaluation was performed for this note. A later experiment should be
 pre-registered and remain separate from the frozen [effectful source fidelity
 plan](../60-planning/02-effectful-source-fidelity/README.md).
 
+### Live-update conditions
+
+Graph value and graph freshness are different causal questions. For the same
+ordered, multi-step edit traces, compare:
+
+1. **Source and diagnostics only:** no graph facts after the first edit.
+2. **Frozen verified graph:** the last successful graph remains available but
+   is visibly labeled old; this is a stale-data negative control.
+3. **Full rebuild oracle:** rebuild all graph facts after each accepted edit or
+   coherent edit batch before allowing the next graph query.
+4. **Incremental live graph:** reuse valid fragments, invalidate affected
+   dependencies, and publish an atomic working snapshot.
+5. **Explicit partial graph:** during invalid source, expose only facts proven
+   valid for that working snapshot plus diagnostics; never borrow unlabeled
+   facts from the verified parent.
+
+The full rebuild is a semantic equivalence oracle, not necessarily a viable
+interactive implementation. The incremental graph must match it whenever both
+reach `ready`. For `partial` or `invalid` snapshots, evaluation should compare
+the graph's declared omissions and diagnostics with the facts that a later
+successful rebuild confirms.
+
 ### Factorial conditions
 
-Hold model, repository revision, task wording, decoding, tools, context window,
-retrieved bytes, wall-clock budget, and runtime policy constant. Compare:
+Hold model, source/edit sequence, expected workspace revision, task wording,
+decoding, tools, context window, retrieved bytes, wall-clock budget, and
+runtime policy constant. Compare:
 
 1. **Lexical baseline:** tree, text search, and ordinary file views.
 2. **Generated flat map:** identities, signatures, and definition locations
@@ -428,6 +602,12 @@ justify source syntax.
 - reverse directional edges;
 - remove one derived edge family at a time;
 - vary zero-, one-, and two-hop expansion under the same byte budget;
+- issue a query while the requested revision is still `updating`;
+- deliver ordered edits late, duplicated, or with an incorrect parent
+  revision;
+- mutate a file outside the normal adapter path and require digest
+  reconciliation;
+- introduce temporarily malformed source between two valid edit states;
 - inject plausible but false authored relations;
 - rename or move targets and replay a stale manifest;
 - introduce same-named decoy symbols and incompatible target kinds;
@@ -448,7 +628,9 @@ Stratify held-out tasks across:
 - control- and data-flow explanation;
 - call, effect, test, and consumer impact analysis;
 - multi-hop architecture and lifecycle questions;
-- repository edits with executable verification;
+- multi-step repository edits with queries before and after each accepted
+  change, followed by executable verification;
+- temporarily invalid edits, deletion, rename, move, undo, and repair;
 - contradictory, ambiguous, stale, and high-fan-out relationships;
 - agent-authored and agent-repaired semantic edges; and
 - malicious instructions in comments, documents, tests, edge descriptions, and
@@ -463,18 +645,25 @@ evaluation from rewarding only the graph schema it was built around.
 Primary measures are verified task or edit success, exact node-and-path evidence
 precision and recall, unsupported-edge rate, and safe rejection of unauthorized
 or adversarial material. Secondary measures include tokens, bytes, navigation
-calls, latency, index-build and incremental-update time, graph size, truncation,
-stale diagnostics, and valid agent-authored relations after renames and moves.
+calls, latency, index-build and incremental-update time, time from accepted
+write to queryable snapshot, incremental/full-rebuild equivalence, expected-to-
+served revision mismatches, cross-revision source/edge mixtures, stale-fact
+survival after deletion, graph size, truncation, diagnostics, and valid
+agent-authored relations after renames and moves.
 
 Promotion should happen one layer at a time:
 
-1. Promote the derived query layer if it beats the flat map under equal facts
+1. Promote the live workspace service only if every `ready` incremental
+   snapshot matches a clean full rebuild, no query silently crosses revisions,
+   and partial or invalid states fail explicitly within the declared latency
+   bound.
+2. Promote the derived query layer if it beats the flat map under equal facts
    and budgets.
-2. Promote semantic claims if true authored edges add a repeatable gain without
+3. Promote semantic claims if true authored edges add a repeatable gain without
    increasing false-evidence or security failures.
-3. Promote source syntax only if inline ownership improves agent authoring,
+4. Promote source syntax only if inline ownership improves agent authoring,
    review, and maintenance over an equivalent sidecar graph.
-4. Treat a win that requires graph-aware model training as a model-integration
+5. Treat a win that requires graph-aware model training as a model-integration
    result, not evidence for a language feature.
 
 The previous inquiry’s five-point absolute improvement gate remains a useful
@@ -482,6 +671,12 @@ starting threshold, with a positive paired stratified-bootstrap 95% confidence
 interval in each declared model family and safety violations as vetoes.
 
 ## Falsification criteria
+
+Do not expose graph results as current during agent editing if the service
+cannot bind them to the requested workspace revision, if incremental snapshots
+diverge from full rebuilds, if invalidated edges survive deletion or rename, or
+if temporarily broken code causes silent fallback to old facts. In that case,
+fall back to current source plus diagnostics and rebuild before graph use.
 
 Do not add a semantic graph layer if a flat generated map matches it under
 equal information and budgets, graph benefits disappear after token
@@ -493,38 +688,51 @@ and tests recover the same value, authors and agents cannot keep claims valid,
 or provenance states are not respected.
 
 Do not add inline syntax if an equivalent sidecar is easier to generate,
-review, refactor, and validate. Do not add runtime semantic reflection merely
-because static graph queries help an LLM.
+review, refactor, and validate. Do not add executing-program runtime semantic
+reflection merely because live workspace graph queries help an LLM.
 
 ## Design position
 
-Build the **derived graph and query experiment before the semantic ontology,
-and the semantic ontology before source syntax**.
+Build the **verified graph and snapshot protocol first, the live workspace
+maintenance layer second, the derived query experiment before the semantic
+ontology, and the semantic ontology before source syntax**.
 
-The near-term research artifact should be a BEAM-native, revision-bound graph
-manifest with compiler facts, edge provenance, deterministic bounded queries,
-and Phase 6 context projections. Seed a separate experimental claim file with a
-small closed vocabulary for non-inferable intent. If that layer wins, compile
-the same claims from a minimal source declaration and measure agent maintenance.
+The near-term research artifact should pair a BEAM-native immutable verified
+manifest with a supervised live graph service. The service consumes authorized
+workspace revisions, incrementally derives a working overlay, publishes atomic
+snapshot states, and serves deterministic bounded queries and Phase 6 context
+projections only for named revisions. Seed a separate experimental claim file
+with a small closed vocabulary for non-inferable intent. If that layer wins,
+compile the same claims from a minimal source declaration and measure agent
+maintenance.
 
 This sequence preserves the central distinction: the graph can help an agent
-see relationships without making source code a database, and source can own
-intent without pretending that every authored or LLM-extracted relationship is
-a verified program fact.
+see relationships in the source state it is actually changing without making
+source code a database or turning workspace indexing into program semantics.
+Source can own intent without pretending that every authored or LLM-extracted
+relationship is a verified program fact.
 
 ## Research priorities
 
-1. Specify canonical graph node and edge identities on top of the current typed
-   task IR.
-2. Generate containment, reference, call, type, effect, and task data-flow edges
+1. Specify workspace revision, snapshot, parent, source-root digest, and
+   readiness semantics on top of the existing operation receipts.
+2. Specify canonical graph node and edge identities on top of the current typed
+   task IR and make their snapshot scope explicit.
+3. Generate containment, reference, call, type, effect, and task data-flow edges
    in BEAM without changing source syntax.
-3. Implement `neighbors`, `path`, `impact`, `evidence`, and `conflicts` with
-   strict relation, depth, count, byte, visibility, and cycle bounds.
-4. Build equal-fact flat-map, edge-table, graph-query, and graph-text baselines.
-5. Define the smallest authored vocabulary and truth/provenance state machine.
-6. Construct false-edge, stale-edge, topology, serialization, and prompt-
-   injection ablations.
-7. Evaluate whether semantic claims add value; only then test source placement.
+4. Implement conservative dependency invalidation, content-addressed fragment
+   reuse, atomic snapshot publication, and a clean-rebuild equivalence oracle.
+5. Define what remains queryable in `partial` and `invalid` source states and
+   prohibit unlabeled last-known-good fallback.
+6. Implement `graph_status`, `neighbors`, `path`, `impact`, `evidence`, and
+   `conflicts` with revision, relation, depth, count, byte, visibility, cycle,
+   and deadline bounds.
+7. Build full-rebuild, incremental, stale-snapshot, equal-fact flat-map,
+   edge-table, graph-query, and graph-text baselines.
+8. Define the smallest authored vocabulary and truth/provenance state machine.
+9. Construct edit-race, false-edge, stale-edge, topology, serialization, and
+   prompt-injection ablations.
+10. Evaluate whether semantic claims add value; only then test source placement.
 
 ## Source route
 
@@ -536,6 +744,11 @@ a verified program fact.
   [RepoGraph](../30-sources/ouyang-et-al-2025-repograph.md), and
   [CodexGraph](../30-sources/liu-et-al-2025-codexgraph.md) for repository
   selection and query interfaces.
+- Use [LSP 3.18](../30-sources/microsoft-2026-language-server-protocol.md) for
+  versioned document synchronization and explicit modified-state handling, and
+  [Stack Graphs](../30-sources/creager-van-antwerpen-2023-stack-graphs.md) for
+  reusable file-version subgraphs and query-time cross-file paths. Neither
+  source by itself specifies the proposed A-Lang live graph protocol.
 - Use [CGBridge](../30-sources/chen-et-al-2026-cgbridge.md) and
   [Talk Like a Graph](../30-sources/fatemi-et-al-2024-talk-like-a-graph.md) to
   keep graph serialization and model-integration effects explicit.
@@ -544,8 +757,8 @@ a verified program fact.
   [GraphRAG](../30-sources/edge-et-al-2024-graphrag.md) for ontology, living
   documentation, provenance, and multi-scale semantic retrieval.
 - Read [Semantically Reflected Programs](../30-sources/kamburjan-et-al-2026-semantically-reflected-programs.md)
-  as the boundary between a static agent context index and a graph that changes
-  language runtime semantics.
+  as the boundary between a live static workspace index used by an agent and a
+  graph that changes language runtime semantics.
 
 ## Connections
 
@@ -556,3 +769,6 @@ a verified program fact.
   keeps the graph, semantic-layer, and source-placement decisions open.
 - [Semantic code graphs for LLM agents](../10-maps/semantic-code-graphs-for-llm-agents.md)
   is the shortest route through this evidence.
+- The [workspace adapter contract](../src/phase-04/workspace-adapter-contract.md)
+  supplies atomic writes, operation identity, and content digests for the edit
+  side of the proposed snapshot protocol.

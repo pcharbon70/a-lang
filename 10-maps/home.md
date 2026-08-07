@@ -60,4 +60,5 @@ See the [archive guide](../README.md) for its structure and conventions.
   beyond a generated symbol map under the same context budget.
 - Whether a derived queryable graph, provenance-bearing semantic claims, or
   inline placement adds value after graph facts and context budgets are
-  controlled independently.
+  controlled independently—and whether its live workspace snapshots can remain
+  exact while an agent edits temporarily invalid code.

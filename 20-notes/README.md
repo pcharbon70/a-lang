@@ -47,9 +47,9 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
   — a synthesis of transformer behavior, task representation, agent
   programming, formal reasoning, and language-design implications.
 - [Semantic code graphs for LLM understanding](semantic-code-graphs-for-llm-understanding.md)
-  — a layered design and causal research plan for derived program graphs,
-  authored semantic claims, provenance, bounded graph queries, and optional
-  source ownership.
+  — a layered design and causal research plan for verified compile graphs,
+  incrementally maintained live workspace snapshots, bounded graph queries,
+  authored semantic claims, provenance, and optional source ownership.
 - [Typed source references for LLM code understanding](typed-source-references-for-llm-code-understanding.md)
   — an evidence-bounded case for compiler-resolved semantic relationships,
   selective context materialization, and an experiment before source syntax.
