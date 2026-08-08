@@ -102,7 +102,9 @@ format_outcome(#{outcome := Outcome}) ->
         <<"stop-surface-expansion">> ->
             "STOP: User-facing language expansion suspended";
         <<"stop-invalid-campaign-no-efficacy-conclusion">> ->
-            "STOP: Invalid campaign — no efficacy comparison permitted"
+            "STOP: Invalid campaign — no efficacy comparison permitted";
+        _ ->
+            "UNKNOWN_OUTCOME"
     end;
 format_outcome(_) -> "UNKNOWN_OUTCOME".
 
