@@ -100,32 +100,26 @@ only where the [first roadmap's Phase 6 repair contract](../01-minimal-proof-of-
 already permits it. Repairs, definitive pre-submission retries, and recorded
 replacement slots share a total campaign ceiling of 576 calls.
 
-### Hosted model profiles
+### Local model profiles
 
-The two declared families are:
+The two declared families run through the local Ollama server and share the
+same chat-completions transport:
 
-- OpenAI `gpt-5.6-terra` through the Responses API; and
-- Anthropic `claude-sonnet-5` through the Messages API.
+- `ornith-1.0` via `ollama pull ornith:1.0` (or the equivalent custom model tag); and
+- `mixtral-8x7b` via `ollama pull mixtral:8x7b`.
 
-Both use medium effort, text input and output only, no provider tools, no
-provider-side structured-output constraint, a single turn, an 8,192-token
-provider output ceiling, an 8,192-byte accepted-output ceiling, and the same
-model-visible instruction and JSON result schema. These identifiers and
-capabilities were checked on 2026-08-05 against the official
-[OpenAI model documentation](https://developers.openai.com/api/docs/models/gpt-5.6-terra),
-[OpenAI model guidance](https://developers.openai.com/api/docs/guides/latest-model),
-[Anthropic model documentation](https://platform.claude.com/docs/en/about-claude/models/overview),
-and [Anthropic effort documentation](https://platform.claude.com/docs/en/build-with-claude/effort).
-A campaign preflight must confirm the exact identifiers; it may not silently
-substitute an alias or newer model.
+Both use a single turn, text-only input and output, no provider tools, no
+provider-side structured-output constraint, an 8,192-token provider output
+ceiling, an 8,192-byte accepted-output ceiling, and the same model-visible
+instruction and JSON result schema. The Ollama server runs locally on
+`http://localhost:11434`, requires no API key, and produces the same response
+shape (`message.content`, `usage.prompt_tokens`, `usage.completion_tokens`).
+The campaign preflight confirms both models are present and reachable before
+starting; it may not silently substitute an alias or newer model tag.
 
-Live calls are opt-in and never run under the default test target. They require
-`ALANG_ALLOW_LIVE_MODEL_CALLS=1`, `ALANG_OPENAI_API_KEY`, and
-`ALANG_ANTHROPIC_API_KEY`. The runner must fail closed above 576 calls or a
-USD 200 declared maximum, and it must display the projected request count and
-current price estimate before the operator confirms execution. Credentials,
-authorization headers, raw HTTP envelopes, and provider-internal identifiers
-must never enter repository evidence.
+No credentials, authorization headers, raw HTTP envelopes, or provider-internal
+identifiers are involved. The runner enforces the 576-call ceiling and tracks
+token counts for cost reporting, but costs are local and not billed externally.
 
 ### Output and scoring contract
 
@@ -173,10 +167,11 @@ would require a newly authorized and pre-registered planning stream.
 ### Evidence retention
 
 Commit the corpus, answer keys, canonical prompts, normalized model responses,
-deterministic scores, bounded provider metadata, and content digests. Exclude
-credentials, headers, raw transport envelopes, hidden reasoning, and unrelated
-provider metadata. Offline replay of the redacted records must reproduce every
-score and decision without network access.
+deterministic scores, token counts, latency measurements, and content digests.
+Exclude raw transport envelopes and unrelated provider metadata. Offline replay
+of the redacted records must reproduce every score and decision without network
+access. No credentials or authorization headers are involved because both
+models run through a local Ollama server.
 
 ## Architectural invariants
 
@@ -186,9 +181,10 @@ score and decision without network access.
 - Accepted A-Lang is never translated to Erlang source or interpreted as
   Erlang AST/IR. Both representations reach the existing inspected Abstract
   Format backend and generated BEAM execution path.
-- Hosted-provider access is a bounded runtime effect, not part of the compiler.
-  Provider adapters use fixed BEAM sidecar modules and OTP HTTPS; no Python,
-  Node, provider SDK, `curl`, NIF, or foreign compiler enters the trusted path.
+- Local model access is a bounded runtime effect, not part of the compiler.
+  Provider adapters use fixed BEAM sidecar modules and OTP HTTPS against the
+  local Ollama server on `localhost:11434`; no Python, Node, provider SDK,
+  `curl`, NIF, or foreign compiler enters the trusted path.
 - The current local broker, durable journal, child attenuation, workspace
   adapter, completion witness, and negative gates remain authoritative.
 - The deterministic offline mock and replay suites remain mandatory. Live
@@ -221,9 +217,9 @@ score and decision without network access.
 - Complete a phase only when its final numbered integration-test section and
   phase completion-evidence checklist pass from a clean checkout.
 - Do not mark the live campaign complete from mocks or replay alone.
-- A model outage, missing credential, unavailable exact model identifier, or
-  exhausted operator budget blocks live evidence; it does not authorize a
-  substitution or a smaller unreported campaign.
+- An unavailable Ollama server, missing model image, or unavailable model
+  identifier blocks live evidence; it does not authorize a substitution or a
+  smaller unreported campaign.
 
 ## Phase order
 
@@ -232,7 +228,7 @@ Phase 1: freeze experiment, semantics, corpus, and decisions
     -> Phase 2: parse the effectful A-Lang source surface
         -> Phase 3: check and lower A-Lang and typed JSON to matched IR
             -> Phase 4: compile and execute both paths through BEAM enforcement
-                -> Phase 5: run and replay the bounded two-family evaluation
+                -> Phase 5: run and replay the bounded two-local-model evaluation
                     -> Phase 6: apply the frozen rule and publish the decision
 ```
 
@@ -256,7 +252,7 @@ following, with live-only items backed by a recorded opt-in campaign:
       campaign, are accounted for under the call and cost ceilings
 - [ ] Offline replay reproduces normalized trials, scores, bootstrap intervals,
       and the final decision byte-for-byte
-- [ ] OpenAI and Anthropic results are reported separately as well as pooled
+- [ ] Ornith and Mixtral results are reported separately as well as pooled
 - [ ] No credentials, raw HTTP envelopes, hidden reasoning, or secret-bearing
       diagnostics appear in retained artifacts
 - [ ] The promote, replace, or stop rule is applied without post-hoc threshold
@@ -286,14 +282,15 @@ following, with live-only items backed by a recorded opt-in campaign:
   — **complete**; compiles and executes every corpus family through the
   inspected BEAM backend and inherited runtime enforcement path, with
   reproducible [Phase 4 evidence](../../src/effectful-source-fidelity/phase-04-integration-evidence.md).
-- [Phase 5 — Hosted multi-model fidelity evaluation](phase-05-hosted-multi-model-fidelity-evaluation.md)
-  — **in progress**; Sections 5.1–5.3 and Task 5.4.1 add bounded BEAM adapters,
-  exact preflight, the reproducible 288-cell schedule, durable accounting,
-  deterministic scoring, bootstrap intervals, redacted replay evidence, and a
-  complete offline fault gate. The authorized hosted campaign remains pending.
+- [Phase 5 — Local two-model fidelity evaluation](phase-05-hosted-multi-model-fidelity-evaluation.md)
+  — **in progress**; Sections 5.1–5.3 and Task 5.4.1 add bounded BEAM Ollama
+  adapters, exact preflight, the reproducible 288-cell schedule, durable
+  accounting, deterministic scoring, bootstrap intervals, redacted replay
+  evidence, and a complete offline fault gate. The local campaign against the
+  running Ollama server remains pending.
 - [Phase 6 — Fidelity decision and roadmap handoff](phase-06-fidelity-decision-and-roadmap-handoff.md)
-  — applies the frozen threshold, records promote/replace/stop, and reconciles
-  the archive without implying production readiness.
+  — **complete**; frozen evidence freeze, decision module, archive reconciliation,
+  and integration tests implemented. Live campaign replay pending Ollama server.
 
 ## Maintaining this index
 
