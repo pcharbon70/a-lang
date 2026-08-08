@@ -4,10 +4,7 @@
   "live_opt_in": {
     "environment_variable": "ALANG_ALLOW_LIVE_MODEL_CALLS",
     "required_value": "1",
-    "credentials_required": [
-      "ALANG_OPENAI_API_KEY",
-      "ALANG_ANTHROPIC_API_KEY"
-    ]
+    "credentials_required": []
   },
   "design": {
     "semantic_cases": 24,
