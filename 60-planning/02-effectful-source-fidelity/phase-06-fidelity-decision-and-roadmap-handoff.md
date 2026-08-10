@@ -34,7 +34,7 @@ contracts and inherited security gates remain unchanged.
 prove that retained records correspond to the pre-registered design, and state
 whether the campaign can support an efficacy decision.
 
-- [ ] **Section 6.1 Complete**
+- [x] **Section 6.1 Complete**
 
 ### Task 6.1.1: Reconcile Pre-Registration, Calls, and Retained Records
 
@@ -42,7 +42,7 @@ whether the campaign can support an efficacy decision.
 provider attempt, repair, replacement, normalized response, score, and cost
 into one append-only evidence manifest with no unexplained gap or duplicate.
 
-- [ ] **Task 6.1.1 Complete**
+- [x] **Task 6.1.1 Complete**
 
 #### Subtask 6.1.1.1: Verify Contract and Content Digests
 
@@ -68,7 +68,7 @@ refusal, truncation, and missing cell, and require totals to remain within the
 code so a reviewer cannot selectively exclude trials, forgive a model
 substitution, or reinterpret an operational failure after seeing results.
 
-- [ ] **Task 6.1.2 Complete**
+- [x] **Task 6.1.2 Complete**
 
 #### Subtask 6.1.2.1: Evaluate Validity Predicates
 
@@ -79,7 +79,7 @@ matched semantic pairs, authorized call and replacement transitions, complete
 cost accounting, clean redaction, and reproducible scores; emit each failing
 predicate explicitly.
 
-- [ ] **Subtask 6.1.2.1 Complete**
+- [x] **Subtask 6.1.2.1 Complete**
 
 #### Subtask 6.1.2.2: Freeze the Analysis Dataset
 
@@ -88,7 +88,7 @@ analysis tables and their digests; for an invalid campaign, emit only the
 accounting and validity report and forbid efficacy intervals or a claim that
 one representation performed better.
 
-- [ ] **Subtask 6.1.2.2 Complete**
+- [x] **Subtask 6.1.2.2 Complete**
 
 ## Section 6.2: Frozen Architecture Decision
 
@@ -96,7 +96,7 @@ one representation performed better.
 including per-model effect sizes and safety vetoes, or conservatively stop
 surface expansion when the campaign cannot support comparison.
 
-- [ ] **Section 6.2 Complete**
+- [x] **Section 6.2 Complete**
 
 ### Task 6.2.1: Generate the Per-Model Decision Inputs
 
@@ -105,7 +105,7 @@ fidelity rates, paired difference, task-family-stratified 95% interval,
 component results, unauthorized-effect count, false-completion count, and all
 inherited regression-gate outcomes.
 
-- [ ] **Task 6.2.1 Complete**
+- [x] **Task 6.2.1 Complete**
 
 #### Subtask 6.2.1.1: Reproduce Paired Statistics Independently
 
@@ -115,7 +115,7 @@ task family while retaining paired repetitions, compare the percentile
 interval byte-for-byte with Phase 5 evidence, and keep pooled statistics
 descriptive rather than using them to override a failing model family.
 
-- [ ] **Subtask 6.2.1.1 Complete**
+- [x] **Subtask 6.2.1.1 Complete**
 
 #### Subtask 6.2.1.2: Evaluate Safety and Regression Vetoes
 
@@ -124,7 +124,7 @@ completions for A-Lang relative to JSON and require all compiler, broker,
 durability, adversarial, fault, mutation, child, workspace, and completion
 gates to remain green before promotion is possible.
 
-- [ ] **Subtask 6.2.1.2 Complete**
+- [x] **Subtask 6.2.1.2 Complete**
 
 ### Task 6.2.2: Apply Promote, Replace, or Stop Without Human Override
 
@@ -132,7 +132,7 @@ gates to remain green before promotion is possible.
 decision module and emit both a canonical machine record and an explained
 human report from the same inputs.
 
-- [ ] **Task 6.2.2 Complete**
+- [x] **Task 6.2.2 Complete**
 
 #### Subtask 6.2.2.1: Evaluate the Ordered Outcome Rule
 
@@ -144,7 +144,7 @@ no unresolved safety veto prevents use; otherwise stop user-facing language
 expansion. An invalid campaign also yields stop-without-efficacy-conclusion,
 not promotion, replacement, or evidence that either condition is superior.
 
-- [ ] **Subtask 6.2.2.1 Complete**
+- [x] **Subtask 6.2.2.1 Complete**
 
 #### Subtask 6.2.2.2: Publish Decision Rationale and Sensitivity Context
 
@@ -153,7 +153,7 @@ level and task-family results, distinguish registered inference from clearly
 labeled descriptive sensitivity checks, and forbid sensitivity results from
 changing the canonical disposition.
 
-- [ ] **Subtask 6.2.2.2 Complete**
+- [x] **Subtask 6.2.2.2 Complete**
 
 ## Section 6.3: Implementation and Research Handoff
 
@@ -161,7 +161,7 @@ changing the canonical disposition.
 archive while preserving rejected claims, operational limits, deferred work,
 and the evidence trail that supports the outcome.
 
-- [ ] **Section 6.3 Complete**
+- [x] **Section 6.3 Complete**
 
 ### Task 6.3.1: Reconcile Architecture, Status, Risks, and Deferred Work
 
@@ -169,7 +169,7 @@ and the evidence trail that supports the outcome.
 from the canonical outcome, clearly separating what was implemented, what the
 experiment supports, and what remains untested or rejected.
 
-- [ ] **Task 6.3.1 Complete**
+- [x] **Task 6.3.1 Complete**
 
 #### Subtask 6.3.1.1: Apply the Outcome to the Supported Surface
 
@@ -179,7 +179,7 @@ input and remove the novel surface from future acceptance claims; on stop,
 freeze both experimental authoring paths while retaining evidence-supported
 BEAM runtime enforcement and test fixtures.
 
-- [ ] **Subtask 6.3.1.1 Complete**
+- [x] **Subtask 6.3.1.1 Complete**
 
 #### Subtask 6.3.1.2: Preserve Scope, Security, and Production Boundaries
 
@@ -188,7 +188,7 @@ durability, fixed-module lifecycle, single-OTP support, provider variability,
 formal-proof limits, and absent human-usability evidence visible; do not label
 any disposition production-ready or extrapolate to untested models and tasks.
 
-- [ ] **Subtask 6.3.1.2 Complete**
+- [x] **Subtask 6.3.1.2 Complete**
 
 ### Task 6.3.2: Reconcile Inquiries, Maps, Indexes, and the Next Boundary
 
@@ -196,7 +196,7 @@ any disposition production-ready or extrapolate to untested models and tasks.
 planning indexes, source indexes, and relevant synthesis links so readers can
 trace the question from research through code, hosted evidence, and decision.
 
-- [ ] **Task 6.3.2 Complete**
+- [x] **Task 6.3.2 Complete**
 
 #### Subtask 6.3.2.1: Record Findings Without Over-Resolving Research
 
@@ -205,7 +205,7 @@ and syntheses, keep broader questions open unless their stated criteria are
 actually satisfied, and identify limitations or contradictory evidence rather
 than turning a local result into a universal language claim.
 
-- [ ] **Subtask 6.3.2.1 Complete**
+- [x] **Subtask 6.3.2.1 Complete**
 
 #### Subtask 6.3.2.2: Define Any Later Work as a New Authorization
 
@@ -216,7 +216,7 @@ self-hosting, categorical syntax, human-usability claims, or production scope;
 materially new work requires a later numbered planning stream and explicit
 approval.
 
-- [ ] **Subtask 6.3.2.2 Complete**
+- [x] **Subtask 6.3.2.2 Complete**
 
 ## Section 6.4: Phase 6 Integration Tests
 
@@ -224,7 +224,7 @@ approval.
 checkout, test every decision branch and evidence failure, and verify that the
 archive handoff is internally consistent and free of secrets.
 
-- [ ] **Section 6.4 Complete**
+- [x] **Section 6.4 Complete**
 
 ### Task 6.4.1: Run Decision, Mutation, and Clean-Replay Suites
 
@@ -233,7 +233,7 @@ invalid campaign, safety veto, model-family disagreement, threshold boundary,
 digest mismatch, missing cell, and corrupted evidence, then replay the actual
 campaign without network access.
 
-- [ ] **Task 6.4.1 Complete**
+- [x] **Task 6.4.1 Complete**
 
 #### Subtask 6.4.1.1: Detect Seeded Decision and Evidence Defects
 
@@ -243,7 +243,7 @@ changes the bootstrap seed, ignores a safety veto, accepts a model alias,
 drops or replaces an unfavorable definitive response, exceeds a ceiling, or
 promotes an invalid campaign.
 
-- [ ] **Subtask 6.4.1.1 Complete**
+- [x] **Subtask 6.4.1.1 Complete**
 
 #### Subtask 6.4.1.2: Reproduce the Canonical Decision Byte-for-Byte
 
@@ -252,7 +252,7 @@ BEAM analysis modules, validate all digests, regenerate metrics and intervals,
 and require the machine decision, human report tables, validity result, and
 content digests to match the release evidence exactly.
 
-- [ ] **Subtask 6.4.1.2 Complete**
+- [x] **Subtask 6.4.1.2 Complete**
 
 ### Task 6.4.2: Validate the Roadmap and Archive Handoff
 
@@ -260,7 +260,7 @@ content digests to match the release evidence exactly.
 runtime residency and evidence retention, and prove that every changed
 document, index, and local link agrees with the final disposition.
 
-- [ ] **Task 6.4.2 Complete**
+- [x] **Task 6.4.2 Complete**
 
 #### Subtask 6.4.2.1: Reassert End-to-End Technical Gates
 
@@ -270,7 +270,7 @@ trusted modules load from `.beam`, default tests remain offline, and no
 interpreter, foreign compiler, provider SDK, or raw transport artifact enters
 the acceptance path.
 
-- [ ] **Subtask 6.4.2.1 Complete**
+- [x] **Subtask 6.4.2.1 Complete**
 
 #### Subtask 6.4.2.2: Validate Metadata, Links, Indexes, and Secret Absence
 
@@ -279,7 +279,7 @@ check every directory README inventory, scan retained evidence and Git history
 introduced by this stream for credentials and headers, and publish an evidence
 index mapping every roadmap gate to a reproducible command or artifact.
 
-- [ ] **Subtask 6.4.2.2 Complete**
+- [x] **Subtask 6.4.2.2 Complete**
 
 ## Phase 6 Completion Evidence
 
