@@ -3,7 +3,7 @@
 -export([decide/1, load_contract/1, validate_contract/1]).
 
 -define(FORMAT, <<"alang-fidelity-decision-v1">>).
--define(MODEL_FAMILIES, [<<"anthropic">>, <<"openai">>]).
+-define(MODEL_FAMILIES, [<<"mixtral">>, <<"ornith">>]).
 -define(SECONDARY_METRICS, [
     <<"authority-widening-rate">>,
     <<"component-exactness">>,

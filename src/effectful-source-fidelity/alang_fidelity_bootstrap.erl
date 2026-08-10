@@ -12,10 +12,10 @@ compute(Scores) when is_list(Scores) ->
         {Index, FamilyCases} = validate_and_index(Scores),
         State0 = rand:seed_s(exsss, {?SEED, ?SEED + 1, ?SEED + 2}),
         {Samples, _State} = resamples(?RESAMPLES, State0, Index, FamilyCases, #{
-            anthropic => [], openai => []
+            mixtral => [], ornith => []
         }),
         Models = maps:from_list([{Model, interval(Model, Index, FamilyCases, maps:get(Model, Samples))}
-            || Model <- [anthropic, openai]]),
+            || Model <- [mixtral, ornith]]),
         Result0 = #{
             format => alang_fidelity_paired_bootstrap_v1,
             seed => ?SEED,
@@ -48,7 +48,7 @@ validate_and_index(Scores) ->
     ensure(lists:all(fun(Cases) -> length(Cases) =:= 8 end, maps:values(FamilyCases)), invalid_family_case_count),
     KeysAndValues = [
         begin
-            ensure(lists:member(maps:get(model_family, Score), [anthropic, openai]), invalid_model_family),
+            ensure(lists:member(maps:get(model_family, Score), [mixtral, ornith]), invalid_model_family),
             ensure(lists:member(maps:get(condition, Score), [alang, json]), invalid_condition),
             Repetition = maps:get(repetition, Score),
             ensure(is_integer(Repetition) andalso Repetition >= 1 andalso Repetition =< 3, invalid_repetition),
@@ -70,7 +70,7 @@ validate_and_index(Scores) ->
     ensure(maps:size(Index) =:= 288, duplicate_bootstrap_cell),
     ExpectedKeys = [
         {Model, Condition, CaseId, Repetition}
-        || Model <- [anthropic, openai],
+        || Model <- [mixtral, ornith],
            Condition <- [alang, json],
            Family <- Families,
            CaseId <- maps:get(Family, FamilyCases),

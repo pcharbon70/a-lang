@@ -35,9 +35,9 @@ paired_semantic_digests_are_equal_test() ->
 provider_profiles_are_exact_and_bounded_test() ->
     {ok, Profiles} = alang_fidelity_json:decode_file(profiles_path()),
     ?assertMatch({ok, _}, alang_fidelity_corpus:validate_provider_profiles(Profiles)),
-    [OpenAi, Anthropic] = maps:get(<<"profiles">>, Profiles),
-    ?assertEqual(<<"gpt-5.6-terra">>, maps:get(<<"model_id">>, OpenAi)),
-    ?assertEqual(<<"claude-sonnet-5">>, maps:get(<<"model_id">>, Anthropic)),
+    [Ornith, Mixtral] = maps:get(<<"profiles">>, Profiles),
+    ?assertEqual(<<"ornith-1.0">>, maps:get(<<"model_id">>, Ornith)),
+    ?assertEqual(<<"mixtral-8x7b">>, maps:get(<<"model_id">>, Mixtral)),
     lists:foreach(
         fun(Profile) ->
             ?assertEqual(<<"medium">>, maps:get(<<"effort">>, Profile)),
@@ -47,13 +47,13 @@ provider_profiles_are_exact_and_bounded_test() ->
             ?assertEqual(8192, maps:get(<<"max_output_tokens">>, Profile)),
             ?assertEqual(8192, maps:get(<<"accepted_output_bytes">>, Profile))
         end,
-        [OpenAi, Anthropic]
+        [Ornith, Mixtral]
     ).
 
 alias_model_identifier_is_rejected_test() ->
     {ok, Profiles} = alang_fidelity_json:decode_file(profiles_path()),
-    [OpenAi, Anthropic] = maps:get(<<"profiles">>, Profiles),
-    Mutant = Profiles#{<<"profiles">> => [OpenAi#{<<"model_id">> => <<"gpt-latest">>}, Anthropic]},
+    [Ornith, Mixtral] = maps:get(<<"profiles">>, Profiles),
+    Mutant = Profiles#{<<"profiles">> => [Ornith#{<<"model_id">> => <<"ornith-latest">>}, Mixtral]},
     ?assertMatch(
         {error, {campaign_error, [<<"profiles">>], {frozen_contract_mismatch, _, _}}},
         alang_fidelity_corpus:validate_provider_profiles(Mutant)

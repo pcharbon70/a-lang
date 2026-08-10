@@ -32,10 +32,10 @@
         "exact_identifier_required"
       ],
       "properties": {
-        "family": { "enum": ["openai", "anthropic"] },
-        "provider": { "enum": ["OpenAI", "Anthropic"] },
-        "api": { "enum": ["Responses", "Messages"] },
-        "model_id": { "enum": ["gpt-5.6-terra", "claude-sonnet-5"] },
+        "family": { "enum": ["ornith", "mixtral"] },
+        "provider": { "enum": ["Ollama"] },
+        "api": { "enum": ["ChatCompletions"] },
+        "model_id": { "enum": ["ornith-1.0", "mixtral-8x7b"] },
         "effort": { "const": "medium" },
         "turns": { "const": 1 },
         "tools_enabled": { "const": false },

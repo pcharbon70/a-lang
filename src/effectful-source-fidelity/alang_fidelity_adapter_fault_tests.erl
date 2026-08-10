@@ -18,19 +18,19 @@ both_adapters_use_the_scripted_https_boundary_without_retaining_secrets_test() -
         ?assertEqual(nomatch, binary:match(
             term_to_binary(Result, [deterministic]), ?SECRET
         ))
-    end, [anthropic, openai]).
+    end, [mixtral, ornith]).
 
 transport_identity_and_bound_failures_are_closed_test() ->
-    OpenAI = cell(openai),
-    Anthropic = cell(anthropic),
+    OrnithCell = cell(ornith),
+    MixtralCell = cell(mixtral),
     Cases = [
-        {openai, OpenAI, {error, tls_rejected, not_submitted}, tls_rejected, not_submitted},
-        {anthropic, Anthropic, {ok, 302, <<"redirect">>}, redirect_rejected, definitive},
-        {openai, OpenAI, {error, timeout, not_submitted}, timeout, not_submitted},
-        {anthropic, Anthropic, {error, timeout, uncertain}, timeout, uncertain},
-        {openai, OpenAI, {ok, 429, <<"rate">>}, rate_limited, definitive},
-        {anthropic, Anthropic, {ok, 200, <<"not-json">>}, malformed_provider_response, definitive},
-        {openai, OpenAI, {ok, 200, binary:copy(<<"x">>, 65537)},
+        {ornith, OrnithCell, {error, tls_rejected, not_submitted}, tls_rejected, not_submitted},
+        {mixtral, MixtralCell, {ok, 302, <<"redirect">>}, redirect_rejected, definitive},
+        {ornith, OrnithCell, {error, timeout, not_submitted}, timeout, not_submitted},
+        {mixtral, MixtralCell, {error, timeout, uncertain}, timeout, uncertain},
+        {ornith, OrnithCell, {ok, 429, <<"rate">>}, rate_limited, definitive},
+        {mixtral, MixtralCell, {ok, 200, <<"not-json">>}, malformed_provider_response, definitive},
+        {ornith, OrnithCell, {ok, 200, binary:copy(<<"x">>, 65537)},
             oversized_provider_response, uncertain}
     ],
     lists:foreach(fun({Family, Cell, FixtureResult, Status, Submission}) ->
@@ -38,26 +38,26 @@ transport_identity_and_bound_failures_are_closed_test() ->
         ?assertEqual(Status, maps:get(status, Result)),
         ?assertEqual(Submission, maps:get(submission, Result))
     end, Cases),
-    {ok, WrongOpenAI} = send(openai, request(OpenAI), {ok, 200,
-        alang_fidelity_https_fixture:provider_response(openai, wrong_model, <<"{}">>)}),
-    {ok, WrongAnthropic} = send(anthropic, request(Anthropic), {ok, 200,
-        alang_fidelity_https_fixture:provider_response(anthropic, wrong_model, <<"{}">>)}),
-    ?assertEqual(wrong_model_identity, maps:get(status, WrongOpenAI)),
-    ?assertEqual(wrong_model_identity, maps:get(status, WrongAnthropic)),
-    {ok, PartialUsage} = send(anthropic, request(Anthropic), {ok, 200,
-        alang_fidelity_https_fixture:provider_response(anthropic, partial_usage, <<"{}">>)}),
+    {ok, WrongOrnith} = send(ornith, request(OrnithCell), {ok, 200,
+        alang_fidelity_https_fixture:provider_response(ornith, wrong_model, <<"{}">>)}),
+    {ok, WrongMixtral} = send(mixtral, request(MixtralCell), {ok, 200,
+        alang_fidelity_https_fixture:provider_response(mixtral, wrong_model, <<"{}">>)}),
+    ?assertEqual(wrong_model_identity, maps:get(status, WrongOrnith)),
+    ?assertEqual(wrong_model_identity, maps:get(status, WrongMixtral)),
+    {ok, PartialUsage} = send(mixtral, request(MixtralCell), {ok, 200,
+        alang_fidelity_https_fixture:provider_response(mixtral, partial_usage, <<"{}">>)}),
     ?assertEqual(malformed_provider_response, maps:get(status, PartialUsage)).
 
 scripted_sidecar_crash_and_secret_bearing_error_fail_closed_test() ->
-    Cell = cell(openai),
-    Options = (options(openai))#{
+    Cell = cell(ornith),
+    Options = (options(ornith))#{
         transport => alang_fidelity_https_fixture:crashing_transport(?SECRET)
     },
-    {ok, Result} = alang_fidelity_openai_adapter:send(request(Cell), Options),
+    {ok, Result} = alang_fidelity_ornith_adapter:send(request(Cell), Options),
     ?assertEqual(sidecar_crash, maps:get(status, Result)),
     ?assertEqual(uncertain, maps:get(submission, Result)),
     ?assertEqual(nomatch, binary:match(term_to_binary(Result, [deterministic]), ?SECRET)),
-    {ok, WeirdResult} = send(openai, request(Cell), {secret_bearing_error, ?SECRET}),
+    {ok, WeirdResult} = send(ornith, request(Cell), {secret_bearing_error, ?SECRET}),
     ?assertEqual(sidecar_crash, maps:get(status, WeirdResult)),
     ?assertEqual(nomatch, binary:match(
         term_to_binary(WeirdResult, [deterministic]), ?SECRET
@@ -84,8 +84,8 @@ call_cost_and_projection_ceilings_fail_closed_test() ->
         alang_fidelity_campaign_runner:record_result(Runner1, CostResult)
     ),
     Expensive = #{
-        anthropic => price(30000000, 30000000),
-        openai => price(30000000, 30000000)
+        mixtral => price(30000000, 30000000),
+        ornith => price(30000000, 30000000)
     },
     ?assertEqual(
         {error, projected_cost_exceeds_ceiling},
@@ -97,17 +97,16 @@ send(Family, Request, FixtureResult) ->
         transport => alang_fidelity_https_fixture:transport(Family, FixtureResult)
     },
     case Family of
-        openai -> alang_fidelity_openai_adapter:send(Request, Options);
-        anthropic -> alang_fidelity_anthropic_adapter:send(Request, Options)
+        ornith -> alang_fidelity_ornith_adapter:send(Request, Options);
+        mixtral -> alang_fidelity_mixtral_adapter:send(Request, Options)
     end.
 
 options(_Family) -> #{
-    credential_source => fun() -> ?SECRET end,
     prices => #{
-        anthropic => #{input_microusd_per_million => 1000000,
-            output_microusd_per_million => 2000000},
-        openai => #{input_microusd_per_million => 1000000,
-            output_microusd_per_million => 2000000}
+        mixtral => #{input_microusd_per_million => 0,
+            output_microusd_per_million => 0},
+        ornith => #{input_microusd_per_million => 0,
+            output_microusd_per_million => 0}
     }
 }.
 

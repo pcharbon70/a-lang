@@ -68,7 +68,7 @@ clean_erts_evidence_is_byte_identical_and_replays_without_network_test_() ->
 phase5_offline_path_is_beam_resident_and_has_no_foreign_process_import_test() ->
     Modules = [
         alang_fidelity_adapter_fault_tests,
-        alang_fidelity_anthropic_adapter,
+        alang_fidelity_mixtral_adapter,
         alang_fidelity_bootstrap,
         alang_fidelity_campaign,
         alang_fidelity_campaign_journal,
@@ -78,7 +78,7 @@ phase5_offline_path_is_beam_resident_and_has_no_foreign_process_import_test() ->
         alang_fidelity_https_fixture,
         alang_fidelity_observation,
         alang_fidelity_offline_campaign,
-        alang_fidelity_openai_adapter,
+        alang_fidelity_ornith_adapter,
         alang_fidelity_phase5_mutation,
         alang_fidelity_phase5_worker,
         alang_fidelity_score

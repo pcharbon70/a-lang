@@ -77,16 +77,17 @@ pin these cells without aliases:
 
 | Family | API | Exact model | Effort | Turns | Tools/schema | Output bounds |
 | --- | --- | --- | --- | ---: | --- | --- |
-| OpenAI | Responses | `gpt-5.6-terra` | Medium | 1 | Disabled | 8,192 tokens / 8,192 accepted bytes |
-| Anthropic | Messages | `claude-sonnet-5` | Medium | 1 | Disabled | 8,192 tokens / 8,192 accepted bytes |
+| Ollama | ChatCompletions | `ornith-1.0` | Medium | 1 | Disabled | 8,192 tokens / 8,192 accepted bytes |
+| Ollama | ChatCompletions | `mixtral-8x7b` | Medium | 1 | Disabled | 8,192 tokens / 8,192 accepted bytes |
 
 The [campaign policy](../../assets/effectful-source-fidelity/campaign/campaign-policy-v1.json)
-requires `ALANG_ALLOW_LIVE_MODEL_CALLS=1`, `ALANG_OPENAI_API_KEY`, and
-`ALANG_ANTHROPIC_API_KEY`. It caps primary calls at 288, all calls at 576, and
-declared cost at USD 200. A definitive malformed or schema-invalid response
-remains a zero primary score even when its single permitted repair succeeds as
-secondary evidence. Blind retry is forbidden; proved-not-submitted retries and
-no-definitive-response replacements remain linked and count toward the total.
+requires `ALANG_ALLOW_LIVE_MODEL_CALLS=1` and validates that both models are
+reachable through the local Ollama server. It caps primary calls at 288, all
+calls at 576, and tracks token counts for local cost reporting. A definitive
+malformed or schema-invalid response remains a zero primary score even when its
+single permitted repair succeeds as secondary evidence. Blind retry is
+forbidden; proved-not-submitted retries and no-definitive-response replacements
+remain linked and count toward the total.
 
 ## Metrics and decision rule
 

@@ -92,8 +92,8 @@ unbounded_limit_mutant_is_rejected_test() ->
 
 alias_model_mutant_is_rejected_test() ->
     {ok, Profiles} = alang_fidelity_json:decode_file(profiles_path()),
-    [OpenAi, Anthropic] = maps:get(<<"profiles">>, Profiles),
-    Mutant = Profiles#{<<"profiles">> => [OpenAi, Anthropic#{<<"model_id">> => <<"claude-latest">>}]},
+    [Ornith, Mixtral] = maps:get(<<"profiles">>, Profiles),
+    Mutant = Profiles#{<<"profiles">> => [Ornith, Mixtral#{<<"model_id">> => <<"mixtral-latest">>}]},
     ?assertMatch(
         {error, {campaign_error, [<<"profiles">>], {frozen_contract_mismatch, _, _}}},
         alang_fidelity_corpus:validate_provider_profiles(Mutant)

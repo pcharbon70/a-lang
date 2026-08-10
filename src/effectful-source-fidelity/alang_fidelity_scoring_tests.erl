@@ -112,7 +112,7 @@ paired_bootstrap_is_seeded_stratified_and_reproducible_test_() ->
             ?assertEqual(100000000, maps:get(observed_difference_pp_micros, Interval)),
             ?assertEqual(100000000, maps:get(lower_pp_micros, Interval)),
             ?assertEqual(100000000, maps:get(upper_pp_micros, Interval))
-        end, [anthropic, openai])
+        end, [mixtral, ornith])
     end}.
 
 evidence_is_redacted_bounded_and_safe_to_replay_test_() ->
@@ -174,14 +174,14 @@ success(Cell, Value, AttemptClass, Salt) ->
 
 protocol_success(Request, Output) ->
     Prices = #{
-        anthropic => #{input_microusd_per_million => 1000000,
-            output_microusd_per_million => 2000000},
-        openai => #{input_microusd_per_million => 1000000,
-            output_microusd_per_million => 2000000}
+        mixtral => #{input_microusd_per_million => 0,
+            output_microusd_per_million => 0},
+        ornith => #{input_microusd_per_million => 0,
+            output_microusd_per_million => 0}
     },
     alang_fidelity_provider_protocol:success(
         Request, Output, #{input_tokens => 100, output_tokens => 50},
-        <<"completed">>, 11, Prices
+        <<"done">>, 11, Prices
     ).
 
 request(Cell, AttemptClass, Salt) ->
@@ -226,7 +226,7 @@ synthetic_scores() ->
         repetition => Repetition,
         exact_semantic_fidelity => Condition =:= alang
     }
-        || Model <- [anthropic, openai],
+        || Model <- [mixtral, ornith],
            Condition <- [alang, json],
            Family <- Families,
            CaseNumber <- lists:seq(1, 8),

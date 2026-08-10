@@ -14,7 +14,7 @@ frozen_schedule_has_288_balanced_opaque_cells_test() ->
         ?assertEqual(144, length(ModelCells)),
         ?assertEqual(72, length([Cell || Cell <- ModelCells, maps:get(condition, Cell) =:= alang])),
         ?assertEqual(72, length([Cell || Cell <- ModelCells, maps:get(condition, Cell) =:= json]))
-    end, [anthropic, openai]),
+    end, [mixtral, ornith]),
     lists:foreach(fun(Cell) ->
         TrialId = maps:get(trial_id, Cell),
         ?assertEqual(64, byte_size(TrialId)),

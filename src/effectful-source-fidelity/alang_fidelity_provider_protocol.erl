@@ -13,28 +13,28 @@
 -define(MAX_PROMPT_BYTES, 16384).
 -define(MAX_OUTPUT_BYTES, 8192).
 
--spec profile(openai | anthropic) -> map().
-profile(openai) ->
+-spec profile(ornith | mixtral) -> map().
+profile(ornith) ->
     #{
-        family => openai,
-        provider => <<"OpenAI">>,
-        api => responses,
-        model_id => <<"gpt-5.6-terra">>,
+        family => ornith,
+        provider => <<"Ollama">>,
+        api => chat_completions,
+        model_id => <<"ornith-1.0">>,
         effort => medium,
-        endpoint => <<"https://api.openai.com/v1/responses">>,
-        model_endpoint => <<"https://api.openai.com/v1/models/gpt-5.6-terra">>,
+        endpoint => <<"http://localhost:11434/api/chat">>,
+        model_endpoint => <<"http://localhost:11434/api/tags">>,
         max_output_tokens => 8192,
         accepted_output_bytes => ?MAX_OUTPUT_BYTES
     };
-profile(anthropic) ->
+profile(mixtral) ->
     #{
-        family => anthropic,
-        provider => <<"Anthropic">>,
-        api => messages,
-        model_id => <<"claude-sonnet-5">>,
+        family => mixtral,
+        provider => <<"Ollama">>,
+        api => chat_completions,
+        model_id => <<"mixtral-8x7b">>,
         effort => medium,
-        endpoint => <<"https://api.anthropic.com/v1/messages">>,
-        model_endpoint => <<"https://api.anthropic.com/v1/models/claude-sonnet-5">>,
+        endpoint => <<"http://localhost:11434/api/chat">>,
+        model_endpoint => <<"http://localhost:11434/api/tags">>,
         max_output_tokens => 8192,
         accepted_output_bytes => ?MAX_OUTPUT_BYTES
     }.
@@ -58,7 +58,7 @@ validate_request(Request) ->
         ensure(lists:sort(maps:keys(Request)) =:= Keys, invalid_request_fields),
         ensure(maps:get(format, Request) =:= alang_fidelity_provider_request_v1, invalid_request_format),
         Family = maps:get(family, Request),
-        ensure(lists:member(Family, [anthropic, openai]), invalid_provider_family),
+        ensure(lists:member(Family, [ornith, mixtral]), invalid_provider_family),
         Profile = profile(Family),
         ensure(maps:get(model_id, Request) =:= maps:get(model_id, Profile), model_substitution),
         ensure(maps:get(effort, Request) =:= medium, effort_substitution),
