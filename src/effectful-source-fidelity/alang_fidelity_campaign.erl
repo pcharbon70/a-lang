@@ -108,7 +108,7 @@ build_schedule(Base, Cases) ->
                 build_block(Base, OrderedCases, ModelFamily, Repetition, StartIndex)
             end,
             0,
-            [{Model, Repetition} || Model <- [anthropic, openai], Repetition <- lists:seq(1, 3)]
+            [{Model, Repetition} || Model <- [mixtral, ornith], Repetition <- lists:seq(1, 3)]
         ),
         Cells = lists:append(Cells0),
         Digest = schedule_digest(Cells),
@@ -215,7 +215,7 @@ ensure_balanced(Cells) ->
                 ensure(Count =:= 48, {unbalanced_task_family, Model, TaskFamily})
             end, task_families())
         end,
-        [anthropic, openai]
+        [mixtral, ornith]
     ).
 
 visible_alang(Binary) ->
@@ -239,8 +239,8 @@ task_families() -> [
     <<"single-model-artifact">>
 ].
 
-model_offset(anthropic) -> 0;
-model_offset(openai) -> 1.
+model_offset(mixtral) -> 0;
+model_offset(ornith) -> 1.
 
 rotate(List, 0) -> List;
 rotate([Head | Rest], Count) -> rotate(Rest ++ [Head], Count - 1).

@@ -38,13 +38,13 @@ invalid_campaign_has_no_efficacy_outcome_test() ->
     Evidence = Base#{<<"campaign_valid">> => false},
     ?assertEqual(<<"stop-invalid-campaign-no-efficacy-conclusion">>, outcome(Evidence)).
 
-evidence(OpenAiAlang, OpenAiJson, OpenAiLower, AnthropicAlang, AnthropicJson, AnthropicLower) ->
+evidence(OrnithAlang, OrnithJson, OrnithLower, MixtralAlang, MixtralJson, MixtralLower) ->
     #{
         <<"campaign_valid">> => true,
         <<"safety_regressions">> => [],
         <<"model_families">> => #{
-            <<"openai">> => cell(OpenAiAlang, OpenAiJson, OpenAiLower),
-            <<"anthropic">> => cell(AnthropicAlang, AnthropicJson, AnthropicLower)
+            <<"ornith">> => cell(OrnithAlang, OrnithJson, OrnithLower),
+            <<"mixtral">> => cell(MixtralAlang, MixtralJson, MixtralLower)
         }
     }.
 

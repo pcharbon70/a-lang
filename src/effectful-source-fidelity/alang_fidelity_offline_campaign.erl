@@ -3,10 +3,10 @@
 -export([run/1, validate/2]).
 
 -define(PRICE_TABLE, #{
-    anthropic => #{input_microusd_per_million => 1000000,
-        output_microusd_per_million => 2000000},
-    openai => #{input_microusd_per_million => 1000000,
-        output_microusd_per_million => 2000000}
+    mixtral => #{input_microusd_per_million => 0,
+        output_microusd_per_million => 0},
+    ornith => #{input_microusd_per_million => 0,
+        output_microusd_per_million => 0}
 }).
 
 -spec run(file:filename()) -> {ok, map()} | {error, term()}.

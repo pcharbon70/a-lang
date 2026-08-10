@@ -2,10 +2,10 @@
   "format": "alang-fidelity-provider-profiles-v1",
   "profiles": [
     {
-      "family": "openai",
-      "provider": "OpenAI",
-      "api": "Responses",
-      "model_id": "gpt-5.6-terra",
+      "family": "ornith",
+      "provider": "Ollama",
+      "api": "ChatCompletions",
+      "model_id": "ornith-1.0",
       "effort": "medium",
       "turns": 1,
       "tools_enabled": false,
@@ -15,10 +15,10 @@
       "exact_identifier_required": true
     },
     {
-      "family": "anthropic",
-      "provider": "Anthropic",
-      "api": "Messages",
-      "model_id": "claude-sonnet-5",
+      "family": "mixtral",
+      "provider": "Ollama",
+      "api": "ChatCompletions",
+      "model_id": "mixtral-8x7b",
       "effort": "medium",
       "turns": 1,
       "tools_enabled": false,

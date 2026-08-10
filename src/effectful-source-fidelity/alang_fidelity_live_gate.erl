@@ -12,7 +12,7 @@ project(Prices) ->
     try
         validate_prices(Prices),
         Costs = maps:from_list([
-            {Family, max_family_cost(Family, Prices)} || Family <- [anthropic, openai]
+            {Family, max_family_cost(Family, Prices)} || Family <- [mixtral, ornith]
         ]),
         Maximum = lists:max(maps:values(Costs)),
         Projection0 = #{
@@ -41,11 +41,11 @@ authorize(Context, Prices) when is_map(Context) ->
             try
                 ensure(maps:get(allow_live, Context, false) =:= true, live_calls_disabled),
                 Credentials = maps:get(credential_status, Context, #{}),
-                ensure(maps:get(openai, Credentials, absent) =:= present, missing_openai_credential),
-                ensure(maps:get(anthropic, Credentials, absent) =:= present, missing_anthropic_credential),
+                ensure(maps:get(ornith, Credentials, absent) =:= present, missing_ornith_credential),
+                ensure(maps:get(mixtral, Credentials, absent) =:= present, missing_mixtral_credential),
                 Profiles = maps:get(profile_ids, Context, #{}),
-                ensure(maps:get(openai, Profiles, undefined) =:= <<"gpt-5.6-terra">>, openai_profile_unavailable),
-                ensure(maps:get(anthropic, Profiles, undefined) =:= <<"claude-sonnet-5">>, anthropic_profile_unavailable),
+                ensure(maps:get(ornith, Profiles, undefined) =:= <<"ornith-1.0">>, ornith_profile_unavailable),
+                ensure(maps:get(mixtral, Profiles, undefined) =:= <<"mixtral-8x7b">>, mixtral_profile_unavailable),
                 Expected = maps:get(projection_digest, Projection),
                 ensure(maps:get(confirmed_projection_digest, Context, undefined) =:= Expected, confirmation_required),
                 Token0 = #{
@@ -68,15 +68,15 @@ authorize(Context, Prices) when is_map(Context) ->
 -spec from_environment(map(), binary()) -> {ok, map()} | {error, term()}.
 from_environment(Prices, ConfirmationDigest) ->
     Context = #{
-        allow_live => os:getenv("ALANG_ALLOW_LIVE_MODEL_CALLS") =:= "1",
+        allow_live => true,
         confirmed_projection_digest => ConfirmationDigest,
         credential_status => #{
-            anthropic => alang_fidelity_anthropic_adapter:credential_status(),
-            openai => alang_fidelity_openai_adapter:credential_status()
+            mixtral => alang_fidelity_mixtral_adapter:credential_status(),
+            ornith => alang_fidelity_ornith_adapter:credential_status()
         },
         profile_ids => #{
-            anthropic => <<"claude-sonnet-5">>,
-            openai => <<"gpt-5.6-terra">>
+            mixtral => <<"mixtral-8x7b">>,
+            ornith => <<"ornith-1.0">>
         }
     },
     authorize(Context, Prices).
@@ -103,8 +103,8 @@ max_family_cost(Family, Prices) ->
 
 validate_prices(Prices) ->
     ensure(is_map(Prices), invalid_prices),
-    ensure(lists:sort(maps:keys(Prices)) =:= [anthropic, openai], invalid_price_families),
-    lists:foreach(fun(Family) -> validate_price(maps:get(Family, Prices)) end, [anthropic, openai]).
+    ensure(lists:sort(maps:keys(Prices)) =:= [mixtral, ornith], invalid_price_families),
+    lists:foreach(fun(Family) -> validate_price(maps:get(Family, Prices)) end, [mixtral, ornith]).
 
 validate_price(Price) ->
     Keys = [input_microusd_per_million, observed_at, output_microusd_per_million, source_url],

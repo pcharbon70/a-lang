@@ -48,7 +48,7 @@ build(Base, Schedule, Observations, Scores, Statistics, Options)
             },
             provenance => Provenance,
             implementation_digests => #{
-                anthropic_adapter_beam_sha256 => module_digest(alang_fidelity_anthropic_adapter),
+                mixtral_adapter_beam_sha256 => module_digest(alang_fidelity_mixtral_adapter),
                 observation_beam_sha256 => module_digest(alang_fidelity_observation),
                 scorer_beam_sha256 => module_digest(alang_fidelity_score),
                 bootstrap_beam_sha256 => module_digest(alang_fidelity_bootstrap),
@@ -57,7 +57,7 @@ build(Base, Schedule, Observations, Scores, Statistics, Options)
                 campaign_runner_beam_sha256 => module_digest(alang_fidelity_campaign_runner),
                 evidence_beam_sha256 => module_digest(alang_fidelity_evidence),
                 offline_campaign_beam_sha256 => module_digest(alang_fidelity_offline_campaign),
-                openai_adapter_beam_sha256 => module_digest(alang_fidelity_openai_adapter)
+                ornith_adapter_beam_sha256 => module_digest(alang_fidelity_ornith_adapter)
             }
         },
         validate_safe(Evidence0, maps:get(secrets, Options, [])),
@@ -257,14 +257,14 @@ module_digest(Module) ->
 
 ensure_reader_modules() ->
     Modules = [
-        alang_fidelity_anthropic_adapter,
+        alang_fidelity_mixtral_adapter,
         alang_fidelity_bootstrap,
         alang_fidelity_campaign,
         alang_fidelity_campaign_journal,
         alang_fidelity_campaign_runner,
         alang_fidelity_observation,
         alang_fidelity_offline_campaign,
-        alang_fidelity_openai_adapter,
+        alang_fidelity_ornith_adapter,
         alang_fidelity_phase5_worker,
         alang_fidelity_score
     ],

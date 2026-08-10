@@ -53,10 +53,16 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_ast_tests.erl`](alang_fidelity_ast_tests.erl) — exercises
   exact-shape, origin, path, canonical ETF, legacy compatibility, atom-growth,
   and malformed-input rejection gates.
-- [`alang_fidelity_anthropic_adapter.erl`](alang_fidelity_anthropic_adapter.erl)
-  — renders the fixed Claude Messages request, keeps the API key inside the
-  adapter boundary, rejects model substitution, and maps bounded provider
-  envelopes into the shared result algebra without retaining raw responses.
+- [`alang_fidelity_mixtral_adapter.erl`](alang_fidelity_mixtral_adapter.erl)
+  — renders the fixed Ollama chat-completions request for mixtral-8x7b, runs
+  against the local Ollama server, rejects model substitution, and maps bounded
+  provider envelopes into the shared result algebra without retaining raw
+  responses.
+- [`alang_fidelity_ornith_adapter.erl`](alang_fidelity_ornith_adapter.erl)
+  — renders the fixed Ollama chat-completions request for ornith-1.0, runs
+  against the local Ollama server, rejects model substitution, and maps bounded
+  provider envelopes into the shared result algebra without retaining raw
+  responses.
 - [`alang_fidelity_adapter_fault_tests.erl`](alang_fidelity_adapter_fault_tests.erl)
   — drives both provider adapters through scripted HTTPS outcomes covering
   identity, TLS, redirect, timeout, response, crash, secret, call, cost, and
@@ -191,10 +197,7 @@ test path. Generated evidence belongs under the ignored
   provider results to a closed classification, canonicalizes valid semantic
   records, preserves definitive primary failures, and attaches at most one
   syntax-or-schema repair as a separate secondary observation.
-- [`alang_fidelity_openai_adapter.erl`](alang_fidelity_openai_adapter.erl) —
-  renders the fixed text-only Responses API request, keeps the API key inside
-  the adapter boundary, rejects model substitution, and normalizes only
-  bounded output text and usage metadata.
+
 - [`alang_fidelity_parser.erl`](alang_fidelity_parser.erl) — dispatches v1
   source unchanged and parses v2 task declarations, authority, scopes, and
   limits, ordered actions, errors, child attenuation, and completion into the

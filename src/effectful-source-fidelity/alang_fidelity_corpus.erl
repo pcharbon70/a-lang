@@ -352,8 +352,8 @@ expected_provider_profiles() ->
     #{
         <<"format">> => <<"alang-fidelity-provider-profiles-v1">>,
         <<"profiles">> => [
-            profile(<<"openai">>, <<"OpenAI">>, <<"Responses">>, <<"gpt-5.6-terra">>),
-            profile(<<"anthropic">>, <<"Anthropic">>, <<"Messages">>, <<"claude-sonnet-5">>)
+            profile(<<"ornith">>, <<"Ollama">>, <<"ChatCompletions">>, <<"ornith-1.0">>),
+            profile(<<"mixtral">>, <<"Ollama">>, <<"ChatCompletions">>, <<"mixtral-8x7b">>)
         ]
     }.
 
@@ -379,7 +379,7 @@ expected_campaign_policy() ->
         <<"live_opt_in">> => #{
             <<"environment_variable">> => <<"ALANG_ALLOW_LIVE_MODEL_CALLS">>,
             <<"required_value">> => <<"1">>,
-            <<"credentials_required">> => [<<"ALANG_OPENAI_API_KEY">>, <<"ALANG_ANTHROPIC_API_KEY">>]
+            <<"credentials_required">> => []
         },
         <<"design">> => #{
             <<"semantic_cases">> => 24,
