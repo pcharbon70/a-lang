@@ -52,6 +52,9 @@ links belong together, not merely repeat a file listing.
 - [Symbol-aware code context for LLM agents](symbol-aware-code-context-for-llm-agents.md)
   — evidence and design paths through cross-file retrieval, code graphs,
   symbol protocols, compact repository maps, and indirect prompt injection.
+- [Token-efficient A-Lang syntax](token-efficient-alang-syntax.md) — paths
+  through tokenizer behavior, layout and schema compaction, identifier
+  semantics, reversible shorthand, and the proposed checked model projection.
 
 ## Maintaining this index
 

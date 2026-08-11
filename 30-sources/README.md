@@ -62,6 +62,31 @@ interpretation.
 - [SatLM](ye-et-al-2023-satlm.md) — declarative constraints paired with
   satisfiability solving.
 
+#### Tokenization, compact syntax, and compression
+
+- [Getting the Most out of Your Tokenizer](dagan-et-al-2024-tokenizer-domain-adaptation.md)
+  — evidence that vocabulary, pre-tokenization, and domain data jointly affect
+  code-model efficiency and performance.
+- [CodeT5](wang-et-al-2021-codet5.md) — identifier-aware pretraining that
+  treats developer-assigned names as a semantic channel.
+- [ReCode](wang-et-al-2023-recode.md) — worst-case robustness evaluation under
+  meaning-preserving-intended name, syntax, and layout perturbations.
+- [LLMLingua](jiang-et-al-2023-llmlingua.md) — model-guided, coarse-to-fine
+  prompt compression that protects high-information prompt components.
+- [The Hidden Cost of Readability](pan-et-al-2025-hidden-cost-readability.md) —
+  AST-preserving layout removal across four languages and ten models.
+- [Token Sugar](sun-et-al-2025-token-sugar.md) — mined, reversible AST-pattern
+  shorthands that work after continual pretraining but fail sharply zero-shot.
+- [State-in-context agent minification](hrubec-cito-2026-minification.md) — an
+  end-to-end token/performance tradeoff and direct identifier-shortening
+  ablations on repository repair.
+- [Compact Constraint Encoding](tang-2026-compact-constraint-encoding.md) — a
+  preliminary multi-model comparison of natural-language constraints and
+  compact mnemonic headers.
+- [A Token Efficient Language for LLMs](rickard-2023-token-efficient-language.md)
+  — a practitioner comparison showing why serialization and tokenizer choice
+  must be measured rather than assumed.
+
 #### LLM code understanding and repository context
 
 - [Aider repository map](aider-2026-repository-map.md) — a current

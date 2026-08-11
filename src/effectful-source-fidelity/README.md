@@ -53,6 +53,10 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_ast_tests.erl`](alang_fidelity_ast_tests.erl) — exercises
   exact-shape, origin, path, canonical ETF, legacy compatibility, atom-growth,
   and malformed-input rejection gates.
+- [`alang_fidelity_anthropic_adapter.erl`](alang_fidelity_anthropic_adapter.erl)
+  — renders and validates the fixed Claude Sonnet 5 request, probes exact model
+  identity, maps bounded Anthropic responses into the provider-neutral result
+  algebra, and keeps credentials out of retained evidence.
 - [`alang_fidelity_mixtral_adapter.erl`](alang_fidelity_mixtral_adapter.erl)
   — renders the fixed Ollama chat-completions request for mixtral-8x7b, runs
   against the local Ollama server, rejects model substitution, and maps bounded
@@ -63,8 +67,12 @@ test path. Generated evidence belongs under the ignored
   against the local Ollama server, rejects model substitution, and maps bounded
   provider envelopes into the shared result algebra without retaining raw
   responses.
+- [`alang_fidelity_openai_adapter.erl`](alang_fidelity_openai_adapter.erl) —
+  renders and validates the fixed GPT-5.6 Terra request, probes exact model
+  identity, maps bounded Responses API envelopes into the provider-neutral
+  result algebra, and keeps credentials out of retained evidence.
 - [`alang_fidelity_adapter_fault_tests.erl`](alang_fidelity_adapter_fault_tests.erl)
-  — drives both provider adapters through scripted HTTPS outcomes covering
+  — drives both local provider adapters through scripted HTTPS outcomes covering
   identity, TLS, redirect, timeout, response, crash, secret, call, cost, and
   projection failures without credentials or network access.
 - [`alang_fidelity_authority.erl`](alang_fidelity_authority.erl) — infers exact
@@ -132,6 +140,14 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_decision.erl`](alang_fidelity_decision.erl) — validates the
   pre-registered metric and statistical rule and derives the closed experiment
   outcome from completed evidence.
+- [`alang_fidelity_decision_report.erl`](alang_fidelity_decision_report.erl) —
+  derives the closed promotion, replacement, stop, or invalid-campaign report
+  from validity, safety, and per-family evidence while keeping sensitivity
+  analysis descriptive.
+- [`alang_fidelity_decision_report_tests.erl`](alang_fidelity_decision_report_tests.erl)
+  — checks every report outcome, safety and validity precedence, required
+  fields, sensitivity non-interference, and stable human-facing disposition
+  labels.
 - [`alang_fidelity_decision_tests.erl`](alang_fidelity_decision_tests.erl) —
   covers promotion, JSON replacement, stop, invalid-campaign, interval, and
   safety-veto outcomes.
@@ -242,6 +258,9 @@ test path. Generated evidence belongs under the ignored
   the complete deterministic campaign in a clean ERTS process and writes its
   frozen corpus, journal, observations, scores, intervals, accounting,
   validity, provenance, and implementation digests as redacted evidence.
+- [`alang_fidelity_phase6_integration_tests.erl`](alang_fidelity_phase6_integration_tests.erl)
+  — exercises Phase 6 decision thresholds, family disagreement, invalid and
+  safety-veto outcomes, evidence shape, formatting, and boundary conditions.
 - [`alang_fidelity_preregister.erl`](alang_fidelity_preregister.erl) — validates
   the complete frozen input set and writes deterministic, content-addressed
   pre-registration evidence under the ignored build tree.
@@ -288,6 +307,13 @@ test path. Generated evidence belongs under the ignored
 - [`alang_fidelity_source.erl`](alang_fidelity_source.erl) — translates the
   closed v2 AST into the representation-neutral semantic-input envelope while
   preserving source-local origins for every semantic field.
+- [`alang_fidelity_validity.erl`](alang_fidelity_validity.erl) — evaluates the
+  frozen campaign-validity predicates, freezes primary and secondary analysis
+  tables, and emits an explicit invalid-campaign report before any efficacy
+  conclusion is allowed.
+- [`alang_fidelity_validity_tests.erl`](alang_fidelity_validity_tests.erl) —
+  checks the valid campaign, frozen analysis digests, malformed formats,
+  incomplete observations, and call and cost ceiling failures.
 - [Phase 1 experiment freeze evidence](phase-01-integration-evidence.md) —
   records the final digest, corpus and profile inventory, campaign ceilings,
   negative gates, scope audit, limitations, and reproduction commands.

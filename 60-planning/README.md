@@ -52,6 +52,11 @@ Phase numbering restarts inside each planning stream.
   six-phase successor that holds the BEAM runtime constant while comparing
   user-authored effectful A-Lang with semantically matched typed JSON across
   two hosted model families and a frozen promote, replace, or stop rule.
+- [03 — Compact projection fidelity](03-compact-projection-fidelity/README.md)
+  — a six-phase, separately preregistered campaign comparing readable A-Lang
+  with layout, mnemonic, checked-compact, opaque-identifier, and typed-JSON
+  conditions across comprehension, generation, repair, and safe operational
+  judgment before any model projection can be promoted.
 
 ### Documents
 

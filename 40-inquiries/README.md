@@ -45,6 +45,9 @@ inquiry as the final synthesis.
 - [Can a task language improve LLM agents?](can-a-task-language-improve-llm-agents.md)
   — an open inquiry into whether structured task representations improve
   understanding, reliability, and execution.
+- [Can a compact projection reduce A-Lang token use without reducing fidelity?](can-a-compact-projection-reduce-alang-token-use-without-reducing-fidelity.md)
+  — an open comparison of layout, keyword, schema, and identifier compression
+  under exact semantic, safety, token, diagnostic, and human-review gates.
 - [Can semantic code graphs improve LLM understanding?](can-semantic-code-graphs-improve-llm-understanding.md)
   — an open staged test of live graph freshness, generated flat maps, derived
   graph queries, provenance-bearing authored semantics, and inline versus
