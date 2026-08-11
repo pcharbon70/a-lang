@@ -34,6 +34,8 @@ requires a safe retained artifact.
 
 ### Subdirectories
 
+- [Campaign inputs](campaign/README.md) — the power assumptions, balanced
+  opaque case design, deterministic factor schedule, and operational bounds.
 - [Contracts](contracts/README.md) — closed schemas and registered scientific
   contrasts, metrics, safety vetoes, and ordered outcomes.
 

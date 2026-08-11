@@ -347,8 +347,8 @@ after the frozen effectful-source-fidelity stream. Reusing its semantic cases
 is valuable; modifying its files, prompts, or preregistered conditions is not.
 The resulting design now lives in the
 [compact projection fidelity plan](../60-planning/03-compact-projection-fidelity/README.md):
-the old cases are development-only, a new 24-case corpus supplies confirmatory
-evidence, and 1,152 primary cells cross six comprehension conditions with a
+the old cases are development-only, a power-qualified 48-case corpus supplies
+confirmatory evidence, and 2,304 primary cells cross six comprehension conditions with a
 readable-versus-compact generation, repair, and action/completion core.
 
 ### Conditions

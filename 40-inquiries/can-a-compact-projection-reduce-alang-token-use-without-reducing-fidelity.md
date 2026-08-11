@@ -110,10 +110,10 @@ savings per target tokenizer while preserving:
 The inquiry remains open. The current evidence justifies a BEAM-native
 prototype and controlled experiment, now designed as the separately numbered
 [compact projection campaign](../60-planning/03-compact-projection-fidelity/README.md),
-not a user-facing grammar change. Its initial confirmatory design has 24 new
+not a user-facing grammar change. Its power-qualified confirmatory design has 48 new
 semantic cases, six comprehension conditions, two core bidirectional
 conditions, four model-task protocols, two exact model families, two
-repetitions, and 1,152 primary cells. Until that campaign passes its
+repetitions, and 2,304 primary cells. Until that campaign passes its
 preregistered token, non-inferiority, repair, robustness, and safety gates,
 `alang-source-v2` remains the readable source of truth, the frozen fidelity
 campaign remains unchanged, and compact notation has no authority to satisfy

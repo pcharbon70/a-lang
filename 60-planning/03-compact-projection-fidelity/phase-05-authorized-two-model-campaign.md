@@ -13,7 +13,7 @@ aliases: []
 
 # Phase 5: Authorized Two-Model Campaign
 
-**Description:** Execute the immutable 1,152-cell confirmatory schedule against
+**Description:** Execute the immutable 2,304-cell confirmatory schedule against
 two exact model families, preserve every definitive result and bounded
 transport event, and produce a redacted evidence set that replays without
 network access.
@@ -258,7 +258,7 @@ or formally invalid and its entire retained evidence trail reproduces offline.
 
 - [ ] Exact preregistration digest and explicit operator authorization preceded every model call
 - [ ] Both exact model profiles passed identity and usage preflight without substitution
-- [ ] All 1,152 primary cells, or a machine-valid invalid campaign, are accounted for
+- [ ] All 2,304 primary cells, or a machine-valid invalid campaign, are accounted for
 - [ ] No definitive refusal, invalid output, semantic failure, or safety event was retried or replaced
 - [ ] Every permitted replacement is linked and all request, cost, time, token, and byte ceilings hold
 - [ ] The closed evidence manifest contains normalized observations and no credential, header, or raw envelope

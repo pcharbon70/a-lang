@@ -41,7 +41,7 @@ promotion claims come from a new, content-digested confirmatory corpus.
   statistical rule, safety vetoes, and ordered outcomes.
 - Plans for the BEAM token auditor, projectors, decoders, alias maps, source
   maps, semantic oracles, scheduler, scorer, and replay validators.
-- A new 24-case confirmatory corpus and its representation-neutral answer keys.
+- A new 48-case confirmatory corpus and its representation-neutral answer keys.
 - Offline qualification and explicitly authorized two-model execution.
 - A final promote-projection, retain-readable, reject-unsafe, or
   stop-invalid-campaign decision.
@@ -60,9 +60,9 @@ The existing 24 effectful-source-fidelity cases form the development set. They
 may be used to measure tokens, choose aliases, test round trips, and debug the
 harness. Their model outcomes, if any, cannot enter the new decision.
 
-Before any new model call, Phase 1 authors and freezes 24 new semantic cases:
-eight each for single-model artifact, repair-and-publish, and attenuated-
-delegation tasks. Within each family the cases cover a simple goal, dense
+Before any new model call, Phase 1 authors and freezes 48 new semantic cases:
+sixteen each for single-model artifact, repair-and-publish, and attenuated-
+delegation tasks. Within each family two cases cover each of a simple goal, dense
 constraints, scope and budget boundaries, an error branch, missing
 information, irrelevant context, prompt injection, and a paired lexical or
 one-value perturbation. Each case has one checked semantic oracle from which
@@ -123,23 +123,24 @@ satisfies a runtime execution or completion gate.
 
 ### Campaign cells and bounds
 
-With the initial 24-case confirmatory corpus, two exact model families, and two
-repetitions, the fixed primary schedule has 1,152 cells:
+The registered power audit expands the initial minimum to 48 confirmatory
+cases. With two exact model families and two repetitions, the fixed primary
+schedule has 2,304 cells:
 
 | Arm | Calculation | Primary calls |
 | --- | ---: | ---: |
-| Comprehension | 24 cases × 6 conditions × 2 models × 2 repetitions | 576 |
-| Generation | 24 × 2 core conditions × 2 models × 2 repetitions | 192 |
-| Diagnostic repair | 24 × 2 × 2 × 2 | 192 |
-| Action/completion | 24 × 2 × 2 × 2 | 192 |
-| **Total** |  | **1,152** |
+| Comprehension | 48 cases × 6 conditions × 2 models × 2 repetitions | 1,152 |
+| Generation | 48 × 2 core conditions × 2 models × 2 repetitions | 384 |
+| Diagnostic repair | 48 × 2 × 2 × 2 | 384 |
+| Action/completion | 48 × 2 × 2 × 2 | 384 |
+| **Total** |  | **2,304** |
 
 The schedule seed is `2026081103`. It counterbalances condition order within
 model, task, family, and repetition blocks and separates repetitions of the
 same semantic case. A definitive response is never retried or replaced.
 Exactly one linked replacement is permitted only when the runner proves the
 request was not submitted or the transport result remains uncertain, giving a
-hard ceiling of 2,304 provider requests. Exact profile, time, token, byte, and
+hard ceiling of 4,608 provider requests. Exact profile, time, token, byte, and
 monetary or local-compute ceilings are frozen before authorization.
 
 ### Metrics and inference
@@ -273,11 +274,11 @@ Phase 1: freeze question, conditions, power, profiles, and held-out corpus
 ## Roadmap completion gate
 
 - [ ] The development and confirmatory corpora are content-separated and mechanically labeled
-- [ ] The frozen power audit, 24-case minimum corpus, profiles, prompts, conditions, schedule, metrics, and decision rule share one verified digest
+- [ ] The frozen power audit, 48-case confirmatory corpus, profiles, prompts, conditions, schedule, metrics, and decision rule share one verified digest
 - [ ] All six comprehension surfaces reproduce one checked semantic digest per case
 - [ ] `R0` and `R3` generation, repair, and action/completion oracles reject every registered semantic mutant
 - [ ] Projector and decoder run as trusted BEAM modules with deterministic round-trip and source-map evidence
-- [ ] All 1,152 primary cells, or a machine-readable invalid-campaign disposition, are accounted for within frozen ceilings
+- [ ] All 2,304 primary cells, or a machine-readable invalid-campaign disposition, are accounted for within frozen ceilings
 - [ ] Each model family and task protocol is reported separately, with pooled results labeled descriptive
 - [ ] Token, fidelity, validity, robustness, and safety gates are evaluated without hidden weighting
 - [ ] Opaque identifiers and typed JSON remain nonpromotable controls in this stream
@@ -307,7 +308,7 @@ Phase 1: freeze question, conditions, power, profiles, and held-out corpus
   — proves security and campaign behavior offline, freezes all model-visible
   bytes and digests, and blocks calls until explicit authorization.
 - [Phase 5 — Authorized two-model campaign](phase-05-authorized-two-model-campaign.md)
-  — runs the 1,152-cell schedule with durable accounting, bounded replacement,
+  — runs the 2,304-cell schedule with durable accounting, bounded replacement,
   exact profile identity, redacted evidence, and clean offline replay.
 - [Phase 6 — Projection decision and roadmap handoff](phase-06-projection-decision-and-roadmap-handoff.md)
   — applies the ordered gate, reports mechanisms and limitations, and updates

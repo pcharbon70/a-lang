@@ -208,7 +208,7 @@ closed unless the exact digest receives explicit operator authorization.
 
 ### Task 4.4.1: Run the Full Synthetic Campaign
 
-**Description:** Execute all 1,152 cells with deterministic fixtures spanning
+**Description:** Execute all 2,304 cells with deterministic fixtures spanning
 exact success, semantic miss, invalid generation, failed repair, unsafe
 judgment, refusal, transport uncertainty, replacement, and abort.
 
@@ -267,6 +267,6 @@ entire campaign in advance and one immutable digest binds every decision input.
 - [ ] Safety rejection precedes all benefit calculations and invalidity precedes efficacy
 - [ ] Adapter, transport, interruption, ceiling, and evidence faults are covered
 - [ ] All inherited compiler/runtime/security gates remain green with projection code present
-- [ ] The complete 1,152-cell fixture campaign and all four dispositions replay byte-for-byte
+- [ ] The complete 2,304-cell fixture campaign and all four dispositions replay byte-for-byte
 - [ ] One registration digest binds every model-visible byte, profile, threshold, and implementation input
 - [ ] Live execution fails closed without exact digest authorization and no live call has yet occurred

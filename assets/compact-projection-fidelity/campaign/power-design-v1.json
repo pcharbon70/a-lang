@@ -1,0 +1,37 @@
+{
+  "format": "alang-compact-power-design-v1",
+  "seed": 2026081201,
+  "simulations": 2000,
+  "confidence_percent": 95,
+  "noninferiority_margin": -0.05,
+  "minimum_central_power": 0.80,
+  "case_block_size": 24,
+  "candidate_case_counts": [24, 48, 72],
+  "protocols_per_case": 4,
+  "repetitions_per_case": 2,
+  "selection_scenario": "central",
+  "method": "paired-case-cluster-normal-simulation",
+  "scenarios": [
+    {
+      "id": "optimistic",
+      "both_correct": 0.88,
+      "readable_only_correct": 0.02,
+      "compact_only_correct": 0.02,
+      "both_incorrect": 0.08
+    },
+    {
+      "id": "central",
+      "both_correct": 0.80,
+      "readable_only_correct": 0.05,
+      "compact_only_correct": 0.05,
+      "both_incorrect": 0.10
+    },
+    {
+      "id": "adverse",
+      "both_correct": 0.70,
+      "readable_only_correct": 0.10,
+      "compact_only_correct": 0.10,
+      "both_incorrect": 0.10
+    }
+  ]
+}

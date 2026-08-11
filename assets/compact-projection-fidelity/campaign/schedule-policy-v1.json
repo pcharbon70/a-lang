@@ -1,0 +1,18 @@
+{
+  "format": "alang-compact-schedule-policy-v1",
+  "seed": 2026081103,
+  "selected_cases": 48,
+  "model_families": ["mixtral", "ornith"],
+  "repetitions": 2,
+  "protocol_conditions": {
+    "comprehension": ["R0", "R1", "R2", "R3", "R4", "R5"],
+    "generation": ["R0", "R3"],
+    "diagnostic-repair": ["R0", "R3"],
+    "action-completion": ["R0", "R3"]
+  },
+  "primary_cells": 2304,
+  "max_replacements_per_cell": 1,
+  "hard_request_ceiling": 4608,
+  "definitive_response_retriable": false,
+  "opaque_trial_id_bytes": 12
+}

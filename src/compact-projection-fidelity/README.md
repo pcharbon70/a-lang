@@ -45,9 +45,21 @@ belong to later phases.
 - [`alang_compact_contract_tests.erl`](alang_compact_contract_tests.erl) —
   freezes condition roles and thresholds and tests every outcome, strict
   boundary, nonpromotable control, and unknown-field failure.
+- [`alang_compact_design_tests.erl`](alang_compact_design_tests.erl) — tests
+  deterministic power selection, power-contract mutation, the 2,304-cell
+  factor matrix, opaque identities, balance, and semantic-case separation.
+- [`alang_compact_power.erl`](alang_compact_power.erl) — runs the registered
+  paired case-cluster simulation and selects the first balanced sample size
+  meeting the frozen central-scenario power threshold.
+- [`alang_compact_schedule.erl`](alang_compact_schedule.erl) — validates the
+  opaque 48-case design and deterministically materializes and validates the
+  seeded paired schedule and digest.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —
   records the contract, decision, mutation, BEAM-residency, and no-model-call
   results for the completed section.
+- [Section 1.2 integration evidence](section-01-02-integration-evidence.md) —
+  records the power-driven expansion to 48 cases and the deterministic,
+  balanced 2,304-cell schedule.
 
 ## Maintaining this index
 

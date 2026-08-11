@@ -38,6 +38,12 @@ contracts before confirmatory observations can exist.
   dispositions.
 - [`campaign-contract-v1.schema.json`](campaign-contract-v1.schema.json) — the
   closed JSON Schema for the campaign contract.
+- [`case-design-v1.schema.json`](case-design-v1.schema.json) — the closed
+  schema for the 48 opaque family/stratum/replicate assignments.
+- [`power-design-v1.schema.json`](power-design-v1.schema.json) — the closed
+  schema for simulation assumptions and balanced sample-size selection.
+- [`schedule-policy-v1.schema.json`](schedule-policy-v1.schema.json) — the
+  closed schema for factor eligibility, counts, seed, and request bounds.
 
 ## Maintaining this index
 

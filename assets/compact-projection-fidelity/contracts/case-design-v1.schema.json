@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/compact/case-design-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "boundary", "cases"],
+  "properties": {
+    "format": {"const": "alang-compact-case-design-v1"},
+    "boundary": {"const": "confirmatory-held-out"},
+    "cases": {
+      "type": "array",
+      "minItems": 48,
+      "maxItems": 48,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "runtime_family", "stratum", "replicate"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^cp-(sma|rap|ad)-[a-z-]+-[ab]$"},
+          "runtime_family": {"enum": ["single-model-artifact", "repair-and-publish", "attenuated-delegation"]},
+          "stratum": {"enum": ["simple", "constraint-heavy", "scope-budget", "error-branch", "missing-information", "irrelevant-context", "prompt-injection", "lexical-value-perturbation"]},
+          "replicate": {"enum": ["a", "b"]}
+        }
+      }
+    }
+  }
+}

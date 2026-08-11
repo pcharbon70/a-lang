@@ -18,8 +18,9 @@ protocols, model profiles, power assumptions, independent semantic cases,
 metrics, safety vetoes, operational ceilings, and ordered outcomes before a
 model can observe any new campaign material.
 
-**Status:** Section 1.1 complete; Sections 1.2–1.4 remain planned. Reproduce
-the completed contract and decision gate with `make test-compact-section-1-1`.
+**Status:** Sections 1.1–1.2 complete; Sections 1.3–1.4 remain planned. The
+power audit expands confirmation to 48 cases and 2,304 primary cells. Reproduce
+through Section 1.2 with `make test-compact-section-1-2`.
 
 **Dependencies:** The compact-syntax
 [synthesis](../../20-notes/token-efficient-syntax-for-a-lang.md),
@@ -92,7 +93,8 @@ superiority unless a separate registered contrast supports it.
 registered non-inferiority question while treating semantic cases—not calls
 or repetitions—as independent evidence.
 
-- [ ] **Section 1.2 Complete**
+- [x] **Section 1.2 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-02-integration-evidence.md).
 
 ### Task 1.2.1: Perform the Simulation-Based Power Audit
 
@@ -101,7 +103,7 @@ baseline rates and compact/readable discordance, document the assumptions,
 and verify the initial 24-case design has acceptable power for the pooled
 five-point non-inferiority gate.
 
-- [ ] **Task 1.2.1 Complete**
+- [x] **Task 1.2.1 Complete**
 
 #### Subtask 1.2.1.1: Register Power Scenarios and Acceptance
 
@@ -109,7 +111,7 @@ five-point non-inferiority gate.
 discordance scenarios; require at least 80% power under the registered central
 no-loss scenario and report where the design remains underpowered.
 
-- [ ] **Subtask 1.2.1.1 Complete**
+- [x] **Subtask 1.2.1.1 Complete**
 
 #### Subtask 1.2.1.2: Freeze Any Corpus Expansion Before Observation
 
@@ -117,7 +119,8 @@ no-loss scenario and report where the design remains underpowered.
 24-case blocks, recalculate every cell and ceiling, and freeze the larger count
 before prompts are exposed; forbid outcome-dependent stopping or shrinkage.
 
-- [ ] **Subtask 1.2.1.2 Complete**
+- [x] **Subtask 1.2.1.2 Complete** — the registered central scenario selects
+  48 cases, the next complete balanced block.
 
 ### Task 1.2.2: Materialize the Paired Randomized Schedule
 
@@ -125,7 +128,7 @@ before prompts are exposed; forbid outcome-dependent stopping or shrinkage.
 into opaque cells while preserving paired comparisons, family balance, and
 separation between repetitions.
 
-- [ ] **Task 1.2.2 Complete**
+- [x] **Task 1.2.2 Complete**
 
 #### Subtask 1.2.2.1: Apply Seeded Counterbalancing
 
@@ -133,7 +136,7 @@ separation between repetitions.
 model/task/family/repetition blocks, prevent adjacent repetitions of one case,
 and retain a deterministic inverse map outside model-visible material.
 
-- [ ] **Subtask 1.2.2.1 Complete**
+- [x] **Subtask 1.2.2.1 Complete**
 
 #### Subtask 1.2.2.2: Validate Counts, Pairing, and Leakage Controls
 
@@ -142,7 +145,7 @@ for every core pair, all six comprehension members, no duplicate trial, and no
 condition label, oracle, digest, source filename, or expected result in a
 model-visible request.
 
-- [ ] **Subtask 1.2.2.2 Complete**
+- [x] **Subtask 1.2.2.2 Complete**
 
 ## Section 1.3: Confirmatory Corpus and Operational Registration
 
@@ -154,7 +157,7 @@ campaign.
 
 ### Task 1.3.1: Author the Held-Out Semantic Cases
 
-**Description:** Create at least 24 new cases with representation-neutral
+**Description:** Create exactly 48 new cases with representation-neutral
 oracles and balanced families, perturbations, authority boundaries, and
 terminal outcomes; do not copy names, paths, facts, or answer keys from the
 development corpus.
@@ -163,8 +166,9 @@ development corpus.
 
 #### Subtask 1.3.1.1: Cover the Three Runtime Families and Eight Strata
 
-**Description:** Author eight cases each for single-model artifact, repair and
-publish, and attenuated delegation, crossing simple, constraint-heavy,
+**Description:** Author sixteen cases each for single-model artifact, repair
+and publish, and attenuated delegation, with two independent cases crossing
+simple, constraint-heavy,
 scope/budget, error, missing-information, irrelevant-context, injection, and
 lexical/value perturbation strata.
 
@@ -197,7 +201,7 @@ silent upgrades during execution.
 
 #### Subtask 1.3.2.2: Register Request and Evidence Ceilings
 
-**Description:** Freeze the 1,152-primary-cell baseline, 2,304 hard request
+**Description:** Freeze the 2,304-primary-cell design, 4,608 hard request
 ceiling, per-request input/output/time/byte bounds, total cost authorization,
 replacement semantics, retention policy, and invalid-campaign triggers.
 

@@ -54,7 +54,7 @@ See the [archive guide](../README.md) for its structure and conventions.
   constant and applying a pre-registered decision rule.
 - [Compact projection fidelity plan](../60-planning/03-compact-projection-fidelity/README.md)
   — a separate preregistered path from checked BEAM projection through a
-  1,152-cell, two-model comparison of token cost, semantic non-inferiority,
+  2,304-cell, two-model comparison of token cost, semantic non-inferiority,
   repair, robustness, and safety; readable v2 remains canonical in every
   outcome.
 
