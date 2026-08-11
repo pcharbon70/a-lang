@@ -19,6 +19,7 @@ See the [archive guide](../README.md) for its structure and conventions.
 - [Can BEAM support a native agent language safely and maintainably?](../40-inquiries/can-beam-support-a-native-agent-language.md)
 - [Can categorical semantics materially improve an agent language?](../40-inquiries/can-categorical-semantics-improve-agent-language.md)
 - [Can a task language improve LLM agents?](../40-inquiries/can-a-task-language-improve-llm-agents.md)
+- [Can a compact projection reduce A-Lang token use without reducing fidelity?](../40-inquiries/can-a-compact-projection-reduce-alang-token-use-without-reducing-fidelity.md)
 - [Can semantic code graphs improve LLM understanding?](../40-inquiries/can-semantic-code-graphs-improve-llm-understanding.md)
 - [Can typed source references improve LLM code understanding?](../40-inquiries/can-typed-source-references-improve-llm-code-understanding.md)
 
@@ -29,12 +30,14 @@ See the [archive guide](../README.md) for its structure and conventions.
 - [LLM agent task languages](llm-agent-task-languages.md)
 - [Semantic code graphs for LLM agents](semantic-code-graphs-for-llm-agents.md)
 - [Symbol-aware code context for LLM agents](symbol-aware-code-context-for-llm-agents.md)
+- [Token-efficient A-Lang syntax](token-efficient-alang-syntax.md)
 
 ## Recently developed
 
 - [BEAM as the runtime for a native agent language](../20-notes/beam-runtime-for-native-agent-language.md)
 - [Set and category principles for an agent programming language](../20-notes/set-and-category-principles-for-agent-programming-language.md)
 - [Task languages for LLM agents: a deep dive](../20-notes/llm-agent-task-languages-deep-dive.md)
+- [Token-efficient syntax for A-Lang](../20-notes/token-efficient-syntax-for-a-lang.md)
 - [Semantic code graphs for LLM understanding](../20-notes/semantic-code-graphs-for-llm-understanding.md)
 - [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
 
@@ -49,6 +52,11 @@ See the [archive guide](../README.md) for its structure and conventions.
   — the numbered successor that compares user-authored effectful A-Lang with
   semantically matched typed JSON while holding the BEAM enforcement path
   constant and applying a pre-registered decision rule.
+- [Compact projection fidelity plan](../60-planning/03-compact-projection-fidelity/README.md)
+  — a separate preregistered path from checked BEAM projection through a
+  1,152-cell, two-model comparison of token cost, semantic non-inferiority,
+  repair, robustness, and safety; readable v2 remains canonical in every
+  outcome.
 
 ## Unsettled threads
 
@@ -58,6 +66,9 @@ See the [archive guide](../README.md) for its structure and conventions.
   portable delegation or an unnecessary second authorization runtime.
 - Whether authored typed source relations improve grounded code understanding
   beyond a generated symbol map under the same context budget.
+- Whether a reversible compact projection can reduce A-Lang's model-token cost
+  without losing semantic fidelity, diagnostics, or the safety value of
+  descriptive names and explicit authority.
 - Whether a derived queryable graph, provenance-bearing semantic claims, or
   inline placement adds value after graph facts and context budgets are
   controlled independently—and whether its live workspace snapshots can remain

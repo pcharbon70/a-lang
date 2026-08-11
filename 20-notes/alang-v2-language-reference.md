@@ -614,7 +614,7 @@ task delegation-task {
 
 ## Connections
 
-- [A-Lang v1 language reference](alang-source-v1-language-reference.md) — legacy syntax
+- [A-Lang v1 language surface](../src/phase-02/language-surface.md) — legacy syntax
 - [A-Lang implementation reference](alang-implementation-reference.md) — compiler pipeline
-- [Effectful source fidelity experiment](../../60-planning/02-effectful-source-fidelity/README.md) — the experiment this syntax supports
+- [Effectful source fidelity experiment](../60-planning/02-effectful-source-fidelity/README.md) — the experiment this syntax supports
 - [Task languages for LLM agents: a deep dive](llm-agent-task-languages-deep-dive.md) — research motivation

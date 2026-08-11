@@ -88,6 +88,9 @@ deeper semantic understanding in arbitrary pretrained LLMs.
   task IR across different model families.
 - Explore learned, task-specific representations only after the authored
   semantics and evaluators are stable.
+- Test a reversible compact projection only in a new factorial experiment that
+  separates layout, closed-schema, and identifier changes; do not add it to the
+  frozen effectful-source-fidelity campaign.
 - Test typed repository references only in a separate equal-budget experiment
   against comments and a generated symbol map; do not add that variable to the
   frozen effectful source fidelity campaign.
@@ -116,6 +119,12 @@ deeper semantic understanding in arbitrary pretrained LLMs.
 - [Can typed source references improve LLM code understanding?](can-typed-source-references-improve-llm-code-understanding.md)
   isolates that question as a future inquiry with a generated-map baseline,
   equal context budgets, and prompt-injection vetoes.
+- [Token-efficient syntax for A-Lang](../20-notes/token-efficient-syntax-for-a-lang.md)
+  finds that readable v2 is already smaller than the corpus JSON control under
+  two tokenizer proxies and recommends a checked compact projection before
+  opaque identifiers.
+- [Can a compact projection reduce A-Lang token use without reducing fidelity?](can-a-compact-projection-reduce-alang-token-use-without-reducing-fidelity.md)
+  isolates token efficiency as a future exact-fidelity and safety experiment.
 
 ## Outcome
 
@@ -126,4 +135,5 @@ source, hold the BEAM runtime constant, and measure fidelity against a strong
 conventional typed notation across declared model families. The second
 planning stream defines the implementation and evidence needed to answer that
 bounded question; it is a plan, not yet a finding. Symbol-aware source context
-is now tracked independently so it cannot confound that notation result.
+and compact projection are now tracked independently so neither can confound
+that notation result.

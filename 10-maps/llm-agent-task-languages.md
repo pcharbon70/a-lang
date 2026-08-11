@@ -108,6 +108,27 @@ This is deliberately separate from the active notation experiment. The current
 effectful source fidelity campaign compares A-Lang with typed JSON; it does not
 vary repository-navigation context or authorize a new reference form.
 
+## Token-efficient surface representations
+
+- [Token-efficient syntax for A-Lang](../20-notes/token-efficient-syntax-for-a-lang.md)
+  — separates layout, closed-schema, identifier, and semantic-pattern
+  compression; measures screening bounds on the current corpus; and recommends
+  a reversible checked projection rather than opaque canonical source.
+- [Token-efficient A-Lang syntax](token-efficient-alang-syntax.md) — follows
+  the evidence through tokenizers, format removal, identifier semantics,
+  compact constraint headers, prompt compression, and learned shorthand.
+- [Open compact-projection inquiry](../40-inquiries/can-a-compact-projection-reduce-alang-token-use-without-reducing-fidelity.md)
+  — defines the exact-fidelity and safety vetoes a future experiment must pass.
+- [Compact projection fidelity plan](../60-planning/03-compact-projection-fidelity/README.md)
+  — turns the inquiry into a held-out, four-protocol campaign while keeping
+  layout, vocabulary, identifier, and typed-JSON ablations separate from the
+  checked compact candidate.
+
+This work remains separate from the frozen effectful-source-fidelity campaign.
+The new stream uses its semantic cases only for development and requires a new
+confirmatory corpus; it does not add a compact condition to the preregistered
+comparison.
+
 ## Emerging design thesis
 
 The most promising language is layered:
@@ -145,6 +166,8 @@ exists, it is an experimental design rather than support for either notation.
 - Can semantic translation be tested without recreating the whole task?
 - What representation best supports clarification and negotiated intent?
 - When does a compact DSL help enough to offset its learning and authoring cost?
+- Can a compiler-produced compact projection save tokens across model families
+  without erasing the semantic value of names or explicit authority?
 - Can a BEAM backend preserve this task model across supported OTP releases
   without making OTP compiler internals part of the language semantics?
 - Can opaque local grants and a closed BEAM effect ABI provide sufficient

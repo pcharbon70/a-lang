@@ -763,6 +763,6 @@ The following are **not supported** in generated BEAM code:
 ## Connections
 
 - [A-Lang v2 language reference](alang-v2-language-reference.md) — source syntax
-- [Effectful source fidelity implementation](../effectful-source-fidelity/README.md) — the experiment implementation
+- [Effectful source fidelity implementation](../src/effectful-source-fidelity/README.md) — the experiment implementation
 - [Phase 1-8 proof-of-concept](../60-planning/01-minimal-proof-of-concept/README.md) — the original PoC
 - [BEAM runtime for a native agent language](beam-runtime-for-native-agent-language.md) — design study

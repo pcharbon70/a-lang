@@ -43,6 +43,10 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
   — an evidence-bounded design study of categorical composition, effects,
   state, protocols, uncertainty, interpreters, and evaluation criteria for an
   agent DSL.
+- [Token-efficient syntax for A-Lang](token-efficient-syntax-for-a-lang.md) — a
+  deep dive into tokenizer behavior, layout and schema compaction, identifier
+  semantics, reversible shorthand, local corpus costs, and a checked compact
+  projection that preserves readable source and BEAM-native enforcement.
 - [Task languages for LLM agents: a deep dive](llm-agent-task-languages-deep-dive.md)
   — a synthesis of transformer behavior, task representation, agent
   programming, formal reasoning, and language-design implications.
