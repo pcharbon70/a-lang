@@ -36,6 +36,8 @@ requires a safe retained artifact.
 
 - [Campaign inputs](campaign/README.md) — the power assumptions, balanced
   opaque case design, deterministic factor schedule, and operational bounds.
+- [Confirmatory corpus](corpus/README.md) — 48 independently authored,
+  representation-neutral semantic cases and their blinded audit record.
 - [Contracts](contracts/README.md) — closed schemas and registered scientific
   contrasts, metrics, safety vetoes, and ordered outcomes.
 

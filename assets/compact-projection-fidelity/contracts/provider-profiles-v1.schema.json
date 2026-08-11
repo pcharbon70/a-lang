@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/compact-provider-profiles-v1.schema.json",
+  "title": "A-Lang compact provider profiles v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "selection_record", "profiles"],
+  "properties": {
+    "format": {"const": "alang-compact-provider-profiles-v1"},
+    "selection_record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["prior_stream", "families_retained", "identifier_change_reason", "replacement_after_preregistration"],
+      "properties": {
+        "prior_stream": {"const": "effectful-source-fidelity"},
+        "families_retained": {"const": ["ornith", "mixtral"]},
+        "identifier_change_reason": {"type": "string", "minLength": 1},
+        "replacement_after_preregistration": {"const": "forbidden"}
+      }
+    },
+    "profiles": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/profile"}}
+  },
+  "$defs": {
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["family", "provider", "api", "model_id", "manifest_sha256", "request_parameters", "seed_policy", "turns", "tools_enabled", "provider_schema_constraint", "accepted_output_bytes", "exact_identifier_required", "manifest_match_required"],
+      "properties": {
+        "family": {"enum": ["ornith", "mixtral"]},
+        "provider": {"const": "Ollama"},
+        "api": {"const": "ChatCompletions"},
+        "model_id": {"enum": ["hf.co/unsloth/Ornith-1.0-35B-GGUF:UD-Q5_K_M", "mixtral:8x7b"]},
+        "manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "request_parameters": {
+          "type": "object", "additionalProperties": false,
+          "required": ["temperature", "top_p", "top_k", "num_ctx", "num_predict", "stream"],
+          "properties": {"temperature": {"const": 0.2}, "top_p": {"const": 0.9}, "top_k": {"const": 40}, "num_ctx": {"const": 32768}, "num_predict": {"const": 8192}, "stream": {"const": false}}
+        },
+        "seed_policy": {"const": "sha256-trial-id-low-31-bits"},
+        "turns": {"const": 1},
+        "tools_enabled": {"const": false},
+        "provider_schema_constraint": {"const": false},
+        "accepted_output_bytes": {"const": 8192},
+        "exact_identifier_required": {"const": true},
+        "manifest_match_required": {"const": true}
+      }
+    }
+  }
+}

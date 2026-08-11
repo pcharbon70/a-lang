@@ -45,12 +45,21 @@ belong to later phases.
 - [`alang_compact_contract_tests.erl`](alang_compact_contract_tests.erl) —
   freezes condition roles and thresholds and tests every outcome, strict
   boundary, nonpromotable control, and unknown-field failure.
+- [`alang_compact_corpus.erl`](alang_compact_corpus.erl) — validates the 48
+  held-out semantic descriptors against the opaque design, audits separation
+  from development data, and expands each into a checked neutral oracle.
 - [`alang_compact_design_tests.erl`](alang_compact_design_tests.erl) — tests
   deterministic power selection, power-contract mutation, the 2,304-cell
   factor matrix, opaque identities, balance, and semantic-case separation.
 - [`alang_compact_power.erl`](alang_compact_power.erl) — runs the registered
   paired case-cluster simulation and selects the first balanced sample size
   meeting the frozen central-scenario power threshold.
+- [`alang_compact_registration.erl`](alang_compact_registration.erl) —
+  validates exact provider artifacts, token accounting, offline policy,
+  request and compute ceilings, retention, and invalidation triggers.
+- [`alang_compact_registration_tests.erl`](alang_compact_registration_tests.erl)
+  — tests corpus balance and independence, oracle authority, immutable profile
+  identities, offline defaults, fixed ceilings, and rejection mutants.
 - [`alang_compact_schedule.erl`](alang_compact_schedule.erl) — validates the
   opaque 48-case design and deterministically materializes and validates the
   seeded paired schedule and digest.
@@ -60,6 +69,9 @@ belong to later phases.
 - [Section 1.2 integration evidence](section-01-02-integration-evidence.md) —
   records the power-driven expansion to 48 cases and the deterministic,
   balanced 2,304-cell schedule.
+- [Section 1.3 integration evidence](section-01-03-integration-evidence.md) —
+  records the held-out corpus audit, checked semantic oracles, exact profile
+  and tokenizer registration, campaign ceilings, and zero-call boundary.
 
 ## Maintaining this index
 

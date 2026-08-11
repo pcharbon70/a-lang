@@ -153,7 +153,7 @@ model-visible request.
 profiles and resource bounds needed to run it without touching the prior
 campaign.
 
-- [ ] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete**
 
 ### Task 1.3.1: Author the Held-Out Semantic Cases
 
@@ -162,7 +162,7 @@ oracles and balanced families, perturbations, authority boundaries, and
 terminal outcomes; do not copy names, paths, facts, or answer keys from the
 development corpus.
 
-- [ ] **Task 1.3.1 Complete**
+- [x] **Task 1.3.1 Complete**
 
 #### Subtask 1.3.1.1: Cover the Three Runtime Families and Eight Strata
 
@@ -172,7 +172,7 @@ simple, constraint-heavy,
 scope/budget, error, missing-information, irrelevant-context, injection, and
 lexical/value perturbation strata.
 
-- [ ] **Subtask 1.3.1.1 Complete**
+- [x] **Subtask 1.3.1.1 Complete**
 
 #### Subtask 1.3.1.2: Review Independence and Semantic Balance
 
@@ -180,7 +180,7 @@ lexical/value perturbation strata.
 specific alias favoritism, unequal field density, inconsistent authority, and
 oracle leakage; record exclusions and replacements before the digest freeze.
 
-- [ ] **Subtask 1.3.1.2 Complete**
+- [x] **Subtask 1.3.1.2 Complete**
 
 ### Task 1.3.2: Freeze Model Profiles and Campaign Ceilings
 
@@ -188,7 +188,7 @@ oracle leakage; record exclusions and replacements before the digest freeze.
 token accounting, availability probes, call bounds, latency limits, accepted
 bytes, credentials policy, and monetary or local-compute ceiling.
 
-- [ ] **Task 1.3.2 Complete**
+- [x] **Task 1.3.2 Complete**
 
 #### Subtask 1.3.2.1: Register Exact Model and Tokenizer Identity
 
@@ -197,7 +197,7 @@ comparability; otherwise choose replacements only before preregistration,
 record the reason and exact immutable identities, and prohibit aliases or
 silent upgrades during execution.
 
-- [ ] **Subtask 1.3.2.1 Complete**
+- [x] **Subtask 1.3.2.1 Complete**
 
 #### Subtask 1.3.2.2: Register Request and Evidence Ceilings
 
@@ -205,7 +205,7 @@ silent upgrades during execution.
 ceiling, per-request input/output/time/byte bounds, total cost authorization,
 replacement semantics, retention policy, and invalid-campaign triggers.
 
-- [ ] **Subtask 1.3.2.2 Complete**
+- [x] **Subtask 1.3.2.2 Complete**
 
 ## Section 1.4: Phase 1 Integration Tests
 

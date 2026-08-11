@@ -38,12 +38,23 @@ contracts before confirmatory observations can exist.
   dispositions.
 - [`campaign-contract-v1.schema.json`](campaign-contract-v1.schema.json) — the
   closed JSON Schema for the campaign contract.
+- [`campaign-policy-v1.schema.json`](campaign-policy-v1.schema.json) — the
+  closed schema for offline default, opt-in, availability, request, compute,
+  replacement, retention, and invalidation policy.
 - [`case-design-v1.schema.json`](case-design-v1.schema.json) — the closed
   schema for the 48 opaque family/stratum/replicate assignments.
+- [`confirmatory-corpus-v1.schema.json`](confirmatory-corpus-v1.schema.json) —
+  the closed schema for the held-out requirements, context, semantic-oracle
+  descriptors, and blinded audit log.
 - [`power-design-v1.schema.json`](power-design-v1.schema.json) — the closed
   schema for simulation assumptions and balanced sample-size selection.
+- [`provider-profiles-v1.schema.json`](provider-profiles-v1.schema.json) — the
+  closed schema for exact Ollama artifact identities and request parameters.
 - [`schedule-policy-v1.schema.json`](schedule-policy-v1.schema.json) — the
   closed schema for factor eligibility, counts, seed, and request bounds.
+- [`tokenizer-profiles-v1.schema.json`](tokenizer-profiles-v1.schema.json) —
+  the closed schema for reproducible screening encodings and authoritative
+  provider accounting.
 
 ## Maintaining this index
 
