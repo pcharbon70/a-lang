@@ -273,8 +273,8 @@ Phase 1: freeze question, conditions, power, profiles, and held-out corpus
 
 ## Roadmap completion gate
 
-- [ ] The development and confirmatory corpora are content-separated and mechanically labeled
-- [ ] The frozen power audit, 48-case confirmatory corpus, profiles, prompts, conditions, schedule, metrics, and decision rule share one verified digest
+- [x] The development and confirmatory corpora are content-separated and mechanically labeled
+- [x] The frozen power audit, 48-case confirmatory corpus, profiles, prompts, conditions, schedule, metrics, and decision rule share one verified digest
 - [ ] All six comprehension surfaces reproduce one checked semantic digest per case
 - [ ] `R0` and `R3` generation, repair, and action/completion oracles reject every registered semantic mutant
 - [ ] Projector and decoder run as trusted BEAM modules with deterministic round-trip and source-map evidence

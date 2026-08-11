@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://a-lang.invalid/schema/compact-projection-vocabulary-v1.schema.json","title":"A-Lang compact projection vocabulary v1","type":"object","additionalProperties":false,
+  "required":["format","canonical_source","conditions","alias_groups","derivations","identifier_policy","security_policy","selection_policy"],
+  "properties":{
+    "format":{"const":"alang-compact-projection-vocabulary-v1"},"canonical_source":{"const":"alang-source-v2"},
+    "conditions":{"type":"array","minItems":6,"maxItems":6,"items":{"$ref":"#/$defs/condition"}},
+    "alias_groups":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/aliasGroup"}},
+    "derivations":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/derivation"}},
+    "identifier_policy":{"$ref":"#/$defs/identifierPolicy"},"security_policy":{"$ref":"#/$defs/securityPolicy"},"selection_policy":{"type":"string","minLength":1}
+  },
+  "$defs":{
+    "condition":{"type":"object","additionalProperties":false,"required":["id","representation","strategy","version"],"properties":{"id":{"enum":["R0","R1","R2","R3","R4","R5"]},"representation":{"type":"string","minLength":1},"strategy":{"type":"string","minLength":1},"version":{"type":"string","minLength":1}}},
+    "alias":{"type":"object","additionalProperties":false,"required":["readable","compact"],"properties":{"readable":{"type":"string","minLength":1},"compact":{"type":"string","minLength":1}}},
+    "aliasGroup":{"type":"object","additionalProperties":false,"required":["group","aliases"],"properties":{"group":{"type":"string","minLength":1},"aliases":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/alias"}}}},
+    "derivation":{"type":"object","additionalProperties":false,"required":["field","rule","allowed_only_after_check","ambiguity"],"properties":{"field":{"type":"string","minLength":1},"rule":{"type":"string","minLength":1},"allowed_only_after_check":{"const":true},"ambiguity":{"const":"reject"}}},
+    "identifierPolicy":{"type":"object","additionalProperties":false,"required":["r3","r4","protected","reverse_map_required","opaque_control_promotable"],"properties":{"r3":{"type":"string","minLength":1},"r4":{"type":"string","minLength":1},"protected":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},"reverse_map_required":{"const":true},"opaque_control_promotable":{"const":false}}},
+    "securityPolicy":{"type":"object","additionalProperties":false,"required":["keyed_authority_fields_required","positional_security_fields","nonempty_authority_elision","unknown_alias","unknown_version"],"properties":{"keyed_authority_fields_required":{"const":true},"positional_security_fields":{"const":false},"nonempty_authority_elision":{"const":"only-with-exact-derivation-witness"},"unknown_alias":{"const":"reject"},"unknown_version":{"const":"reject"}}}
+  }
+}

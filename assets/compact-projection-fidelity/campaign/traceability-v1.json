@@ -1,0 +1,37 @@
+{
+  "format": "alang-compact-traceability-v1",
+  "sources": [
+    {"role":"synthesis","path":"20-notes/token-efficient-syntax-for-a-lang.md"},
+    {"role":"active-inquiry","path":"40-inquiries/can-a-compact-projection-reduce-alang-token-use-without-reducing-fidelity.md"},
+    {"role":"prior-campaign","path":"60-planning/02-effectful-source-fidelity/README.md"},
+    {"role":"language-contract","path":"20-notes/alang-v2-language-reference.md"},
+    {"role":"implementation-boundary","path":"20-notes/alang-implementation-reference.md"}
+  ],
+  "condition_hypotheses": [
+    {"id":"R0","hypothesis":"Canonical readable source establishes the paired semantic and token baseline."},
+    {"id":"R1","hypothesis":"Removing optional layout isolates whitespace savings from vocabulary and schema changes."},
+    {"id":"R2","hypothesis":"Mnemonic closed-vocabulary aliases isolate repeated grammar savings without identifier opacity."},
+    {"id":"R3","hypothesis":"A checked reversible projection can reach the registered token thresholds without fidelity or safety loss."},
+    {"id":"R4","hypothesis":"Opaque user identifiers estimate the incremental token benefit and semantic cost of name erasure but cannot be promoted."},
+    {"id":"R5","hypothesis":"Typed JSON contextualizes language-specific compactness without reopening the prior representation decision."}
+  ],
+  "primary_metric_ids": ["paired-document-token-reduction", "paired-full-request-input-token-reduction", "aggregate-provider-token-reduction", "exact-normalized-semantic-fidelity"],
+  "secondary_metric_ids": ["component-exactness", "parse-check-validity", "exact-repair-success", "clarification-recall", "omitted-constraint-count", "invented-action-count", "latency-ms", "replacement-count", "monetary-or-local-compute-cost", "worst-registered-perturbation"],
+  "metric_rationales": [
+    {"group":"token","source_role":"synthesis","reason":"Separate document, request, and provider totals so legends and repair overhead cannot be hidden."},
+    {"group":"fidelity","source_role":"active-inquiry","reason":"Use exact semantic and component checks because byte compaction is not evidence of model understanding."},
+    {"group":"safety","source_role":"language-contract","reason":"Preserve nonaverageable authority and completion failures as vetoes."},
+    {"group":"operations","source_role":"prior-campaign","reason":"Retain latency, replacement, and compute cost so the comparison measures end-to-end efficiency."}
+  ],
+  "included_scope": ["compiler-produced-reversible-projections", "fixed-closed-vocabulary-aliases", "layout-minification", "opaque-identifier-negative-control", "typed-json-external-control", "single-turn-offline-scoring"],
+  "excluded_scope": ["compact-authored-surface", "learned-macros", "human-usability-claim", "production-readiness", "unrelated-language-feature", "model-effect-execution", "training-or-fine-tuning"],
+  "prior_campaign_boundary": {
+    "base":"assets/effectful-source-fidelity",
+    "registration_file_count":86,
+    "registration_digest":"dcf8187fa20eb440784901b25d453ba729abb134c865abf29b5b868da2afb3dd",
+    "archive_file_count":182,
+    "archive_digest":"3dc60f80fa2bc0730af9d4b42f145b0663704a8a75f1fece3a76638d73c56f78",
+    "digest_algorithm":"sha-256-canonical-etf-v1",
+    "mutation":"forbidden"
+  }
+}

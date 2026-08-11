@@ -48,6 +48,15 @@ contracts before confirmatory observations can exist.
   descriptors, and blinded audit log.
 - [`power-design-v1.schema.json`](power-design-v1.schema.json) — the closed
   schema for simulation assumptions and balanced sample-size selection.
+- [`preregistration-evidence-v1.schema.json`](preregistration-evidence-v1.schema.json)
+  — the closed schema for canonical file, derived-artifact, prior-boundary,
+  scope, and zero-observation evidence.
+- [`projection-vocabulary-v1.schema.json`](projection-vocabulary-v1.schema.json)
+  — the closed schema for representation strategies, aliases, derivations,
+  identifier handling, and security policy.
+- [`protocol-registry-v1.schema.json`](protocol-registry-v1.schema.json) — the
+  closed schema for model-task prompts, legends, eligibility, and leakage
+  controls.
 - [`provider-profiles-v1.schema.json`](provider-profiles-v1.schema.json) — the
   closed schema for exact Ollama artifact identities and request parameters.
 - [`schedule-policy-v1.schema.json`](schedule-policy-v1.schema.json) — the
@@ -55,6 +64,9 @@ contracts before confirmatory observations can exist.
 - [`tokenizer-profiles-v1.schema.json`](tokenizer-profiles-v1.schema.json) —
   the closed schema for reproducible screening encodings and authoritative
   provider accounting.
+- [`traceability-v1.schema.json`](traceability-v1.schema.json) — the closed
+  schema for research links, condition hypotheses, metric rationales, scope,
+  and the prior-campaign digest boundary.
 
 ## Maintaining this index
 

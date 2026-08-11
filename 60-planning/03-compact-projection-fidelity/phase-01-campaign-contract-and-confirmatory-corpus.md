@@ -18,9 +18,9 @@ protocols, model profiles, power assumptions, independent semantic cases,
 metrics, safety vetoes, operational ceilings, and ordered outcomes before a
 model can observe any new campaign material.
 
-**Status:** Sections 1.1–1.2 complete; Sections 1.3–1.4 remain planned. The
-power audit expands confirmation to 48 cases and 2,304 primary cells. Reproduce
-through Section 1.2 with `make test-compact-section-1-2`.
+**Status:** Complete. The power audit expands confirmation to 48 cases and
+2,304 primary cells, and the complete Phase 1 input registration reproduces
+with `make test-compact-phase-1`.
 
 **Dependencies:** The compact-syntax
 [synthesis](../../20-notes/token-efficient-syntax-for-a-lang.md),
@@ -153,7 +153,8 @@ model-visible request.
 profiles and resource bounds needed to run it without touching the prior
 campaign.
 
-- [x] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-03-integration-evidence.md).
 
 ### Task 1.3.1: Author the Held-Out Semantic Cases
 
@@ -213,7 +214,8 @@ replacement semantics, retention policy, and invalid-campaign triggers.
 balanced, independent from development data, and reproducible before any
 projector or campaign implementation can claim alignment with it.
 
-- [ ] **Section 1.4 Complete**
+- [x] **Section 1.4 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-04-integration-evidence.md).
 
 ### Task 1.4.1: Validate Contracts, Corpus, and Schedule
 
@@ -221,7 +223,7 @@ projector or campaign implementation can claim alignment with it.
 condition, profile, metric, decision predicate, cell, and ceiling from a clean
 checkout.
 
-- [ ] **Task 1.4.1 Complete**
+- [x] **Task 1.4.1 Complete**
 
 #### Subtask 1.4.1.1: Reject Experimental-Contract Mutants
 
@@ -229,7 +231,7 @@ checkout.
 seeds, pooled model gates, repetition pseudoreplication, promotable controls,
 weakened margins, expanded authority, and unbounded replacements.
 
-- [ ] **Subtask 1.4.1.1 Complete**
+- [x] **Subtask 1.4.1.1 Complete**
 
 #### Subtask 1.4.1.2: Reproduce the Registration Inputs
 
@@ -237,7 +239,7 @@ weakened margins, expanded authority, and unbounded replacements.
 legends, prompts, power report, schedule, and decision data; reproduce the
 ordered manifest and digest byte-for-byte in a clean ERTS process.
 
-- [ ] **Subtask 1.4.1.2 Complete**
+- [x] **Subtask 1.4.1.2 Complete**
 
 ### Task 1.4.2: Audit Scope and Research Traceability
 
@@ -245,7 +247,7 @@ ordered manifest and digest byte-for-byte in a clean ERTS process.
 hypothesis and that no compact authored surface, macro training, human-
 usability claim, or unrelated language feature entered the campaign.
 
-- [ ] **Task 1.4.2 Complete**
+- [x] **Task 1.4.2 Complete**
 
 #### Subtask 1.4.2.1: Preserve the Prior Campaign Boundary
 
@@ -253,7 +255,7 @@ usability claim, or unrelated language feature entered the campaign.
 contracts, schedule, prompts, evidence, or decision changed as part of this
 campaign design.
 
-- [ ] **Subtask 1.4.2.1 Complete**
+- [x] **Subtask 1.4.2.1 Complete**
 
 #### Subtask 1.4.2.2: Publish Phase 1 Evidence
 
@@ -261,7 +263,7 @@ campaign design.
 ceiling, negative-test, and traceability results with reproduction commands
 and clearly mark that no model observation has occurred.
 
-- [ ] **Subtask 1.4.2.2 Complete**
+- [x] **Subtask 1.4.2.2 Complete**
 
 ## Phase 1 Completion Evidence
 
@@ -269,13 +271,13 @@ and clearly mark that no model observation has occurred.
 contract can no longer drift in response to implementation convenience or
 model behavior.
 
-- [ ] Machine-readable conditions, task protocols, metrics, margins, vetoes, and outcomes validate
-- [ ] The power audit and any resulting balanced corpus expansion are frozen
-- [ ] Development and confirmatory cases are content-separated and labeled
-- [ ] Every confirmatory case has one checked representation-neutral oracle
-- [ ] Model profiles, tokenizers, parameters, legends, prompts, ceilings, and schedule are exact
-- [ ] The primary-cell and hard-request counts reconcile mechanically
-- [ ] Mutants prove that leakage, pooling, pseudoreplication, substitution, and threshold weakening fail
-- [ ] The prior campaign's frozen bytes and digests remain unchanged
-- [ ] One canonical Phase 1 evidence record reproduces from a clean checkout
-- [ ] Evidence explicitly states that no model call or efficacy observation has occurred
+- [x] Machine-readable conditions, task protocols, metrics, margins, vetoes, and outcomes validate
+- [x] The power audit and any resulting balanced corpus expansion are frozen
+- [x] Development and confirmatory cases are content-separated and labeled
+- [x] Every confirmatory case has one checked representation-neutral oracle
+- [x] Model profiles, tokenizers, parameters, legends, prompts, ceilings, and schedule are exact
+- [x] The primary-cell and hard-request counts reconcile mechanically
+- [x] Mutants prove that leakage, pooling, pseudoreplication, substitution, and threshold weakening fail
+- [x] The prior campaign's frozen bytes and digests remain unchanged
+- [x] One canonical Phase 1 evidence record reproduces from a clean checkout
+- [x] Evidence explicitly states that no model call or efficacy observation has occurred

@@ -51,9 +51,15 @@ belong to later phases.
 - [`alang_compact_design_tests.erl`](alang_compact_design_tests.erl) — tests
   deterministic power selection, power-contract mutation, the 2,304-cell
   factor matrix, opaque identities, balance, and semantic-case separation.
+- [`alang_compact_integration_tests.erl`](alang_compact_integration_tests.erl)
+  — exercises complete cross-contract reconciliation, deterministic evidence,
+  mutant rejection, prior-campaign isolation, and BEAM module residency.
 - [`alang_compact_power.erl`](alang_compact_power.erl) — runs the registered
   paired case-cluster simulation and selects the first balanced sample size
   meeting the frozen central-scenario power threshold.
+- [`alang_compact_preregister.erl`](alang_compact_preregister.erl) — validates
+  all Phase 1 inputs, audits scope and Stream 02 bytes, and emits the canonical
+  file and derived-artifact digest record without authorizing model calls.
 - [`alang_compact_registration.erl`](alang_compact_registration.erl) —
   validates exact provider artifacts, token accounting, offline policy,
   request and compute ceilings, retention, and invalidation triggers.
@@ -72,6 +78,9 @@ belong to later phases.
 - [Section 1.3 integration evidence](section-01-03-integration-evidence.md) —
   records the held-out corpus audit, checked semantic oracles, exact profile
   and tokenizer registration, campaign ceilings, and zero-call boundary.
+- [Section 1.4 integration evidence](section-01-04-integration-evidence.md) —
+  records the canonical Phase 1 digest, cross-contract reconciliation,
+  mutation results, research scope, prior-boundary audit, and clean commands.
 
 ## Maintaining this index
 
