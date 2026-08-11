@@ -285,6 +285,26 @@ index mapping every roadmap gate to a reproducible command or artifact.
 
 **Description:** Close this planning stream only when one canonical disposition
 is reproducible, conservatively scoped, and reflected consistently throughout
+the code and archive. The hosted campaign execution follows the procedure in
+[Phase 6 campaign execution runbook](phase-06-campaign-execution-runbook.md),
+which records the Ollama model-swap choreography, timing budget, acceptance
+criteria, and rollback steps.
+
+- [ ] Campaign validity is machine-evaluated from a complete attempt and evidence ledger
+- [ ] Frozen inputs, provider profiles, records, analysis code, and outputs have verified digests
+- [ ] Ornith and Mixtral decision inputs and intervals are reported separately
+- [ ] Safety and inherited regression vetoes are evaluated before promotion
+- [ ] One deterministic promote, replace, or stop record follows the pre-registered ordered rule
+- [ ] An invalid campaign cannot produce an efficacy comparison or promotion
+- [ ] The human report explains every decision predicate and labels descriptive sensitivity analysis
+- [ ] Implementation status, risks, deferred work, inquiries, maps, and indexes reflect the outcome
+- [ ] No result claims production readiness, general model/task validity, or human-usability benefit
+- [ ] Clean offline replay reproduces the actual validity, metrics, intervals, and decision byte-for-byte
+- [ ] All inherited and stream-specific technical, archive, and secret-retention gates pass
+- [ ] Any later work is left to an explicitly authorized, newly numbered planning stream
+
+**Description:** Close this planning stream only when one canonical disposition
+is reproducible, conservatively scoped, and reflected consistently throughout
 the code and archive.
 
 - [ ] Campaign validity is machine-evaluated from a complete attempt and evidence ledger

@@ -83,6 +83,15 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 
 - None yet.
 
+### Related Documentation
+
+- [A-Lang v2 language reference](../20-notes/alang-v2-language-reference.md)
+  — complete reference for the `alang-source-v2` syntax, including all task
+  clauses, operations, constraints, and design principles.
+- [A-Lang implementation reference](../20-notes/alang-implementation-reference.md)
+  — complete reference for the compiler pipeline, intermediate representation,
+  runtime kernel, and runtime ABI.
+
 ## Maintaining this index
 
 Index every direct source file and subdirectory when it is added, linking a

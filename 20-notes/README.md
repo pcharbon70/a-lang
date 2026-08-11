@@ -53,6 +53,12 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
 - [Typed source references for LLM code understanding](typed-source-references-for-llm-code-understanding.md)
   — an evidence-bounded case for compiler-resolved semantic relationships,
   selective context materialization, and an experiment before source syntax.
+- [A-Lang v2 language reference](alang-v2-language-reference.md)
+  — a complete reference for the `alang-source-v2` syntax, including all task
+  clauses, operations, constraints, and design principles.
+- [A-Lang implementation reference](alang-implementation-reference.md)
+  — a complete reference for the compiler pipeline, intermediate representation,
+  runtime kernel, and runtime ABI.
 
 ## Maintaining this index
 

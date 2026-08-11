@@ -291,6 +291,10 @@ following, with live-only items backed by a recorded opt-in campaign:
 - [Phase 6 — Fidelity decision and roadmap handoff](phase-06-fidelity-decision-and-roadmap-handoff.md)
   — **complete**; frozen evidence freeze, decision module, archive reconciliation,
   and integration tests implemented. Live campaign replay pending Ollama server.
+- [Phase 6 campaign execution runbook](phase-06-campaign-execution-runbook.md)
+  — **seed**; operational procedure for the hosted 288-cell campaign, including
+  the Ollama model-swap choreography, timing budget, acceptance criteria, and
+  rollback steps.
 
 ## Maintaining this index
 
