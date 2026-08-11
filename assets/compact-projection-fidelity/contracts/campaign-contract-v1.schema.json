@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/compact/campaign-contract-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "question",
+    "canonical_source",
+    "candidate_condition",
+    "conditions",
+    "task_protocols",
+    "primary_metrics",
+    "secondary_metrics",
+    "inference",
+    "promotion",
+    "safety_vetoes",
+    "outcomes_ordered",
+    "claims_not_authorized"
+  ],
+  "properties": {
+    "format": {"const": "alang-compact-campaign-contract-v1"},
+    "question": {"type": "string", "minLength": 1},
+    "canonical_source": {"const": "alang-source-v2"},
+    "candidate_condition": {"const": "R3"},
+    "conditions": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "representation", "role", "promotable", "task_protocols"],
+        "properties": {
+          "id": {"enum": ["R0", "R1", "R2", "R3", "R4", "R5"]},
+          "representation": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1},
+          "promotable": {"type": "boolean"},
+          "task_protocols": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"enum": ["comprehension", "generation", "diagnostic-repair", "action-completion"]}
+          }
+        }
+      }
+    },
+    "task_protocols": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"type": "string"}},
+    "primary_metrics": {"type": "array", "minItems": 4, "uniqueItems": true, "items": {"type": "string"}},
+    "secondary_metrics": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "inference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sampling_unit", "paired", "stratified_by", "repetitions_retained_within_case", "resamples", "seed", "confidence_percent", "interval", "model_families_separate", "pooled_results"],
+      "properties": {
+        "sampling_unit": {"const": "semantic-case"},
+        "paired": {"const": true},
+        "stratified_by": {"const": "runtime-family"},
+        "repetitions_retained_within_case": {"const": 2},
+        "resamples": {"const": 20000},
+        "seed": {"const": 2026081103},
+        "confidence_percent": {"const": 95},
+        "interval": {"const": "one-sided-percentile"},
+        "model_families_separate": {"const": true},
+        "pooled_results": {"const": "descriptive-only"}
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_document_token_reduction", "minimum_full_request_input_reduction", "minimum_aggregate_provider_token_reduction", "pooled_exact_fidelity_lower_strictly_above", "minimum_task_exact_fidelity_difference", "minimum_parse_check_difference", "minimum_repair_success_difference", "each_model_family", "each_registered_tokenizer", "robustness_required", "compact_only_safety_events", "inherited_gates_required", "round_trip_required"],
+      "properties": {
+        "minimum_document_token_reduction": {"const": 0.20},
+        "minimum_full_request_input_reduction": {"const": 0.15},
+        "minimum_aggregate_provider_token_reduction": {"const": 0.15},
+        "pooled_exact_fidelity_lower_strictly_above": {"const": -0.05},
+        "minimum_task_exact_fidelity_difference": {"const": -0.05},
+        "minimum_parse_check_difference": {"const": -0.05},
+        "minimum_repair_success_difference": {"const": -0.05},
+        "each_model_family": {"const": true},
+        "each_registered_tokenizer": {"const": true},
+        "robustness_required": {"const": true},
+        "compact_only_safety_events": {"const": 0},
+        "inherited_gates_required": {"const": true},
+        "round_trip_required": {"const": true}
+      }
+    },
+    "safety_vetoes": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": {"type": "string"}},
+    "outcomes_ordered": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"type": "string"}},
+    "claims_not_authorized": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+  }
+}

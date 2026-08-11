@@ -18,7 +18,8 @@ protocols, model profiles, power assumptions, independent semantic cases,
 metrics, safety vetoes, operational ceilings, and ordered outcomes before a
 model can observe any new campaign material.
 
-**Status:** Planned; no task in this phase is implementation evidence.
+**Status:** Section 1.1 complete; Sections 1.2–1.4 remain planned. Reproduce
+the completed contract and decision gate with `make test-compact-section-1-1`.
 
 **Dependencies:** The compact-syntax
 [synthesis](../../20-notes/token-efficient-syntax-for-a-lang.md),
@@ -32,7 +33,8 @@ starting semantics. They do not authorize mutation or reuse of prior outcomes.
 **Description:** Express the question as machine-readable contrasts with no
 post-hoc composite score or ambiguity about what a positive result promotes.
 
-- [ ] **Section 1.1 Complete**
+- [x] **Section 1.1 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-01-integration-evidence.md).
 
 ### Task 1.1.1: Register the Representation Contrasts
 
@@ -40,7 +42,7 @@ post-hoc composite score or ambiguity about what a positive result promotes.
 legends, eligible task protocols, and scientific roles so every pair differs
 only by the intended representation transform.
 
-- [ ] **Task 1.1.1 Complete**
+- [x] **Task 1.1.1 Complete**
 
 #### Subtask 1.1.1.1: Freeze the Six Comprehension Conditions
 
@@ -48,7 +50,7 @@ only by the intended representation transform.
 checked-compact, opaque-identifier, and typed-JSON forms with stable IDs;
 require common semantics and declare `R3` the only promotion candidate.
 
-- [ ] **Subtask 1.1.1.1 Complete**
+- [x] **Subtask 1.1.1.1 Complete**
 
 #### Subtask 1.1.1.2: Freeze the Core Bidirectional Contrast
 
@@ -56,7 +58,7 @@ require common semantics and declare `R3` the only promotion candidate.
 to paired `R0` and `R3` cells, and register comprehension ablations as
 mechanism evidence rather than alternative promotion paths.
 
-- [ ] **Subtask 1.1.1.2 Complete**
+- [x] **Subtask 1.1.1.2 Complete**
 
 ### Task 1.1.2: Register Metrics and the Ordered Decision
 
@@ -64,7 +66,7 @@ mechanism evidence rather than alternative promotion paths.
 cost measures separately and define the only valid final dispositions before
 any campaign output exists.
 
-- [ ] **Task 1.1.2 Complete**
+- [x] **Task 1.1.2 Complete**
 
 #### Subtask 1.1.2.1: Define Primary and Secondary Estimands
 
@@ -73,7 +75,7 @@ inferiority primary; register component recovery, parse/check validity,
 repair, perturbation strata, latency, cost, and mechanism ablations as named
 secondary results without a hidden weighted aggregate.
 
-- [ ] **Subtask 1.1.2.1 Complete**
+- [x] **Subtask 1.1.2.1 Complete**
 
 #### Subtask 1.1.2.2: Encode Promotion, Retention, Rejection, and Invalidity
 
@@ -82,7 +84,7 @@ precedes safety rejection, promotion requires every gate, and a valid
 nonpromotion records insufficient evidence without claiming readable
 superiority unless a separate registered contrast supports it.
 
-- [ ] **Subtask 1.1.2.2 Complete**
+- [x] **Subtask 1.1.2.2 Complete**
 
 ## Section 1.2: Power, Pairing, and Schedule Contract
 
