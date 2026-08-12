@@ -17,7 +17,9 @@ aliases: []
 This directory contains the BEAM-resident contracts, validators, campaign
 materializers, statistical tools, and preregistration evidence for the
 [compact projection fidelity plan](../../60-planning/03-compact-projection-fidelity/README.md).
-It does not authorize model calls or implement the Phase 2 compact projector.
+It does not authorize model calls. Phase 2 adds the trusted tokenizer,
+representation registry, compact projector, inverse decoder, and source maps
+needed before campaign execution.
 
 ## What belongs here
 
@@ -69,6 +71,27 @@ belong to later phases.
 - [`alang_compact_schedule.erl`](alang_compact_schedule.erl) — validates the
   opaque 48-case design and deterministically materializes and validates the
   seeded paired schedule and digest.
+- [`alang_compact_source_normalizer.erl`](alang_compact_source_normalizer.erl)
+  — reversibly maps source-domain resource and path values through the frozen
+  v2 frontend without changing the prior campaign archive.
+- [`alang_compact_surface.erl`](alang_compact_surface.erl) — validates the
+  closed surface registry and canonically renders and decodes the implemented
+  readable, minified, mnemonic-alias, and typed-JSON representations.
+- [`alang_compact_surface_tests.erl`](alang_compact_surface_tests.erl) — proves
+  deterministic rendering and semantic round trips across all 48 cases and
+  tests version, bound, duplicate, alias, and reserved-surface failures.
+- [`alang_compact_token_audit.erl`](alang_compact_token_audit.erl) — produces
+  exact document/full-request counts and closed semantic, lexical, and
+  provider-provenance attribution reports.
+- [`alang_compact_token_audit_tests.erl`](alang_compact_token_audit_tests.erl)
+  — exercises closed attribution, authoritative provider usage, and rejection
+  of estimates, missing categories, and tokenizer aliases.
+- [`alang_compact_tokenizer.erl`](alang_compact_tokenizer.erl) — implements
+  digest-checked `cl100k_base` and `o200k_base` pre-tokenization and byte-pair
+  encoding entirely on the BEAM.
+- [`alang_compact_tokenizer_tests.erl`](alang_compact_tokenizer_tests.erl) —
+  freezes exact primary-implementation token vectors and tests identities,
+  digests, bounds, UTF-8, and unavailable vocabulary failures.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —
   records the contract, decision, mutation, BEAM-residency, and no-model-call
   results for the completed section.
@@ -81,6 +104,10 @@ belong to later phases.
 - [Section 1.4 integration evidence](section-01-04-integration-evidence.md) —
   records the canonical Phase 1 digest, cross-contract reconciliation,
   mutation results, research scope, prior-boundary audit, and clean commands.
+- [Section 2.1 integration evidence](section-02-01-integration-evidence.md) —
+  records the closed registry, four canonical renderers, 192 corpus round
+  trips, exact BEAM BPE conformance, attribution, failures, and unchanged
+  Phase 1 boundary.
 
 ## Maintaining this index
 

@@ -1,0 +1,11 @@
+{
+  "format": "alang-compact-tokenizer-conformance-v1",
+  "reference_implementation": "tiktoken-0.12.0",
+  "vectors": [
+    {"text":"","tokens":{"tiktoken-0.12.0-cl100k-base":[],"tiktoken-0.12.0-o200k-base":[]}},
+    {"text":"hello world","tokens":{"tiktoken-0.12.0-cl100k-base":[15339,1917],"tiktoken-0.12.0-o200k-base":[24912,2375]}},
+    {"text":"#!alang-source-v2\ntask sample-task{facts[\"Hello, 世界!\"];}\n","tokens":{"tiktoken-0.12.0-cl100k-base":[8169,278,526,31874,8437,17,198,8366,6205,53679,90,69153,1204,9906,11,220,3574,244,98220,0,1365,12355],"tiktoken-0.12.0-o200k-base":[18666,76251,60011,9827,17,198,15921,10176,100154,90,122868,2272,13225,11,185558,0,2601,26586]}},
+    {"text":"model.generate depends [draft];","tokens":{"tiktoken-0.12.0-cl100k-base":[2590,22793,14117,510,46097,5378],"tiktoken-0.12.0-o200k-base":[5079,33917,20102,723,94152,11464]}},
+    {"text":"emoji: 🦆 café é","tokens":{"tiktoken-0.12.0-cl100k-base":[38623,25,11410,99,228,53050,384,54939],"tiktoken-0.12.0-o200k-base":[75339,25,9552,99,228,30469,319,13430]}}
+  ]
+}

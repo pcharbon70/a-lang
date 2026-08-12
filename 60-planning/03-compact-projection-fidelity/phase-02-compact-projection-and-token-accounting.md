@@ -29,7 +29,7 @@ control remain authoritative.
 **Description:** Make token cost attributable, reproducible, and explicitly
 dependent on a declared model profile rather than character length.
 
-- [ ] **Section 2.1 Complete**
+- [x] **Section 2.1 Complete**
 
 ### Task 2.1.1: Implement the BEAM Token-Audit Contract
 
@@ -37,7 +37,7 @@ dependent on a declared model profile rather than character length.
 full-request token counts, lexeme and section attribution, provider usage,
 tokenizer identity, and count provenance.
 
-- [ ] **Task 2.1.1 Complete**
+- [x] **Task 2.1.1 Complete**
 
 #### Subtask 2.1.1.1: Count Registered Tokenizers Deterministically
 
@@ -45,7 +45,7 @@ tokenizer identity, and count provenance.
 pin vocabulary and pre-tokenizer digests, reject unknown model aliases, and
 separate exact counts from proxy estimates.
 
-- [ ] **Subtask 2.1.1.1 Complete**
+- [x] **Subtask 2.1.1.1 Complete**
 
 #### Subtask 2.1.1.2: Attribute Cost to Stable Semantic Sections
 
@@ -53,7 +53,7 @@ separate exact counts from proxy estimates.
 authority, completion, legends, common instructions, and output scaffolding so
 savings cannot be credited to accidentally omitted semantics.
 
-- [ ] **Subtask 2.1.1.2 Complete**
+- [x] **Subtask 2.1.1.2 Complete**
 
 ### Task 2.1.2: Register Canonical Surface IDs and Renderers
 
@@ -61,7 +61,7 @@ savings cannot be credited to accidentally omitted semantics.
 model-visible forms and provenance, and reject unregistered flags or condition
 combinations.
 
-- [ ] **Task 2.1.2 Complete**
+- [x] **Task 2.1.2 Complete**
 
 #### Subtask 2.1.2.1: Render Readable, Minified, Alias, and JSON Controls
 
@@ -69,7 +69,7 @@ combinations.
 layout for `R1`, apply only registered mnemonic aliases for `R2`, and reuse the
 independent typed-JSON path for `R5`.
 
-- [ ] **Subtask 2.1.2.1 Complete**
+- [x] **Subtask 2.1.2.1 Complete**
 
 #### Subtask 2.1.2.2: Reject Surface and Version Ambiguity
 
@@ -77,7 +77,11 @@ independent typed-JSON path for `R5`.
 rendering per semantic input, duplicate-aware decoding, bounded inputs, and
 stable failures for unknown versions, aliases, fields, or encodings.
 
-- [ ] **Subtask 2.1.2.2 Complete**
+- [x] **Subtask 2.1.2.2 Complete**
+
+**Implementation evidence:** [Section 2.1 integration evidence](../../src/compact-projection-fidelity/section-02-01-integration-evidence.md)
+records exact tokenizer conformance, canonical rendering, all-corpus semantic
+round trips, attribution, negative cases, and the unchanged Phase 1 boundary.
 
 ## Section 2.2: Checked Compact Projection and Inverse Decoder
 
