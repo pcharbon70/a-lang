@@ -1,0 +1,41 @@
+{
+  "format": "alang-compact-provider-profiles-v1",
+  "selection_record": {
+    "prior_stream": "effectful-source-fidelity",
+    "families_retained": ["ornith", "mixtral"],
+    "identifier_change_reason": "Stream 02 used shorthand tags that were not immutable. Phase 1 replaces only those tags with exact Ollama artifact identities before preregistration.",
+    "replacement_after_preregistration": "forbidden"
+  },
+  "profiles": [
+    {
+      "family": "ornith",
+      "provider": "Ollama",
+      "api": "ChatCompletions",
+      "model_id": "hf.co/unsloth/Ornith-1.0-35B-GGUF:UD-Q5_K_M",
+      "manifest_sha256": "6959cafd1e245e8fd083f223c951d6f1e3c778b13d1ad33b4919f3c465927a25",
+      "request_parameters": {"temperature": 0.2, "top_p": 0.9, "top_k": 40, "num_ctx": 32768, "num_predict": 8192, "stream": false},
+      "seed_policy": "sha256-trial-id-low-31-bits",
+      "turns": 1,
+      "tools_enabled": false,
+      "provider_schema_constraint": false,
+      "accepted_output_bytes": 8192,
+      "exact_identifier_required": true,
+      "manifest_match_required": true
+    },
+    {
+      "family": "mixtral",
+      "provider": "Ollama",
+      "api": "ChatCompletions",
+      "model_id": "mixtral:8x7b",
+      "manifest_sha256": "a3b6bef0f836ff29ddb576a80eeb1b7def43ec9b809466f62e96adb871fe8498",
+      "request_parameters": {"temperature": 0.2, "top_p": 0.9, "top_k": 40, "num_ctx": 32768, "num_predict": 8192, "stream": false},
+      "seed_policy": "sha256-trial-id-low-31-bits",
+      "turns": 1,
+      "tools_enabled": false,
+      "provider_schema_constraint": false,
+      "accepted_output_bytes": 8192,
+      "exact_identifier_required": true,
+      "manifest_match_required": true
+    }
+  ]
+}

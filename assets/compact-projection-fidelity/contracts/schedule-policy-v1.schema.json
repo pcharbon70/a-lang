@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/compact/schedule-policy-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "seed", "selected_cases", "model_families", "repetitions", "protocol_conditions", "primary_cells", "max_replacements_per_cell", "hard_request_ceiling", "definitive_response_retriable", "opaque_trial_id_bytes"],
+  "properties": {
+    "format": {"const": "alang-compact-schedule-policy-v1"},
+    "seed": {"const": 2026081103},
+    "selected_cases": {"const": 48},
+    "model_families": {"const": ["mixtral", "ornith"]},
+    "repetitions": {"const": 2},
+    "protocol_conditions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["comprehension", "generation", "diagnostic-repair", "action-completion"],
+      "properties": {
+        "comprehension": {"const": ["R0", "R1", "R2", "R3", "R4", "R5"]},
+        "generation": {"const": ["R0", "R3"]},
+        "diagnostic-repair": {"const": ["R0", "R3"]},
+        "action-completion": {"const": ["R0", "R3"]}
+      }
+    },
+    "primary_cells": {"const": 2304},
+    "max_replacements_per_cell": {"const": 1},
+    "hard_request_ceiling": {"const": 4608},
+    "definitive_response_retriable": {"const": false},
+    "opaque_trial_id_bytes": {"const": 12}
+  }
+}

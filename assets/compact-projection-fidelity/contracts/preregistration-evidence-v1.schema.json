@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://a-lang.invalid/schema/compact-preregistration-evidence-v1.schema.json","title":"A-Lang compact preregistration evidence v1","type":"object","additionalProperties":false,
+  "required":["format","digest_algorithm","registration_digest","registration_file_count","registration_files","derived","semantic_case_count","primary_cell_count","hard_request_ceiling","model_profile_count","screening_tokenizer_count","schema_count","prior_campaign_digest","prior_campaign_file_count","prior_archive_digest","prior_archive_file_count","scope_audit","hosted_calls_observed","efficacy_observations","network_authorized","commands","evidence_digest"],
+  "properties":{
+    "format":{"const":"alang-compact-preregistration-evidence-v1"},"digest_algorithm":{"const":"sha-256-canonical-etf-v1"},"registration_digest":{"$ref":"#/$defs/sha"},"registration_file_count":{"type":"integer","minimum":1},"registration_files":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/file"}},
+    "derived":{"$ref":"#/$defs/derived"},"semantic_case_count":{"const":48},"primary_cell_count":{"const":2304},"hard_request_ceiling":{"const":4608},"model_profile_count":{"const":2},"screening_tokenizer_count":{"const":2},"schema_count":{"const":12},"prior_campaign_digest":{"$ref":"#/$defs/sha"},"prior_campaign_file_count":{"const":86},"prior_archive_digest":{"$ref":"#/$defs/sha"},"prior_archive_file_count":{"const":182},
+    "scope_audit":{"$ref":"#/$defs/scope"},"hosted_calls_observed":{"const":0},"efficacy_observations":{"const":0},"network_authorized":{"const":false},"commands":{"type":"array","minItems":1,"items":{"type":"string"}},"evidence_digest":{"$ref":"#/$defs/sha"}
+  },
+  "$defs":{
+    "sha":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "file":{"type":"object","additionalProperties":false,"required":["path","sha256","bytes"],"properties":{"path":{"type":"string","minLength":1},"sha256":{"$ref":"#/$defs/sha"},"bytes":{"type":"integer","minimum":1}}},
+    "derived":{"type":"object","additionalProperties":false,"required":["power_audit_digest","schedule_digest","schedule_record_digest","oracle_bundle_digest","validation_digest"],"properties":{"power_audit_digest":{"$ref":"#/$defs/sha"},"schedule_digest":{"$ref":"#/$defs/sha"},"schedule_record_digest":{"$ref":"#/$defs/sha"},"oracle_bundle_digest":{"$ref":"#/$defs/sha"},"validation_digest":{"$ref":"#/$defs/sha"}}},
+    "scope":{"type":"object","additionalProperties":false,"required":["condition_hypotheses","metric_ids","source_links","included_scope","excluded_scope","foreign_trusted_sources","passed"],"properties":{"condition_hypotheses":{"const":6},"metric_ids":{"const":14},"source_links":{"const":5},"included_scope":{"const":6},"excluded_scope":{"const":7},"foreign_trusted_sources":{"const":0},"passed":{"const":true}}}
+  }
+}

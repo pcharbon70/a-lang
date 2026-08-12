@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schema/compact-confirmatory-corpus-v1.schema.json",
+  "title": "A-Lang compact confirmatory corpus v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["format", "boundary", "development_corpus", "families", "strata", "audit_log", "cases"],
+  "properties": {
+    "format": {"const": "alang-compact-confirmatory-corpus-v1"},
+    "boundary": {"const": "confirmatory-held-out"},
+    "development_corpus": {"const": "assets/effectful-source-fidelity/corpus"},
+    "families": {"const": ["single-model-artifact", "repair-and-publish", "attenuated-delegation"]},
+    "strata": {"const": ["simple", "constraint-heavy", "scope-budget", "error-branch", "missing-information", "irrelevant-context", "prompt-injection", "lexical-value-perturbation"]},
+    "audit_log": {"type": "object", "additionalProperties": false, "required": ["blinded_to_representation_conditions", "excluded_case_ids", "replacement_case_ids", "review_rule"], "properties": {"blinded_to_representation_conditions": {"const": true}, "excluded_case_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}, "replacement_case_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}, "review_rule": {"type": "string", "minLength": 1}}},
+    "cases": {"type": "array", "minItems": 48, "maxItems": 48, "items": {"$ref": "#/$defs/case"}}
+  },
+  "$defs": {
+    "case": {"type": "object", "additionalProperties": false, "required": ["id", "runtime_family", "stratum", "replicate", "request", "untrusted_context", "oracle"], "properties": {"id": {"type": "string", "pattern": "^cp-(sma|rap|ad)-[a-z-]+-[ab]$"}, "runtime_family": {"enum": ["single-model-artifact", "repair-and-publish", "attenuated-delegation"]}, "stratum": {"enum": ["simple", "constraint-heavy", "scope-budget", "error-branch", "missing-information", "irrelevant-context", "prompt-injection", "lexical-value-perturbation"]}, "replicate": {"enum": ["a", "b"]}, "request": {"type": "string", "minLength": 24, "maxLength": 320}, "untrusted_context": {"type": "array", "maxItems": 2, "items": {"type": "string", "minLength": 1, "maxLength": 320}}, "oracle": {"$ref": "#/$defs/oracle"}}},
+    "oracle": {"type": "object", "additionalProperties": false, "required": ["goal_facts", "input_name", "model", "workspace", "path", "max_bytes", "timeout_ms", "error_on", "clarifications", "terminal"], "properties": {"goal_facts": {"type": "array", "minItems": 1, "maxItems": 8, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "input_name": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}, "model": {"type": "string", "pattern": "^model/[a-z]+$"}, "workspace": {"type": "string", "pattern": "^workspace/[a-z]+$"}, "path": {"type": "string", "pattern": "^[a-z0-9-]+/[a-z0-9-]+\\.md$"}, "max_bytes": {"type": "integer", "minimum": 1, "maximum": 8192}, "timeout_ms": {"type": "integer", "minimum": 1, "maximum": 120000}, "error_on": {"type": ["string", "null"], "enum": [null, "denied", "timeout", "invalid-output", "verification-failed"]}, "clarifications": {"type": "array", "maxItems": 4, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}, "terminal": {"enum": ["complete", "needs-clarification"]}}}
+  }
+}

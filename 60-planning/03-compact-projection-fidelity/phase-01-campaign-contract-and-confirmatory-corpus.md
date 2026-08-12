@@ -18,7 +18,9 @@ protocols, model profiles, power assumptions, independent semantic cases,
 metrics, safety vetoes, operational ceilings, and ordered outcomes before a
 model can observe any new campaign material.
 
-**Status:** Planned; no task in this phase is implementation evidence.
+**Status:** Complete. The power audit expands confirmation to 48 cases and
+2,304 primary cells, and the complete Phase 1 input registration reproduces
+with `make test-compact-phase-1`.
 
 **Dependencies:** The compact-syntax
 [synthesis](../../20-notes/token-efficient-syntax-for-a-lang.md),
@@ -32,7 +34,8 @@ starting semantics. They do not authorize mutation or reuse of prior outcomes.
 **Description:** Express the question as machine-readable contrasts with no
 post-hoc composite score or ambiguity about what a positive result promotes.
 
-- [ ] **Section 1.1 Complete**
+- [x] **Section 1.1 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-01-integration-evidence.md).
 
 ### Task 1.1.1: Register the Representation Contrasts
 
@@ -40,7 +43,7 @@ post-hoc composite score or ambiguity about what a positive result promotes.
 legends, eligible task protocols, and scientific roles so every pair differs
 only by the intended representation transform.
 
-- [ ] **Task 1.1.1 Complete**
+- [x] **Task 1.1.1 Complete**
 
 #### Subtask 1.1.1.1: Freeze the Six Comprehension Conditions
 
@@ -48,7 +51,7 @@ only by the intended representation transform.
 checked-compact, opaque-identifier, and typed-JSON forms with stable IDs;
 require common semantics and declare `R3` the only promotion candidate.
 
-- [ ] **Subtask 1.1.1.1 Complete**
+- [x] **Subtask 1.1.1.1 Complete**
 
 #### Subtask 1.1.1.2: Freeze the Core Bidirectional Contrast
 
@@ -56,7 +59,7 @@ require common semantics and declare `R3` the only promotion candidate.
 to paired `R0` and `R3` cells, and register comprehension ablations as
 mechanism evidence rather than alternative promotion paths.
 
-- [ ] **Subtask 1.1.1.2 Complete**
+- [x] **Subtask 1.1.1.2 Complete**
 
 ### Task 1.1.2: Register Metrics and the Ordered Decision
 
@@ -64,7 +67,7 @@ mechanism evidence rather than alternative promotion paths.
 cost measures separately and define the only valid final dispositions before
 any campaign output exists.
 
-- [ ] **Task 1.1.2 Complete**
+- [x] **Task 1.1.2 Complete**
 
 #### Subtask 1.1.2.1: Define Primary and Secondary Estimands
 
@@ -73,7 +76,7 @@ inferiority primary; register component recovery, parse/check validity,
 repair, perturbation strata, latency, cost, and mechanism ablations as named
 secondary results without a hidden weighted aggregate.
 
-- [ ] **Subtask 1.1.2.1 Complete**
+- [x] **Subtask 1.1.2.1 Complete**
 
 #### Subtask 1.1.2.2: Encode Promotion, Retention, Rejection, and Invalidity
 
@@ -82,7 +85,7 @@ precedes safety rejection, promotion requires every gate, and a valid
 nonpromotion records insufficient evidence without claiming readable
 superiority unless a separate registered contrast supports it.
 
-- [ ] **Subtask 1.1.2.2 Complete**
+- [x] **Subtask 1.1.2.2 Complete**
 
 ## Section 1.2: Power, Pairing, and Schedule Contract
 
@@ -90,7 +93,8 @@ superiority unless a separate registered contrast supports it.
 registered non-inferiority question while treating semantic cases—not calls
 or repetitions—as independent evidence.
 
-- [ ] **Section 1.2 Complete**
+- [x] **Section 1.2 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-02-integration-evidence.md).
 
 ### Task 1.2.1: Perform the Simulation-Based Power Audit
 
@@ -99,7 +103,7 @@ baseline rates and compact/readable discordance, document the assumptions,
 and verify the initial 24-case design has acceptable power for the pooled
 five-point non-inferiority gate.
 
-- [ ] **Task 1.2.1 Complete**
+- [x] **Task 1.2.1 Complete**
 
 #### Subtask 1.2.1.1: Register Power Scenarios and Acceptance
 
@@ -107,7 +111,7 @@ five-point non-inferiority gate.
 discordance scenarios; require at least 80% power under the registered central
 no-loss scenario and report where the design remains underpowered.
 
-- [ ] **Subtask 1.2.1.1 Complete**
+- [x] **Subtask 1.2.1.1 Complete**
 
 #### Subtask 1.2.1.2: Freeze Any Corpus Expansion Before Observation
 
@@ -115,7 +119,8 @@ no-loss scenario and report where the design remains underpowered.
 24-case blocks, recalculate every cell and ceiling, and freeze the larger count
 before prompts are exposed; forbid outcome-dependent stopping or shrinkage.
 
-- [ ] **Subtask 1.2.1.2 Complete**
+- [x] **Subtask 1.2.1.2 Complete** — the registered central scenario selects
+  48 cases, the next complete balanced block.
 
 ### Task 1.2.2: Materialize the Paired Randomized Schedule
 
@@ -123,7 +128,7 @@ before prompts are exposed; forbid outcome-dependent stopping or shrinkage.
 into opaque cells while preserving paired comparisons, family balance, and
 separation between repetitions.
 
-- [ ] **Task 1.2.2 Complete**
+- [x] **Task 1.2.2 Complete**
 
 #### Subtask 1.2.2.1: Apply Seeded Counterbalancing
 
@@ -131,7 +136,7 @@ separation between repetitions.
 model/task/family/repetition blocks, prevent adjacent repetitions of one case,
 and retain a deterministic inverse map outside model-visible material.
 
-- [ ] **Subtask 1.2.2.1 Complete**
+- [x] **Subtask 1.2.2.1 Complete**
 
 #### Subtask 1.2.2.2: Validate Counts, Pairing, and Leakage Controls
 
@@ -140,7 +145,7 @@ for every core pair, all six comprehension members, no duplicate trial, and no
 condition label, oracle, digest, source filename, or expected result in a
 model-visible request.
 
-- [ ] **Subtask 1.2.2.2 Complete**
+- [x] **Subtask 1.2.2.2 Complete**
 
 ## Section 1.3: Confirmatory Corpus and Operational Registration
 
@@ -148,25 +153,27 @@ model-visible request.
 profiles and resource bounds needed to run it without touching the prior
 campaign.
 
-- [ ] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-03-integration-evidence.md).
 
 ### Task 1.3.1: Author the Held-Out Semantic Cases
 
-**Description:** Create at least 24 new cases with representation-neutral
+**Description:** Create exactly 48 new cases with representation-neutral
 oracles and balanced families, perturbations, authority boundaries, and
 terminal outcomes; do not copy names, paths, facts, or answer keys from the
 development corpus.
 
-- [ ] **Task 1.3.1 Complete**
+- [x] **Task 1.3.1 Complete**
 
 #### Subtask 1.3.1.1: Cover the Three Runtime Families and Eight Strata
 
-**Description:** Author eight cases each for single-model artifact, repair and
-publish, and attenuated delegation, crossing simple, constraint-heavy,
+**Description:** Author sixteen cases each for single-model artifact, repair
+and publish, and attenuated delegation, with two independent cases crossing
+simple, constraint-heavy,
 scope/budget, error, missing-information, irrelevant-context, injection, and
 lexical/value perturbation strata.
 
-- [ ] **Subtask 1.3.1.1 Complete**
+- [x] **Subtask 1.3.1.1 Complete**
 
 #### Subtask 1.3.1.2: Review Independence and Semantic Balance
 
@@ -174,7 +181,7 @@ lexical/value perturbation strata.
 specific alias favoritism, unequal field density, inconsistent authority, and
 oracle leakage; record exclusions and replacements before the digest freeze.
 
-- [ ] **Subtask 1.3.1.2 Complete**
+- [x] **Subtask 1.3.1.2 Complete**
 
 ### Task 1.3.2: Freeze Model Profiles and Campaign Ceilings
 
@@ -182,7 +189,7 @@ oracle leakage; record exclusions and replacements before the digest freeze.
 token accounting, availability probes, call bounds, latency limits, accepted
 bytes, credentials policy, and monetary or local-compute ceiling.
 
-- [ ] **Task 1.3.2 Complete**
+- [x] **Task 1.3.2 Complete**
 
 #### Subtask 1.3.2.1: Register Exact Model and Tokenizer Identity
 
@@ -191,15 +198,15 @@ comparability; otherwise choose replacements only before preregistration,
 record the reason and exact immutable identities, and prohibit aliases or
 silent upgrades during execution.
 
-- [ ] **Subtask 1.3.2.1 Complete**
+- [x] **Subtask 1.3.2.1 Complete**
 
 #### Subtask 1.3.2.2: Register Request and Evidence Ceilings
 
-**Description:** Freeze the 1,152-primary-cell baseline, 2,304 hard request
+**Description:** Freeze the 2,304-primary-cell design, 4,608 hard request
 ceiling, per-request input/output/time/byte bounds, total cost authorization,
 replacement semantics, retention policy, and invalid-campaign triggers.
 
-- [ ] **Subtask 1.3.2.2 Complete**
+- [x] **Subtask 1.3.2.2 Complete**
 
 ## Section 1.4: Phase 1 Integration Tests
 
@@ -207,7 +214,8 @@ replacement semantics, retention policy, and invalid-campaign triggers.
 balanced, independent from development data, and reproducible before any
 projector or campaign implementation can claim alignment with it.
 
-- [ ] **Section 1.4 Complete**
+- [x] **Section 1.4 Complete** — see the
+  [integration evidence](../../src/compact-projection-fidelity/section-01-04-integration-evidence.md).
 
 ### Task 1.4.1: Validate Contracts, Corpus, and Schedule
 
@@ -215,7 +223,7 @@ projector or campaign implementation can claim alignment with it.
 condition, profile, metric, decision predicate, cell, and ceiling from a clean
 checkout.
 
-- [ ] **Task 1.4.1 Complete**
+- [x] **Task 1.4.1 Complete**
 
 #### Subtask 1.4.1.1: Reject Experimental-Contract Mutants
 
@@ -223,7 +231,7 @@ checkout.
 seeds, pooled model gates, repetition pseudoreplication, promotable controls,
 weakened margins, expanded authority, and unbounded replacements.
 
-- [ ] **Subtask 1.4.1.1 Complete**
+- [x] **Subtask 1.4.1.1 Complete**
 
 #### Subtask 1.4.1.2: Reproduce the Registration Inputs
 
@@ -231,7 +239,7 @@ weakened margins, expanded authority, and unbounded replacements.
 legends, prompts, power report, schedule, and decision data; reproduce the
 ordered manifest and digest byte-for-byte in a clean ERTS process.
 
-- [ ] **Subtask 1.4.1.2 Complete**
+- [x] **Subtask 1.4.1.2 Complete**
 
 ### Task 1.4.2: Audit Scope and Research Traceability
 
@@ -239,7 +247,7 @@ ordered manifest and digest byte-for-byte in a clean ERTS process.
 hypothesis and that no compact authored surface, macro training, human-
 usability claim, or unrelated language feature entered the campaign.
 
-- [ ] **Task 1.4.2 Complete**
+- [x] **Task 1.4.2 Complete**
 
 #### Subtask 1.4.2.1: Preserve the Prior Campaign Boundary
 
@@ -247,7 +255,7 @@ usability claim, or unrelated language feature entered the campaign.
 contracts, schedule, prompts, evidence, or decision changed as part of this
 campaign design.
 
-- [ ] **Subtask 1.4.2.1 Complete**
+- [x] **Subtask 1.4.2.1 Complete**
 
 #### Subtask 1.4.2.2: Publish Phase 1 Evidence
 
@@ -255,7 +263,7 @@ campaign design.
 ceiling, negative-test, and traceability results with reproduction commands
 and clearly mark that no model observation has occurred.
 
-- [ ] **Subtask 1.4.2.2 Complete**
+- [x] **Subtask 1.4.2.2 Complete**
 
 ## Phase 1 Completion Evidence
 
@@ -263,13 +271,13 @@ and clearly mark that no model observation has occurred.
 contract can no longer drift in response to implementation convenience or
 model behavior.
 
-- [ ] Machine-readable conditions, task protocols, metrics, margins, vetoes, and outcomes validate
-- [ ] The power audit and any resulting balanced corpus expansion are frozen
-- [ ] Development and confirmatory cases are content-separated and labeled
-- [ ] Every confirmatory case has one checked representation-neutral oracle
-- [ ] Model profiles, tokenizers, parameters, legends, prompts, ceilings, and schedule are exact
-- [ ] The primary-cell and hard-request counts reconcile mechanically
-- [ ] Mutants prove that leakage, pooling, pseudoreplication, substitution, and threshold weakening fail
-- [ ] The prior campaign's frozen bytes and digests remain unchanged
-- [ ] One canonical Phase 1 evidence record reproduces from a clean checkout
-- [ ] Evidence explicitly states that no model call or efficacy observation has occurred
+- [x] Machine-readable conditions, task protocols, metrics, margins, vetoes, and outcomes validate
+- [x] The power audit and any resulting balanced corpus expansion are frozen
+- [x] Development and confirmatory cases are content-separated and labeled
+- [x] Every confirmatory case has one checked representation-neutral oracle
+- [x] Model profiles, tokenizers, parameters, legends, prompts, ceilings, and schedule are exact
+- [x] The primary-cell and hard-request counts reconcile mechanically
+- [x] Mutants prove that leakage, pooling, pseudoreplication, substitution, and threshold weakening fail
+- [x] The prior campaign's frozen bytes and digests remain unchanged
+- [x] One canonical Phase 1 evidence record reproduces from a clean checkout
+- [x] Evidence explicitly states that no model call or efficacy observation has occurred

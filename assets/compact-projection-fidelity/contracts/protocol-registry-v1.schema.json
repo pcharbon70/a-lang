@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://a-lang.invalid/schema/compact-protocol-registry-v1.schema.json","title":"A-Lang compact protocol registry v1","type":"object","additionalProperties":false,
+  "required":["format","single_turn","conversation_memory","examples","common_instruction","request_order","protocols","legends","leakage_forbidden","definitive_response"],
+  "properties":{
+    "format":{"const":"alang-compact-protocol-registry-v1"},"single_turn":{"const":true},"conversation_memory":{"const":false},"examples":{"const":false},"common_instruction":{"type":"string","minLength":1},
+    "request_order":{"const":["opaque-trial-id","common-instruction","protocol-instruction","condition-legend","case-material","output-contract"]},
+    "protocols":{"type":"array","minItems":4,"maxItems":4,"items":{"$ref":"#/$defs/protocol"}},"legends":{"type":"array","minItems":6,"maxItems":6,"items":{"$ref":"#/$defs/legend"}},
+    "leakage_forbidden":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},"definitive_response":{"const":"first-provider-response-only"}
+  },
+  "$defs":{
+    "protocol":{"type":"object","additionalProperties":false,"required":["id","conditions","instruction","output_contract"],"properties":{"id":{"enum":["action-completion","comprehension","diagnostic-repair","generation"]},"conditions":{"type":"array","minItems":2,"uniqueItems":true,"items":{"enum":["R0","R1","R2","R3","R4","R5"]}},"instruction":{"type":"string","minLength":1},"output_contract":{"type":"string","minLength":1}}},
+    "legend":{"type":"object","additionalProperties":false,"required":["condition","title","content"],"properties":{"condition":{"enum":["R0","R1","R2","R3","R4","R5"]},"title":{"type":"string","minLength":1},"content":{"type":"string","minLength":1}}}
+  }
+}

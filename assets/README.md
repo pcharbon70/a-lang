@@ -31,6 +31,9 @@ archive when a link is sufficient.
 
 ### Subdirectories
 
+- [Compact projection fidelity assets](compact-projection-fidelity/README.md) —
+  the versioned contracts and future held-out campaign inputs for testing a
+  checked model projection without modifying readable A-Lang source.
 - [Effectful source fidelity assets](effectful-source-fidelity/README.md) — the
   frozen schemas, paired corpus, provider profiles, prompts, and campaign
   inputs for the task-language source experiment.

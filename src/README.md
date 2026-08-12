@@ -49,6 +49,10 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 
 ### Subdirectories
 
+- [Compact projection fidelity implementation](compact-projection-fidelity/README.md)
+  — the BEAM-native experiment contracts, power and schedule tools, held-out
+  corpus validators, and preregistration evidence for the token-efficiency
+  campaign.
 - [Effectful source fidelity implementation](effectful-source-fidelity/README.md)
   — the BEAM-native experiment contracts, paired corpus validators,
   deterministic scorer, and pre-registration evidence for the next

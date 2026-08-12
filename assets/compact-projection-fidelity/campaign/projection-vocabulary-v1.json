@@ -1,0 +1,40 @@
+{
+  "format": "alang-compact-projection-vocabulary-v1",
+  "canonical_source": "alang-source-v2",
+  "conditions": [
+    {"id":"R0","representation":"alang-source-v2-readable","strategy":"canonical-readable","version":"alang-source-v2"},
+    {"id":"R1","representation":"alang-source-v2-layout-minified","strategy":"remove-grammar-optional-layout-only","version":"alang-source-v2"},
+    {"id":"R2","representation":"alang-source-v2-mnemonic-aliases","strategy":"layout-plus-registered-closed-aliases","version":"alang-source-v2-alias-v1"},
+    {"id":"R3","representation":"alang-model-v1","strategy":"checked-ir-projection-with-reconstructible-elision","version":"alang-model-v1"},
+    {"id":"R4","representation":"alang-model-v1-opaque-identifiers","strategy":"r3-plus-deterministic-local-identifier-aliases","version":"alang-model-v1-opaque-control"},
+    {"id":"R5","representation":"alang-task-json-v1","strategy":"canonical-typed-json-control","version":"alang-task-json-v1"}
+  ],
+  "alias_groups": [
+    {"group":"declaration","aliases":[{"readable":"facts","compact":"f"},{"readable":"inputs","compact":"i"},{"readable":"requirements","compact":"use"},{"readable":"scopes","compact":"at"},{"readable":"limits","compact":"cap"},{"readable":"on-error","compact":"err"},{"readable":"child","compact":"kid"},{"readable":"completion","compact":"ok"},{"readable":"clarify","compact":"ask"},{"readable":"terminal","compact":"end"}]},
+    {"group":"scope-key","aliases":[{"readable":"models","compact":"m"},{"readable":"workspaces","compact":"w"},{"readable":"paths","compact":"p"}]},
+    {"group":"budget-key","aliases":[{"readable":"steps","compact":"s"},{"readable":"model-calls","compact":"m"},{"readable":"repair-calls","compact":"r"},{"readable":"child-calls","compact":"c"},{"readable":"workspace-writes","compact":"w"},{"readable":"output-bytes","compact":"b"},{"readable":"timeout-ms","compact":"t"}]},
+    {"group":"operation","aliases":[{"readable":"model.generate","compact":"gen"},{"readable":"model.repair","compact":"fix"},{"readable":"workspace.write","compact":"put"},{"readable":"child.run","compact":"sub"},{"readable":"complete","compact":"done"}]},
+    {"group":"predicate","aliases":[{"readable":"artifact-exists","compact":"exists"},{"readable":"journal-succeeded","compact":"journal"},{"readable":"max-bytes","compact":"maxb"},{"readable":"utf8","compact":"u8"},{"readable":"clarification-recorded","compact":"asked"}]},
+    {"group":"relation","aliases":[{"readable":"depends","compact":"<-"}]}
+  ],
+  "derivations": [
+    {"field":"effects","rule":"derive-exactly-from-checked-actions","allowed_only_after_check":true,"ambiguity":"reject"},
+    {"field":"requirements","rule":"derive-exactly-from-checked-actions-and-scopes","allowed_only_after_check":true,"ambiguity":"reject"},
+    {"field":"empty-collections","rule":"omit-only-when-versioned-decoder-restores-empty","allowed_only_after_check":true,"ambiguity":"reject"}
+  ],
+  "identifier_policy": {
+    "r3":"declare-descriptive-name-once-and-use-reversible-local-reference",
+    "r4":"replace-only-task-input-action-and-resource-identifiers",
+    "protected":["literal-facts","paths","enum-tags","effect-names","scope-keys","budget-keys","model-profiles","completion-predicates"],
+    "reverse_map_required":true,
+    "opaque_control_promotable":false
+  },
+  "security_policy": {
+    "keyed_authority_fields_required":true,
+    "positional_security_fields":false,
+    "nonempty_authority_elision":"only-with-exact-derivation-witness",
+    "unknown_alias":"reject",
+    "unknown_version":"reject"
+  },
+  "selection_policy":"Vocabulary is frozen before confirmatory rendering or token observations and cannot be tuned from campaign outcomes."
+}

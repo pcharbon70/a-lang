@@ -265,9 +265,103 @@ FIDELITY_PHASE5_EVIDENCE_DIR := $(FIDELITY_PHASE5_BUILD)/evidence
 FIDELITY_PHASE5_REPRODUCTION_A := $(FIDELITY_PHASE5_EVIDENCE_DIR)/reproduction-a.etf
 FIDELITY_PHASE5_REPRODUCTION_B := $(FIDELITY_PHASE5_EVIDENCE_DIR)/reproduction-b.etf
 FIDELITY_PHASE5_ERL_PATHS := -pa $(FIDELITY_PHASE5_BUILD) -pa $(FIDELITY_PHASE4_BUILD) -pa $(FIDELITY_PHASE3_BUILD) -pa $(FIDELITY_PHASE2_BUILD) -pa $(FIDELITY_BUILD)
+COMPACT_DIR := src/compact-projection-fidelity
+COMPACT_ASSETS := assets/compact-projection-fidelity
+COMPACT_BUILD := build/compact-projection-fidelity/phase-01
+COMPACT_SECTION11_SOURCES := \
+	$(FIDELITY_DIR)/alang_fidelity_json.erl \
+	$(COMPACT_DIR)/alang_compact_contract.erl \
+	$(COMPACT_DIR)/alang_compact_contract_tests.erl
+COMPACT_SECTION11_ASSETS := \
+	$(COMPACT_ASSETS)/contracts/campaign-contract-v1.json \
+	$(COMPACT_ASSETS)/contracts/campaign-contract-v1.schema.json
+COMPACT_SECTION11_STAMP := $(COMPACT_BUILD)/.section-1-1-compiled
+COMPACT_SECTION12_SOURCES := \
+	$(COMPACT_DIR)/alang_compact_power.erl \
+	$(COMPACT_DIR)/alang_compact_schedule.erl \
+	$(COMPACT_DIR)/alang_compact_design_tests.erl
+COMPACT_SECTION12_ASSETS := \
+	$(COMPACT_ASSETS)/campaign/power-design-v1.json \
+	$(COMPACT_ASSETS)/campaign/case-design-v1.json \
+	$(COMPACT_ASSETS)/campaign/schedule-policy-v1.json \
+	$(COMPACT_ASSETS)/contracts/power-design-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/case-design-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/schedule-policy-v1.schema.json
+COMPACT_SECTION12_STAMP := $(COMPACT_BUILD)/.section-1-2-compiled
+COMPACT_SECTION13_SOURCES := \
+	$(FIDELITY_DIR)/alang_fidelity_contract.erl \
+	$(COMPACT_DIR)/alang_compact_corpus.erl \
+	$(COMPACT_DIR)/alang_compact_registration.erl \
+	$(COMPACT_DIR)/alang_compact_registration_tests.erl
+COMPACT_SECTION13_ASSETS := \
+	$(COMPACT_ASSETS)/corpus/confirmatory-corpus-v1.json \
+	$(COMPACT_ASSETS)/campaign/provider-profiles-v1.json \
+	$(COMPACT_ASSETS)/campaign/tokenizer-profiles-v1.json \
+	$(COMPACT_ASSETS)/campaign/campaign-policy-v1.json \
+	$(COMPACT_ASSETS)/contracts/confirmatory-corpus-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/provider-profiles-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/tokenizer-profiles-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/campaign-policy-v1.schema.json
+COMPACT_SECTION13_STAMP := $(COMPACT_BUILD)/.section-1-3-compiled
+COMPACT_SECTION14_SOURCES := \
+	$(COMPACT_DIR)/alang_compact_preregister.erl \
+	$(COMPACT_DIR)/alang_compact_integration_tests.erl
+COMPACT_SECTION14_ASSETS := \
+	$(COMPACT_ASSETS)/campaign/projection-vocabulary-v1.json \
+	$(COMPACT_ASSETS)/campaign/protocol-registry-v1.json \
+	$(COMPACT_ASSETS)/campaign/traceability-v1.json \
+	$(COMPACT_ASSETS)/contracts/projection-vocabulary-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/protocol-registry-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/traceability-v1.schema.json \
+	$(COMPACT_ASSETS)/contracts/preregistration-evidence-v1.schema.json
+COMPACT_SECTION14_STAMP := $(COMPACT_BUILD)/.section-1-4-compiled
+COMPACT_PHASE1_EVIDENCE := $(COMPACT_BUILD)/evidence/pre-registration-evidence.json
 
 .PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compare compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation compile-phase-8-release decide demo release-candidate run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2 test-section-7-3 test-section-7-4 test-section-7-5 test-section-8-1 test-section-8-2 test-section-8-3 test-section-8-4
 .PHONY: build-fidelity-phase-1-evidence build-fidelity-phase-2-evidence build-fidelity-phase-3-evidence build-fidelity-phase-4-evidence build-fidelity-phase-4-reproduction build-fidelity-phase-5-offline-evidence compile-fidelity-phase-1 compile-fidelity-phase-2 compile-fidelity-phase-3 compile-fidelity-phase-4 compile-fidelity-phase-5 test-fidelity-phase-1 test-fidelity-phase-2 test-fidelity-phase-3 test-fidelity-phase-4 test-fidelity-phase-5 test-fidelity-section-1-1 test-fidelity-section-1-2 test-fidelity-section-1-3 test-fidelity-section-1-4 test-fidelity-section-2-1 test-fidelity-section-2-2 test-fidelity-section-2-3 test-fidelity-section-2-4 test-fidelity-section-3-1 test-fidelity-section-3-2 test-fidelity-section-3-3 test-fidelity-section-3-4 test-fidelity-section-4-1 test-fidelity-section-4-2 test-fidelity-section-4-3 test-fidelity-section-4-4 test-fidelity-section-5-1 test-fidelity-section-5-2 test-fidelity-section-5-3 test-fidelity-section-5-4
+.PHONY: build-compact-phase-1-evidence compile-compact-section-1-1 compile-compact-section-1-2 compile-compact-section-1-3 compile-compact-section-1-4 test-compact-phase-1 test-compact-section-1-1 test-compact-section-1-2 test-compact-section-1-3 test-compact-section-1-4
+
+compile-compact-section-1-1: $(COMPACT_SECTION11_STAMP)
+
+$(COMPACT_SECTION11_STAMP): $(COMPACT_SECTION11_SOURCES) $(COMPACT_SECTION11_ASSETS)
+	mkdir -p $(COMPACT_BUILD)
+	$(ERLC) -Werror +deterministic -o $(COMPACT_BUILD) $(COMPACT_SECTION11_SOURCES)
+	touch $@
+
+test-compact-section-1-1: compile-compact-section-1-1
+	$(ERL) -noshell -pa $(COMPACT_BUILD) -eval 'case eunit:test(alang_compact_contract_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+compile-compact-section-1-2: $(COMPACT_SECTION12_STAMP)
+
+$(COMPACT_SECTION12_STAMP): $(COMPACT_SECTION11_STAMP) $(COMPACT_SECTION12_SOURCES) $(COMPACT_SECTION12_ASSETS)
+	$(ERLC) -Werror +deterministic -pa $(COMPACT_BUILD) -o $(COMPACT_BUILD) $(COMPACT_SECTION12_SOURCES)
+	touch $@
+
+test-compact-section-1-2: test-compact-section-1-1 compile-compact-section-1-2
+	$(ERL) -noshell -pa $(COMPACT_BUILD) -eval 'case eunit:test(alang_compact_design_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+compile-compact-section-1-3: $(COMPACT_SECTION13_STAMP)
+
+$(COMPACT_SECTION13_STAMP): $(COMPACT_SECTION12_STAMP) $(COMPACT_SECTION13_SOURCES) $(COMPACT_SECTION13_ASSETS)
+	$(ERLC) -Werror +deterministic -pa $(COMPACT_BUILD) -o $(COMPACT_BUILD) $(COMPACT_SECTION13_SOURCES)
+	touch $@
+
+test-compact-section-1-3: test-compact-section-1-2 compile-compact-section-1-3
+	$(ERL) -noshell -pa $(COMPACT_BUILD) -eval 'case eunit:test(alang_compact_registration_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+compile-compact-section-1-4: $(COMPACT_SECTION14_STAMP)
+
+$(COMPACT_SECTION14_STAMP): $(COMPACT_SECTION13_STAMP) $(COMPACT_SECTION14_SOURCES) $(COMPACT_SECTION14_ASSETS)
+	$(ERLC) -Werror +deterministic -pa $(COMPACT_BUILD) -o $(COMPACT_BUILD) $(COMPACT_SECTION14_SOURCES)
+	touch $@
+
+build-compact-phase-1-evidence: compile-compact-section-1-4
+	$(ERL) -noshell -pa $(COMPACT_BUILD) -s alang_compact_preregister main -extra $(COMPACT_PHASE1_EVIDENCE)
+
+test-compact-section-1-4: test-compact-section-1-3 build-compact-phase-1-evidence
+	$(ERL) -noshell -pa $(COMPACT_BUILD) -eval 'case eunit:test(alang_compact_integration_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
+
+test-compact-phase-1: test-compact-section-1-4
 
 compile-fidelity-phase-1: $(FIDELITY_PHASE1_STAMP)
 
