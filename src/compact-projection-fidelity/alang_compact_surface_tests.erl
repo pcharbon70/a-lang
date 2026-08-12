@@ -2,14 +2,13 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
-registry_is_closed_and_r4_remains_reserved_test() ->
+registry_is_closed_and_all_surface_ids_are_exact_test() ->
     ?assertMatch({ok, _}, alang_compact_surface:load_registry(registry_path())),
     {ok, Registry} = alang_fidelity_json:decode_file(registry_path()),
     ?assertMatch({error, {surface_registry_mismatch, _, _}},
         alang_compact_surface:validate_registry(Registry#{<<"unknown_surface">> := <<"accept">>})),
-    Oracle = first_oracle(),
-    ?assertMatch({error, {surface_not_implemented, <<"R4">>, <<"2.3">>}},
-        alang_compact_surface:render(<<"R4">>, <<"alang-model-v1-opaque-control">>, Oracle, registry_path())).
+    ?assertEqual([<<"R0">>, <<"R1">>, <<"R2">>, <<"R3">>, <<"R4">>, <<"R5">>],
+        [maps:get(<<"id">>, Surface) || Surface <- maps:get(<<"surfaces">>, Registry)]).
 
 implemented_surfaces_are_canonical_and_round_trip_all_cases_test_() ->
     {timeout, 30, fun() ->

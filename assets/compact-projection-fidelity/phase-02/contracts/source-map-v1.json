@@ -1,0 +1,10 @@
+{
+  "format": "alang-compact-source-map-contract-v1",
+  "map_format": "alang-compact-source-map-v1",
+  "coverage": "contiguous-every-byte-exactly-once",
+  "token_origins": ["generated","semantic"],
+  "security_field_status": ["compact","derived","versioned-empty-elision"],
+  "diagnostic_edit_target": "readable-source",
+  "opaque_diagnostics": "original-identifiers-required",
+  "compact_spans": "optional-additional-context"
+}

@@ -1,0 +1,17 @@
+{
+  "format": "alang-compact-opaque-control-contract-v1",
+  "surface_id": "R4",
+  "version": "alang-model-v1-opaque-control",
+  "header": "#!alang-model-v1-opaque-control",
+  "role": "identifier-negative-control",
+  "promotable": false,
+  "eligible": ["task-identifiers","input-identifiers","action-identifiers","model-resource-references","workspace-resource-references"],
+  "protected": ["literal-facts","paths","enum-tags","effect-names","scope-keys","budget-keys","provider-model-profiles","completion-predicates"],
+  "protected_model_profiles": ["hf.co/unsloth/Ornith-1.0-35B-GGUF:UD-Q5_K_M","mixtral:8x7b"],
+  "alias_prefix": "o",
+  "maximum_aliases": 128,
+  "collisions": "reject",
+  "reverse_map": "required-non-model-visible-decode-context",
+  "unknown_or_unused_alias": "reject",
+  "selection_as_default": "forbidden"
+}

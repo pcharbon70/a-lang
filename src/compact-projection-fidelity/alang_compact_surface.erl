@@ -1,6 +1,6 @@
 -module(alang_compact_surface).
 
--export([decode/3, load_registry/1, render/4, validate_registry/1]).
+-export([decode/3, decode/4, load_registry/1, readable_bytes/1, render/4, validate_registry/1]).
 
 -define(MAX_REPRESENTATION_BYTES, 32768).
 
@@ -57,7 +57,16 @@ render_checked(#{<<"implementation_section">> := Section} = Surface, Oracle)
 render_checked(#{<<"id">> := <<"R3">>, <<"implementation_section">> := <<"2.2">>} = Surface,
         Oracle) ->
     case alang_compact_model:encode(Oracle) of
-        {ok, Encoded} -> result(Surface, Oracle, maps:get(bytes, Encoded));
+        {ok, Encoded} -> with_source_map(result(Surface, Oracle, maps:get(bytes, Encoded)), Oracle, #{});
+        {error, _} = Error -> Error
+    end;
+render_checked(#{<<"id">> := <<"R4">>, <<"implementation_section">> := <<"2.3">>} = Surface,
+        Oracle) ->
+    case alang_compact_opaque:encode(Oracle) of
+        {ok, Encoded} ->
+            Extra = #{opaque_reverse_map => maps:get(reverse_map, Encoded),
+                promotable => false, ablation_only => true},
+            with_source_map(result(Surface, Oracle, maps:get(bytes, Encoded)), Oracle, Extra);
         {error, _} = Error -> Error
     end;
 render_checked(Surface, _Oracle) ->
@@ -77,6 +86,15 @@ render_implemented(<<"R5">>, Oracle) ->
         <<"task">> => maps:without([<<"format">>, <<"case_id">>], Oracle)
     },
     alang_fidelity_json:encode_canonical(Control).
+
+-spec readable_bytes(map()) -> {ok, binary()} | {error, term()}.
+readable_bytes(Oracle) ->
+    case alang_fidelity_contract:validate_comprehension(Oracle) of
+        {ok, _} ->
+            try {ok, render_source(Oracle, readable)}
+            catch throw:{surface_render_error, Reason} -> {error, Reason} end;
+        {error, Reason} -> {error, {invalid_checked_semantics, Reason}}
+    end.
 
 result(Surface, Oracle, Binary) when byte_size(Binary) =< ?MAX_REPRESENTATION_BYTES ->
     SemanticDigest = alang_fidelity_contract:semantic_digest(Oracle),
@@ -100,6 +118,15 @@ result(Surface, Oracle, Binary) when byte_size(Binary) =< ?MAX_REPRESENTATION_BY
 result(_Surface, _Oracle, Binary) ->
     {error, {representation_too_large, byte_size(Binary), ?MAX_REPRESENTATION_BYTES}}.
 
+with_source_map({ok, Surface}, Oracle, ExtraProvenance) ->
+    Provenance = maps:merge(maps:get(provenance, Surface), ExtraProvenance),
+    Enriched = Surface#{provenance := Provenance},
+    case alang_compact_source_map:build(Enriched, Oracle) of
+        {ok, SourceMap} -> {ok, Enriched#{provenance := Provenance#{source_map => SourceMap}}};
+        {error, _} = Error -> Error
+    end;
+with_source_map({error, _} = Error, _Oracle, _ExtraProvenance) -> Error.
+
 -spec decode(binary(), binary(), binary()) -> {ok, map()} | {error, term()}.
 decode(SurfaceId, Version, Binary) when is_binary(Binary), byte_size(Binary) =< ?MAX_REPRESENTATION_BYTES ->
     case exact_version(SurfaceId, Version) of
@@ -110,6 +137,21 @@ decode(_SurfaceId, _Version, Binary) when is_binary(Binary) ->
     {error, {representation_too_large, byte_size(Binary), ?MAX_REPRESENTATION_BYTES}};
 decode(_SurfaceId, _Version, _Binary) ->
     {error, expected_representation_binary}.
+
+-spec decode(binary(), binary(), binary(), map()) -> {ok, map()} | {error, term()}.
+decode(<<"R4">> = SurfaceId, Version, Binary, Context) when is_map(Context) ->
+    case lists:sort(maps:keys(Context)) of
+        [opaque_reverse_map] ->
+            case exact_version(SurfaceId, Version) of
+                ok -> alang_compact_opaque:decode(Binary, maps:get(opaque_reverse_map, Context));
+                {error, _} = Error -> Error
+            end;
+        _ -> {error, {invalid_decode_context, SurfaceId}}
+    end;
+decode(SurfaceId, Version, Binary, Context) when is_map(Context), map_size(Context) =:= 0 ->
+    decode(SurfaceId, Version, Binary);
+decode(SurfaceId, _Version, _Binary, _Context) ->
+    {error, {invalid_decode_context, SurfaceId}}.
 
 decode_versioned(<<"R0">>, Binary) -> decode_source(Binary, <<"alang-source-v2">>);
 decode_versioned(<<"R1">>, Binary) -> decode_source(Binary, <<"alang-source-v2">>);
@@ -131,6 +173,8 @@ decode_versioned(<<"R5">>, Binary) ->
     end;
 decode_versioned(<<"R3">>, Binary) ->
     alang_compact_model:decode(Binary);
+decode_versioned(<<"R4">>, _Binary) ->
+    {error, {opaque_reverse_map_required, <<"R4">>}};
 decode_versioned(SurfaceId, _Binary) ->
     {error, {surface_not_implemented, SurfaceId}}.
 

@@ -1,0 +1,24 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://a-lang.invalid/schemas/compact-projection-fidelity/phase-02/opaque-control-v1.schema.json",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["format","surface_id","version","header","role","promotable","eligible","protected","protected_model_profiles","alias_prefix","maximum_aliases","collisions","reverse_map","unknown_or_unused_alias","selection_as_default"],
+  "properties":{
+    "format":{"const":"alang-compact-opaque-control-contract-v1"},
+    "surface_id":{"const":"R4"},
+    "version":{"const":"alang-model-v1-opaque-control"},
+    "header":{"const":"#!alang-model-v1-opaque-control"},
+    "role":{"const":"identifier-negative-control"},
+    "promotable":{"const":false},
+    "eligible":{"const":["task-identifiers","input-identifiers","action-identifiers","model-resource-references","workspace-resource-references"]},
+    "protected":{"const":["literal-facts","paths","enum-tags","effect-names","scope-keys","budget-keys","provider-model-profiles","completion-predicates"]},
+    "protected_model_profiles":{"const":["hf.co/unsloth/Ornith-1.0-35B-GGUF:UD-Q5_K_M","mixtral:8x7b"]},
+    "alias_prefix":{"const":"o"},
+    "maximum_aliases":{"const":128},
+    "collisions":{"const":"reject"},
+    "reverse_map":{"const":"required-non-model-visible-decode-context"},
+    "unknown_or_unused_alias":{"const":"reject"},
+    "selection_as_default":{"const":"forbidden"}
+  }
+}

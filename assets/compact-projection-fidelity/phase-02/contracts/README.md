@@ -36,6 +36,14 @@ by the Phase 2 BEAM implementation.
   acceptance gate.
 - [`model-format-v1.schema.json`](model-format-v1.schema.json) — the closed
   schema for the `alang-model-v1` format contract.
+- [`opaque-control-v1.json`](opaque-control-v1.json) — fixes R4 eligibility,
+  protected values, external reverse context, and mechanical nonpromotion.
+- [`opaque-control-v1.schema.json`](opaque-control-v1.schema.json) — the closed
+  schema for the opaque identifier negative control.
+- [`source-map-v1.json`](source-map-v1.json) — requires contiguous byte
+  coverage, security-field witnesses, and readable-source diagnostics.
+- [`source-map-v1.schema.json`](source-map-v1.schema.json) — the closed schema
+  for the compact source-map contract.
 - [`surface-registry-v1.json`](surface-registry-v1.json) — registers `R0`
   through `R5`, exact versions, roles, and implementation sections.
 - [`surface-registry-v1.schema.json`](surface-registry-v1.schema.json) — the

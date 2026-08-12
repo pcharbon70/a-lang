@@ -62,6 +62,12 @@ belong to later phases.
 - [`alang_compact_model_tests.erl`](alang_compact_model_tests.erl) — proves 48
   corpus and 32 generated round trips plus derivation, authority, alias,
   mutation, version, and semantic-difference failures.
+- [`alang_compact_opaque.erl`](alang_compact_opaque.erl) — implements the
+  nonpromotable R4 identifier ablation with protected vocabulary and a bounded,
+  typed, non-model-visible reverse decode context.
+- [`alang_compact_opaque_tests.erl`](alang_compact_opaque_tests.erl) — proves
+  48 opaque round trips, protected-name retention, reverse-map rejection,
+  provider-profile protection, and mechanical nonpromotion.
 - [`alang_compact_power.erl`](alang_compact_power.erl) — runs the registered
   paired case-cluster simulation and selects the first balanced sample size
   meeting the frozen central-scenario power threshold.
@@ -80,6 +86,12 @@ belong to later phases.
 - [`alang_compact_source_normalizer.erl`](alang_compact_source_normalizer.erl)
   — reversibly maps source-domain resource and path values through the frozen
   v2 frontend without changing the prior campaign archive.
+- [`alang_compact_source_map.erl`](alang_compact_source_map.erl) — assigns
+  every compact byte a generated or semantic origin, witnesses security fields,
+  links aliases, and emits canonical readable-source diagnostics.
+- [`alang_compact_source_map_tests.erl`](alang_compact_source_map_tests.erl) —
+  proves R3/R4 byte and security-field coverage, readable spans, derivations,
+  alias diagnostics, and rejection of coverage mutations.
 - [`alang_compact_surface.erl`](alang_compact_surface.erl) — validates the
   closed surface registry and canonically renders and decodes the implemented
   readable, minified, mnemonic-alias, and typed-JSON representations.
@@ -117,6 +129,9 @@ belong to later phases.
 - [Section 2.2 integration evidence](section-02-02-integration-evidence.md) —
   records checked R3 projection, exact derivations, reversible local aliases,
   80 semantic round trips, authority mutants, and trusted-path results.
+- [Section 2.3 integration evidence](section-02-03-integration-evidence.md) —
+  records 48 opaque round trips, protected vocabulary, mechanical
+  nonpromotion, complete R3/R4 source maps, and readable diagnostics.
 
 ## Maintaining this index
 

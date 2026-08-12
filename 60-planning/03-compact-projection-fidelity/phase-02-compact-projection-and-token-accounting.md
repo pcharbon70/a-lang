@@ -149,7 +149,7 @@ alias gates, authority mutations, and trusted BEAM execution.
 while ensuring all model-facing failures remain explainable in readable-source
 terms.
 
-- [ ] **Section 2.3 Complete**
+- [x] **Section 2.3 Complete**
 
 ### Task 2.3.1: Implement the `R4` Negative Control
 
@@ -157,7 +157,7 @@ terms.
 aliases after checked projection, preserving literal facts, paths, units, and
 security vocabulary and carrying an exact reverse map.
 
-- [ ] **Task 2.3.1 Complete**
+- [x] **Task 2.3.1 Complete**
 
 #### Subtask 2.3.1.1: Define Eligible and Protected Names
 
@@ -165,7 +165,7 @@ security vocabulary and carrying an exact reverse map.
 may be renamed and protect strings, paths, enum tags, effect names, scopes,
 budgets, model profiles, and completion predicates from accidental rewriting.
 
-- [ ] **Subtask 2.3.1.1 Complete**
+- [x] **Subtask 2.3.1.1 Complete**
 
 #### Subtask 2.3.1.2: Enforce Nonpromotion and Reverse Mapping
 
@@ -173,14 +173,14 @@ budgets, model profiles, and completion predicates from accidental rewriting.
 schedules, evidence, and decision code; prove the control cannot be selected
 as a default even if it wins every token and fidelity metric.
 
-- [ ] **Subtask 2.3.1.2 Complete**
+- [x] **Subtask 2.3.1.2 Complete**
 
 ### Task 2.3.2: Produce Readable Source Maps and Diagnostics
 
 **Description:** Map every compact byte range, alias, restored declaration,
 and checker error back to its readable source construct and semantic path.
 
-- [ ] **Task 2.3.2 Complete**
+- [x] **Task 2.3.2 Complete**
 
 #### Subtask 2.3.2.1: Validate Bidirectional Origin Maps
 
@@ -188,7 +188,7 @@ and checker error back to its readable source construct and semantic path.
 source origin and every security-relevant readable field to have a compact
 location or explicit derivation witness.
 
-- [ ] **Subtask 2.3.2.1 Complete**
+- [x] **Subtask 2.3.2.1 Complete**
 
 #### Subtask 2.3.2.2: Render Diagnostics in Canonical Source Terms
 
@@ -196,7 +196,12 @@ location or explicit derivation witness.
 names with readable spans and optional compact spans; never expose only an
 opaque alias or make a user edit generated compact text.
 
-- [ ] **Subtask 2.3.2.2 Complete**
+- [x] **Subtask 2.3.2.2 Complete**
+
+**Implementation evidence:** [Section 2.3 integration evidence](../../src/compact-projection-fidelity/section-02-03-integration-evidence.md)
+records opaque all-corpus round trips, protected names, mechanical
+nonpromotion, contiguous byte maps, security witnesses, and readable-source
+diagnostics.
 
 ## Section 2.4: Phase 2 Integration Tests
 
