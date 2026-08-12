@@ -56,6 +56,12 @@ belong to later phases.
 - [`alang_compact_integration_tests.erl`](alang_compact_integration_tests.erl)
   — exercises complete cross-contract reconciliation, deterministic evidence,
   mutant rejection, prior-campaign isolation, and BEAM module residency.
+- [`alang_compact_model.erl`](alang_compact_model.erl) — projects checked
+  semantics into keyed `alang-model-v1`, restores exact derivations and bounded
+  aliases, revalidates, and gates acceptance on the canonical semantic digest.
+- [`alang_compact_model_tests.erl`](alang_compact_model_tests.erl) — proves 48
+  corpus and 32 generated round trips plus derivation, authority, alias,
+  mutation, version, and semantic-difference failures.
 - [`alang_compact_power.erl`](alang_compact_power.erl) — runs the registered
   paired case-cluster simulation and selects the first balanced sample size
   meeting the frozen central-scenario power threshold.
@@ -108,6 +114,9 @@ belong to later phases.
   records the closed registry, four canonical renderers, 192 corpus round
   trips, exact BEAM BPE conformance, attribution, failures, and unchanged
   Phase 1 boundary.
+- [Section 2.2 integration evidence](section-02-02-integration-evidence.md) —
+  records checked R3 projection, exact derivations, reversible local aliases,
+  80 semantic round trips, authority mutants, and trusted-path results.
 
 ## Maintaining this index
 

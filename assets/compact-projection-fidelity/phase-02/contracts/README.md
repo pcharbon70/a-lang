@@ -31,6 +31,11 @@ by the Phase 2 BEAM implementation.
 
 ### Files
 
+- [`model-format-v1.json`](model-format-v1.json) — fixes the keyed R3 shape,
+  exact derivations, bounded reverse aliases, collision rules, and semantic
+  acceptance gate.
+- [`model-format-v1.schema.json`](model-format-v1.schema.json) — the closed
+  schema for the `alang-model-v1` format contract.
 - [`surface-registry-v1.json`](surface-registry-v1.json) — registers `R0`
   through `R5`, exact versions, roles, and implementation sections.
 - [`surface-registry-v1.schema.json`](surface-registry-v1.schema.json) — the

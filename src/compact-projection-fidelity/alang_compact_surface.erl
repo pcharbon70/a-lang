@@ -54,6 +54,12 @@ render_checked(#{<<"implementation_section">> := Section} = Surface, Oracle)
         {error, Reason} ->
             {error, {invalid_checked_semantics, Reason}}
     end;
+render_checked(#{<<"id">> := <<"R3">>, <<"implementation_section">> := <<"2.2">>} = Surface,
+        Oracle) ->
+    case alang_compact_model:encode(Oracle) of
+        {ok, Encoded} -> result(Surface, Oracle, maps:get(bytes, Encoded));
+        {error, _} = Error -> Error
+    end;
 render_checked(Surface, _Oracle) ->
     {error, {surface_not_implemented,
         maps:get(<<"id">>, Surface), maps:get(<<"implementation_section">>, Surface)}}.
@@ -123,6 +129,8 @@ decode_versioned(<<"R5">>, Binary) ->
             }};
         {error, Reason} -> {error, {surface_decode_failed, <<"R5">>, Reason}}
     end;
+decode_versioned(<<"R3">>, Binary) ->
+    alang_compact_model:decode(Binary);
 decode_versioned(SurfaceId, _Binary) ->
     {error, {surface_not_implemented, SurfaceId}}.
 

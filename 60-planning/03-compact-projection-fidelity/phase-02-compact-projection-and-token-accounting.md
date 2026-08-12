@@ -88,7 +88,7 @@ round trips, attribution, negative cases, and the unchanged Phase 1 boundary.
 **Description:** Serialize checked semantics compactly without inventing a
 parallel unchecked language or relying on positional security fields.
 
-- [ ] **Section 2.2 Complete**
+- [x] **Section 2.2 Complete**
 
 ### Task 2.2.1: Implement `alang-model-v1`
 
@@ -96,7 +96,7 @@ parallel unchecked language or relying on positional security fields.
 vocabulary, repeated-reference aliases, and reconstructible schema elision
 while retaining keyed authority, budgets, errors, and completion predicates.
 
-- [ ] **Task 2.2.1 Complete**
+- [x] **Task 2.2.1 Complete**
 
 #### Subtask 2.2.1.1: Derive Only Reconstructible Declarations
 
@@ -104,7 +104,7 @@ while retaining keyed authority, budgets, errors, and completion predicates.
 exact checked value from retained structure; reject ambiguous effects,
 requirements, scopes, child grants, limits, or completion evidence.
 
-- [ ] **Subtask 2.2.1.1 Complete**
+- [x] **Subtask 2.2.1.1 Complete**
 
 #### Subtask 2.2.1.2: Assign Reversible Local Aliases
 
@@ -112,7 +112,7 @@ requirements, scopes, child grants, limits, or completion evidence.
 compiler-local aliases only to repeated references, include a bounded reverse
 map, and reject collisions, shadowing, same-prefix ambiguity, or map tampering.
 
-- [ ] **Subtask 2.2.1.2 Complete**
+- [x] **Subtask 2.2.1.2 Complete**
 
 ### Task 2.2.2: Implement Canonical Decoding and Semantic Equality
 
@@ -120,7 +120,7 @@ map, and reject collisions, shadowing, same-prefix ambiguity, or map tampering.
 derived or aliased value, run the same checker, and compare canonical semantic
 digests before the result can proceed.
 
-- [ ] **Task 2.2.2 Complete**
+- [x] **Task 2.2.2 Complete**
 
 #### Subtask 2.2.2.1: Prove Checked-IR Round Trip
 
@@ -128,7 +128,7 @@ digests before the result can proceed.
 canonical IR and semantic digest for every corpus case and generated valid
 task, with stable errors at the smallest compact and readable source paths.
 
-- [ ] **Subtask 2.2.2.1 Complete**
+- [x] **Subtask 2.2.2.1 Complete**
 
 #### Subtask 2.2.2.2: Reject Authority and Meaning Mutants
 
@@ -137,7 +137,11 @@ missing effects, wider scopes, extra child grants, altered dependencies,
 weakened completion, alias swaps, and unknown fields; require every mutant to
 fail or produce a different semantic digest.
 
-- [ ] **Subtask 2.2.2.2 Complete**
+- [x] **Subtask 2.2.2.2 Complete**
+
+**Implementation evidence:** [Section 2.2 integration evidence](../../src/compact-projection-fidelity/section-02-02-integration-evidence.md)
+records 48 corpus and 32 generated semantic round trips, exact derivation and
+alias gates, authority mutations, and trusted BEAM execution.
 
 ## Section 2.3: Opaque-Identifier Control and Source Mapping
 

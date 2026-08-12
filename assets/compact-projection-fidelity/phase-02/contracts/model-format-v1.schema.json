@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://a-lang.invalid/schemas/compact-projection-fidelity/phase-02/model-format-v1.schema.json",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["format","surface_id","version","header","max_representation_bytes","keyed_authority","positional_security_fields","derivations","aliases","unknown_fields","semantic_acceptance"],
+  "properties":{
+    "format":{"const":"alang-compact-model-format-contract-v1"},
+    "surface_id":{"const":"R3"},
+    "version":{"const":"alang-model-v1"},
+    "header":{"const":"#!alang-model-v1"},
+    "max_representation_bytes":{"const":32768},
+    "keyed_authority":{"const":true},
+    "positional_security_fields":{"const":false},
+    "derivations":{"const":{"effects":"exact-from-checked-actions-or-retain","requirements":"exact-from-keyed-scopes-or-retain","empty_collections":"restore-only-versioned-optional-fields"}},
+    "aliases":{"const":{"prefix":"@n","maximum":64,"minimum_references":2,"assignment":"first-eligible-declaration-order","reverse_map":"required","collisions":"reject","cross_namespace_shadowing":"reject"}},
+    "unknown_fields":{"const":"reject"},
+    "semantic_acceptance":{"const":"validate-and-match-sha-256-canonical-etf-v1"}
+  }
+}
