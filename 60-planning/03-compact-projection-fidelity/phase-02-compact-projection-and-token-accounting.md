@@ -17,8 +17,8 @@ aliases: []
 decoding, source and alias maps, section-level token accounting, and semantic
 round-trip gates as trusted BEAM modules operating on checked A-Lang IR.
 
-**Status:** Planned; every checkbox requires implementation and negative
-evidence rather than a text transformation or token-count demonstration.
+**Status:** Implemented; every section has reproducible positive and negative
+evidence. Offline token screening does not make a model-fidelity claim.
 
 **Dependencies:** Phase 1 must freeze the projection vocabulary and scientific
 roles. The existing v2 frontend, checker, typed IR, semantic digest, and JSON
@@ -209,7 +209,7 @@ diagnostics.
 matched, bounded, mutation-sensitive, source-mapped, and implemented wholly on
 the trusted BEAM path.
 
-- [ ] **Section 2.4 Complete**
+- [x] **Section 2.4 Complete**
 
 ### Task 2.4.1: Run Corpus, Property, and Mutation Suites
 
@@ -217,7 +217,7 @@ the trusted BEAM path.
 then generate valid and invalid checked tasks across every registered field,
 boundary, alias count, and representation version.
 
-- [ ] **Task 2.4.1 Complete**
+- [x] **Task 2.4.1 Complete**
 
 #### Subtask 2.4.1.1: Reproduce All Surfaces and Token Reports
 
@@ -225,14 +225,14 @@ boundary, alias count, and representation version.
 maps, and token reports across clean ERTS processes and shuffled input map
 orders.
 
-- [ ] **Subtask 2.4.1.1 Complete**
+- [x] **Subtask 2.4.1.1 Complete**
 
 #### Subtask 2.4.1.2: Measure Mutation Adequacy
 
 **Description:** Prove seeded decoder, derivation, alias, token-attribution,
 source-map, version, and authority defects cause the named test gates to fail.
 
-- [ ] **Subtask 2.4.1.2 Complete**
+- [x] **Subtask 2.4.1.2 Complete**
 
 ### Task 2.4.2: Reassert Compiler Residency and Isolation
 
@@ -240,7 +240,7 @@ source-map, version, and authority defects cause the named test gates to fail.
 artifacts to prove every trusted transform runs from `.beam` on ERTS and no
 foreign tokenizer or language interpreter entered the path.
 
-- [ ] **Task 2.4.2 Complete**
+- [x] **Task 2.4.2 Complete**
 
 #### Subtask 2.4.2.1: Inspect the Trusted Module Closure
 
@@ -248,7 +248,7 @@ foreign tokenizer or language interpreter entered the path.
 source-map, and validator modules and fail on interpreted forms, provider SDKs,
 ports, NIFs, shell commands, or non-BEAM executables.
 
-- [ ] **Subtask 2.4.2.1 Complete**
+- [x] **Subtask 2.4.2.1 Complete**
 
 #### Subtask 2.4.2.2: Publish Phase 2 Evidence
 
@@ -256,7 +256,13 @@ ports, NIFs, shell commands, or non-BEAM executables.
 attribution, source maps, mutation results, module closure, and clean-build
 commands without claiming model fidelity from offline transformations.
 
-- [ ] **Subtask 2.4.2.2 Complete**
+- [x] **Subtask 2.4.2.2 Complete**
+
+**Implementation evidence:** [Section 2.4 integration evidence](../../src/compact-projection-fidelity/section-02-04-integration-evidence.md)
+records 432 deterministic cross-surface corpus cells, 96 generated valid
+round trips, 48 invalid-input renderer rejections, 864 exact token reports,
+complete source maps, full mutation detection, clean-process reproduction,
+and the trusted BEAM closure.
 
 ## Phase 2 Completion Evidence
 
@@ -264,13 +270,13 @@ commands without claiming model fidelity from offline transformations.
 is a deterministic projection of checked semantics rather than a plausible
 but unverified string rewrite.
 
-- [ ] All six registered surfaces have canonical byte renderings and closed versions
-- [ ] Every surface decodes or normalizes to the same case semantic digest
-- [ ] `alang-model-v1` uses only registered aliases and reconstructible elisions
-- [ ] Keyed budgets, scopes, effects, child grants, errors, and completion remain exact
-- [ ] Opaque identifiers are isolated and mechanically nonpromotable
-- [ ] Source maps cover every compact token and every security-relevant readable field
-- [ ] Token reports distinguish exact provider/profile counts from proxies
-- [ ] Property and mutation suites detect semantic, authority, alias, version, and accounting defects
-- [ ] Trusted projection modules load from deterministic `.beam` artifacts on ERTS
-- [ ] Clean-process evidence reproduces without network access or foreign executables
+- [x] All six registered surfaces have canonical byte renderings and closed versions
+- [x] Every surface decodes or normalizes to the same case semantic digest
+- [x] `alang-model-v1` uses only registered aliases and reconstructible elisions
+- [x] Keyed budgets, scopes, effects, child grants, errors, and completion remain exact
+- [x] Opaque identifiers are isolated and mechanically nonpromotable
+- [x] Source maps cover every compact token and every security-relevant readable field
+- [x] Token reports distinguish exact provider/profile counts from proxies
+- [x] Property and mutation suites detect semantic, authority, alias, version, and accounting defects
+- [x] Trusted projection modules load from deterministic `.beam` artifacts on ERTS
+- [x] Clean-process evidence reproduces without network access or foreign executables

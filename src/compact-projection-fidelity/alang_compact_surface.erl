@@ -139,6 +139,9 @@ decode(_SurfaceId, _Version, _Binary) ->
     {error, expected_representation_binary}.
 
 -spec decode(binary(), binary(), binary(), map()) -> {ok, map()} | {error, term()}.
+decode(_SurfaceId, _Version, Binary, _Context)
+  when is_binary(Binary), byte_size(Binary) > ?MAX_REPRESENTATION_BYTES ->
+    {error, {representation_too_large, byte_size(Binary), ?MAX_REPRESENTATION_BYTES}};
 decode(<<"R4">> = SurfaceId, Version, Binary, Context) when is_map(Context) ->
     case lists:sort(maps:keys(Context)) of
         [opaque_reverse_map] ->
@@ -279,7 +282,7 @@ completion_clause(Mode, Predicates) ->
 
 completion_predicate(Predicate, Mode) ->
     Kind = case Mode of
-        alias -> <<"~", (predicate_alias(maps:get(<<"kind">>, Predicate)))/binary>>;
+        alias -> predicate_alias(maps:get(<<"kind">>, Predicate));
         _ -> maps:get(<<"kind">>, Predicate)
     end,
     [Kind, <<" ">>, quote(maps:get(<<"target">>, Predicate)), <<":">>,
@@ -383,11 +386,11 @@ operation_alias(<<"workspace.write">>) -> <<"put">>;
 operation_alias(<<"child.run">>) -> <<"sub">>;
 operation_alias(<<"complete">>) -> <<"done">>.
 
-predicate_alias(<<"artifact-exists">>) -> <<"exists">>;
-predicate_alias(<<"journal-succeeded">>) -> <<"journal">>;
-predicate_alias(<<"max-bytes">>) -> <<"maxb">>;
-predicate_alias(<<"utf8">>) -> <<"u8">>;
-predicate_alias(<<"clarification-recorded">>) -> <<"asked">>;
+predicate_alias(<<"artifact-exists">>) -> <<"~exists">>;
+predicate_alias(<<"journal-succeeded">>) -> <<"~journal">>;
+predicate_alias(<<"max-bytes">>) -> <<"~maxb">>;
+predicate_alias(<<"utf8">>) -> <<"~u8">>;
+predicate_alias(<<"clarification-recorded">>) -> <<"~asked">>;
 predicate_alias(Other) -> Other.
 
 expand_alias_source(<<"#!alang-source-v2-alias-v1", Rest/binary>>) ->

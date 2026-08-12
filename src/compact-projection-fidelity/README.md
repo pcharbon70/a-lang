@@ -68,6 +68,19 @@ belong to later phases.
 - [`alang_compact_opaque_tests.erl`](alang_compact_opaque_tests.erl) — proves
   48 opaque round trips, protected-name retention, reverse-map rejection,
   provider-profile protection, and mechanical nonpromotion.
+- [`alang_compact_phase2_integration_tests.erl`](alang_compact_phase2_integration_tests.erl)
+  — verifies both corpora and generated tasks across six surfaces, invalid
+  inputs, clean-process evidence, token accounting, mutation adequacy, and
+  trusted residency.
+- [`alang_compact_phase2_mutation.erl`](alang_compact_phase2_mutation.erl) —
+  seeds decoder, derivation, alias, accounting, source-map, version, and
+  authority defects and requires every named gate to detect them.
+- [`alang_compact_phase2_residency.erl`](alang_compact_phase2_residency.erl) —
+  inspects the trusted module closure, BEAM imports, source inputs, and artifact
+  digests for foreign executables or forbidden runtime mechanisms.
+- [`alang_compact_phase2_worker.erl`](alang_compact_phase2_worker.erl) — builds
+  canonical all-surface round-trip, source-map, token, mutation, and residency
+  evidence in isolated ERTS processes.
 - [`alang_compact_power.erl`](alang_compact_power.erl) — runs the registered
   paired case-cluster simulation and selects the first balanced sample size
   meeting the frozen central-scenario power threshold.
@@ -132,6 +145,10 @@ belong to later phases.
 - [Section 2.3 integration evidence](section-02-03-integration-evidence.md) —
   records 48 opaque round trips, protected vocabulary, mechanical
   nonpromotion, complete R3/R4 source maps, and readable diagnostics.
+- [Section 2.4 integration evidence](section-02-04-integration-evidence.md) —
+  records 432 cross-surface corpus cells, generated properties, exact token
+  screening, seeded mutation adequacy, clean-process reproduction, and the
+  trusted BEAM closure.
 
 ## Maintaining this index
 

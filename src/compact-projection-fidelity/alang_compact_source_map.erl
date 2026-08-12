@@ -215,6 +215,7 @@ vocabulary_value(<<"journal">>) -> <<"journal-succeeded">>;
 vocabulary_value(<<"maxb">>) -> <<"max-bytes">>;
 vocabulary_value(<<"u8">>) -> <<"utf8">>;
 vocabulary_value(<<"asked">>) -> <<"clarification-recorded">>;
+vocabulary_value(<<"none">>) -> null;
 vocabulary_value(Value) -> Value.
 
 local_aliases(Bytes) ->
