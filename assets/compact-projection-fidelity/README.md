@@ -40,6 +40,9 @@ requires a safe retained artifact.
   representation-neutral semantic cases and their blinded audit record.
 - [Contracts](contracts/README.md) — closed schemas and registered scientific
   contrasts, metrics, safety vetoes, and ordered outcomes.
+- [Phase 2 implementation assets](phase-02/README.md) — versioned surface,
+  audit, and exact BEAM tokenizer inputs kept outside the frozen Phase 1
+  preregistration bundle.
 
 ### Files
 

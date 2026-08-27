@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://a-lang.invalid/schemas/compact-projection-fidelity/phase-02/source-map-v1.schema.json",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["format","map_format","coverage","token_origins","security_field_status","diagnostic_edit_target","opaque_diagnostics","compact_spans"],
+  "properties":{
+    "format":{"const":"alang-compact-source-map-contract-v1"},
+    "map_format":{"const":"alang-compact-source-map-v1"},
+    "coverage":{"const":"contiguous-every-byte-exactly-once"},
+    "token_origins":{"const":["generated","semantic"]},
+    "security_field_status":{"const":["compact","derived","versioned-empty-elision"]},
+    "diagnostic_edit_target":{"const":"readable-source"},
+    "opaque_diagnostics":{"const":"original-identifiers-required"},
+    "compact_spans":{"const":"optional-additional-context"}
+  }
+}

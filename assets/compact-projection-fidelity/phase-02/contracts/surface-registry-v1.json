@@ -1,0 +1,16 @@
+{
+  "format": "alang-compact-surface-registry-v1",
+  "canonical_input": "checked-alang-task-comprehension-v1",
+  "max_representation_bytes": 32768,
+  "surfaces": [
+    {"id":"R0","representation":"alang-source-v2-readable","version":"alang-source-v2","role":"canonical-baseline","promotable":false,"implementation_section":"2.1"},
+    {"id":"R1","representation":"alang-source-v2-layout-minified","version":"alang-source-v2","role":"layout-ablation","promotable":false,"implementation_section":"2.1"},
+    {"id":"R2","representation":"alang-source-v2-mnemonic-aliases","version":"alang-source-v2-alias-v1","role":"closed-vocabulary-ablation","promotable":false,"implementation_section":"2.1"},
+    {"id":"R3","representation":"alang-model-v1","version":"alang-model-v1","role":"promotion-candidate","promotable":true,"implementation_section":"2.2"},
+    {"id":"R4","representation":"alang-model-v1-opaque-identifiers","version":"alang-model-v1-opaque-control","role":"identifier-negative-control","promotable":false,"implementation_section":"2.3"},
+    {"id":"R5","representation":"alang-task-json-v1","version":"alang-task-json-v1","role":"external-control","promotable":false,"implementation_section":"2.1"}
+  ],
+  "unknown_surface": "reject",
+  "unknown_version": "reject",
+  "unregistered_flags": "reject"
+}

@@ -47,6 +47,10 @@ Use `maturity` in frontmatter to distinguish a `seed`, `developing`, or
   deep dive into tokenizer behavior, layout and schema compaction, identifier
   semantics, reversible shorthand, local corpus costs, and a checked compact
   projection that preserves readable source and BEAM-native enforcement.
+- [Model-facing A-Lang promotion must be token-positive](model-facing-alang-promotion-must-be-token-positive.md)
+  — records the hard decision that a token-efficiency candidate must beat the
+  readable baseline on every document and full request before fidelity and
+  safety evidence can make it promotable.
 - [Task languages for LLM agents: a deep dive](llm-agent-task-languages-deep-dive.md)
   — a synthesis of transformer behavior, task representation, agent
   programming, formal reasoning, and language-design implications.

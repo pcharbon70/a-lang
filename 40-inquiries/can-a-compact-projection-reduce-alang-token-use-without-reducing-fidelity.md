@@ -29,9 +29,10 @@ safety advantages across the actual model families A-Lang uses.
 
 ## Operational question
 
-Relative to readable `alang-source-v2` and the current typed-JSON control, can
-a versioned projection of the checked task IR achieve at least 20% median token
-savings per target tokenizer while preserving:
+Relative to readable `alang-source-v2`, can a versioned model-facing view be
+strictly token-positive on every frozen document and full request, achieve at
+least 5% aggregate and median savings per target tokenizer and model protocol,
+and preserve:
 
 - exact goal, input, action, dependency, effect, requirement, scope, budget,
   error, child, completion, clarification, and terminal fields;
@@ -104,17 +105,30 @@ savings per target tokenizer while preserving:
 - [CodeT5](../30-sources/wang-et-al-2021-codet5.md) and
   [ReCode](../30-sources/wang-et-al-2023-recode.md) support treating names and
   syntax as model-visible semantic signals whose perturbation must be tested.
+- [Compact projection Phase 2 evidence](../src/compact-projection-fidelity/section-02-04-integration-evidence.md)
+  falsifies byte length as a proxy for the first promotion candidate. Across
+  72 cases, keyed R3 was 8.34% smaller in bytes but used 8.33% more
+  `cl100k_base` and 13.10% more `o200k_base` document tokens than readable R0.
+  Mnemonic R2 instead used 8.72% and 7.96% fewer document tokens and was
+  strictly cheaper on every measured document and full request. These remain
+  offline counts, not model-fidelity evidence.
 
 ## Outcome
 
-The inquiry remains open. The current evidence justifies a BEAM-native
-prototype and controlled experiment, now designed as the separately numbered
-[compact projection campaign](../60-planning/03-compact-projection-fidelity/README.md),
-not a user-facing grammar change. Its power-qualified confirmatory design has 48 new
-semantic cases, six comprehension conditions, two core bidirectional
-conditions, four model-task protocols, two exact model families, two
-repetitions, and 2,304 primary cells. Until that campaign passes its
-preregistered token, non-inferiority, repair, robustness, and safety gates,
-`alang-source-v2` remains the readable source of truth, the frozen fidelity
-campaign remains unchanged, and compact notation has no authority to satisfy
-an execution gate.
+The inquiry remains open. The original separately numbered
+[compact projection campaign](../60-planning/03-compact-projection-fidelity/README.md)
+successfully implemented its offline representations and validators, but its
+sole candidate R3 cannot satisfy a token-positive promotion purpose. That
+campaign remains unchanged as a provenance record and does not authorize a
+live R3 campaign.
+
+The prospective
+[token-positive mnemonic campaign](../60-planning/04-token-positive-mnemonic-promotion/README.md)
+gives the exact measured R2 bytes a new campaign-local candidate role without
+retrofitting the old campaign. It requires byte-for-byte R2 conformance, fresh
+confirmatory cases, all four task protocols, two exact model families,
+pairwise token nonregression, at least 5% aggregate and median savings,
+registered fidelity non-inferiority, and zero candidate-only safety failures.
+Until that new registration is frozen and its model campaign passes every
+gate, `alang-source-v2` remains the readable source of truth and mnemonic
+notation has no authority to satisfy an execution gate.

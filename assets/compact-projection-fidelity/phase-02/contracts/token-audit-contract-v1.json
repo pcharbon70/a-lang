@@ -1,0 +1,12 @@
+{
+  "format": "alang-compact-token-audit-contract-v1",
+  "report_format": "alang-compact-token-audit-v1",
+  "representation_digest": "sha-256-bytes",
+  "offline_counts": "exact-registered-tokenizer",
+  "provider_usage": "authoritative-when-present-otherwise-unavailable",
+  "attribution_mode": "standalone-nonadditive-bpe-components",
+  "semantic_sections": ["layout","keywords","identifiers","facts","paths","budgets","authority","completion","legends","common_instructions","output_scaffolding"],
+  "lexeme_classes": ["layout","keywords","identifiers","literals","punctuation"],
+  "required_count_scopes": ["document","full_request"],
+  "estimated_provider_usage": "reject"
+}

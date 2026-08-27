@@ -17,7 +17,9 @@ aliases: []
 This directory contains the BEAM-resident contracts, validators, campaign
 materializers, statistical tools, and preregistration evidence for the
 [compact projection fidelity plan](../../60-planning/03-compact-projection-fidelity/README.md).
-It does not authorize model calls or implement the Phase 2 compact projector.
+It does not authorize model calls. Phase 2 adds the trusted tokenizer,
+representation registry, compact projector, inverse decoder, and source maps
+needed before campaign execution.
 
 ## What belongs here
 
@@ -54,6 +56,31 @@ belong to later phases.
 - [`alang_compact_integration_tests.erl`](alang_compact_integration_tests.erl)
   — exercises complete cross-contract reconciliation, deterministic evidence,
   mutant rejection, prior-campaign isolation, and BEAM module residency.
+- [`alang_compact_model.erl`](alang_compact_model.erl) — projects checked
+  semantics into keyed `alang-model-v1`, restores exact derivations and bounded
+  aliases, revalidates, and gates acceptance on the canonical semantic digest.
+- [`alang_compact_model_tests.erl`](alang_compact_model_tests.erl) — proves 48
+  corpus and 32 generated round trips plus derivation, authority, alias,
+  mutation, version, and semantic-difference failures.
+- [`alang_compact_opaque.erl`](alang_compact_opaque.erl) — implements the
+  nonpromotable R4 identifier ablation with protected vocabulary and a bounded,
+  typed, non-model-visible reverse decode context.
+- [`alang_compact_opaque_tests.erl`](alang_compact_opaque_tests.erl) — proves
+  48 opaque round trips, protected-name retention, reverse-map rejection,
+  provider-profile protection, and mechanical nonpromotion.
+- [`alang_compact_phase2_integration_tests.erl`](alang_compact_phase2_integration_tests.erl)
+  — verifies both corpora and generated tasks across six surfaces, invalid
+  inputs, clean-process evidence, token accounting, mutation adequacy, and
+  trusted residency.
+- [`alang_compact_phase2_mutation.erl`](alang_compact_phase2_mutation.erl) —
+  seeds decoder, derivation, alias, accounting, source-map, version, and
+  authority defects and requires every named gate to detect them.
+- [`alang_compact_phase2_residency.erl`](alang_compact_phase2_residency.erl) —
+  inspects the trusted module closure, BEAM imports, source inputs, and artifact
+  digests for foreign executables or forbidden runtime mechanisms.
+- [`alang_compact_phase2_worker.erl`](alang_compact_phase2_worker.erl) — builds
+  canonical all-surface round-trip, source-map, token, mutation, and residency
+  evidence in isolated ERTS processes.
 - [`alang_compact_power.erl`](alang_compact_power.erl) — runs the registered
   paired case-cluster simulation and selects the first balanced sample size
   meeting the frozen central-scenario power threshold.
@@ -69,6 +96,33 @@ belong to later phases.
 - [`alang_compact_schedule.erl`](alang_compact_schedule.erl) — validates the
   opaque 48-case design and deterministically materializes and validates the
   seeded paired schedule and digest.
+- [`alang_compact_source_normalizer.erl`](alang_compact_source_normalizer.erl)
+  — reversibly maps source-domain resource and path values through the frozen
+  v2 frontend without changing the prior campaign archive.
+- [`alang_compact_source_map.erl`](alang_compact_source_map.erl) — assigns
+  every compact byte a generated or semantic origin, witnesses security fields,
+  links aliases, and emits canonical readable-source diagnostics.
+- [`alang_compact_source_map_tests.erl`](alang_compact_source_map_tests.erl) —
+  proves R3/R4 byte and security-field coverage, readable spans, derivations,
+  alias diagnostics, and rejection of coverage mutations.
+- [`alang_compact_surface.erl`](alang_compact_surface.erl) — validates the
+  closed surface registry and canonically renders and decodes the implemented
+  readable, minified, mnemonic-alias, and typed-JSON representations.
+- [`alang_compact_surface_tests.erl`](alang_compact_surface_tests.erl) — proves
+  deterministic rendering and semantic round trips across all 48 cases and
+  tests version, bound, duplicate, alias, and reserved-surface failures.
+- [`alang_compact_token_audit.erl`](alang_compact_token_audit.erl) — produces
+  exact document/full-request counts and closed semantic, lexical, and
+  provider-provenance attribution reports.
+- [`alang_compact_token_audit_tests.erl`](alang_compact_token_audit_tests.erl)
+  — exercises closed attribution, authoritative provider usage, and rejection
+  of estimates, missing categories, and tokenizer aliases.
+- [`alang_compact_tokenizer.erl`](alang_compact_tokenizer.erl) — implements
+  digest-checked `cl100k_base` and `o200k_base` pre-tokenization and byte-pair
+  encoding entirely on the BEAM.
+- [`alang_compact_tokenizer_tests.erl`](alang_compact_tokenizer_tests.erl) —
+  freezes exact primary-implementation token vectors and tests identities,
+  digests, bounds, UTF-8, and unavailable vocabulary failures.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —
   records the contract, decision, mutation, BEAM-residency, and no-model-call
   results for the completed section.
@@ -81,6 +135,20 @@ belong to later phases.
 - [Section 1.4 integration evidence](section-01-04-integration-evidence.md) —
   records the canonical Phase 1 digest, cross-contract reconciliation,
   mutation results, research scope, prior-boundary audit, and clean commands.
+- [Section 2.1 integration evidence](section-02-01-integration-evidence.md) —
+  records the closed registry, four canonical renderers, 192 corpus round
+  trips, exact BEAM BPE conformance, attribution, failures, and unchanged
+  Phase 1 boundary.
+- [Section 2.2 integration evidence](section-02-02-integration-evidence.md) —
+  records checked R3 projection, exact derivations, reversible local aliases,
+  80 semantic round trips, authority mutants, and trusted-path results.
+- [Section 2.3 integration evidence](section-02-03-integration-evidence.md) —
+  records 48 opaque round trips, protected vocabulary, mechanical
+  nonpromotion, complete R3/R4 source maps, and readable diagnostics.
+- [Section 2.4 integration evidence](section-02-04-integration-evidence.md) —
+  records 432 cross-surface corpus cells, generated properties, exact token
+  screening, seeded mutation adequacy, clean-process reproduction, and the
+  trusted BEAM closure.
 
 ## Maintaining this index
 

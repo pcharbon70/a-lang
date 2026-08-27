@@ -35,6 +35,25 @@ its 24 cases, prompts, conditions, schedules, or decision. Those cases may be
 used for projector development and nonconfirmatory screening only. All
 promotion claims come from a new, content-digested confirmatory corpus.
 
+## Current disposition after Phase 2
+
+Phase 2 produced a decisive offline eligibility result before any model call:
+R3 uses 8.33% more `cl100k_base` document tokens and 13.10% more
+`o200k_base` document tokens than readable R0 across the combined 72-case
+development and confirmatory corpus. It therefore cannot meet this stream's
+registered 20% document-token reduction gate, and live R3 campaign execution
+is not warranted.
+
+This document and its frozen R2/R3 role assignment remain unchanged as the
+historical preregistration. R2 cannot be selected retrospectively from its
+favorable token result because it received only the comprehension protocol and
+was explicitly nonpromotable here. The
+[token-positive promotion decision](../../20-notes/model-facing-alang-promotion-must-be-token-positive.md)
+records the governing policy, and the separately numbered
+[token-positive mnemonic campaign](../04-token-positive-mnemonic-promotion/README.md)
+prospectively re-registers the exact R2 bytes for full-protocol candidate
+status.
+
 ## What belongs here
 
 - The projection experiment's fixed conditions, task protocols, metrics,

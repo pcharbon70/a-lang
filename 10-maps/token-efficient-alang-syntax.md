@@ -37,6 +37,12 @@ weakening an executable agent contract?
   — the separate six-phase campaign that tests six reading conditions and a
   readable-versus-compact bidirectional core under token, non-inferiority,
   repair, perturbation, and safety gates.
+- [Token-positive promotion decision](../20-notes/model-facing-alang-promotion-must-be-token-positive.md)
+  — records why a representation introduced for token efficiency cannot be
+  promoted when exact model-visible counts exceed readable A-Lang.
+- [Token-positive mnemonic promotion plan](../60-planning/04-token-positive-mnemonic-promotion/README.md)
+  — re-registers the exact mnemonic R2 bytes for full-protocol candidate
+  status without rewriting their historical ablation role.
 
 ## Tokenizers define the unit of cost
 
@@ -87,7 +93,7 @@ macros in the current universal surface.
 
 ## Design trail
 
-The synthesis recommends this order:
+The research and Phase 2 implementation evidence now support this order:
 
 1. measure the current corpus with each target tokenizer;
 2. test AST-preserving layout minification;
@@ -96,6 +102,13 @@ The synthesis recommends this order:
    user identifiers;
 5. retain keyed budgets, explicit authority, and exact round trips;
 6. consider learned macros only for declared, adapted model families.
+
+The first checked projection did not satisfy this sequence's token objective:
+R3 was shorter in bytes but used 8.33% more `cl100k_base` tokens and 13.10%
+more `o200k_base` tokens than readable R0. The mnemonic R2 surface used
+7.96–8.72% fewer document tokens and was cheaper on every measured case. This
+makes the exact R2 surface the next candidate, subject to a fresh prospective
+fidelity and safety campaign.
 
 ## Open questions
 
@@ -108,6 +121,7 @@ The synthesis recommends this order:
 - How much explicit redundancy should remain as an error-detecting code in the
   model-visible representation?
 - What non-inferiority and safety margins should a future preregistered trial
-  require before a compact form becomes default? The new campaign registers a
-  five-point semantic margin and zero compact-only safety failures as its
-  initial answer, subject to its pre-observation power audit.
+  require before a compact form becomes default? The R2 re-registration
+  campaign registers a five-point semantic margin, zero candidate-only safety
+  failures, pairwise token nonregression, and at least 5% aggregate and median
+  savings, subject to its pre-observation power audit.

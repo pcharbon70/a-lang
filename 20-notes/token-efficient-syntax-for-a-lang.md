@@ -257,9 +257,38 @@ Three observations matter more than the exact counts:
    the checked compact projection. Most estimated savings come from repeated
    grammar and schema, not from erasing task names.
 
-The compact candidates are not accepted syntax, have not passed the A-Lang
-parser, and have not been shown to preserve model fidelity. They bound an
-opportunity; they do not establish a language change.
+These preliminary compact strings were not accepted syntax and had not passed
+the A-Lang parser when measured. They bounded an opportunity rather than
+establishing a language change. The later implementation result below
+supersedes their token estimates.
+
+## Implemented Phase 2 measurement
+
+The [Phase 2 integration](../src/compact-projection-fidelity/section-02-04-integration-evidence.md)
+implemented canonical BEAM-native renderers and exact inverse decoders, then
+measured 24 development and 48 confirmatory cases with pinned
+`cl100k_base` and `o200k_base` vocabularies.
+
+| Implemented surface | `cl100k_base` | Change | `o200k_base` | Change |
+| --- | ---: | ---: | ---: | ---: |
+| R0 readable | 17,204 | baseline | 17,118 | baseline |
+| R2 mnemonic aliases | 15,703 | −8.72% | 15,755 | −7.96% |
+| R3 keyed projection | 18,639 | +8.33% | 19,362 | +13.10% |
+
+R3 remained 8.34% smaller in bytes, but its keyed JSON-like structure was
+more fragmented under both tokenizers. The result overturns the preliminary
+28% checked-projection estimate and reinforces the central methodological
+point: optimize actual model tokens, not characters or an illustrative
+serialization.
+
+R2 was strictly cheaper than R0 for every measured document and full request,
+but it was preregistered as a comprehension-only ablation. Its token result is
+therefore design evidence for a new prospective campaign, not grounds for
+retrospective promotion. The
+[token-positive promotion decision](model-facing-alang-promotion-must-be-token-positive.md)
+and [R2 re-registration campaign](../60-planning/04-token-positive-mnemonic-promotion/README.md)
+make token savings an eligibility condition and give the exact mnemonic R2
+bytes all four protocols before any model outcome is observed.
 
 ## Design alternatives
 

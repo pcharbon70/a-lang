@@ -17,8 +17,8 @@ aliases: []
 decoding, source and alias maps, section-level token accounting, and semantic
 round-trip gates as trusted BEAM modules operating on checked A-Lang IR.
 
-**Status:** Planned; every checkbox requires implementation and negative
-evidence rather than a text transformation or token-count demonstration.
+**Status:** Implemented; every section has reproducible positive and negative
+evidence. Offline token screening does not make a model-fidelity claim.
 
 **Dependencies:** Phase 1 must freeze the projection vocabulary and scientific
 roles. The existing v2 frontend, checker, typed IR, semantic digest, and JSON
@@ -29,7 +29,7 @@ control remain authoritative.
 **Description:** Make token cost attributable, reproducible, and explicitly
 dependent on a declared model profile rather than character length.
 
-- [ ] **Section 2.1 Complete**
+- [x] **Section 2.1 Complete**
 
 ### Task 2.1.1: Implement the BEAM Token-Audit Contract
 
@@ -37,7 +37,7 @@ dependent on a declared model profile rather than character length.
 full-request token counts, lexeme and section attribution, provider usage,
 tokenizer identity, and count provenance.
 
-- [ ] **Task 2.1.1 Complete**
+- [x] **Task 2.1.1 Complete**
 
 #### Subtask 2.1.1.1: Count Registered Tokenizers Deterministically
 
@@ -45,7 +45,7 @@ tokenizer identity, and count provenance.
 pin vocabulary and pre-tokenizer digests, reject unknown model aliases, and
 separate exact counts from proxy estimates.
 
-- [ ] **Subtask 2.1.1.1 Complete**
+- [x] **Subtask 2.1.1.1 Complete**
 
 #### Subtask 2.1.1.2: Attribute Cost to Stable Semantic Sections
 
@@ -53,7 +53,7 @@ separate exact counts from proxy estimates.
 authority, completion, legends, common instructions, and output scaffolding so
 savings cannot be credited to accidentally omitted semantics.
 
-- [ ] **Subtask 2.1.1.2 Complete**
+- [x] **Subtask 2.1.1.2 Complete**
 
 ### Task 2.1.2: Register Canonical Surface IDs and Renderers
 
@@ -61,7 +61,7 @@ savings cannot be credited to accidentally omitted semantics.
 model-visible forms and provenance, and reject unregistered flags or condition
 combinations.
 
-- [ ] **Task 2.1.2 Complete**
+- [x] **Task 2.1.2 Complete**
 
 #### Subtask 2.1.2.1: Render Readable, Minified, Alias, and JSON Controls
 
@@ -69,7 +69,7 @@ combinations.
 layout for `R1`, apply only registered mnemonic aliases for `R2`, and reuse the
 independent typed-JSON path for `R5`.
 
-- [ ] **Subtask 2.1.2.1 Complete**
+- [x] **Subtask 2.1.2.1 Complete**
 
 #### Subtask 2.1.2.2: Reject Surface and Version Ambiguity
 
@@ -77,14 +77,18 @@ independent typed-JSON path for `R5`.
 rendering per semantic input, duplicate-aware decoding, bounded inputs, and
 stable failures for unknown versions, aliases, fields, or encodings.
 
-- [ ] **Subtask 2.1.2.2 Complete**
+- [x] **Subtask 2.1.2.2 Complete**
+
+**Implementation evidence:** [Section 2.1 integration evidence](../../src/compact-projection-fidelity/section-02-01-integration-evidence.md)
+records exact tokenizer conformance, canonical rendering, all-corpus semantic
+round trips, attribution, negative cases, and the unchanged Phase 1 boundary.
 
 ## Section 2.2: Checked Compact Projection and Inverse Decoder
 
 **Description:** Serialize checked semantics compactly without inventing a
 parallel unchecked language or relying on positional security fields.
 
-- [ ] **Section 2.2 Complete**
+- [x] **Section 2.2 Complete**
 
 ### Task 2.2.1: Implement `alang-model-v1`
 
@@ -92,7 +96,7 @@ parallel unchecked language or relying on positional security fields.
 vocabulary, repeated-reference aliases, and reconstructible schema elision
 while retaining keyed authority, budgets, errors, and completion predicates.
 
-- [ ] **Task 2.2.1 Complete**
+- [x] **Task 2.2.1 Complete**
 
 #### Subtask 2.2.1.1: Derive Only Reconstructible Declarations
 
@@ -100,7 +104,7 @@ while retaining keyed authority, budgets, errors, and completion predicates.
 exact checked value from retained structure; reject ambiguous effects,
 requirements, scopes, child grants, limits, or completion evidence.
 
-- [ ] **Subtask 2.2.1.1 Complete**
+- [x] **Subtask 2.2.1.1 Complete**
 
 #### Subtask 2.2.1.2: Assign Reversible Local Aliases
 
@@ -108,7 +112,7 @@ requirements, scopes, child grants, limits, or completion evidence.
 compiler-local aliases only to repeated references, include a bounded reverse
 map, and reject collisions, shadowing, same-prefix ambiguity, or map tampering.
 
-- [ ] **Subtask 2.2.1.2 Complete**
+- [x] **Subtask 2.2.1.2 Complete**
 
 ### Task 2.2.2: Implement Canonical Decoding and Semantic Equality
 
@@ -116,7 +120,7 @@ map, and reject collisions, shadowing, same-prefix ambiguity, or map tampering.
 derived or aliased value, run the same checker, and compare canonical semantic
 digests before the result can proceed.
 
-- [ ] **Task 2.2.2 Complete**
+- [x] **Task 2.2.2 Complete**
 
 #### Subtask 2.2.2.1: Prove Checked-IR Round Trip
 
@@ -124,7 +128,7 @@ digests before the result can proceed.
 canonical IR and semantic digest for every corpus case and generated valid
 task, with stable errors at the smallest compact and readable source paths.
 
-- [ ] **Subtask 2.2.2.1 Complete**
+- [x] **Subtask 2.2.2.1 Complete**
 
 #### Subtask 2.2.2.2: Reject Authority and Meaning Mutants
 
@@ -133,7 +137,11 @@ missing effects, wider scopes, extra child grants, altered dependencies,
 weakened completion, alias swaps, and unknown fields; require every mutant to
 fail or produce a different semantic digest.
 
-- [ ] **Subtask 2.2.2.2 Complete**
+- [x] **Subtask 2.2.2.2 Complete**
+
+**Implementation evidence:** [Section 2.2 integration evidence](../../src/compact-projection-fidelity/section-02-02-integration-evidence.md)
+records 48 corpus and 32 generated semantic round trips, exact derivation and
+alias gates, authority mutations, and trusted BEAM execution.
 
 ## Section 2.3: Opaque-Identifier Control and Source Mapping
 
@@ -141,7 +149,7 @@ fail or produce a different semantic digest.
 while ensuring all model-facing failures remain explainable in readable-source
 terms.
 
-- [ ] **Section 2.3 Complete**
+- [x] **Section 2.3 Complete**
 
 ### Task 2.3.1: Implement the `R4` Negative Control
 
@@ -149,7 +157,7 @@ terms.
 aliases after checked projection, preserving literal facts, paths, units, and
 security vocabulary and carrying an exact reverse map.
 
-- [ ] **Task 2.3.1 Complete**
+- [x] **Task 2.3.1 Complete**
 
 #### Subtask 2.3.1.1: Define Eligible and Protected Names
 
@@ -157,7 +165,7 @@ security vocabulary and carrying an exact reverse map.
 may be renamed and protect strings, paths, enum tags, effect names, scopes,
 budgets, model profiles, and completion predicates from accidental rewriting.
 
-- [ ] **Subtask 2.3.1.1 Complete**
+- [x] **Subtask 2.3.1.1 Complete**
 
 #### Subtask 2.3.1.2: Enforce Nonpromotion and Reverse Mapping
 
@@ -165,14 +173,14 @@ budgets, model profiles, and completion predicates from accidental rewriting.
 schedules, evidence, and decision code; prove the control cannot be selected
 as a default even if it wins every token and fidelity metric.
 
-- [ ] **Subtask 2.3.1.2 Complete**
+- [x] **Subtask 2.3.1.2 Complete**
 
 ### Task 2.3.2: Produce Readable Source Maps and Diagnostics
 
 **Description:** Map every compact byte range, alias, restored declaration,
 and checker error back to its readable source construct and semantic path.
 
-- [ ] **Task 2.3.2 Complete**
+- [x] **Task 2.3.2 Complete**
 
 #### Subtask 2.3.2.1: Validate Bidirectional Origin Maps
 
@@ -180,7 +188,7 @@ and checker error back to its readable source construct and semantic path.
 source origin and every security-relevant readable field to have a compact
 location or explicit derivation witness.
 
-- [ ] **Subtask 2.3.2.1 Complete**
+- [x] **Subtask 2.3.2.1 Complete**
 
 #### Subtask 2.3.2.2: Render Diagnostics in Canonical Source Terms
 
@@ -188,7 +196,12 @@ location or explicit derivation witness.
 names with readable spans and optional compact spans; never expose only an
 opaque alias or make a user edit generated compact text.
 
-- [ ] **Subtask 2.3.2.2 Complete**
+- [x] **Subtask 2.3.2.2 Complete**
+
+**Implementation evidence:** [Section 2.3 integration evidence](../../src/compact-projection-fidelity/section-02-03-integration-evidence.md)
+records opaque all-corpus round trips, protected names, mechanical
+nonpromotion, contiguous byte maps, security witnesses, and readable-source
+diagnostics.
 
 ## Section 2.4: Phase 2 Integration Tests
 
@@ -196,7 +209,7 @@ opaque alias or make a user edit generated compact text.
 matched, bounded, mutation-sensitive, source-mapped, and implemented wholly on
 the trusted BEAM path.
 
-- [ ] **Section 2.4 Complete**
+- [x] **Section 2.4 Complete**
 
 ### Task 2.4.1: Run Corpus, Property, and Mutation Suites
 
@@ -204,7 +217,7 @@ the trusted BEAM path.
 then generate valid and invalid checked tasks across every registered field,
 boundary, alias count, and representation version.
 
-- [ ] **Task 2.4.1 Complete**
+- [x] **Task 2.4.1 Complete**
 
 #### Subtask 2.4.1.1: Reproduce All Surfaces and Token Reports
 
@@ -212,14 +225,14 @@ boundary, alias count, and representation version.
 maps, and token reports across clean ERTS processes and shuffled input map
 orders.
 
-- [ ] **Subtask 2.4.1.1 Complete**
+- [x] **Subtask 2.4.1.1 Complete**
 
 #### Subtask 2.4.1.2: Measure Mutation Adequacy
 
 **Description:** Prove seeded decoder, derivation, alias, token-attribution,
 source-map, version, and authority defects cause the named test gates to fail.
 
-- [ ] **Subtask 2.4.1.2 Complete**
+- [x] **Subtask 2.4.1.2 Complete**
 
 ### Task 2.4.2: Reassert Compiler Residency and Isolation
 
@@ -227,7 +240,7 @@ source-map, version, and authority defects cause the named test gates to fail.
 artifacts to prove every trusted transform runs from `.beam` on ERTS and no
 foreign tokenizer or language interpreter entered the path.
 
-- [ ] **Task 2.4.2 Complete**
+- [x] **Task 2.4.2 Complete**
 
 #### Subtask 2.4.2.1: Inspect the Trusted Module Closure
 
@@ -235,7 +248,7 @@ foreign tokenizer or language interpreter entered the path.
 source-map, and validator modules and fail on interpreted forms, provider SDKs,
 ports, NIFs, shell commands, or non-BEAM executables.
 
-- [ ] **Subtask 2.4.2.1 Complete**
+- [x] **Subtask 2.4.2.1 Complete**
 
 #### Subtask 2.4.2.2: Publish Phase 2 Evidence
 
@@ -243,7 +256,13 @@ ports, NIFs, shell commands, or non-BEAM executables.
 attribution, source maps, mutation results, module closure, and clean-build
 commands without claiming model fidelity from offline transformations.
 
-- [ ] **Subtask 2.4.2.2 Complete**
+- [x] **Subtask 2.4.2.2 Complete**
+
+**Implementation evidence:** [Section 2.4 integration evidence](../../src/compact-projection-fidelity/section-02-04-integration-evidence.md)
+records 432 deterministic cross-surface corpus cells, 96 generated valid
+round trips, 48 invalid-input renderer rejections, 864 exact token reports,
+complete source maps, full mutation detection, clean-process reproduction,
+and the trusted BEAM closure.
 
 ## Phase 2 Completion Evidence
 
@@ -251,13 +270,13 @@ commands without claiming model fidelity from offline transformations.
 is a deterministic projection of checked semantics rather than a plausible
 but unverified string rewrite.
 
-- [ ] All six registered surfaces have canonical byte renderings and closed versions
-- [ ] Every surface decodes or normalizes to the same case semantic digest
-- [ ] `alang-model-v1` uses only registered aliases and reconstructible elisions
-- [ ] Keyed budgets, scopes, effects, child grants, errors, and completion remain exact
-- [ ] Opaque identifiers are isolated and mechanically nonpromotable
-- [ ] Source maps cover every compact token and every security-relevant readable field
-- [ ] Token reports distinguish exact provider/profile counts from proxies
-- [ ] Property and mutation suites detect semantic, authority, alias, version, and accounting defects
-- [ ] Trusted projection modules load from deterministic `.beam` artifacts on ERTS
-- [ ] Clean-process evidence reproduces without network access or foreign executables
+- [x] All six registered surfaces have canonical byte renderings and closed versions
+- [x] Every surface decodes or normalizes to the same case semantic digest
+- [x] `alang-model-v1` uses only registered aliases and reconstructible elisions
+- [x] Keyed budgets, scopes, effects, child grants, errors, and completion remain exact
+- [x] Opaque identifiers are isolated and mechanically nonpromotable
+- [x] Source maps cover every compact token and every security-relevant readable field
+- [x] Token reports distinguish exact provider/profile counts from proxies
+- [x] Property and mutation suites detect semantic, authority, alias, version, and accounting defects
+- [x] Trusted projection modules load from deterministic `.beam` artifacts on ERTS
+- [x] Clean-process evidence reproduces without network access or foreign executables

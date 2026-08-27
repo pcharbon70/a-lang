@@ -1,0 +1,25 @@
+{
+  "format": "alang-compact-model-format-contract-v1",
+  "surface_id": "R3",
+  "version": "alang-model-v1",
+  "header": "#!alang-model-v1",
+  "max_representation_bytes": 32768,
+  "keyed_authority": true,
+  "positional_security_fields": false,
+  "derivations": {
+    "effects": "exact-from-checked-actions-or-retain",
+    "requirements": "exact-from-keyed-scopes-or-retain",
+    "empty_collections": "restore-only-versioned-optional-fields"
+  },
+  "aliases": {
+    "prefix": "@n",
+    "maximum": 64,
+    "minimum_references": 2,
+    "assignment": "first-eligible-declaration-order",
+    "reverse_map": "required",
+    "collisions": "reject",
+    "cross_namespace_shadowing": "reject"
+  },
+  "unknown_fields": "reject",
+  "semantic_acceptance": "validate-and-match-sha-256-canonical-etf-v1"
+}

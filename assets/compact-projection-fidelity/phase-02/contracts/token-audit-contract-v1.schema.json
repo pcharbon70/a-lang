@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://a-lang.invalid/schemas/compact-projection-fidelity/phase-02/token-audit-contract-v1.schema.json",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["format","report_format","representation_digest","offline_counts","provider_usage","attribution_mode","semantic_sections","lexeme_classes","required_count_scopes","estimated_provider_usage"],
+  "properties":{
+    "format":{"const":"alang-compact-token-audit-contract-v1"},
+    "report_format":{"const":"alang-compact-token-audit-v1"},
+    "representation_digest":{"const":"sha-256-bytes"},
+    "offline_counts":{"const":"exact-registered-tokenizer"},
+    "provider_usage":{"const":"authoritative-when-present-otherwise-unavailable"},
+    "attribution_mode":{"const":"standalone-nonadditive-bpe-components"},
+    "semantic_sections":{"const":["layout","keywords","identifiers","facts","paths","budgets","authority","completion","legends","common_instructions","output_scaffolding"]},
+    "lexeme_classes":{"const":["layout","keywords","identifiers","literals","punctuation"]},
+    "required_count_scopes":{"const":["document","full_request"]},
+    "estimated_provider_usage":{"const":"reject"}
+  }
+}
