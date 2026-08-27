@@ -82,6 +82,9 @@ execution gate. A-Lang runtime results must come from loaded BEAM artifacts.
 - [Phase 8 demonstration and proof-of-concept decision](phase-08/README.md) —
   the offline source-to-evidence package, matched ablations, architecture
   decision, risk ledger, and final acceptance gate.
+- [Token-positive mnemonic promotion implementation](token-positive-mnemonic-promotion/README.md)
+  — the BEAM-native exact-R2 contract, fresh corpus, paired schedule,
+  preregistration, mutation, and zero-call evidence tools.
 
 ### Files
 

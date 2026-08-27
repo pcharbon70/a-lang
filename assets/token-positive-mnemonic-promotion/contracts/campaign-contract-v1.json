@@ -1,0 +1,107 @@
+{
+  "format": "alang-token-positive-campaign-contract-v1",
+  "question": "Can the exact R2 mnemonic surface reduce model-visible tokens while remaining non-inferior to readable A-Lang across all four registered protocols?",
+  "canonical_source": "alang-source-v2",
+  "candidate_condition": "P1",
+  "conditions": [
+    {
+      "id": "P0",
+      "representation": "alang-source-v2-readable",
+      "version": "alang-source-v2",
+      "source_condition": "R0",
+      "role": "canonical-baseline",
+      "promotable": false
+    },
+    {
+      "id": "P1",
+      "representation": "alang-source-v2-mnemonic-aliases",
+      "version": "alang-source-v2-alias-v1",
+      "source_condition": "R2",
+      "role": "sole-promotion-candidate",
+      "promotable": true
+    }
+  ],
+  "historical_registration": {
+    "stream": "03-compact-projection-fidelity",
+    "r2_role": "closed-vocabulary-ablation",
+    "r2_promotable": false,
+    "r3_role": "sole-promotion-candidate",
+    "rewrite": "forbidden"
+  },
+  "r2_reference": {
+    "renderer_path": "src/compact-projection-fidelity/alang_compact_surface.erl",
+    "renderer_sha256": "2dffb9750c640ac6cd26d3b628e281931632d32b0906fa4f30635669a11969a8",
+    "vocabulary_path": "assets/compact-projection-fidelity/campaign/projection-vocabulary-v1.json",
+    "vocabulary_sha256": "048995ece626b1d36d01f1d5ca0024f79a44dd2b0d07096d000b98d0c7521b47",
+    "surface_registry_path": "assets/compact-projection-fidelity/phase-02/contracts/surface-registry-v1.json",
+    "surface_registry_sha256": "43e2d3749b142862f9b1db3e69fca2fce3e21778d029213e48bb38f0987886b4",
+    "rendering_conformance": "byte-for-byte",
+    "acceptance_conformance": "same-accept-or-reject",
+    "decode_conformance": "same-checked-semantics"
+  },
+  "task_protocols": [
+    "action-completion",
+    "comprehension",
+    "diagnostic-repair",
+    "generation"
+  ],
+  "inference": {
+    "sampling_unit": "semantic-case",
+    "paired": true,
+    "stratified_by": "runtime-family",
+    "repetitions_retained_within_case": 2,
+    "resamples": 20000,
+    "seed": 2026082504,
+    "confidence_percent": 95,
+    "interval": "one-sided-percentile",
+    "model_families_separate": true,
+    "protocols_separate": true,
+    "pooled_results": "descriptive-only"
+  },
+  "promotion": {
+    "offline": {
+      "every_document_strictly_cheaper": true,
+      "every_full_request_strictly_cheaper": true,
+      "minimum_aggregate_document_savings": 0.05,
+      "minimum_median_document_savings": 0.05,
+      "minimum_aggregate_request_savings": 0.05,
+      "minimum_median_request_savings": 0.05,
+      "each_registered_tokenizer": true
+    },
+    "provider": {
+      "usage_complete_and_unestimated": true,
+      "no_higher_input_pair": true,
+      "minimum_input_savings_each_family_protocol": 0.05,
+      "maximum_total_token_delta_each_family_protocol": 0.0
+    },
+    "safety": {
+      "round_trip_required": true,
+      "inherited_gates_required": true,
+      "candidate_only_events": 0
+    },
+    "fidelity": {
+      "exact_lower_strictly_above": -0.05,
+      "minimum_point_difference": -0.05,
+      "minimum_validity_difference": -0.05,
+      "minimum_repair_difference": -0.05,
+      "robustness_required": true,
+      "each_model_family": true,
+      "each_protocol": true
+    }
+  },
+  "outcomes_ordered": [
+    "stop-invalid-token-positive-campaign",
+    "ineligible-token-negative-candidate",
+    "reject-unsafe-mnemonic-candidate",
+    "retain-readable-insufficient-fidelity",
+    "promote-token-positive-mnemonic-view"
+  ],
+  "claims_not_authorized": [
+    "mnemonic-human-authored-source",
+    "opaque-identifiers",
+    "learned-tokens",
+    "runtime-semantic-change",
+    "weaker-compiler-or-capability-gates",
+    "unregistered-model-or-task-generalization"
+  ]
+}

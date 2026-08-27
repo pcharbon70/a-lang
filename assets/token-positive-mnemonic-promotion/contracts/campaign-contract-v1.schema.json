@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/campaign-contract-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "question", "canonical_source", "candidate_condition", "conditions", "historical_registration", "r2_reference", "task_protocols", "inference", "promotion", "outcomes_ordered", "claims_not_authorized"],
+  "properties": {
+    "format": {"const": "alang-token-positive-campaign-contract-v1"},
+    "question": {"type": "string", "minLength": 1},
+    "canonical_source": {"const": "alang-source-v2"},
+    "candidate_condition": {"const": "P1"},
+    "conditions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "representation", "version", "source_condition", "role", "promotable"],
+        "properties": {
+          "id": {"enum": ["P0", "P1"]},
+          "representation": {"type": "string", "minLength": 1},
+          "version": {"type": "string", "minLength": 1},
+          "source_condition": {"enum": ["R0", "R2"]},
+          "role": {"enum": ["canonical-baseline", "sole-promotion-candidate"]},
+          "promotable": {"type": "boolean"}
+        }
+      }
+    },
+    "historical_registration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stream", "r2_role", "r2_promotable", "r3_role", "rewrite"],
+      "properties": {
+        "stream": {"const": "03-compact-projection-fidelity"},
+        "r2_role": {"const": "closed-vocabulary-ablation"},
+        "r2_promotable": {"const": false},
+        "r3_role": {"const": "sole-promotion-candidate"},
+        "rewrite": {"const": "forbidden"}
+      }
+    },
+    "r2_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["renderer_path", "renderer_sha256", "vocabulary_path", "vocabulary_sha256", "surface_registry_path", "surface_registry_sha256", "rendering_conformance", "acceptance_conformance", "decode_conformance"],
+      "properties": {
+        "renderer_path": {"type": "string", "minLength": 1},
+        "renderer_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "vocabulary_path": {"type": "string", "minLength": 1},
+        "vocabulary_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "surface_registry_path": {"type": "string", "minLength": 1},
+        "surface_registry_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "rendering_conformance": {"const": "byte-for-byte"},
+        "acceptance_conformance": {"const": "same-accept-or-reject"},
+        "decode_conformance": {"const": "same-checked-semantics"}
+      }
+    },
+    "task_protocols": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": {"enum": ["action-completion", "comprehension", "diagnostic-repair", "generation"]}},
+    "inference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sampling_unit", "paired", "stratified_by", "repetitions_retained_within_case", "resamples", "seed", "confidence_percent", "interval", "model_families_separate", "protocols_separate", "pooled_results"],
+      "properties": {
+        "sampling_unit": {"const": "semantic-case"},
+        "paired": {"const": true},
+        "stratified_by": {"const": "runtime-family"},
+        "repetitions_retained_within_case": {"const": 2},
+        "resamples": {"const": 20000},
+        "seed": {"const": 2026082504},
+        "confidence_percent": {"const": 95},
+        "interval": {"const": "one-sided-percentile"},
+        "model_families_separate": {"const": true},
+        "protocols_separate": {"const": true},
+        "pooled_results": {"const": "descriptive-only"}
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offline", "provider", "safety", "fidelity"],
+      "properties": {
+        "offline": {
+          "type": "object", "additionalProperties": false,
+          "required": ["every_document_strictly_cheaper", "every_full_request_strictly_cheaper", "minimum_aggregate_document_savings", "minimum_median_document_savings", "minimum_aggregate_request_savings", "minimum_median_request_savings", "each_registered_tokenizer"],
+          "properties": {
+            "every_document_strictly_cheaper": {"const": true}, "every_full_request_strictly_cheaper": {"const": true},
+            "minimum_aggregate_document_savings": {"const": 0.05}, "minimum_median_document_savings": {"const": 0.05},
+            "minimum_aggregate_request_savings": {"const": 0.05}, "minimum_median_request_savings": {"const": 0.05},
+            "each_registered_tokenizer": {"const": true}
+          }
+        },
+        "provider": {
+          "type": "object", "additionalProperties": false,
+          "required": ["usage_complete_and_unestimated", "no_higher_input_pair", "minimum_input_savings_each_family_protocol", "maximum_total_token_delta_each_family_protocol"],
+          "properties": {
+            "usage_complete_and_unestimated": {"const": true}, "no_higher_input_pair": {"const": true},
+            "minimum_input_savings_each_family_protocol": {"const": 0.05}, "maximum_total_token_delta_each_family_protocol": {"const": 0.0}
+          }
+        },
+        "safety": {
+          "type": "object", "additionalProperties": false,
+          "required": ["round_trip_required", "inherited_gates_required", "candidate_only_events"],
+          "properties": {"round_trip_required": {"const": true}, "inherited_gates_required": {"const": true}, "candidate_only_events": {"const": 0}}
+        },
+        "fidelity": {
+          "type": "object", "additionalProperties": false,
+          "required": ["exact_lower_strictly_above", "minimum_point_difference", "minimum_validity_difference", "minimum_repair_difference", "robustness_required", "each_model_family", "each_protocol"],
+          "properties": {
+            "exact_lower_strictly_above": {"const": -0.05}, "minimum_point_difference": {"const": -0.05},
+            "minimum_validity_difference": {"const": -0.05}, "minimum_repair_difference": {"const": -0.05},
+            "robustness_required": {"const": true}, "each_model_family": {"const": true}, "each_protocol": {"const": true}
+          }
+        }
+      }
+    },
+    "outcomes_ordered": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": {"type": "string"}},
+    "claims_not_authorized": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+  }
+}

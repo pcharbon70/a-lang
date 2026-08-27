@@ -24,7 +24,8 @@ ceilings before any model-facing observation.
 campaign-local identities without changing the scientific roles or bytes in
 the original compact-projection registration.
 
-- [ ] **Section 1.1 Complete**
+- [x] **Section 1.1 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-01-01-integration-evidence.md).
 
 ### Task 1.1.1: Define the `P0` and `P1` Contract
 
@@ -32,7 +33,7 @@ the original compact-projection registration.
 allowed protocols, and the narrow architecture consequence of a positive
 result.
 
-- [ ] **Task 1.1.1 Complete**
+- [x] **Task 1.1.1 Complete**
 
 #### Subtask 1.1.1.1: Re-register Exact R2 Bytes Without Rewriting Its Role
 
@@ -44,7 +45,7 @@ conformance on every frozen and generated case, and reject any attempt either
 to mutate the historical contract or to change P1 model-visible bytes,
 accepted language, or decode results.
 
-- [ ] **Subtask 1.1.1.1 Complete**
+- [x] **Subtask 1.1.1.1 Complete**
 
 #### Subtask 1.1.1.2: Bound What Promotion Means
 
@@ -52,7 +53,7 @@ accepted language, or decode results.
 checked semantics; retain readable v2 as canonical source and exclude authored
 mnemonic syntax, opaque names, learned tokens, and runtime-semantic changes.
 
-- [ ] **Subtask 1.1.1.2 Complete**
+- [x] **Subtask 1.1.1.2 Complete**
 
 ### Task 1.1.2: Encode Token Eligibility Before Fidelity
 
@@ -60,7 +61,7 @@ mnemonic syntax, opaque names, learned tokens, and runtime-semantic changes.
 is checked first, token-negative candidates are ineligible second, safety
 vetoes precede fidelity, and promotion requires every remaining predicate.
 
-- [ ] **Task 1.1.2 Complete**
+- [x] **Task 1.1.2 Complete**
 
 #### Subtask 1.1.2.1: Freeze Offline Token-Positive Predicates
 
@@ -68,7 +69,7 @@ vetoes precede fidelity, and promotion requires every remaining predicate.
 for every paired case and tokenizer plus at least 5% aggregate and median
 savings; block model authorization on any failure or unavailable exact count.
 
-- [ ] **Subtask 1.1.2.1 Complete**
+- [x] **Subtask 1.1.2.1 Complete**
 
 #### Subtask 1.1.2.2: Freeze Operational Token and Fidelity Predicates
 
@@ -76,7 +77,7 @@ savings; block model authorization on any failure or unavailable exact count.
 provider-input savings per family and protocol, no operational total-token
 increase, registered non-inferiority, and zero candidate-only safety failures.
 
-- [ ] **Subtask 1.1.2.2 Complete**
+- [x] **Subtask 1.1.2.2 Complete**
 
 ## Section 1.2: Freeze Power, Profiles, Corpus, and Schedule
 
