@@ -57,6 +57,11 @@ Phase numbering restarts inside each planning stream.
   with layout, mnemonic, checked-compact, opaque-identifier, and typed-JSON
   conditions across comprehension, generation, repair, and safe operational
   judgment before any model projection can be promoted.
+- [04 — Token-positive mnemonic promotion](04-token-positive-mnemonic-promotion/README.md)
+  — a prospective four-phase re-registration of the exact R2 surface that
+  makes pairwise and aggregate token savings a hard eligibility gate, then
+  tests it against readable A-Lang across all four protocols and two exact
+  model families.
 
 ### Documents
 

@@ -38,6 +38,7 @@ See the [archive guide](../README.md) for its structure and conventions.
 - [Set and category principles for an agent programming language](../20-notes/set-and-category-principles-for-agent-programming-language.md)
 - [Task languages for LLM agents: a deep dive](../20-notes/llm-agent-task-languages-deep-dive.md)
 - [Token-efficient syntax for A-Lang](../20-notes/token-efficient-syntax-for-a-lang.md)
+- [Model-facing A-Lang promotion must be token-positive](../20-notes/model-facing-alang-promotion-must-be-token-positive.md)
 - [Semantic code graphs for LLM understanding](../20-notes/semantic-code-graphs-for-llm-understanding.md)
 - [Typed source references for LLM code understanding](../20-notes/typed-source-references-for-llm-code-understanding.md)
 
@@ -57,6 +58,11 @@ See the [archive guide](../README.md) for its structure and conventions.
   2,304-cell, two-model comparison of token cost, semantic non-inferiority,
   repair, robustness, and safety; readable v2 remains canonical in every
   outcome.
+- [Token-positive mnemonic promotion plan](../60-planning/04-token-positive-mnemonic-promotion/README.md)
+  — prospectively re-registers the exact R2 surface after the negative R3
+  token result; it requires those same mnemonic bytes to be cheaper than
+  readable A-Lang on every frozen request before model fidelity and safety can
+  authorize promotion.
 
 ## Unsettled threads
 
