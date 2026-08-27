@@ -1,0 +1,68 @@
+{
+  "format": "alang-token-positive-traceability-v1",
+  "sources": [
+    {
+      "role": "campaign-plan",
+      "path": "60-planning/04-token-positive-mnemonic-promotion/README.md"
+    },
+    {
+      "role": "phase-plan",
+      "path": "60-planning/04-token-positive-mnemonic-promotion/phase-01-token-positive-contract-and-fresh-corpus.md"
+    },
+    {
+      "role": "promotion-policy",
+      "path": "20-notes/model-facing-alang-promotion-must-be-token-positive.md"
+    },
+    {
+      "role": "design-input-evidence",
+      "path": "src/compact-projection-fidelity/section-02-04-integration-evidence.md"
+    },
+    {
+      "role": "open-inquiry",
+      "path": "40-inquiries/can-a-compact-projection-reduce-alang-token-use-without-reducing-fidelity.md"
+    }
+  ],
+  "design_evidence": {
+    "role": "candidate-selection-and-threshold-design-only",
+    "previous_semantic_cases": 72,
+    "model_calls_observed": 0,
+    "r0_document_tokens": {
+      "cl100k_base": 17204,
+      "o200k_base": 17118
+    },
+    "r2_document_tokens": {
+      "cl100k_base": 15703,
+      "o200k_base": 15755
+    },
+    "r2_document_savings": {
+      "cl100k_base": 0.0872,
+      "o200k_base": 0.0796
+    },
+    "every_measured_document_and_request_cheaper": true,
+    "model_fidelity_claim": false
+  },
+  "included_scope": [
+    "exact-r2-re-registration",
+    "readable-p0-baseline",
+    "four-single-turn-protocols",
+    "two-exact-model-families",
+    "paired-case-cluster-inference",
+    "token-positive-promotion-gate"
+  ],
+  "excluded_scope": [
+    "historical-r2-role-rewrite",
+    "r3-live-campaign",
+    "authored-mnemonic-source",
+    "opaque-identifiers",
+    "learned-tokens",
+    "runtime-semantic-change",
+    "model-effect-execution"
+  ],
+  "observation_boundary": {
+    "fresh_cases": 48,
+    "prior_design_cases": 72,
+    "hosted_calls_observed": 0,
+    "efficacy_observations": 0,
+    "network_authorized": false
+  }
+}

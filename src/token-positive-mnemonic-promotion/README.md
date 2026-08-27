@@ -49,8 +49,19 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_design_tests.erl`](alang_mnemonic_design_tests.erl) — tests
   deterministic power and scheduling, fresh-corpus balance and mutations,
   exact profiles and prompts, offline ceilings, and trusted residency.
+- [`alang_mnemonic_integration_tests.erl`](alang_mnemonic_integration_tests.erl)
+  — reconciles the complete registration, deterministic evidence, design-
+  evidence boundary, mutation coverage, traceability, and BEAM residency.
+- [`alang_mnemonic_mutation.erl`](alang_mnemonic_mutation.erl) — seeds and
+  requires detection of 19 scientific-role, threshold, corpus, schedule,
+  profile, prompt, and inference defects.
+- [`alang_mnemonic_phase1_worker.erl`](alang_mnemonic_phase1_worker.erl) —
+  writes canonical Phase 1 evidence from a clean offline ERTS process.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.
+- [`alang_mnemonic_preregister.erl`](alang_mnemonic_preregister.erl) — closes
+  schemas and traceability, audits trusted-source scope, reconciles every
+  registration dimension, and builds the 21-file evidence record.
 - [`alang_mnemonic_registration.erl`](alang_mnemonic_registration.erl) —
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
@@ -63,6 +74,9 @@ belong to Phase 3 and remain unauthorized here.
   records the power-qualified 48-case selection, fresh all-72-case-separated
   corpus, exact profiles and prompts, balanced schedule, mutations, ceilings,
   and zero-call boundary.
+- [Section 1.3 integration evidence](section-01-03-integration-evidence.md) —
+  records deterministic full-phase reproduction, design-input separation,
+  closed schemas, 19 detected mutants, BEAM residency, and zero hosted calls.
 
 ## Maintaining this index
 

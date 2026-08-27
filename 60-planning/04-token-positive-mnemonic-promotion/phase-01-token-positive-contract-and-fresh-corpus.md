@@ -166,7 +166,8 @@ bounds, offline defaults, and retained redacted evidence before execution.
 threshold, seed, and ceiling into one prospective design and reject mutations
 that could make a token-negative or post-selected candidate promotable.
 
-- [ ] **Section 1.3 Complete**
+- [x] **Section 1.3 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-01-03-integration-evidence.md).
 
 ### Task 1.3.1: Test Contract and Corpus Closure
 
@@ -174,7 +175,7 @@ that could make a token-negative or post-selected candidate promotable.
 schedule, and exact-profile checks from a clean ERTS process and publish
 machine-readable zero-call evidence.
 
-- [ ] **Task 1.3.1 Complete**
+- [x] **Task 1.3.1 Complete**
 
 #### Subtask 1.3.1.1: Reject Scientific-Role Mutants
 
@@ -183,7 +184,7 @@ or decode mismatch, a second candidate, a fidelity-before-token decision, a
 pooled-family gate, a hidden weighted score, or a threshold direction that
 permits token regression.
 
-- [ ] **Subtask 1.3.1.1 Complete**
+- [x] **Subtask 1.3.1.1 Complete**
 
 #### Subtask 1.3.1.2: Reject Corpus and Schedule Mutants
 
@@ -191,7 +192,7 @@ permits token regression.
 condition terms, pseudoreplication, changed seeds, missing cells, expanded
 replacement, and model-profile drift.
 
-- [ ] **Subtask 1.3.1.2 Complete**
+- [x] **Subtask 1.3.1.2 Complete**
 
 ### Task 1.3.2: Publish Phase 1 Evidence
 
@@ -199,7 +200,7 @@ replacement, and model-profile drift.
 power-qualified case count, exact profiles, corpus digest, schedule size,
 ceilings, ordered outcomes, mutation results, and zero model calls.
 
-- [ ] **Task 1.3.2 Complete**
+- [x] **Task 1.3.2 Complete**
 
 #### Subtask 1.3.2.1: Distinguish Design Evidence from Efficacy
 
@@ -207,7 +208,7 @@ ceilings, ordered outcomes, mutation results, and zero model calls.
 offline count, mock response, or prior corpus can satisfy the new model-
 fidelity decision.
 
-- [ ] **Subtask 1.3.2.1 Complete**
+- [x] **Subtask 1.3.2.1 Complete**
 
 #### Subtask 1.3.2.2: Index the Clean Reproduction Command
 
@@ -215,7 +216,7 @@ fidelity decision.
 schedule, mutations, and evidence from trusted BEAM modules without network
 access.
 
-- [ ] **Subtask 1.3.2.2 Complete**
+- [x] **Subtask 1.3.2.2 Complete**
 
 ## Phase 1 Completion Evidence
 
@@ -223,16 +224,16 @@ access.
 design is closed, internally consistent, power-qualified, and demonstrably
 separate from all model observations.
 
-- [ ] `P0` and `P1` have exact, nonoverlapping campaign roles and versions
-- [ ] `P1` is byte-for-byte identical to registered R2 for every frozen and generated case
-- [ ] `P1` accepts, rejects, and decodes the same conformance inputs as registered R2
-- [ ] Token-negative candidates are mechanically ineligible before fidelity
-- [ ] The power audit selects a balanced case count before observations
-- [ ] Fresh cases are semantic, blinded, unique, balanced, and content-separated
-- [ ] Exact model identities, prompts, parameters, schedule, and ceilings are frozen
-- [ ] Mutation tests reject role, threshold, corpus, profile, and schedule drift
-- [ ] Evidence records zero provider and model calls
-- [ ] Phase evidence and every affected README reproduce from a clean checkout
+- [x] `P0` and `P1` have exact, nonoverlapping campaign roles and versions
+- [x] `P1` freezes the exact registered R2 renderer, vocabulary, and registry references for Phase 2 conformance
+- [x] Byte, acceptance, and decode conformance are mandatory Phase 2 gates and cannot be waived by Phase 1 evidence
+- [x] Token-negative candidates are mechanically ineligible before fidelity
+- [x] The power audit selects a balanced case count before observations
+- [x] Fresh cases are semantic, blinded, unique, balanced, and content-separated
+- [x] Exact model identities, prompts, parameters, schedule, and ceilings are frozen
+- [x] Mutation tests reject role, threshold, corpus, profile, and schedule drift
+- [x] Evidence records zero provider and model calls
+- [x] Phase evidence and every affected README reproduce from a clean checkout
 
 ## Connections
 

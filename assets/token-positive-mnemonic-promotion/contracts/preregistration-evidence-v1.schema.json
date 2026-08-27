@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/preregistration-evidence-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "registration_file_count",
+    "registration_digest",
+    "files",
+    "derived_digests",
+    "selected_cases",
+    "primary_cells",
+    "hard_request_ceiling",
+    "model_families",
+    "protocols",
+    "conditions",
+    "design_evidence",
+    "scope",
+    "schema_count",
+    "mutations",
+    "hosted_calls_observed",
+    "efficacy_observations",
+    "network_authorized"
+  ],
+  "properties": {
+    "format": {
+      "const": "alang-token-positive-phase-1-evidence-v1"
+    },
+    "registration_file_count": {
+      "const": 21
+    },
+    "registration_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "minItems": 21,
+      "maxItems": 21
+    },
+    "derived_digests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "r2_reference",
+        "power_audit",
+        "schedule",
+        "corpus",
+        "registration",
+        "traceability"
+      ],
+      "properties": {
+        "contract": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "r2_reference": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "power_audit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "schedule": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "corpus": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "registration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "traceability": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "selected_cases": {
+      "const": 48
+    },
+    "primary_cells": {
+      "const": 1536
+    },
+    "hard_request_ceiling": {
+      "const": 3072
+    },
+    "model_families": {
+      "const": 2
+    },
+    "protocols": {
+      "const": 4
+    },
+    "conditions": {
+      "const": 2
+    },
+    "design_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "previous_semantic_cases",
+        "model_calls_observed",
+        "r0_document_tokens",
+        "r2_document_tokens",
+        "r2_document_savings",
+        "every_measured_document_and_request_cheaper",
+        "model_fidelity_claim"
+      ],
+      "properties": {
+        "role": {
+          "const": "candidate-selection-and-threshold-design-only"
+        },
+        "previous_semantic_cases": {
+          "const": 72
+        },
+        "model_calls_observed": {
+          "const": 0
+        },
+        "r0_document_tokens": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cl100k_base",
+            "o200k_base"
+          ],
+          "properties": {
+            "cl100k_base": {
+              "const": 17204
+            },
+            "o200k_base": {
+              "const": 17118
+            }
+          }
+        },
+        "r2_document_tokens": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cl100k_base",
+            "o200k_base"
+          ],
+          "properties": {
+            "cl100k_base": {
+              "const": 15703
+            },
+            "o200k_base": {
+              "const": 15755
+            }
+          }
+        },
+        "r2_document_savings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cl100k_base",
+            "o200k_base"
+          ],
+          "properties": {
+            "cl100k_base": {
+              "const": 0.0872
+            },
+            "o200k_base": {
+              "const": 0.0796
+            }
+          }
+        },
+        "every_measured_document_and_request_cheaper": {
+          "const": true
+        },
+        "model_fidelity_claim": {
+          "const": false
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "included",
+        "excluded",
+        "source_links",
+        "foreign_trusted_sources"
+      ],
+      "properties": {
+        "included": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "excluded": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_links": {
+          "const": 5
+        },
+        "foreign_trusted_sources": {
+          "const": 0
+        }
+      }
+    },
+    "schema_count": {
+      "const": 11
+    },
+    "mutations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "detected",
+        "total",
+        "all_detected",
+        "names"
+      ],
+      "properties": {
+        "detected": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "all_detected": {
+          "const": true
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "hosted_calls_observed": {
+      "const": 0
+    },
+    "efficacy_observations": {
+      "const": 0
+    },
+    "network_authorized": {
+      "const": false
+    }
+  }
+}

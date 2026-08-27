@@ -47,6 +47,9 @@ exact-R2 P0/P1 campaign.
   factorial schedule, seed, counterbalance dimensions, and 3,072-request cap.
 - [Tokenizer profiles](tokenizer-profiles-v1.json) — retains the exact two
   offline screening identities and authoritative provider-usage rule.
+- [Traceability](traceability-v1.json) — links the campaign to its evidence
+  sources and separates the 72 prior design cases and token results from the
+  48 fresh cases and all future efficacy observations.
 
 ## Maintaining this index
 

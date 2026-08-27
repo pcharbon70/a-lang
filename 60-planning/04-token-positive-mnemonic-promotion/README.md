@@ -224,9 +224,9 @@ or manual override:
 
 ## Status and change rules
 
-- **Preregistration status:** complete draft; not frozen or authorized.
-- **Implementation status:** Phase 1 Sections 1.1 and 1.2 complete; Section 1.3
-  remains unchecked until its clean integration evidence exists.
+- **Preregistration status:** Phase 1 design frozen under a reproducible 21-file
+  digest; Phase 2 qualification and live authorization remain incomplete.
+- **Implementation status:** Phase 1 complete; Phase 2 is next.
 - Every implementation and evidence checkbox begins unchecked.
 - No model call may occur until Phase 2 publishes and verifies one canonical
   preregistration and qualification digest containing every candidate byte,

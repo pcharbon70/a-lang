@@ -46,12 +46,18 @@ and decoder behavior a new prospective promotion-candidate identity.
   margin, power, block, and scenario assumptions.
 - [Prompt policy schema](prompt-policy-v1.schema.json) — closes protocol
   instructions, legends, request order, and leakage exclusions.
+- [Preregistration evidence schema](preregistration-evidence-v1.schema.json) —
+  closes the 21-file Phase 1 digest, derived evidence, design boundary, scope,
+  mutation results, and zero-call record.
 - [Provider profile schema](provider-profiles-v1.schema.json) — closes exact
   model identities, manifests, parameters, and single-turn settings.
 - [Schedule policy schema](schedule-policy-v1.schema.json) — closes the factor
   matrix, seed, counterbalance dimensions, replacement, and request ceiling.
 - [Tokenizer profile schema](tokenizer-profiles-v1.schema.json) — closes exact
   screening identities and provider-accounting requirements.
+- [Traceability schema](traceability-v1.schema.json) — closes provenance,
+  historical design evidence, included and excluded scope, and the prospective
+  observation boundary.
 
 ## Maintaining this index
 
