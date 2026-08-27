@@ -84,7 +84,8 @@ increase, registered non-inferiority, and zero candidate-only safety failures.
 **Description:** Establish a new confirmatory boundary and a balanced schedule
 whose semantic case, rather than call or repetition, is the inferential unit.
 
-- [ ] **Section 1.2 Complete**
+- [x] **Section 1.2 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-01-02-integration-evidence.md).
 
 ### Task 1.2.1: Run the Pre-observation Power Audit
 
@@ -93,7 +94,7 @@ under the five-point fidelity margin and choose the first balanced case count
 that meets the registered power floor in both model families and all four
 protocols.
 
-- [ ] **Task 1.2.1 Complete**
+- [x] **Task 1.2.1 Complete**
 
 #### Subtask 1.2.1.1: Preserve Clustered Dependence
 
@@ -101,7 +102,7 @@ protocols.
 semantic-case cluster, stratify by runtime family, and prohibit calls or
 repetitions from inflating the sample size.
 
-- [ ] **Subtask 1.2.1.1 Complete**
+- [x] **Subtask 1.2.1.1 Complete**
 
 #### Subtask 1.2.1.2: Freeze Expansion and Simulation Evidence
 
@@ -109,7 +110,7 @@ repetitions from inflating the sample size.
 model observation, publish the deterministic seed and simulation digest, and
 forbid post-observation corpus resizing.
 
-- [ ] **Subtask 1.2.1.2 Complete**
+- [x] **Subtask 1.2.1.2 Complete**
 
 ### Task 1.2.2: Author a Fresh Representation-Neutral Corpus
 
@@ -117,7 +118,7 @@ forbid post-observation corpus resizing.
 72 design cases, balanced across three runtime families, eight strata, and two
 replicates, with no condition vocabulary or answer leakage.
 
-- [ ] **Task 1.2.2 Complete**
+- [x] **Task 1.2.2 Complete**
 
 #### Subtask 1.2.2.1: Validate Semantics and Authority
 
@@ -125,7 +126,7 @@ replicates, with no condition vocabulary or answer leakage.
 attenuated child authority, bounded paths and budgets, unique semantic digests,
 and adversarial same-prefix, negation, numeric, and injection coverage.
 
-- [ ] **Subtask 1.2.2.1 Complete**
+- [x] **Subtask 1.2.2.1 Complete**
 
 #### Subtask 1.2.2.2: Audit Independence and Blinding
 
@@ -133,7 +134,7 @@ and adversarial same-prefix, negation, numeric, and injection coverage.
 condition names, legends, and expected outputs; retain exclusion and
 replacement decisions in an immutable audit log.
 
-- [ ] **Subtask 1.2.2.2 Complete**
+- [x] **Subtask 1.2.2.2 Complete**
 
 ### Task 1.2.3: Freeze Exact Profiles and the Paired Schedule
 
@@ -141,7 +142,7 @@ replacement decisions in an immutable audit log.
 freeze request parameters and prompt bytes, and materialize a deterministic
 counterbalanced schedule from seed `2026082504`.
 
-- [ ] **Task 1.2.3 Complete**
+- [x] **Task 1.2.3 Complete**
 
 #### Subtask 1.2.3.1: Fail Closed on Profile Drift
 
@@ -149,7 +150,7 @@ counterbalanced schedule from seed `2026082504`.
 when their identifiers and manifests match; otherwise block the campaign and
 require a new preregistration rather than silently substituting a model.
 
-- [ ] **Subtask 1.2.3.1 Complete**
+- [x] **Subtask 1.2.3.1 Complete**
 
 #### Subtask 1.2.3.2: Bound Calls, Replacements, and Retention
 
@@ -157,7 +158,7 @@ require a new preregistration rather than silently substituting a model.
 evidence-linked transport replacement, a 3,072-request ceiling, per-request
 bounds, offline defaults, and retained redacted evidence before execution.
 
-- [ ] **Subtask 1.2.3.2 Complete**
+- [x] **Subtask 1.2.3.2 Complete**
 
 ## Section 1.3: Phase 1 Integration Tests
 

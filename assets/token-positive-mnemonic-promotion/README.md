@@ -34,6 +34,10 @@ authorizes a model call.
 
 ### Subdirectories
 
+- [Campaign inputs](campaign/README.md) — exact power, profile, prompt,
+  schedule, tokenizer, authorization, and resource registrations.
+- [Confirmatory corpus](corpus/README.md) — 48 fresh representation-neutral
+  cases separated from all 72 design cases.
 - [Contracts](contracts/README.md) — the closed P0/P1 scientific contract,
   exact R2 reference, hard token gate, safety and fidelity thresholds, and
   ordered outcomes.

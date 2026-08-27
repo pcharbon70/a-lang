@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/prompt-policy-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "single_turn",
+    "conversation_memory",
+    "examples",
+    "common_instruction",
+    "request_order",
+    "protocols",
+    "legends",
+    "leakage_forbidden",
+    "definitive_response"
+  ],
+  "properties": {
+    "format": {
+      "const": "alang-token-positive-prompt-policy-v1"
+    },
+    "single_turn": {
+      "const": true
+    },
+    "conversation_memory": {
+      "const": false
+    },
+    "examples": {
+      "const": false
+    },
+    "common_instruction": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_order": {
+      "const": [
+        "opaque-trial-id",
+        "common-instruction",
+        "protocol-instruction",
+        "condition-legend",
+        "case-material",
+        "output-contract"
+      ]
+    },
+    "protocols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "conditions",
+          "instruction",
+          "output_contract"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "action-completion",
+              "comprehension",
+              "diagnostic-repair",
+              "generation"
+            ]
+          },
+          "conditions": {
+            "const": [
+              "P0",
+              "P1"
+            ]
+          },
+          "instruction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "output_contract": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "legends": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "condition",
+          "title",
+          "content"
+        ],
+        "properties": {
+          "condition": {
+            "enum": [
+              "P0",
+              "P1"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "leakage_forbidden": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "definitive_response": {
+      "const": "first-provider-response-only"
+    }
+  }
+}

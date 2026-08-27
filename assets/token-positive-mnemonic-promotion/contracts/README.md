@@ -36,6 +36,22 @@ and decoder behavior a new prospective promotion-candidate identity.
   excluded claims, and ordered outcomes.
 - [Campaign contract schema](campaign-contract-v1.schema.json) — closes the
   top-level contract and every nested object against unregistered fields.
+- [Campaign policy schema](campaign-policy-v1.schema.json) — closes offline
+  defaults, authorization, ceilings, replacement, retention, and invalidation.
+- [Case design schema](case-design-v1.schema.json) — closes the balanced
+  family, stratum, and replicate case matrix.
+- [Confirmatory corpus schema](confirmatory-corpus-v1.schema.json) — closes
+  fresh semantic descriptors, audit history, and neutral oracle inputs.
+- [Power design schema](power-design-v1.schema.json) — closes simulation,
+  margin, power, block, and scenario assumptions.
+- [Prompt policy schema](prompt-policy-v1.schema.json) — closes protocol
+  instructions, legends, request order, and leakage exclusions.
+- [Provider profile schema](provider-profiles-v1.schema.json) — closes exact
+  model identities, manifests, parameters, and single-turn settings.
+- [Schedule policy schema](schedule-policy-v1.schema.json) — closes the factor
+  matrix, seed, counterbalance dimensions, replacement, and request ceiling.
+- [Tokenizer profile schema](tokenizer-profiles-v1.schema.json) — closes exact
+  screening identities and provider-accounting requirements.
 
 ## Maintaining this index
 

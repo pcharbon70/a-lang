@@ -43,9 +43,26 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_contract_tests.erl`](alang_mnemonic_contract_tests.erl) —
   tests exact reference hashes, role closure, strict thresholds, every outcome,
   precedence, and unknown-field rejection.
+- [`alang_mnemonic_corpus.erl`](alang_mnemonic_corpus.erl) — validates the 48
+  fresh semantic cases, all-72-case separation, adversarial coverage, exact
+  authority, and neutral-oracle digests using the existing checked semantics.
+- [`alang_mnemonic_design_tests.erl`](alang_mnemonic_design_tests.erl) — tests
+  deterministic power and scheduling, fresh-corpus balance and mutations,
+  exact profiles and prompts, offline ceilings, and trusted residency.
+- [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
+  paired case-cluster audit and prevents selection below the 48-case minimum.
+- [`alang_mnemonic_registration.erl`](alang_mnemonic_registration.erl) —
+  validates exact model/tokenizer profiles, prompt bytes, offline defaults,
+  request ceilings, replacement, retention, and zero-call state.
+- [`alang_mnemonic_schedule.erl`](alang_mnemonic_schedule.erl) — materializes
+  and validates the deterministic, opaque, balanced 1,536-cell P0/P1 schedule.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —
   records the frozen P0/P1 contract, exact historical references, decision
   mutations, BEAM residency, and zero-call boundary.
+- [Section 1.2 integration evidence](section-01-02-integration-evidence.md) —
+  records the power-qualified 48-case selection, fresh all-72-case-separated
+  corpus, exact profiles and prompts, balanced schedule, mutations, ceilings,
+  and zero-call boundary.
 
 ## Maintaining this index
 

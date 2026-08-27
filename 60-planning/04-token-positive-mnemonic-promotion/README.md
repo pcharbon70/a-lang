@@ -225,8 +225,8 @@ or manual override:
 ## Status and change rules
 
 - **Preregistration status:** complete draft; not frozen or authorized.
-- **Implementation status:** Phase 1 Section 1.1 complete; later sections
-  remain unchecked until their clean evidence exists.
+- **Implementation status:** Phase 1 Sections 1.1 and 1.2 complete; Section 1.3
+  remains unchecked until its clean integration evidence exists.
 - Every implementation and evidence checkbox begins unchecked.
 - No model call may occur until Phase 2 publishes and verifies one canonical
   preregistration and qualification digest containing every candidate byte,
@@ -249,7 +249,7 @@ Phase 1: freeze token-positive contract, power, profiles, and fresh corpus
 
 ## Roadmap completion gate
 
-- [ ] A fresh content-digested confirmatory corpus is separated from all 72 design cases
+- [x] A fresh content-digested confirmatory corpus is separated from all 72 design cases
 - [ ] `P1` model-visible bytes exactly match the registered R2 renderer on all frozen and generated cases
 - [ ] `P1` acceptance and decoding exactly match registered R2 on valid and invalid conformance cases
 - [ ] `P0` and `P1` render canonically and reproduce one checked semantic digest
