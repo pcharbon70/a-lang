@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/power-design-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "seed",
+    "simulations",
+    "confidence_percent",
+    "noninferiority_margin",
+    "minimum_central_power",
+    "case_block_size",
+    "candidate_case_counts",
+    "protocols_per_case",
+    "repetitions_per_case",
+    "selection_scenario",
+    "method",
+    "scenarios"
+  ],
+  "properties": {
+    "format": {
+      "const": "alang-token-positive-power-design-v1"
+    },
+    "seed": {
+      "const": 2026082504
+    },
+    "simulations": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "confidence_percent": {
+      "const": 95
+    },
+    "noninferiority_margin": {
+      "const": -0.05
+    },
+    "minimum_central_power": {
+      "const": 0.8
+    },
+    "case_block_size": {
+      "const": 24
+    },
+    "candidate_case_counts": {
+      "const": [
+        24,
+        48,
+        72
+      ]
+    },
+    "protocols_per_case": {
+      "const": 4
+    },
+    "repetitions_per_case": {
+      "const": 2
+    },
+    "selection_scenario": {
+      "const": "central"
+    },
+    "method": {
+      "const": "paired-case-cluster-normal-simulation"
+    },
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "both_correct",
+          "readable_only_correct",
+          "compact_only_correct",
+          "both_incorrect"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "optimistic",
+              "central",
+              "adverse"
+            ]
+          },
+          "both_correct": {
+            "type": "number"
+          },
+          "readable_only_correct": {
+            "type": "number"
+          },
+          "compact_only_correct": {
+            "type": "number"
+          },
+          "both_incorrect": {
+            "type": "number"
+          }
+        }
+      },
+      "minItems": 3,
+      "maxItems": 3
+    }
+  }
+}

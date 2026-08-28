@@ -1,0 +1,65 @@
+---
+title: "Token-Positive Mnemonic Promotion Contracts"
+kind: map
+created: 2026-08-27
+tags:
+  - directory-index
+  - experiment-design
+  - token-efficiency
+aliases: []
+---
+
+# Token-Positive Mnemonic Promotion Contracts (`assets/token-positive-mnemonic-promotion/contracts`)
+
+## Purpose
+
+This directory contains closed machine-readable contracts for the P0/P1
+campaign. They preserve the historical R2 role while giving its exact bytes
+and decoder behavior a new prospective promotion-candidate identity.
+
+## What belongs here
+
+- The exact two-condition scientific contract and its JSON Schema.
+- Later closed schemas for corpus, schedule, profiles, and evidence records.
+- Immutable token, safety, fidelity, validity, and outcome ordering rules.
+
+## Index
+
+### Subdirectories
+
+- None yet.
+
+### Files
+
+- [Campaign contract](campaign-contract-v1.json) — registers P0 and P1, the
+  exact R2 references, all four protocols, inference boundaries, hard gates,
+  excluded claims, and ordered outcomes.
+- [Campaign contract schema](campaign-contract-v1.schema.json) — closes the
+  top-level contract and every nested object against unregistered fields.
+- [Campaign policy schema](campaign-policy-v1.schema.json) — closes offline
+  defaults, authorization, ceilings, replacement, retention, and invalidation.
+- [Case design schema](case-design-v1.schema.json) — closes the balanced
+  family, stratum, and replicate case matrix.
+- [Confirmatory corpus schema](confirmatory-corpus-v1.schema.json) — closes
+  fresh semantic descriptors, audit history, and neutral oracle inputs.
+- [Power design schema](power-design-v1.schema.json) — closes simulation,
+  margin, power, block, and scenario assumptions.
+- [Prompt policy schema](prompt-policy-v1.schema.json) — closes protocol
+  instructions, legends, request order, and leakage exclusions.
+- [Preregistration evidence schema](preregistration-evidence-v1.schema.json) —
+  closes the 21-file Phase 1 digest, derived evidence, design boundary, scope,
+  mutation results, and zero-call record.
+- [Provider profile schema](provider-profiles-v1.schema.json) — closes exact
+  model identities, manifests, parameters, and single-turn settings.
+- [Schedule policy schema](schedule-policy-v1.schema.json) — closes the factor
+  matrix, seed, counterbalance dimensions, replacement, and request ceiling.
+- [Tokenizer profile schema](tokenizer-profiles-v1.schema.json) — closes exact
+  screening identities and provider-accounting requirements.
+- [Traceability schema](traceability-v1.schema.json) — closes provenance,
+  historical design evidence, included and excluded scope, and the prospective
+  observation boundary.
+
+## Maintaining this index
+
+Keep schemas closed, version changes explicitly, and never relax a gate or
+change P1 rendering or decoding under an existing campaign version.

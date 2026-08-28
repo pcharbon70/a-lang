@@ -1,0 +1,86 @@
+{
+  "format": "alang-token-positive-campaign-policy-v1",
+  "network_default": "disabled",
+  "live_opt_in": {
+    "environment_variable": "ALANG_ALLOW_MNEMONIC_MODEL_CALLS",
+    "required_value": "1",
+    "endpoint": "http://127.0.0.1:11434",
+    "credentials_required": []
+  },
+  "availability": {
+    "probe": "ollama-manifest-sha256",
+    "all_profiles_required_before_authorization": true,
+    "missing_profile": "block-campaign",
+    "manifest_mismatch": "invalidate-campaign"
+  },
+  "design": {
+    "semantic_cases": 48,
+    "primary_cells": 1536,
+    "hard_request_ceiling": 3072,
+    "model_families": 2,
+    "paired_repetitions": 2,
+    "protocols": 4,
+    "conditions": 2
+  },
+  "per_request_ceilings": {
+    "accepted_source_bytes": 8192,
+    "accepted_input_bytes": 32768,
+    "accepted_response_bytes": 8192,
+    "max_output_tokens": 8192,
+    "timeout_ms": 120000
+  },
+  "campaign_ceilings": {
+    "primary_requests": 1536,
+    "all_requests": 3072,
+    "local_compute_minutes": 6400,
+    "monetary_cost_usd": 0
+  },
+  "replacement": {
+    "blind_retry": false,
+    "max_replacements_per_primary_cell": 1,
+    "allowed_only_when": [
+      "transport-failure-before-response",
+      "timeout-before-response-metadata"
+    ],
+    "forbidden_when": [
+      "definitive-response-received",
+      "definitive-refusal",
+      "truncated",
+      "malformed-output",
+      "score-failure",
+      "uncertain-submission"
+    ]
+  },
+  "retention": {
+    "retain": [
+      "redacted-prompt",
+      "raw-response",
+      "normalized-response",
+      "deterministic-score",
+      "bounded-request-metadata",
+      "provider-token-usage",
+      "content-digest"
+    ],
+    "exclude": [
+      "credential",
+      "authorization-header",
+      "unredacted-secret",
+      "provider-internal-trace"
+    ],
+    "path": "build/token-positive-mnemonic-promotion/phase-03/evidence",
+    "minimum_days": 365
+  },
+  "invalid_campaign_triggers": [
+    "model-identifier-drift",
+    "model-manifest-drift",
+    "provider-parameter-drift",
+    "tokenizer-version-drift",
+    "r2-reference-drift",
+    "case-or-schedule-digest-drift",
+    "request-ceiling-exceeded",
+    "compute-ceiling-exceeded",
+    "unregistered-replacement",
+    "missing-provider-token-usage",
+    "model-visible-call-before-authorization"
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "format": "alang-token-positive-case-design-v1",
+  "boundary": "prospective-confirmatory-held-out",
+  "cases": [
+    {
+      "id": "tp-sma-simple-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "simple",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-simple-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "simple",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-sma-constraints-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "constraint-heavy",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-constraints-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "constraint-heavy",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-sma-scope-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "scope-budget",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-scope-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "scope-budget",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-sma-error-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "error-branch",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-error-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "error-branch",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-sma-missing-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "missing-information",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-missing-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "missing-information",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-sma-context-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "irrelevant-context",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-context-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "irrelevant-context",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-sma-injection-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "prompt-injection",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-injection-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "prompt-injection",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-sma-lexical-a",
+      "runtime_family": "single-model-artifact",
+      "stratum": "lexical-value-perturbation",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-sma-lexical-b",
+      "runtime_family": "single-model-artifact",
+      "stratum": "lexical-value-perturbation",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-simple-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "simple",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-simple-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "simple",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-constraints-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "constraint-heavy",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-constraints-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "constraint-heavy",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-scope-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "scope-budget",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-scope-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "scope-budget",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-error-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "error-branch",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-error-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "error-branch",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-missing-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "missing-information",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-missing-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "missing-information",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-context-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "irrelevant-context",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-context-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "irrelevant-context",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-injection-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "prompt-injection",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-injection-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "prompt-injection",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-rap-lexical-a",
+      "runtime_family": "repair-and-publish",
+      "stratum": "lexical-value-perturbation",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-rap-lexical-b",
+      "runtime_family": "repair-and-publish",
+      "stratum": "lexical-value-perturbation",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-simple-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "simple",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-simple-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "simple",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-constraints-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "constraint-heavy",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-constraints-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "constraint-heavy",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-scope-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "scope-budget",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-scope-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "scope-budget",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-error-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "error-branch",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-error-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "error-branch",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-missing-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "missing-information",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-missing-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "missing-information",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-context-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "irrelevant-context",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-context-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "irrelevant-context",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-injection-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "prompt-injection",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-injection-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "prompt-injection",
+      "replicate": "b"
+    },
+    {
+      "id": "tp-ad-lexical-a",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "lexical-value-perturbation",
+      "replicate": "a"
+    },
+    {
+      "id": "tp-ad-lexical-b",
+      "runtime_family": "attenuated-delegation",
+      "stratum": "lexical-value-perturbation",
+      "replicate": "b"
+    }
+  ]
+}

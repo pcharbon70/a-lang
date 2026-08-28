@@ -1,0 +1,41 @@
+{
+  "format": "alang-token-positive-power-design-v1",
+  "seed": 2026082504,
+  "simulations": 2000,
+  "confidence_percent": 95,
+  "noninferiority_margin": -0.05,
+  "minimum_central_power": 0.8,
+  "case_block_size": 24,
+  "candidate_case_counts": [
+    24,
+    48,
+    72
+  ],
+  "protocols_per_case": 4,
+  "repetitions_per_case": 2,
+  "selection_scenario": "central",
+  "method": "paired-case-cluster-normal-simulation",
+  "scenarios": [
+    {
+      "id": "optimistic",
+      "both_correct": 0.88,
+      "readable_only_correct": 0.02,
+      "compact_only_correct": 0.02,
+      "both_incorrect": 0.08
+    },
+    {
+      "id": "central",
+      "both_correct": 0.8,
+      "readable_only_correct": 0.05,
+      "compact_only_correct": 0.05,
+      "both_incorrect": 0.1
+    },
+    {
+      "id": "adverse",
+      "both_correct": 0.7,
+      "readable_only_correct": 0.1,
+      "compact_only_correct": 0.1,
+      "both_incorrect": 0.1
+    }
+  ]
+}

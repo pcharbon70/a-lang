@@ -37,6 +37,9 @@ archive when a link is sufficient.
 - [Effectful source fidelity assets](effectful-source-fidelity/README.md) — the
   frozen schemas, paired corpus, provider profiles, prompts, and campaign
   inputs for the task-language source experiment.
+- [Token-positive mnemonic promotion assets](token-positive-mnemonic-promotion/README.md)
+  — the exact-R2 P0/P1 contract and prospective corpus, profile, schedule, and
+  registration inputs for the full-protocol mnemonic campaign.
 
 ### Files
 

@@ -1,0 +1,40 @@
+{
+  "format": "alang-token-positive-schedule-policy-v1",
+  "seed": 2026082504,
+  "selected_cases": 48,
+  "model_families": [
+    "mixtral",
+    "ornith"
+  ],
+  "repetitions": 2,
+  "protocol_conditions": {
+    "action-completion": [
+      "P0",
+      "P1"
+    ],
+    "comprehension": [
+      "P0",
+      "P1"
+    ],
+    "diagnostic-repair": [
+      "P0",
+      "P1"
+    ],
+    "generation": [
+      "P0",
+      "P1"
+    ]
+  },
+  "counterbalance_by": [
+    "model-family",
+    "protocol",
+    "runtime-family",
+    "stratum",
+    "repetition"
+  ],
+  "primary_cells": 1536,
+  "max_replacements_per_cell": 1,
+  "hard_request_ceiling": 3072,
+  "definitive_response_retriable": false,
+  "opaque_trial_id_bytes": 12
+}

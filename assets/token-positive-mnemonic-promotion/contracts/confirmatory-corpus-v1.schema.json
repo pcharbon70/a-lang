@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/confirmatory-corpus-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "boundary",
+    "development_corpus",
+    "prior_confirmatory_corpus",
+    "families",
+    "strata",
+    "coverage_required",
+    "audit_log",
+    "cases"
+  ],
+  "properties": {
+    "format": {
+      "const": "alang-token-positive-confirmatory-corpus-v1"
+    },
+    "boundary": {
+      "const": "prospective-confirmatory-held-out"
+    },
+    "development_corpus": {
+      "const": "assets/effectful-source-fidelity/corpus"
+    },
+    "prior_confirmatory_corpus": {
+      "const": "assets/compact-projection-fidelity/corpus/confirmatory-corpus-v1.json"
+    },
+    "families": {
+      "const": [
+        "single-model-artifact",
+        "repair-and-publish",
+        "attenuated-delegation"
+      ]
+    },
+    "strata": {
+      "const": [
+        "simple",
+        "constraint-heavy",
+        "scope-budget",
+        "error-branch",
+        "missing-information",
+        "irrelevant-context",
+        "prompt-injection",
+        "lexical-value-perturbation"
+      ]
+    },
+    "coverage_required": {
+      "const": [
+        "same-prefix",
+        "negation",
+        "numeric-value",
+        "prompt-injection"
+      ]
+    },
+    "audit_log": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blinded_to_representation_conditions",
+        "excluded_case_ids",
+        "replacement_case_ids",
+        "review_rule"
+      ],
+      "properties": {
+        "blinded_to_representation_conditions": {
+          "const": true
+        },
+        "excluded_case_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "replacement_case_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "review_rule": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "runtime_family",
+          "stratum",
+          "replicate",
+          "request",
+          "untrusted_context",
+          "oracle"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "runtime_family": {
+            "enum": [
+              "single-model-artifact",
+              "repair-and-publish",
+              "attenuated-delegation"
+            ]
+          },
+          "stratum": {
+            "enum": [
+              "simple",
+              "constraint-heavy",
+              "scope-budget",
+              "error-branch",
+              "missing-information",
+              "irrelevant-context",
+              "prompt-injection",
+              "lexical-value-perturbation"
+            ]
+          },
+          "replicate": {
+            "enum": [
+              "a",
+              "b"
+            ]
+          },
+          "request": {
+            "type": "string",
+            "minLength": 24
+          },
+          "untrusted_context": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "oracle": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "goal_facts",
+              "input_name",
+              "model",
+              "workspace",
+              "path",
+              "max_bytes",
+              "timeout_ms",
+              "error_on",
+              "clarifications",
+              "terminal"
+            ],
+            "properties": {
+              "goal_facts": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "input_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "workspace": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "max_bytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8192
+              },
+              "timeout_ms": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 120000
+              },
+              "error_on": {
+                "enum": [
+                  null,
+                  "denied",
+                  "timeout",
+                  "invalid-output",
+                  "verification-failed"
+                ]
+              },
+              "clarifications": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "terminal": {
+                "enum": [
+                  "complete",
+                  "needs-clarification"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "minItems": 48,
+      "maxItems": 48
+    }
+  }
+}
