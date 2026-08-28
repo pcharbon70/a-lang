@@ -24,6 +24,7 @@ normalize(Cell, Request, Result, Oracle, Root) ->
         exact(maps:get(<<"response_sha256">>, Result), hex(crypto:hash(sha256, Response)),
             response_digest),
         {ok, Usage} = checked(validate_usage(maps:get(<<"usage">>, Result))),
+        ensure(maps:get(<<"output_tokens">>, Usage) =< 8192, output_token_ceiling),
         Protocol = maps:get(<<"protocol">>, Cell),
         Condition = maps:get(<<"condition">>, Cell),
         {ok, Score} = alang_mnemonic_protocol:score(Protocol, Condition,

@@ -1,6 +1,7 @@
 -module(alang_mnemonic_live_gate).
 
--export([authorize/4, decode_inventory/1, validate_submission/6]).
+-export([authorize/4, decode_inventory/1, validate_inventory/2,
+    validate_submission/6]).
 
 -define(PROFILES, "assets/token-positive-mnemonic-promotion/campaign/provider-profiles-v1.json").
 -define(POLICY, "assets/token-positive-mnemonic-promotion/campaign/campaign-policy-v1.json").
@@ -28,10 +29,7 @@ authorize(Evidence, Root, Environment, Inventory) ->
         {ok, _} = checked(alang_mnemonic_registration:validate_profiles(Profiles)),
         {ok, _} = checked(alang_mnemonic_registration:validate_policy(Policy)),
         FullProfiles = [profile_identity(P) || P <- maps:get(<<"profiles">>, Profiles)],
-        Required = [maps:with([<<"model_id">>, <<"manifest_sha256">>], P)
-            || P <- FullProfiles],
-        Actual = lists:sort([closed_inventory(I) || I <- Inventory]),
-        exact(Actual, lists:sort(Required), model_inventory),
+        {ok, _} = checked(validate_inventory(Profiles, Inventory)),
         Body = #{
             <<"format">> => <<"alang-token-positive-phase-3-live-token-v1">>,
             <<"qualification_digest">> => maps:get(<<"qualification_digest">>, BaseToken),
@@ -44,6 +42,28 @@ authorize(Evidence, Root, Environment, Inventory) ->
             <<"scope">> => <<"phase-3-exact-profile-submissions-only">>
         },
         {ok, Body#{<<"token_digest">> => alang_fidelity_json:digest(Body)}}
+    catch
+        error:{badkey, Key} -> {error, {mnemonic_live_gate_error, {missing_field, Key}}};
+        throw:{mnemonic_live_gate_error, Reason} -> {error, {mnemonic_live_gate_error, Reason}}
+    end.
+
+-spec validate_inventory(map(), [map()]) -> {ok, [map()]} | {error, term()}.
+validate_inventory(Profiles, Inventory) ->
+    try
+        FullProfiles = [profile_identity(P) || P <- maps:get(<<"profiles">>, Profiles)],
+        Required = [maps:with([<<"model_id">>, <<"manifest_sha256">>], P)
+            || P <- FullProfiles],
+        Actual = [closed_inventory(I) || I <- Inventory],
+        Ids = [maps:get(<<"model_id">>, I) || I <- Actual],
+        ensure(length(Ids) =:= length(lists:usort(Ids)), duplicate_model_id),
+        lists:foreach(fun(Expected) ->
+            Id = maps:get(<<"model_id">>, Expected),
+            case [I || I <- Actual, maps:get(<<"model_id">>, I) =:= Id] of
+                [Observed] -> exact(Observed, Expected, {model_manifest, Id});
+                [] -> fail({missing_model, Id})
+            end
+        end, Required),
+        {ok, Required}
     catch
         error:{badkey, Key} -> {error, {mnemonic_live_gate_error, {missing_field, Key}}};
         throw:{mnemonic_live_gate_error, Reason} -> {error, {mnemonic_live_gate_error, Reason}}

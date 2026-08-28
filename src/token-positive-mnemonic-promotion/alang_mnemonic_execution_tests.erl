@@ -8,6 +8,10 @@ exact_inventory_authorizes_and_drift_fails() ->
     Evidence = qualification(), Inventory = inventory(),
     {ok, Token} = alang_mnemonic_live_gate:authorize(Evidence, ".", env(), Inventory),
     ?assertEqual(true, maps:get(<<"authorized">>, Token)),
+    Extra = #{<<"model_id">> => <<"unregistered-local-model">>,
+        <<"manifest_sha256">> => zeros()},
+    ?assertMatch({ok, _}, alang_mnemonic_live_gate:authorize(
+        Evidence, ".", env(), [Extra | Inventory])),
     [First | Rest] = Inventory,
     Drift = [First#{<<"manifest_sha256">> := zeros()} | Rest],
     ?assertMatch({error, _}, alang_mnemonic_live_gate:authorize(Evidence, ".", env(), Drift)),

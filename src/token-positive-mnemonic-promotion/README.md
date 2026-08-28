@@ -75,6 +75,9 @@ gated loopback adapter; normal builds and tests remain offline.
 - [`alang_mnemonic_integration_tests.erl`](alang_mnemonic_integration_tests.erl)
   — reconciles the complete registration, deterministic evidence, design-
   evidence boundary, mutation coverage, traceability, and BEAM residency.
+- [`alang_mnemonic_limits.erl`](alang_mnemonic_limits.erl) — rejects the first
+  projected request, byte, output-token, time, compute, or monetary ceiling
+  excess before transport.
 - [`alang_mnemonic_mutation.erl`](alang_mnemonic_mutation.erl) — seeds and
   requires detection of 19 scientific-role, threshold, corpus, schedule,
   profile, prompt, and inference defects.
@@ -102,6 +105,15 @@ gated loopback adapter; normal builds and tests remain offline.
 - [`alang_mnemonic_phase2_residency.erl`](alang_mnemonic_phase2_residency.erl)
   — hashes the trusted source and BEAM closure and rejects foreign sources,
   ports, NIFs, shell commands, interpreted forms, and forbidden imports.
+- [`alang_mnemonic_phase3_integration_tests.erl`](alang_mnemonic_phase3_integration_tests.erl)
+  — verifies 19/19 fault mutations, every resource boundary, the frozen
+  qualification digest, zero observation claims, and trusted residency.
+- [`alang_mnemonic_phase3_mutation.erl`](alang_mnemonic_phase3_mutation.erl) —
+  seeds identity, submission, usage, pairing, response, scoring, safety,
+  replay, ceiling, and replacement defects.
+- [`alang_mnemonic_phase3_residency.erl`](alang_mnemonic_phase3_residency.erl) —
+  audits the nine-module Phase 3 BEAM closure and confines HTTP imports to the
+  scoped Ollama adapter.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.
 - [`alang_mnemonic_preregister.erl`](alang_mnemonic_preregister.erl) — closes
@@ -155,6 +167,9 @@ gated loopback adapter; normal builds and tests remain offline.
 - [Section 3.2 readiness evidence](section-03-02-readiness-evidence.md) —
   records closed provider usage, deterministic semantic and safety scoring,
   paired token materialization, and offline replay readiness.
+- [Section 3.3 readiness evidence](section-03-03-readiness-evidence.md) —
+  records 19 fault mutations, ceiling boundaries, network isolation, trusted
+  BEAM residency, and the explicit no-observation publication boundary.
 
 ## Maintaining this index
 

@@ -172,6 +172,11 @@ transport journaling, replacement bounds, provider usage, deterministic
 scoring, safety vetoes, ceiling enforcement, and replay before accepting the
 hosted campaign evidence.
 
+[Section 3.3 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-03-readiness-evidence.md)
+records the offline mutation, ceiling, network-isolation, residency, and
+digest tests. Hosted evidence publication and the section completion box remain
+open because no authorized campaign was run.
+
 - [ ] **Section 3.3 Complete**
 
 ### Task 3.3.1: Run Fault and Mutation Campaigns
