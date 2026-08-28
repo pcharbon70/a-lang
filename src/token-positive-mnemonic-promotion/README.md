@@ -71,6 +71,20 @@ belong to Phase 3 and remain unauthorized here.
   writes canonical Phase 1 evidence from a clean offline ERTS process.
 - [`alang_mnemonic_phase2_worker.erl`](alang_mnemonic_phase2_worker.erl) —
   writes canonical Phase 2 qualification evidence in an isolated ERTS process.
+- [`alang_mnemonic_phase2_evidence.erl`](alang_mnemonic_phase2_evidence.erl) —
+  reconciles qualification with all-corpus replay, mutation results, trusted
+  residency, authorization, and the final zero-call evidence digest.
+- [`alang_mnemonic_phase2_integration_tests.erl`](alang_mnemonic_phase2_integration_tests.erl)
+  — verifies clean evidence equality, 136 replay pairs, 18 mutants, 16 trusted
+  modules, and qualification/authorization digest agreement.
+- [`alang_mnemonic_phase2_integration_worker.erl`](alang_mnemonic_phase2_integration_worker.erl)
+  — writes final Phase 2 evidence in an isolated offline ERTS process.
+- [`alang_mnemonic_phase2_mutation.erl`](alang_mnemonic_phase2_mutation.erl) —
+  seeds candidate, alias, map, token, oracle, prompt, authorization, profile,
+  schedule, source, and runtime-import defects.
+- [`alang_mnemonic_phase2_residency.erl`](alang_mnemonic_phase2_residency.erl)
+  — hashes the trusted source and BEAM closure and rejects foreign sources,
+  ports, NIFs, shell commands, interpreted forms, and forbidden imports.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.
 - [`alang_mnemonic_preregister.erl`](alang_mnemonic_preregister.erl) — closes
@@ -109,6 +123,9 @@ belong to Phase 3 and remain unauthorized here.
 - [Section 2.2 integration evidence](section-02-02-integration-evidence.md) —
   records four deterministic protocols, exact token-positive results, the
   50-file registration, qualification digest, and explicit authorization gate.
+- [Section 2.3 integration evidence](section-02-03-integration-evidence.md) —
+  records all-corpus replay, 18/18 named mutants, the 16-module trusted BEAM
+  closure, clean final reproduction, and the zero-call Phase 2 boundary.
 
 ## Maintaining this index
 

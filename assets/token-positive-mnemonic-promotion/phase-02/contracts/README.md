@@ -54,6 +54,9 @@ Phase 2 evidence before any model call.
 - [Authorization contract schema](authorization-v1.schema.json) — closes the
   authorization digest, environment variable, required value, and fail-closed
   drift policy.
+- [Phase 2 evidence schema](phase-2-evidence-v1.schema.json) — closes replay,
+  mutation, trusted-residency, digest reconciliation, and zero-call evidence
+  published after qualification.
 
 ## Maintaining this index
 

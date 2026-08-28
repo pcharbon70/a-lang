@@ -224,9 +224,9 @@ or manual override:
 
 ## Status and change rules
 
-- **Preregistration status:** Phase 1 design frozen under a reproducible 21-file
-  digest; Phase 2 qualification and live authorization remain incomplete.
-- **Implementation status:** Phase 1 complete; Phase 2 is next.
+- **Preregistration status:** Phase 2 qualified under one reproducible 50-file
+  registration and explicit digest-bound live-authorization contract.
+- **Implementation status:** Phases 1 and 2 complete; Phase 3 is next.
 - Every implementation and evidence checkbox begins unchecked.
 - No model call may occur until Phase 2 publishes and verifies one canonical
   preregistration and qualification digest containing every candidate byte,

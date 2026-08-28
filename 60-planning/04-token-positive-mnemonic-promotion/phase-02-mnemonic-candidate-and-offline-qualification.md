@@ -169,7 +169,8 @@ submit a model-visible request.
 token eligibility, compiler residency, preregistration immutability, and zero-
 call isolation from clean ERTS processes.
 
-- [ ] **Section 2.3 Complete**
+- [x] **Section 2.3 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-02-03-integration-evidence.md).
 
 ### Task 2.3.1: Run Corpus, Property, and Mutation Suites
 
@@ -177,7 +178,7 @@ call isolation from clean ERTS processes.
 conditions and four protocols, then seed renderer, decoder, alias, source-map,
 accounting, oracle, version, and authority defects.
 
-- [ ] **Task 2.3.1 Complete**
+- [x] **Task 2.3.1 Complete**
 
 #### Subtask 2.3.1.1: Reproduce Candidate and Token Evidence
 
@@ -186,14 +187,14 @@ plus byte-identical semantic digests, source maps, prompts, token reports, and
 registration evidence across clean processes and recursively shuffled input
 maps.
 
-- [ ] **Subtask 2.3.1.1 Complete**
+- [x] **Subtask 2.3.1.1 Complete**
 
 #### Subtask 2.3.1.2: Measure Mutation Adequacy
 
 **Description:** Report every seeded defect and fail the phase if any mutant
 survives its named semantic, token, authorization, or residency gate.
 
-- [ ] **Subtask 2.3.1.2 Complete**
+- [x] **Subtask 2.3.1.2 Complete**
 
 ### Task 2.3.2: Inspect Trusted Residency and Isolation
 
@@ -201,7 +202,7 @@ survives its named semantic, token, authorization, or residency gate.
 calls, and artifacts and reject provider SDKs, ports, NIFs, shell commands,
 interpreted forms, or foreign tokenizer executables.
 
-- [ ] **Task 2.3.2 Complete**
+- [x] **Task 2.3.2 Complete**
 
 #### Subtask 2.3.2.1: Publish the Trusted Module Closure
 
@@ -209,7 +210,7 @@ interpreted forms, or foreign tokenizer executables.
 parser, checker, renderer, decoder, tokenizer, map, protocol, scorer,
 registration, authorization, and replay modules.
 
-- [ ] **Subtask 2.3.2.1 Complete**
+- [x] **Subtask 2.3.2.1 Complete**
 
 #### Subtask 2.3.2.2: Publish Phase 2 Evidence
 
@@ -217,7 +218,7 @@ registration, authorization, and replay modules.
 schedule reconciliation, mutations, residency, no-call evidence, and clean
 commands without making a model-fidelity claim.
 
-- [ ] **Subtask 2.3.2.2 Complete**
+- [x] **Subtask 2.3.2.2 Complete**
 
 ## Phase 2 Completion Evidence
 
@@ -225,18 +226,18 @@ commands without making a model-fidelity claim.
 reversible, materially token-positive on every frozen case, and bound into an
 immutable prospective registration.
 
-- [ ] `P0` and `P1` are canonical, bounded, versioned, and semantically equal
-- [ ] `P1` output is byte-for-byte identical to registered R2 on all frozen and generated cases
-- [ ] `P1` acceptance and decoding match registered R2 on valid and invalid conformance cases
-- [ ] Every mnemonic alias is registered, reversible, and group-sensitive
-- [ ] Source maps cover every token and security-relevant field
-- [ ] All four protocols have deterministic condition-symmetric oracles
-- [ ] Every document and full request is strictly token-positive under both tokenizers
-- [ ] Aggregate and median document and request savings are at least 5%
-- [ ] Mutations detect semantic, authority, alias, mapping, accounting, and authorization defects
-- [ ] Trusted modules load from deterministic `.beam` artifacts on ERTS
-- [ ] One complete preregistration digest reproduces with zero model calls
-- [ ] Live authorization fails on any digest, profile, prompt, corpus, or code drift
+- [x] `P0` and `P1` are canonical, bounded, versioned, and semantically equal
+- [x] `P1` output is byte-for-byte identical to registered R2 on all frozen and generated cases
+- [x] `P1` acceptance and decoding match registered R2 on valid and invalid conformance cases
+- [x] Every mnemonic alias is registered, reversible, and group-sensitive
+- [x] Source maps cover every token and security-relevant field
+- [x] All four protocols have deterministic condition-symmetric oracles
+- [x] Every document and full request is strictly token-positive under both tokenizers
+- [x] Aggregate and median document and request savings are at least 5%
+- [x] Mutations detect semantic, authority, alias, mapping, accounting, and authorization defects
+- [x] Trusted modules load from deterministic `.beam` artifacts on ERTS
+- [x] One complete preregistration digest reproduces with zero model calls
+- [x] Live authorization fails on any digest, profile, prompt, corpus, or code drift
 
 ## Connections
 

@@ -51,7 +51,7 @@ and the complete token-report digest is
 
 Fifty Phase 1 inputs, Phase 2 contracts, external digest-pinned assets, and
 trusted source modules produce registration digest
-`603236e56a2abfab85366d795253ea3353e6067bd6ea7371612d80bd6713f486`.
+`351f07c0d0b91f1d34426cc74789b782b3249650a3ed38f2ebd14e10176e4d05`.
 Together with candidate, protocol, token, and schedule evidence, they produce
 qualification digest
 `e00fe1b40807d052523a2999fc3584d9a4e5cf6736766cc4f0565f9c09c7417f`.
