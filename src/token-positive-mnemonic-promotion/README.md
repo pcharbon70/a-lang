@@ -26,8 +26,8 @@ It reuses R2 by exact reference and never changes the historical campaign.
 - EUnit, mutation, clean-process, and zero-call integration evidence.
 
 Generated BEAM files and machine evidence belong under the ignored
-`build/token-positive-mnemonic-promotion/` directory. Live model adapters
-belong to Phase 3 and remain unauthorized here.
+`build/token-positive-mnemonic-promotion/` directory. Phase 3 adds a separately
+gated loopback adapter; normal builds and tests remain offline.
 
 ## Index
 
@@ -49,6 +49,17 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_authorization_tests.erl`](alang_mnemonic_authorization_tests.erl)
   — tests the exact handshake and fail-closed digest, opt-in, and contract
   behavior without performing a request.
+- [`alang_mnemonic_execution_tests.erl`](alang_mnemonic_execution_tests.erl) —
+  tests exact live identities, bounded requests, schedule order, replacement
+  rules, Ollama decoding, and durable journal integrity without network use.
+- [`alang_mnemonic_journal.erl`](alang_mnemonic_journal.erl) — maintains a
+  qualification- and schedule-bound append-only record chain around each
+  transport attempt.
+- [`alang_mnemonic_live_gate.erl`](alang_mnemonic_live_gate.erl) — rebuilds the
+  frozen qualification and requires exact opt-in, model IDs, manifests,
+  parameters, prompts, and ceilings before every prepared submission.
+- [`alang_mnemonic_ollama.erl`](alang_mnemonic_ollama.erl) — contains the only
+  Phase 3 loopback transport path and validates exact provider response usage.
 - [`alang_mnemonic_contract.erl`](alang_mnemonic_contract.erl) — validates
   exact P0/P1 roles and R2 references and applies validity, token, safety, and
   fidelity gates in their frozen order.
@@ -105,6 +116,9 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_registration.erl`](alang_mnemonic_registration.erl) —
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
+- [`alang_mnemonic_runner.erl`](alang_mnemonic_runner.erl) — advances only the
+  next registered cell and enforces pending-intent, request, disposition, and
+  one-replacement state.
 - [`alang_mnemonic_schedule.erl`](alang_mnemonic_schedule.erl) — materializes
   and validates the deterministic, opaque, balanced 1,536-cell P0/P1 schedule.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —
@@ -126,6 +140,9 @@ belong to Phase 3 and remain unauthorized here.
 - [Section 2.3 integration evidence](section-02-03-integration-evidence.md) —
   records all-corpus replay, 18/18 named mutants, the 16-module trusted BEAM
   closure, clean final reproduction, and the zero-call Phase 2 boundary.
+- [Section 3.1 readiness evidence](section-03-01-readiness-evidence.md) —
+  records the implemented authorization, journal, transport, and replacement
+  boundary while retaining the visible live-prerequisite block.
 
 ## Maintaining this index
 

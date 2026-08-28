@@ -23,6 +23,11 @@ trial deterministically, and reproduce the complete observation set offline.
 **Description:** Make a live request possible only for the exact preregistered
 digest, model artifacts, prompt bytes, schedule cell, and bounded opt-in state.
 
+Implementation readiness is recorded in
+[Section 3.1 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-01-readiness-evidence.md).
+The completion box remains open because the exact Mixtral artifact and the
+registered explicit live opt-in were unavailable; no hosted call occurred.
+
 - [ ] **Section 3.1 Complete**
 
 ### Task 3.1.1: Validate the Live Gate Before Every Submission
