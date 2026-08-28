@@ -37,6 +37,12 @@ belong to Phase 3 and remain unauthorized here.
 
 ### Files
 
+- [`alang_mnemonic_candidate.erl`](alang_mnemonic_candidate.erl) — validates
+  exact reused references and binds P0/R0 and P1/R2 rendering, decoding,
+  semantic equality, complete source maps, and readable diagnostics.
+- [`alang_mnemonic_candidate_tests.erl`](alang_mnemonic_candidate_tests.erl) —
+  proves exact P1/R2 bytes across 136 frozen and generated oracles, identical
+  acceptance and decoding, stable maps, bounds, and trusted residency.
 - [`alang_mnemonic_contract.erl`](alang_mnemonic_contract.erl) — validates
   exact P0/P1 roles and R2 references and applies validity, token, safety, and
   fidelity gates in their frozen order.
@@ -77,6 +83,9 @@ belong to Phase 3 and remain unauthorized here.
 - [Section 1.3 integration evidence](section-01-03-integration-evidence.md) —
   records deterministic full-phase reproduction, design-input separation,
   closed schemas, 19 detected mutants, BEAM residency, and zero hosted calls.
+- [Section 2.1 integration evidence](section-02-01-integration-evidence.md) —
+  records exact P1/R2 rendering and decoding, closed aliases and bounds,
+  complete stable source maps, readable diagnostics, and zero-call isolation.
 
 ## Maintaining this index
 

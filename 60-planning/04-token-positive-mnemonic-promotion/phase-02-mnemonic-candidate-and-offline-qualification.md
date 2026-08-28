@@ -26,7 +26,8 @@ role without changing its model-visible bytes, then add exact conformance,
 inverse-semantics, source-map, bounds, and readable-diagnostic evidence around
 it.
 
-- [ ] **Section 2.1 Complete**
+- [x] **Section 2.1 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-02-01-integration-evidence.md).
 
 ### Task 2.1.1: Reuse Canonical R2 Rendering for `P1`
 
@@ -35,7 +36,7 @@ and version, decode through the existing A-Lang-owned parser and checker, and
 require both byte equality with R2 and the same origin-free semantic digest as
 readable `P0`.
 
-- [ ] **Task 2.1.1 Complete**
+- [x] **Task 2.1.1 Complete**
 
 #### Subtask 2.1.1.1: Freeze Closed Group-Sensitive Aliases
 
@@ -44,7 +45,7 @@ declaration, scope, budget, operation, predicate, and relation aliases by
 semantic group; preserve unknown readable vocabulary and reject cross-group
 meaning, collisions, and unregistered flags.
 
-- [ ] **Subtask 2.1.1.1 Complete**
+- [x] **Subtask 2.1.1.1 Complete**
 
 #### Subtask 2.1.1.2: Enforce Bounds and Version Closure
 
@@ -54,7 +55,7 @@ bytes not produced by the canonical renderer, and any canonical P1 rendering
 that differs from R2 by even one byte. Require P1 and R2 to accept, reject, and
 decode the same valid and invalid conformance inputs.
 
-- [ ] **Subtask 2.1.1.2 Complete**
+- [x] **Subtask 2.1.1.2 Complete**
 
 ### Task 2.1.2: Produce Readable Source Maps and Diagnostics
 
@@ -62,7 +63,7 @@ decode the same valid and invalid conformance inputs.
 to readable source spans, original names, or an explicit deterministic
 derivation witness.
 
-- [ ] **Task 2.1.2 Complete**
+- [x] **Task 2.1.2 Complete**
 
 #### Subtask 2.1.2.1: Validate Complete Bidirectional Coverage
 
@@ -70,7 +71,7 @@ derivation witness.
 origins, keyed authority locations, versioned empty witnesses, and stable maps
 under input-map order changes.
 
-- [ ] **Subtask 2.1.2.1 Complete**
+- [x] **Subtask 2.1.2.1 Complete**
 
 #### Subtask 2.1.2.2: Keep Readable Source as the Edit Target
 
@@ -78,7 +79,7 @@ under input-map order changes.
 canonical readable terms and never instruct a person to edit only generated
 mnemonic text.
 
-- [ ] **Subtask 2.1.2.2 Complete**
+- [x] **Subtask 2.1.2.2 Complete**
 
 ## Section 2.2: Implement Protocols and the Authorization Gate
 

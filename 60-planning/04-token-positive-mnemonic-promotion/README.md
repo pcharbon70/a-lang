@@ -250,9 +250,9 @@ Phase 1: freeze token-positive contract, power, profiles, and fresh corpus
 ## Roadmap completion gate
 
 - [x] A fresh content-digested confirmatory corpus is separated from all 72 design cases
-- [ ] `P1` model-visible bytes exactly match the registered R2 renderer on all frozen and generated cases
-- [ ] `P1` acceptance and decoding exactly match registered R2 on valid and invalid conformance cases
-- [ ] `P0` and `P1` render canonically and reproduce one checked semantic digest
+- [x] `P1` model-visible bytes exactly match the registered R2 renderer on all frozen and generated cases
+- [x] `P1` acceptance and decoding exactly match registered R2 on valid and invalid conformance cases
+- [x] `P0` and `P1` render canonically and reproduce one checked semantic digest
 - [ ] Every document and full request is token-positive under every registered tokenizer
 - [ ] Median and aggregate offline savings are at least 5% on the frozen corpus
 - [ ] All four protocol oracles reject every registered semantic and authority mutant
