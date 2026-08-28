@@ -78,6 +78,12 @@ gated loopback adapter; normal builds and tests remain offline.
 - [`alang_mnemonic_mutation.erl`](alang_mnemonic_mutation.erl) — seeds and
   requires detection of 19 scientific-role, threshold, corpus, schedule,
   profile, prompt, and inference defects.
+- [`alang_mnemonic_observation.erl`](alang_mnemonic_observation.erl) — closes
+  provider usage, first-response scores, normalized semantics, paired token
+  records, and candidate-only safety classifications.
+- [`alang_mnemonic_observation_tests.erl`](alang_mnemonic_observation_tests.erl)
+  — tests exact and invalid usage, deterministic scores, safety widening,
+  pairing, replay ordering, gaps, and duplicates.
 - [`alang_mnemonic_phase1_worker.erl`](alang_mnemonic_phase1_worker.erl) —
   writes canonical Phase 1 evidence from a clean offline ERTS process.
 - [`alang_mnemonic_phase2_worker.erl`](alang_mnemonic_phase2_worker.erl) —
@@ -116,6 +122,9 @@ gated loopback adapter; normal builds and tests remain offline.
 - [`alang_mnemonic_registration.erl`](alang_mnemonic_registration.erl) —
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
+- [`alang_mnemonic_replay.erl`](alang_mnemonic_replay.erl) — reconstructs
+  complete ordered observations, token pairs, scores, safety outcomes, and
+  byte-stable evidence digests without network or provider state.
 - [`alang_mnemonic_runner.erl`](alang_mnemonic_runner.erl) — advances only the
   next registered cell and enforces pending-intent, request, disposition, and
   one-replacement state.
@@ -143,6 +152,9 @@ gated loopback adapter; normal builds and tests remain offline.
 - [Section 3.1 readiness evidence](section-03-01-readiness-evidence.md) —
   records the implemented authorization, journal, transport, and replacement
   boundary while retaining the visible live-prerequisite block.
+- [Section 3.2 readiness evidence](section-03-02-readiness-evidence.md) —
+  records closed provider usage, deterministic semantic and safety scoring,
+  paired token materialization, and offline replay readiness.
 
 ## Maintaining this index
 

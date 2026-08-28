@@ -86,6 +86,11 @@ spending an unregistered call.
 same deterministic semantic, validity, repair, safety, and token accounting to
 both conditions, and make every score replayable without network access.
 
+The deterministic implementation and fixture evidence are documented in
+[Section 3.2 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-02-readiness-evidence.md).
+Completion remains open until the authorized schedule supplies real provider
+usage and first-response observations.
+
 - [ ] **Section 3.2 Complete**
 
 ### Task 3.2.1: Validate Provider Usage as Operational Evidence
