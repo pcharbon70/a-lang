@@ -1,0 +1,74 @@
+{
+  "format": "alang-token-positive-candidate-contract-v1",
+  "conditions": [
+    {
+      "id": "P0",
+      "surface_id": "R0",
+      "representation": "alang-source-v2-readable",
+      "version": "alang-source-v2",
+      "role": "canonical-baseline"
+    },
+    {
+      "id": "P1",
+      "surface_id": "R2",
+      "representation": "alang-source-v2-mnemonic-aliases",
+      "version": "alang-source-v2-alias-v1",
+      "role": "sole-promotion-candidate"
+    }
+  ],
+  "references": [
+    {
+      "role": "renderer",
+      "path": "src/compact-projection-fidelity/alang_compact_surface.erl",
+      "sha256": "2dffb9750c640ac6cd26d3b628e281931632d32b0906fa4f30635669a11969a8"
+    },
+    {
+      "role": "vocabulary",
+      "path": "assets/compact-projection-fidelity/campaign/projection-vocabulary-v1.json",
+      "sha256": "048995ece626b1d36d01f1d5ca0024f79a44dd2b0d07096d000b98d0c7521b47"
+    },
+    {
+      "role": "surface-registry",
+      "path": "assets/compact-projection-fidelity/phase-02/contracts/surface-registry-v1.json",
+      "sha256": "43e2d3749b142862f9b1db3e69fca2fce3e21778d029213e48bb38f0987886b4"
+    },
+    {
+      "role": "source-map-implementation",
+      "path": "src/compact-projection-fidelity/alang_compact_source_map.erl",
+      "sha256": "eed0d4194c583312cd2193de7fe896cf520c7cbcaaa157bb8c02788036bd3fce"
+    },
+    {
+      "role": "source-map-contract",
+      "path": "assets/compact-projection-fidelity/phase-02/contracts/source-map-v1.json",
+      "sha256": "5616a7a714a1a21c7787bb3ab3983a6ea119d3851045e7e836d4d94851ad4180"
+    }
+  ],
+  "alias_groups": [
+    "declaration",
+    "scope-key",
+    "budget-key",
+    "operation",
+    "predicate",
+    "relation"
+  ],
+  "limits": {
+    "max_representation_bytes": 32768,
+    "unknown_version": "reject",
+    "duplicate_fields": "reject",
+    "invalid_utf8": "reject",
+    "unknown_alias": "reject",
+    "cross_group_alias": "reject"
+  },
+  "conformance": {
+    "rendering": "byte-for-byte-r2",
+    "acceptance": "same-as-r2",
+    "decode": "same-checked-semantics-as-r2",
+    "semantic_digest": "origin-free-canonical"
+  },
+  "source_maps": {
+    "coverage": "contiguous-every-byte-exactly-once",
+    "security_fields": "complete-with-witnesses",
+    "map_order": "stable",
+    "diagnostic_edit_target": "readable-source"
+  }
+}

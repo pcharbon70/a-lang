@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/candidate-contract-v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "conditions", "references", "alias_groups", "limits", "conformance", "source_maps"],
+  "properties": {
+    "format": {"const": "alang-token-positive-candidate-contract-v1"},
+    "conditions": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "surface_id", "representation", "version", "role"],
+        "properties": {
+          "id": {"enum": ["P0", "P1"]}, "surface_id": {"enum": ["R0", "R2"]},
+          "representation": {"type": "string", "minLength": 1},
+          "version": {"type": "string", "minLength": 1},
+          "role": {"enum": ["canonical-baseline", "sole-promotion-candidate"]}
+        }
+      }
+    },
+    "references": {
+      "type": "array", "minItems": 5, "maxItems": 5,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["role", "path", "sha256"],
+        "properties": {
+          "role": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "alias_groups": {
+      "type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true,
+      "items": {"enum": ["declaration", "scope-key", "budget-key", "operation", "predicate", "relation"]}
+    },
+    "limits": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_representation_bytes", "unknown_version", "duplicate_fields", "invalid_utf8", "unknown_alias", "cross_group_alias"],
+      "properties": {
+        "max_representation_bytes": {"const": 32768},
+        "unknown_version": {"const": "reject"}, "duplicate_fields": {"const": "reject"},
+        "invalid_utf8": {"const": "reject"}, "unknown_alias": {"const": "reject"},
+        "cross_group_alias": {"const": "reject"}
+      }
+    },
+    "conformance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["rendering", "acceptance", "decode", "semantic_digest"],
+      "properties": {
+        "rendering": {"const": "byte-for-byte-r2"}, "acceptance": {"const": "same-as-r2"},
+        "decode": {"const": "same-checked-semantics-as-r2"},
+        "semantic_digest": {"const": "origin-free-canonical"}
+      }
+    },
+    "source_maps": {
+      "type": "object", "additionalProperties": false,
+      "required": ["coverage", "security_fields", "map_order", "diagnostic_edit_target"],
+      "properties": {
+        "coverage": {"const": "contiguous-every-byte-exactly-once"},
+        "security_fields": {"const": "complete-with-witnesses"},
+        "map_order": {"const": "stable"},
+        "diagnostic_edit_target": {"const": "readable-source"}
+      }
+    }
+  }
+}

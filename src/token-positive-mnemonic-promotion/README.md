@@ -37,6 +37,18 @@ belong to Phase 3 and remain unauthorized here.
 
 ### Files
 
+- [`alang_mnemonic_candidate.erl`](alang_mnemonic_candidate.erl) — validates
+  exact reused references and binds P0/R0 and P1/R2 rendering, decoding,
+  semantic equality, complete source maps, and readable diagnostics.
+- [`alang_mnemonic_candidate_tests.erl`](alang_mnemonic_candidate_tests.erl) —
+  proves exact P1/R2 bytes across 136 frozen and generated oracles, identical
+  acceptance and decoding, stable maps, bounds, and trusted residency.
+- [`alang_mnemonic_authorization.erl`](alang_mnemonic_authorization.erl) —
+  rebuilds qualification evidence and requires its exact frozen digest plus
+  the registered explicit opt-in before issuing a bounded authorization token.
+- [`alang_mnemonic_authorization_tests.erl`](alang_mnemonic_authorization_tests.erl)
+  — tests the exact handshake and fail-closed digest, opt-in, and contract
+  behavior without performing a request.
 - [`alang_mnemonic_contract.erl`](alang_mnemonic_contract.erl) — validates
   exact P0/P1 roles and R2 references and applies validity, token, safety, and
   fidelity gates in their frozen order.
@@ -57,11 +69,39 @@ belong to Phase 3 and remain unauthorized here.
   profile, prompt, and inference defects.
 - [`alang_mnemonic_phase1_worker.erl`](alang_mnemonic_phase1_worker.erl) —
   writes canonical Phase 1 evidence from a clean offline ERTS process.
+- [`alang_mnemonic_phase2_worker.erl`](alang_mnemonic_phase2_worker.erl) —
+  writes canonical Phase 2 qualification evidence in an isolated ERTS process.
+- [`alang_mnemonic_phase2_evidence.erl`](alang_mnemonic_phase2_evidence.erl) —
+  reconciles qualification with all-corpus replay, mutation results, trusted
+  residency, authorization, and the final zero-call evidence digest.
+- [`alang_mnemonic_phase2_integration_tests.erl`](alang_mnemonic_phase2_integration_tests.erl)
+  — verifies clean evidence equality, 136 replay pairs, 18 mutants, 16 trusted
+  modules, and qualification/authorization digest agreement.
+- [`alang_mnemonic_phase2_integration_worker.erl`](alang_mnemonic_phase2_integration_worker.erl)
+  — writes final Phase 2 evidence in an isolated offline ERTS process.
+- [`alang_mnemonic_phase2_mutation.erl`](alang_mnemonic_phase2_mutation.erl) —
+  seeds candidate, alias, map, token, oracle, prompt, authorization, profile,
+  schedule, source, and runtime-import defects.
+- [`alang_mnemonic_phase2_residency.erl`](alang_mnemonic_phase2_residency.erl)
+  — hashes the trusted source and BEAM closure and rejects foreign sources,
+  ports, NIFs, shell commands, interpreted forms, and forbidden imports.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.
 - [`alang_mnemonic_preregister.erl`](alang_mnemonic_preregister.erl) — closes
   schemas and traceability, audits trusted-source scope, reconciles every
   registration dimension, and builds the 21-file evidence record.
+- [`alang_mnemonic_protocol.erl`](alang_mnemonic_protocol.erl) — materializes
+  four frozen paired prompts and scores comprehension, generation, repair, and
+  action/completion responses deterministically without an LLM judge.
+- [`alang_mnemonic_protocol_tests.erl`](alang_mnemonic_protocol_tests.erl) —
+  tests all 384 prompt/oracle cells, leakage exclusions, malformed responses,
+  condition symmetry, and seventeen semantic and authority mutations.
+- [`alang_mnemonic_qualification.erl`](alang_mnemonic_qualification.erl) —
+  runs exact document and complete-request counts, closed attribution, hard
+  token gates, registration hashing, and canonical qualification evidence.
+- [`alang_mnemonic_qualification_tests.erl`](alang_mnemonic_qualification_tests.erl)
+  — verifies every pair, aggregate and median thresholds, drift rejection,
+  zero-call state, and trusted tokenizer residency.
 - [`alang_mnemonic_registration.erl`](alang_mnemonic_registration.erl) —
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
@@ -77,6 +117,15 @@ belong to Phase 3 and remain unauthorized here.
 - [Section 1.3 integration evidence](section-01-03-integration-evidence.md) —
   records deterministic full-phase reproduction, design-input separation,
   closed schemas, 19 detected mutants, BEAM residency, and zero hosted calls.
+- [Section 2.1 integration evidence](section-02-01-integration-evidence.md) —
+  records exact P1/R2 rendering and decoding, closed aliases and bounds,
+  complete stable source maps, readable diagnostics, and zero-call isolation.
+- [Section 2.2 integration evidence](section-02-02-integration-evidence.md) —
+  records four deterministic protocols, exact token-positive results, the
+  50-file registration, qualification digest, and explicit authorization gate.
+- [Section 2.3 integration evidence](section-02-03-integration-evidence.md) —
+  records all-corpus replay, 18/18 named mutants, the 16-module trusted BEAM
+  closure, clean final reproduction, and the zero-call Phase 2 boundary.
 
 ## Maintaining this index
 

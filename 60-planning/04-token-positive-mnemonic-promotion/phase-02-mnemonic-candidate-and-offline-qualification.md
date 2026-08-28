@@ -26,7 +26,8 @@ role without changing its model-visible bytes, then add exact conformance,
 inverse-semantics, source-map, bounds, and readable-diagnostic evidence around
 it.
 
-- [ ] **Section 2.1 Complete**
+- [x] **Section 2.1 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-02-01-integration-evidence.md).
 
 ### Task 2.1.1: Reuse Canonical R2 Rendering for `P1`
 
@@ -35,7 +36,7 @@ and version, decode through the existing A-Lang-owned parser and checker, and
 require both byte equality with R2 and the same origin-free semantic digest as
 readable `P0`.
 
-- [ ] **Task 2.1.1 Complete**
+- [x] **Task 2.1.1 Complete**
 
 #### Subtask 2.1.1.1: Freeze Closed Group-Sensitive Aliases
 
@@ -44,7 +45,7 @@ declaration, scope, budget, operation, predicate, and relation aliases by
 semantic group; preserve unknown readable vocabulary and reject cross-group
 meaning, collisions, and unregistered flags.
 
-- [ ] **Subtask 2.1.1.1 Complete**
+- [x] **Subtask 2.1.1.1 Complete**
 
 #### Subtask 2.1.1.2: Enforce Bounds and Version Closure
 
@@ -54,7 +55,7 @@ bytes not produced by the canonical renderer, and any canonical P1 rendering
 that differs from R2 by even one byte. Require P1 and R2 to accept, reject, and
 decode the same valid and invalid conformance inputs.
 
-- [ ] **Subtask 2.1.1.2 Complete**
+- [x] **Subtask 2.1.1.2 Complete**
 
 ### Task 2.1.2: Produce Readable Source Maps and Diagnostics
 
@@ -62,7 +63,7 @@ decode the same valid and invalid conformance inputs.
 to readable source spans, original names, or an explicit deterministic
 derivation witness.
 
-- [ ] **Task 2.1.2 Complete**
+- [x] **Task 2.1.2 Complete**
 
 #### Subtask 2.1.2.1: Validate Complete Bidirectional Coverage
 
@@ -70,7 +71,7 @@ derivation witness.
 origins, keyed authority locations, versioned empty witnesses, and stable maps
 under input-map order changes.
 
-- [ ] **Subtask 2.1.2.1 Complete**
+- [x] **Subtask 2.1.2.1 Complete**
 
 #### Subtask 2.1.2.2: Keep Readable Source as the Edit Target
 
@@ -78,14 +79,15 @@ under input-map order changes.
 canonical readable terms and never instruct a person to edit only generated
 mnemonic text.
 
-- [ ] **Subtask 2.1.2.2 Complete**
+- [x] **Subtask 2.1.2.2 Complete**
 
 ## Section 2.2: Implement Protocols and the Authorization Gate
 
 **Description:** Give `P0` and `P1` identical model-task coverage and make
 exact token qualification a mechanical prerequisite of any live execution.
 
-- [ ] **Section 2.2 Complete**
+- [x] **Section 2.2 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-02-02-integration-evidence.md).
 
 ### Task 2.2.1: Implement Four Paired Protocol Oracles
 
@@ -93,7 +95,7 @@ exact token qualification a mechanical prerequisite of any live execution.
 and action/completion prompts from the same case semantics and score them
 without an LLM judge.
 
-- [ ] **Task 2.2.1 Complete**
+- [x] **Task 2.2.1 Complete**
 
 #### Subtask 2.2.1.1: Freeze Model-visible Bytes
 
@@ -102,7 +104,7 @@ material, diagnostics, and output scaffolding in canonical prompt records;
 exclude condition roles, answer keys, semantic digests, hidden examples, and
 cross-trial state.
 
-- [ ] **Subtask 2.2.1.1 Complete**
+- [x] **Subtask 2.2.1.1 Complete**
 
 #### Subtask 2.2.1.2: Reject Semantic and Authority Mutants
 
@@ -110,7 +112,7 @@ cross-trial state.
 dependency, error, child grant, and completion predicate and prove both
 condition oracles reject or score the changed meaning distinctly.
 
-- [ ] **Subtask 2.2.1.2 Complete**
+- [x] **Subtask 2.2.1.2 Complete**
 
 ### Task 2.2.2: Execute the Offline Token-Positive Gate
 
@@ -118,7 +120,7 @@ condition oracles reject or score the changed meaning distinctly.
 case and registered tokenizer, then block authorization unless all pairwise,
 aggregate, and median predicates pass.
 
-- [ ] **Task 2.2.2 Complete**
+- [x] **Task 2.2.2 Complete**
 
 #### Subtask 2.2.2.1: Count and Attribute Every Request Section
 
@@ -127,7 +129,7 @@ counts from unavailable provider usage, and attribute layout, vocabulary,
 identifiers, facts, paths, budgets, authority, completion, legends,
 instructions, and output scaffolding.
 
-- [ ] **Subtask 2.2.2.1 Complete**
+- [x] **Subtask 2.2.2.1 Complete**
 
 #### Subtask 2.2.2.2: Fail on Any Token-negative Pair
 
@@ -135,7 +137,7 @@ instructions, and output scaffolding.
 strictly cheaper under either tokenizer, when aggregate or median savings fall
 below 5%, or when a count, digest, or attribution category is missing.
 
-- [ ] **Subtask 2.2.2.2 Complete**
+- [x] **Subtask 2.2.2.2 Complete**
 
 ### Task 2.2.3: Freeze the Canonical Preregistration Digest
 
@@ -143,7 +145,7 @@ below 5%, or when a count, digest, or attribution category is missing.
 oracles, schedule, token reports, thresholds, bootstrap, ceilings, and code
 artifacts into one verified no-call evidence record.
 
-- [ ] **Task 2.2.3 Complete**
+- [x] **Task 2.2.3 Complete**
 
 #### Subtask 2.2.3.1: Reconcile Every Frozen Input
 
@@ -151,7 +153,7 @@ artifacts into one verified no-call evidence record.
 identities, complete traceability, clean source maps, green inherited gates,
 and no mutable path outside the registration digest.
 
-- [ ] **Subtask 2.2.3.1 Complete**
+- [x] **Subtask 2.2.3.1 Complete**
 
 #### Subtask 2.2.3.2: Require Explicit Live Authorization
 
@@ -159,7 +161,7 @@ and no mutable path outside the registration digest.
 exact qualifying digest and the registered opt-in value before the runner can
 submit a model-visible request.
 
-- [ ] **Subtask 2.2.3.2 Complete**
+- [x] **Subtask 2.2.3.2 Complete**
 
 ## Section 2.3: Phase 2 Integration Tests
 
@@ -167,7 +169,8 @@ submit a model-visible request.
 token eligibility, compiler residency, preregistration immutability, and zero-
 call isolation from clean ERTS processes.
 
-- [ ] **Section 2.3 Complete**
+- [x] **Section 2.3 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-02-03-integration-evidence.md).
 
 ### Task 2.3.1: Run Corpus, Property, and Mutation Suites
 
@@ -175,7 +178,7 @@ call isolation from clean ERTS processes.
 conditions and four protocols, then seed renderer, decoder, alias, source-map,
 accounting, oracle, version, and authority defects.
 
-- [ ] **Task 2.3.1 Complete**
+- [x] **Task 2.3.1 Complete**
 
 #### Subtask 2.3.1.1: Reproduce Candidate and Token Evidence
 
@@ -184,14 +187,14 @@ plus byte-identical semantic digests, source maps, prompts, token reports, and
 registration evidence across clean processes and recursively shuffled input
 maps.
 
-- [ ] **Subtask 2.3.1.1 Complete**
+- [x] **Subtask 2.3.1.1 Complete**
 
 #### Subtask 2.3.1.2: Measure Mutation Adequacy
 
 **Description:** Report every seeded defect and fail the phase if any mutant
 survives its named semantic, token, authorization, or residency gate.
 
-- [ ] **Subtask 2.3.1.2 Complete**
+- [x] **Subtask 2.3.1.2 Complete**
 
 ### Task 2.3.2: Inspect Trusted Residency and Isolation
 
@@ -199,7 +202,7 @@ survives its named semantic, token, authorization, or residency gate.
 calls, and artifacts and reject provider SDKs, ports, NIFs, shell commands,
 interpreted forms, or foreign tokenizer executables.
 
-- [ ] **Task 2.3.2 Complete**
+- [x] **Task 2.3.2 Complete**
 
 #### Subtask 2.3.2.1: Publish the Trusted Module Closure
 
@@ -207,7 +210,7 @@ interpreted forms, or foreign tokenizer executables.
 parser, checker, renderer, decoder, tokenizer, map, protocol, scorer,
 registration, authorization, and replay modules.
 
-- [ ] **Subtask 2.3.2.1 Complete**
+- [x] **Subtask 2.3.2.1 Complete**
 
 #### Subtask 2.3.2.2: Publish Phase 2 Evidence
 
@@ -215,7 +218,7 @@ registration, authorization, and replay modules.
 schedule reconciliation, mutations, residency, no-call evidence, and clean
 commands without making a model-fidelity claim.
 
-- [ ] **Subtask 2.3.2.2 Complete**
+- [x] **Subtask 2.3.2.2 Complete**
 
 ## Phase 2 Completion Evidence
 
@@ -223,18 +226,18 @@ commands without making a model-fidelity claim.
 reversible, materially token-positive on every frozen case, and bound into an
 immutable prospective registration.
 
-- [ ] `P0` and `P1` are canonical, bounded, versioned, and semantically equal
-- [ ] `P1` output is byte-for-byte identical to registered R2 on all frozen and generated cases
-- [ ] `P1` acceptance and decoding match registered R2 on valid and invalid conformance cases
-- [ ] Every mnemonic alias is registered, reversible, and group-sensitive
-- [ ] Source maps cover every token and security-relevant field
-- [ ] All four protocols have deterministic condition-symmetric oracles
-- [ ] Every document and full request is strictly token-positive under both tokenizers
-- [ ] Aggregate and median document and request savings are at least 5%
-- [ ] Mutations detect semantic, authority, alias, mapping, accounting, and authorization defects
-- [ ] Trusted modules load from deterministic `.beam` artifacts on ERTS
-- [ ] One complete preregistration digest reproduces with zero model calls
-- [ ] Live authorization fails on any digest, profile, prompt, corpus, or code drift
+- [x] `P0` and `P1` are canonical, bounded, versioned, and semantically equal
+- [x] `P1` output is byte-for-byte identical to registered R2 on all frozen and generated cases
+- [x] `P1` acceptance and decoding match registered R2 on valid and invalid conformance cases
+- [x] Every mnemonic alias is registered, reversible, and group-sensitive
+- [x] Source maps cover every token and security-relevant field
+- [x] All four protocols have deterministic condition-symmetric oracles
+- [x] Every document and full request is strictly token-positive under both tokenizers
+- [x] Aggregate and median document and request savings are at least 5%
+- [x] Mutations detect semantic, authority, alias, mapping, accounting, and authorization defects
+- [x] Trusted modules load from deterministic `.beam` artifacts on ERTS
+- [x] One complete preregistration digest reproduces with zero model calls
+- [x] Live authorization fails on any digest, profile, prompt, corpus, or code drift
 
 ## Connections
 

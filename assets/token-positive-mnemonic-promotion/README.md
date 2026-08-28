@@ -41,6 +41,8 @@ authorizes a model call.
 - [Contracts](contracts/README.md) — the closed P0/P1 scientific contract,
   exact R2 reference, hard token gate, safety and fidelity thresholds, and
   ordered outcomes.
+- [Phase 2 assets](phase-02/README.md) — exact candidate conformance, protocol,
+  token-qualification, authorization, and evidence contracts.
 
 ### Files
 

@@ -1,0 +1,16 @@
+{
+  "format": "alang-token-positive-protocol-contract-v1",
+  "prompt_policy_path": "assets/token-positive-mnemonic-promotion/campaign/prompt-policy-v1.json",
+  "prompt_policy_sha256": "1adfed75683c6da2867f4666bbb0502b1b6d5705147b7a61a76ead09fbc7df11",
+  "conditions": ["P0", "P1"],
+  "protocols": [
+    {"id": "action-completion", "case_material": "checked-surface-plus-neutral-request", "scorer": "exact-closed-action-record"},
+    {"id": "comprehension", "case_material": "checked-surface", "scorer": "exact-normalized-semantic-digest"},
+    {"id": "diagnostic-repair", "case_material": "one-immutable-version-mutant-plus-readable-diagnostic", "scorer": "exact-valid-semantic-repair"},
+    {"id": "generation", "case_material": "neutral-natural-language-requirements", "scorer": "exact-valid-semantic-generation"}
+  ],
+  "request_order": ["opaque-trial-id", "common-instruction", "protocol-instruction", "condition-legend", "case-material", "output-contract"],
+  "model_visible_excluded": ["condition-role", "answer-key", "semantic-digest", "hidden-example", "cross-trial-state"],
+  "mutation_fields": ["facts", "inputs", "effects", "requirements", "scopes", "budgets", "actions", "dependencies", "error-branches", "child-grants", "completion-predicates", "clarification-needs", "terminal-class", "negation", "digits", "units", "paths"],
+  "judge": "deterministic-beam-only"
+}

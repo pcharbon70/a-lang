@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/protocol-contract-v1.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["format", "prompt_policy_path", "prompt_policy_sha256", "conditions", "protocols", "request_order", "model_visible_excluded", "mutation_fields", "judge"],
+  "properties": {
+    "format": {"const": "alang-token-positive-protocol-contract-v1"},
+    "prompt_policy_path": {"const": "assets/token-positive-mnemonic-promotion/campaign/prompt-policy-v1.json"},
+    "prompt_policy_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "conditions": {"const": ["P0", "P1"]},
+    "protocols": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "object", "additionalProperties": false, "required": ["id", "case_material", "scorer"], "properties": {"id": {"enum": ["action-completion", "comprehension", "diagnostic-repair", "generation"]}, "case_material": {"type": "string", "minLength": 1}, "scorer": {"type": "string", "minLength": 1}}}},
+    "request_order": {"const": ["opaque-trial-id", "common-instruction", "protocol-instruction", "condition-legend", "case-material", "output-contract"]},
+    "model_visible_excluded": {"type": "array", "minItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "mutation_fields": {"type": "array", "minItems": 17, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "judge": {"const": "deterministic-beam-only"}
+  }
+}

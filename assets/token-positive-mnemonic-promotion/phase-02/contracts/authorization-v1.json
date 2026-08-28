@@ -1,0 +1,8 @@
+{
+  "format": "alang-token-positive-live-authorization-v1",
+  "qualification_digest": "e00fe1b40807d052523a2999fc3584d9a4e5cf6736766cc4f0565f9c09c7417f",
+  "environment_variable": "ALANG_ALLOW_MNEMONIC_MODEL_CALLS",
+  "required_value": "1",
+  "network_default": "disabled",
+  "drift_policy": "reject-and-requalify"
+}
