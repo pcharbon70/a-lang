@@ -26,8 +26,8 @@ It reuses R2 by exact reference and never changes the historical campaign.
 - EUnit, mutation, clean-process, and zero-call integration evidence.
 
 Generated BEAM files and machine evidence belong under the ignored
-`build/token-positive-mnemonic-promotion/` directory. Live model adapters
-belong to Phase 3 and remain unauthorized here.
+`build/token-positive-mnemonic-promotion/` directory. Phase 3 adds a separately
+gated loopback adapter; normal builds and tests remain offline.
 
 ## Index
 
@@ -49,6 +49,17 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_authorization_tests.erl`](alang_mnemonic_authorization_tests.erl)
   — tests the exact handshake and fail-closed digest, opt-in, and contract
   behavior without performing a request.
+- [`alang_mnemonic_execution_tests.erl`](alang_mnemonic_execution_tests.erl) —
+  tests exact live identities, bounded requests, schedule order, replacement
+  rules, Ollama decoding, and durable journal integrity without network use.
+- [`alang_mnemonic_journal.erl`](alang_mnemonic_journal.erl) — maintains a
+  qualification- and schedule-bound append-only record chain around each
+  transport attempt.
+- [`alang_mnemonic_live_gate.erl`](alang_mnemonic_live_gate.erl) — rebuilds the
+  frozen qualification and requires exact opt-in, model IDs, manifests,
+  parameters, prompts, and ceilings before every prepared submission.
+- [`alang_mnemonic_ollama.erl`](alang_mnemonic_ollama.erl) — contains the only
+  Phase 3 loopback transport path and validates exact provider response usage.
 - [`alang_mnemonic_contract.erl`](alang_mnemonic_contract.erl) — validates
   exact P0/P1 roles and R2 references and applies validity, token, safety, and
   fidelity gates in their frozen order.
@@ -64,9 +75,18 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_integration_tests.erl`](alang_mnemonic_integration_tests.erl)
   — reconciles the complete registration, deterministic evidence, design-
   evidence boundary, mutation coverage, traceability, and BEAM residency.
+- [`alang_mnemonic_limits.erl`](alang_mnemonic_limits.erl) — rejects the first
+  projected request, byte, output-token, time, compute, or monetary ceiling
+  excess before transport.
 - [`alang_mnemonic_mutation.erl`](alang_mnemonic_mutation.erl) — seeds and
   requires detection of 19 scientific-role, threshold, corpus, schedule,
   profile, prompt, and inference defects.
+- [`alang_mnemonic_observation.erl`](alang_mnemonic_observation.erl) — closes
+  provider usage, first-response scores, normalized semantics, paired token
+  records, and candidate-only safety classifications.
+- [`alang_mnemonic_observation_tests.erl`](alang_mnemonic_observation_tests.erl)
+  — tests exact and invalid usage, deterministic scores, safety widening,
+  pairing, replay ordering, gaps, and duplicates.
 - [`alang_mnemonic_phase1_worker.erl`](alang_mnemonic_phase1_worker.erl) —
   writes canonical Phase 1 evidence from a clean offline ERTS process.
 - [`alang_mnemonic_phase2_worker.erl`](alang_mnemonic_phase2_worker.erl) —
@@ -85,6 +105,15 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_phase2_residency.erl`](alang_mnemonic_phase2_residency.erl)
   — hashes the trusted source and BEAM closure and rejects foreign sources,
   ports, NIFs, shell commands, interpreted forms, and forbidden imports.
+- [`alang_mnemonic_phase3_integration_tests.erl`](alang_mnemonic_phase3_integration_tests.erl)
+  — verifies 19/19 fault mutations, every resource boundary, the frozen
+  qualification digest, zero observation claims, and trusted residency.
+- [`alang_mnemonic_phase3_mutation.erl`](alang_mnemonic_phase3_mutation.erl) —
+  seeds identity, submission, usage, pairing, response, scoring, safety,
+  replay, ceiling, and replacement defects.
+- [`alang_mnemonic_phase3_residency.erl`](alang_mnemonic_phase3_residency.erl) —
+  audits the nine-module Phase 3 BEAM closure and confines HTTP imports to the
+  scoped Ollama adapter.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.
 - [`alang_mnemonic_preregister.erl`](alang_mnemonic_preregister.erl) — closes
@@ -105,6 +134,12 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_registration.erl`](alang_mnemonic_registration.erl) —
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
+- [`alang_mnemonic_replay.erl`](alang_mnemonic_replay.erl) — reconstructs
+  complete ordered observations, token pairs, scores, safety outcomes, and
+  byte-stable evidence digests without network or provider state.
+- [`alang_mnemonic_runner.erl`](alang_mnemonic_runner.erl) — advances only the
+  next registered cell and enforces pending-intent, request, disposition, and
+  one-replacement state.
 - [`alang_mnemonic_schedule.erl`](alang_mnemonic_schedule.erl) — materializes
   and validates the deterministic, opaque, balanced 1,536-cell P0/P1 schedule.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —
@@ -126,6 +161,15 @@ belong to Phase 3 and remain unauthorized here.
 - [Section 2.3 integration evidence](section-02-03-integration-evidence.md) —
   records all-corpus replay, 18/18 named mutants, the 16-module trusted BEAM
   closure, clean final reproduction, and the zero-call Phase 2 boundary.
+- [Section 3.1 readiness evidence](section-03-01-readiness-evidence.md) —
+  records the implemented authorization, journal, transport, and replacement
+  boundary while retaining the visible live-prerequisite block.
+- [Section 3.2 readiness evidence](section-03-02-readiness-evidence.md) —
+  records closed provider usage, deterministic semantic and safety scoring,
+  paired token materialization, and offline replay readiness.
+- [Section 3.3 readiness evidence](section-03-03-readiness-evidence.md) —
+  records 19 fault mutations, ceiling boundaries, network isolation, trusted
+  BEAM residency, and the explicit no-observation publication boundary.
 
 ## Maintaining this index
 

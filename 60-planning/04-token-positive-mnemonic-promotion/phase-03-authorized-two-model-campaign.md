@@ -23,6 +23,11 @@ trial deterministically, and reproduce the complete observation set offline.
 **Description:** Make a live request possible only for the exact preregistered
 digest, model artifacts, prompt bytes, schedule cell, and bounded opt-in state.
 
+Implementation readiness is recorded in
+[Section 3.1 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-01-readiness-evidence.md).
+The completion box remains open because the exact Mixtral artifact and the
+registered explicit live opt-in were unavailable; no hosted call occurred.
+
 - [ ] **Section 3.1 Complete**
 
 ### Task 3.1.1: Validate the Live Gate Before Every Submission
@@ -80,6 +85,11 @@ spending an unregistered call.
 **Description:** Normalize provider outputs into closed records, apply the
 same deterministic semantic, validity, repair, safety, and token accounting to
 both conditions, and make every score replayable without network access.
+
+The deterministic implementation and fixture evidence are documented in
+[Section 3.2 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-02-readiness-evidence.md).
+Completion remains open until the authorized schedule supplies real provider
+usage and first-response observations.
 
 - [ ] **Section 3.2 Complete**
 
@@ -161,6 +171,11 @@ processes.
 transport journaling, replacement bounds, provider usage, deterministic
 scoring, safety vetoes, ceiling enforcement, and replay before accepting the
 hosted campaign evidence.
+
+[Section 3.3 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-03-readiness-evidence.md)
+records the offline mutation, ceiling, network-isolation, residency, and
+digest tests. Hosted evidence publication and the section completion box remain
+open because no authorized campaign was run.
 
 - [ ] **Section 3.3 Complete**
 
