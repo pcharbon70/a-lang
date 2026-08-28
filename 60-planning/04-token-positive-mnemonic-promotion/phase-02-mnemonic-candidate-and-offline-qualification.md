@@ -86,7 +86,8 @@ mnemonic text.
 **Description:** Give `P0` and `P1` identical model-task coverage and make
 exact token qualification a mechanical prerequisite of any live execution.
 
-- [ ] **Section 2.2 Complete**
+- [x] **Section 2.2 Complete** — see the
+  [integration evidence](../../src/token-positive-mnemonic-promotion/section-02-02-integration-evidence.md).
 
 ### Task 2.2.1: Implement Four Paired Protocol Oracles
 
@@ -94,7 +95,7 @@ exact token qualification a mechanical prerequisite of any live execution.
 and action/completion prompts from the same case semantics and score them
 without an LLM judge.
 
-- [ ] **Task 2.2.1 Complete**
+- [x] **Task 2.2.1 Complete**
 
 #### Subtask 2.2.1.1: Freeze Model-visible Bytes
 
@@ -103,7 +104,7 @@ material, diagnostics, and output scaffolding in canonical prompt records;
 exclude condition roles, answer keys, semantic digests, hidden examples, and
 cross-trial state.
 
-- [ ] **Subtask 2.2.1.1 Complete**
+- [x] **Subtask 2.2.1.1 Complete**
 
 #### Subtask 2.2.1.2: Reject Semantic and Authority Mutants
 
@@ -111,7 +112,7 @@ cross-trial state.
 dependency, error, child grant, and completion predicate and prove both
 condition oracles reject or score the changed meaning distinctly.
 
-- [ ] **Subtask 2.2.1.2 Complete**
+- [x] **Subtask 2.2.1.2 Complete**
 
 ### Task 2.2.2: Execute the Offline Token-Positive Gate
 
@@ -119,7 +120,7 @@ condition oracles reject or score the changed meaning distinctly.
 case and registered tokenizer, then block authorization unless all pairwise,
 aggregate, and median predicates pass.
 
-- [ ] **Task 2.2.2 Complete**
+- [x] **Task 2.2.2 Complete**
 
 #### Subtask 2.2.2.1: Count and Attribute Every Request Section
 
@@ -128,7 +129,7 @@ counts from unavailable provider usage, and attribute layout, vocabulary,
 identifiers, facts, paths, budgets, authority, completion, legends,
 instructions, and output scaffolding.
 
-- [ ] **Subtask 2.2.2.1 Complete**
+- [x] **Subtask 2.2.2.1 Complete**
 
 #### Subtask 2.2.2.2: Fail on Any Token-negative Pair
 
@@ -136,7 +137,7 @@ instructions, and output scaffolding.
 strictly cheaper under either tokenizer, when aggregate or median savings fall
 below 5%, or when a count, digest, or attribution category is missing.
 
-- [ ] **Subtask 2.2.2.2 Complete**
+- [x] **Subtask 2.2.2.2 Complete**
 
 ### Task 2.2.3: Freeze the Canonical Preregistration Digest
 
@@ -144,7 +145,7 @@ below 5%, or when a count, digest, or attribution category is missing.
 oracles, schedule, token reports, thresholds, bootstrap, ceilings, and code
 artifacts into one verified no-call evidence record.
 
-- [ ] **Task 2.2.3 Complete**
+- [x] **Task 2.2.3 Complete**
 
 #### Subtask 2.2.3.1: Reconcile Every Frozen Input
 
@@ -152,7 +153,7 @@ artifacts into one verified no-call evidence record.
 identities, complete traceability, clean source maps, green inherited gates,
 and no mutable path outside the registration digest.
 
-- [ ] **Subtask 2.2.3.1 Complete**
+- [x] **Subtask 2.2.3.1 Complete**
 
 #### Subtask 2.2.3.2: Require Explicit Live Authorization
 
@@ -160,7 +161,7 @@ and no mutable path outside the registration digest.
 exact qualifying digest and the registered opt-in value before the runner can
 submit a model-visible request.
 
-- [ ] **Subtask 2.2.3.2 Complete**
+- [x] **Subtask 2.2.3.2 Complete**
 
 ## Section 2.3: Phase 2 Integration Tests
 

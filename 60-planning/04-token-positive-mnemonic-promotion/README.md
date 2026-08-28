@@ -253,10 +253,10 @@ Phase 1: freeze token-positive contract, power, profiles, and fresh corpus
 - [x] `P1` model-visible bytes exactly match the registered R2 renderer on all frozen and generated cases
 - [x] `P1` acceptance and decoding exactly match registered R2 on valid and invalid conformance cases
 - [x] `P0` and `P1` render canonically and reproduce one checked semantic digest
-- [ ] Every document and full request is token-positive under every registered tokenizer
-- [ ] Median and aggregate offline savings are at least 5% on the frozen corpus
-- [ ] All four protocol oracles reject every registered semantic and authority mutant
-- [ ] The complete preregistration has one verified digest before any model call
+- [x] Every document and full request is token-positive under every registered tokenizer
+- [x] Median and aggregate offline savings are at least 5% on the frozen corpus
+- [x] All four protocol oracles reject every registered semantic and authority mutant
+- [x] The complete preregistration has one verified digest before any model call
 - [ ] Every scheduled primary cell or invalid-campaign disposition is accounted for
 - [ ] Provider input usage is pairwise nonworse and at least 5% lower per family and protocol
 - [ ] Operational total tokens do not increase in any model-family and protocol stratum

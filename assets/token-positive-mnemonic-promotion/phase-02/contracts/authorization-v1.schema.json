@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/authorization-v1.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["format", "qualification_digest", "environment_variable", "required_value", "network_default", "drift_policy"],
+  "properties": {
+    "format": {"const": "alang-token-positive-live-authorization-v1"},
+    "qualification_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "environment_variable": {"const": "ALANG_ALLOW_MNEMONIC_MODEL_CALLS"},
+    "required_value": {"const": "1"},
+    "network_default": {"const": "disabled"},
+    "drift_policy": {"const": "reject-and-requalify"}
+  }
+}

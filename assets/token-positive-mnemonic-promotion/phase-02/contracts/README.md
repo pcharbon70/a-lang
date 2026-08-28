@@ -36,6 +36,24 @@ Phase 2 evidence before any model call.
   contract without changing the historical role.
 - [Candidate contract schema](candidate-contract-v1.schema.json) — closes all
   candidate identities, references, limits, conformance, and diagnostic rules.
+- [Protocol contract](protocol-contract-v1.json) — freezes four symmetric,
+  single-turn prompt materializers and deterministic no-judge scorers.
+- [Protocol contract schema](protocol-contract-v1.schema.json) — closes prompt
+  provenance, request ordering, scoring modes, and semantic mutation coverage.
+- [Qualification contract](qualification-contract-v1.json) — freezes exact
+  tokenizers, pairwise and five-percent gates, registration inputs, and the
+  explicit live-authorization handshake.
+- [Qualification contract schema](qualification-contract-v1.schema.json) —
+  closes token thresholds, tokenizer references, registration scope, and
+  authorization defaults.
+- [Qualification evidence schema](qualification-evidence-v1.schema.json) —
+  closes the complete registration, conformance, protocol, token, schedule,
+  gate, zero-call, and qualification-digest record.
+- [Authorization contract](authorization-v1.json) — pins the one qualifying
+  Phase 2 digest and exact opt-in value accepted by later live execution.
+- [Authorization contract schema](authorization-v1.schema.json) — closes the
+  authorization digest, environment variable, required value, and fail-closed
+  drift policy.
 
 ## Maintaining this index
 

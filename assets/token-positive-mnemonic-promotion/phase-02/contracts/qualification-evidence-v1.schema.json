@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/qualification-evidence-v1.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["format", "registration_file_count", "registration_digest", "registration_files", "phase1_registration_digest", "semantic_cases", "document_pairs", "full_request_pairs", "candidate_conformance_digest", "protocol_oracle_digest", "token_report_digest", "schedule_digest", "profiles", "gate", "attribution_categories", "hosted_calls_observed", "efficacy_observations", "network_authorized", "model_fidelity_claim", "qualification_digest"],
+  "properties": {
+    "format": {"const": "alang-token-positive-phase-2-qualification-v1"},
+    "registration_file_count": {"const": 50},
+    "registration_digest": {"$ref": "#/$defs/digest"},
+    "registration_files": {"type": "array", "minItems": 50, "maxItems": 50, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/digest"}}}},
+    "phase1_registration_digest": {"$ref": "#/$defs/digest"},
+    "semantic_cases": {"const": 48}, "document_pairs": {"const": 96}, "full_request_pairs": {"const": 384},
+    "candidate_conformance_digest": {"$ref": "#/$defs/digest"}, "protocol_oracle_digest": {"$ref": "#/$defs/digest"}, "token_report_digest": {"$ref": "#/$defs/digest"}, "schedule_digest": {"$ref": "#/$defs/digest"},
+    "profiles": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "object", "additionalProperties": false, "required": ["profile_id", "documents_all_strictly_cheaper", "requests_all_strictly_cheaper", "document_aggregate_savings_basis_points", "document_median_savings_basis_points", "request_aggregate_savings_basis_points", "request_median_savings_basis_points", "p0_document_tokens", "p1_document_tokens", "p0_request_tokens", "p1_request_tokens"], "properties": {"profile_id": {"type": "string", "minLength": 1}, "documents_all_strictly_cheaper": {"const": true}, "requests_all_strictly_cheaper": {"const": true}, "document_aggregate_savings_basis_points": {"type": "integer", "minimum": 500}, "document_median_savings_basis_points": {"type": "integer", "minimum": 500}, "request_aggregate_savings_basis_points": {"type": "integer", "minimum": 500}, "request_median_savings_basis_points": {"type": "integer", "minimum": 500}, "p0_document_tokens": {"type": "integer", "minimum": 1}, "p1_document_tokens": {"type": "integer", "minimum": 1}, "p0_request_tokens": {"type": "integer", "minimum": 1}, "p1_request_tokens": {"type": "integer", "minimum": 1}}}},
+    "gate": {"type": "object", "additionalProperties": false, "required": ["pass", "every_document_strictly_cheaper", "every_full_request_strictly_cheaper", "aggregate_document_savings_at_least_five_percent", "median_document_savings_at_least_five_percent", "aggregate_request_savings_at_least_five_percent", "median_request_savings_at_least_five_percent", "attribution_complete"], "properties": {"pass": {"const": true}, "every_document_strictly_cheaper": {"const": true}, "every_full_request_strictly_cheaper": {"const": true}, "aggregate_document_savings_at_least_five_percent": {"const": true}, "median_document_savings_at_least_five_percent": {"const": true}, "aggregate_request_savings_at_least_five_percent": {"const": true}, "median_request_savings_at_least_five_percent": {"const": true}, "attribution_complete": {"const": true}}},
+    "attribution_categories": {"type": "array", "minItems": 11, "maxItems": 11, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "hosted_calls_observed": {"const": 0}, "efficacy_observations": {"const": 0}, "network_authorized": {"const": false}, "model_fidelity_claim": {"const": false},
+    "qualification_digest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {"digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

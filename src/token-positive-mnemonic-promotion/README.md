@@ -43,6 +43,12 @@ belong to Phase 3 and remain unauthorized here.
 - [`alang_mnemonic_candidate_tests.erl`](alang_mnemonic_candidate_tests.erl) —
   proves exact P1/R2 bytes across 136 frozen and generated oracles, identical
   acceptance and decoding, stable maps, bounds, and trusted residency.
+- [`alang_mnemonic_authorization.erl`](alang_mnemonic_authorization.erl) —
+  rebuilds qualification evidence and requires its exact frozen digest plus
+  the registered explicit opt-in before issuing a bounded authorization token.
+- [`alang_mnemonic_authorization_tests.erl`](alang_mnemonic_authorization_tests.erl)
+  — tests the exact handshake and fail-closed digest, opt-in, and contract
+  behavior without performing a request.
 - [`alang_mnemonic_contract.erl`](alang_mnemonic_contract.erl) — validates
   exact P0/P1 roles and R2 references and applies validity, token, safety, and
   fidelity gates in their frozen order.
@@ -63,11 +69,25 @@ belong to Phase 3 and remain unauthorized here.
   profile, prompt, and inference defects.
 - [`alang_mnemonic_phase1_worker.erl`](alang_mnemonic_phase1_worker.erl) —
   writes canonical Phase 1 evidence from a clean offline ERTS process.
+- [`alang_mnemonic_phase2_worker.erl`](alang_mnemonic_phase2_worker.erl) —
+  writes canonical Phase 2 qualification evidence in an isolated ERTS process.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.
 - [`alang_mnemonic_preregister.erl`](alang_mnemonic_preregister.erl) — closes
   schemas and traceability, audits trusted-source scope, reconciles every
   registration dimension, and builds the 21-file evidence record.
+- [`alang_mnemonic_protocol.erl`](alang_mnemonic_protocol.erl) — materializes
+  four frozen paired prompts and scores comprehension, generation, repair, and
+  action/completion responses deterministically without an LLM judge.
+- [`alang_mnemonic_protocol_tests.erl`](alang_mnemonic_protocol_tests.erl) —
+  tests all 384 prompt/oracle cells, leakage exclusions, malformed responses,
+  condition symmetry, and seventeen semantic and authority mutations.
+- [`alang_mnemonic_qualification.erl`](alang_mnemonic_qualification.erl) —
+  runs exact document and complete-request counts, closed attribution, hard
+  token gates, registration hashing, and canonical qualification evidence.
+- [`alang_mnemonic_qualification_tests.erl`](alang_mnemonic_qualification_tests.erl)
+  — verifies every pair, aggregate and median thresholds, drift rejection,
+  zero-call state, and trusted tokenizer residency.
 - [`alang_mnemonic_registration.erl`](alang_mnemonic_registration.erl) —
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
@@ -86,6 +106,9 @@ belong to Phase 3 and remain unauthorized here.
 - [Section 2.1 integration evidence](section-02-01-integration-evidence.md) —
   records exact P1/R2 rendering and decoding, closed aliases and bounds,
   complete stable source maps, readable diagnostics, and zero-call isolation.
+- [Section 2.2 integration evidence](section-02-02-integration-evidence.md) —
+  records four deterministic protocols, exact token-positive results, the
+  50-file registration, qualification digest, and explicit authorization gate.
 
 ## Maintaining this index
 

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-lang.invalid/schemas/token-positive-mnemonic/qualification-contract-v1.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["format", "tokenizers", "tokenizer_directory", "cases", "protocols", "conditions", "thresholds", "attribution_categories", "registration", "live_authorization"],
+  "properties": {
+    "format": {"const": "alang-token-positive-qualification-contract-v1"},
+    "tokenizers": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "object", "additionalProperties": false, "required": ["profile_id", "vocabulary_path", "vocabulary_sha256"], "properties": {"profile_id": {"type": "string", "minLength": 1}, "vocabulary_path": {"type": "string", "minLength": 1}, "vocabulary_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}},
+    "tokenizer_directory": {"type": "string", "minLength": 1}, "cases": {"const": 48}, "protocols": {"const": 4}, "conditions": {"const": 2},
+    "thresholds": {"type": "object", "additionalProperties": false, "required": ["every_document_strictly_cheaper", "every_full_request_strictly_cheaper", "minimum_aggregate_document_savings_basis_points", "minimum_median_document_savings_basis_points", "minimum_aggregate_request_savings_basis_points", "minimum_median_request_savings_basis_points"], "properties": {"every_document_strictly_cheaper": {"const": true}, "every_full_request_strictly_cheaper": {"const": true}, "minimum_aggregate_document_savings_basis_points": {"const": 500}, "minimum_median_document_savings_basis_points": {"const": 500}, "minimum_aggregate_request_savings_basis_points": {"const": 500}, "minimum_median_request_savings_basis_points": {"const": 500}}},
+    "attribution_categories": {"type": "array", "minItems": 11, "maxItems": 11, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "registration": {"type": "object", "additionalProperties": false, "required": ["phase1_assets", "phase2_contracts", "external_references", "trusted_modules", "authorization_contract_excluded_from_digest"], "properties": {"phase1_assets": {"const": "all-json"}, "phase2_contracts": {"const": ["candidate-contract-v1", "protocol-contract-v1", "qualification-contract-v1"]}, "external_references": {"const": "all-digest-pinned"}, "trusted_modules": {"const": ["candidate", "protocol", "qualification", "authorization"]}, "authorization_contract_excluded_from_digest": {"const": true}}},
+    "live_authorization": {"type": "object", "additionalProperties": false, "required": ["network_default", "environment_variable", "required_value", "qualification_digest_required", "any_drift"], "properties": {"network_default": {"const": "disabled"}, "environment_variable": {"const": "ALANG_ALLOW_MNEMONIC_MODEL_CALLS"}, "required_value": {"const": "1"}, "qualification_digest_required": {"const": true}, "any_drift": {"const": "reject"}}}
+  }
+}
