@@ -87,7 +87,7 @@ gated loopback adapter; normal builds and tests remain offline.
   profile, prompt, and inference defects.
 - [`alang_mnemonic_observation.erl`](alang_mnemonic_observation.erl) — closes
   provider usage, first-response scores, normalized semantics, paired token
-  records, and candidate-only safety classifications.
+  records, latency evidence, and candidate-only safety classifications.
 - [`alang_mnemonic_observation_tests.erl`](alang_mnemonic_observation_tests.erl)
   — tests exact and invalid usage, deterministic scores, safety widening,
   pairing, replay ordering, gaps, and duplicates.
@@ -139,7 +139,8 @@ gated loopback adapter; normal builds and tests remain offline.
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
 - [`alang_mnemonic_replay.erl`](alang_mnemonic_replay.erl) — reconstructs
-  complete ordered observations, token pairs, scores, safety outcomes, and
+  definitive observations directly from retained intent/result records, then
+  reproduces complete ordering, token pairs, scores, safety outcomes, and
   byte-stable evidence digests without network or provider state.
 - [`alang_mnemonic_runner.erl`](alang_mnemonic_runner.erl) — advances only the
   next registered cell, enforces pending-intent, request, compute,

@@ -39,7 +39,7 @@ start(Root, RunRoot, Environment, Inventory) ->
             maps:get(<<"schedule_digest">>, Schedule))),
         Policy = decode(filename:join(Root, ?POLICY)),
         {ok, state(Root, RunRoot, Environment, Inventory, Qualification,
-            Token, Policy, Runner, Journal)}
+            Token, Policy, Runner, Journal, [])}
     catch
         error:{badmatch, Reason} -> {error, {mnemonic_campaign_error, Reason}};
         throw:{mnemonic_campaign_error, Reason} ->
@@ -59,9 +59,11 @@ resume(Root, RunRoot, Environment, Inventory) ->
             RunRoot, maps:get(<<"qualification_digest">>, Qualification))),
         {ok, Runner} = checked(alang_mnemonic_runner:replay(
             Runner0, maps:get(records, Journal))),
+        {ok, Observations} = checked(alang_mnemonic_replay:from_records(
+            maps:get(records, Journal), Root)),
         Policy = decode(filename:join(Root, ?POLICY)),
         State = state(Root, RunRoot, Environment, Inventory, Qualification,
-            Token, Policy, Runner, Journal),
+            Token, Policy, Runner, Journal, Observations),
         case maps:get(pending, Runner) of
             none -> {ok, State};
             _ ->
@@ -101,6 +103,7 @@ run(State) ->
 snapshot(State) -> #{runner => alang_mnemonic_runner:snapshot(maps:get(runner, State)),
     journal_head => maps:get(head_digest, maps:get(journal, State)),
     journal_records => length(maps:get(records, maps:get(journal, State))),
+    observation_count => length(maps:get(observations, State)),
     qualification_digest => maps:get(<<"qualification_digest">>,
         maps:get(qualification, State))}.
 
@@ -172,8 +175,20 @@ apply_result(State, Result) ->
             Updated = State#{runner := Runner},
             case maps:get(<<"provider_state">>, Result) of
                 <<"uncertain">> -> invalidate(Updated, uncertain_submission);
-                _ -> {ok, Result, Updated}
+                <<"not_submitted">> -> {ok, Result, Updated};
+                <<"definitive">> -> observe(Updated, Result)
             end;
+        {error, Reason} -> invalidate(State, Reason)
+    end.
+
+observe(State, Result) ->
+    Request = maps:get(pending_request, State, request_for_result(State, Result)),
+    Cell = cell_for(State, maps:get(<<"cell_index">>, Request)),
+    Oracle = oracle_for(State, Cell),
+    case alang_mnemonic_observation:normalize(Cell, Request, Result, Oracle,
+            maps:get(root, State)) of
+        {ok, Observation} -> {ok, Result, State#{observations :=
+            maps:get(observations, State) ++ [Observation]}};
         {error, Reason} -> invalidate(State, Reason)
     end.
 
@@ -210,11 +225,21 @@ case_for(State, Cell) ->
 oracle_for(State, Cell) -> alang_mnemonic_corpus:oracle(case_for(State, Cell)).
 
 state(Root, RunRoot, Environment, Inventory, Qualification, Token, Policy,
-        Runner, Journal) ->
+        Runner, Journal, Observations) ->
     #{format => alang_mnemonic_live_campaign_v1, root => Root, run_root => RunRoot,
       environment => Environment, inventory => Inventory,
       qualification => Qualification, token => Token, policy => Policy,
-      runner => Runner, journal => Journal}.
+      runner => Runner, journal => Journal, observations => Observations}.
+
+request_for_result(State, Result) ->
+    Operation = maps:get(<<"operation_id">>, Result),
+    [Request] = [maps:get(request, maps:get(payload, Record)) || Record <-
+        maps:get(records, maps:get(journal, State)), maps:get(kind, Record) =:= trial_intent,
+        maps:get(<<"operation_id">>, maps:get(request, maps:get(payload, Record))) =:= Operation],
+    Request.
+cell_for(State, Index) ->
+    [Cell] = [C || C <- maps:get(cells, maps:get(runner, State)),
+        maps:get(<<"index">>, C) =:= Index], Cell.
 
 uncertain_result(Request, Reason) ->
     Diagnostic = unicode:characters_to_binary(io_lib:format("~tp", [Reason])),

@@ -105,7 +105,7 @@ result(Request, Response, Usage) -> #{<<"format">> =>
     <<"model_id">> => maps:get(<<"model_id">>, Request),
     <<"provider_state">> => <<"definitive">>, <<"response">> => Response,
     <<"response_sha256">> => hex(crypto:hash(sha256, Response)),
-    <<"usage">> => Usage, <<"diagnostic">> => <<>>}.
+    <<"usage">> => Usage, <<"diagnostic">> => <<>>, <<"latency_ms">> => 1}.
 usage(I, O) -> #{<<"estimated">> => false, <<"prompt_tokens">> => I,
     <<"output_tokens">> => O, <<"total_tokens">> => I + O}.
 fixture(Root) ->
