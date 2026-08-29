@@ -49,6 +49,10 @@ gated loopback adapter; normal builds and tests remain offline.
 - [`alang_mnemonic_authorization_tests.erl`](alang_mnemonic_authorization_tests.erl)
   — tests the exact handshake and fail-closed digest, opt-in, and contract
   behavior without performing a request.
+- [`alang_mnemonic_campaign.erl`](alang_mnemonic_campaign.erl) — performs exact
+  live preflight, advances one authorized schedule cell at a time, writes
+  intent and result records synchronously, links the single permitted
+  replacement, and resumes only from an unambiguous journal.
 - [`alang_mnemonic_execution_tests.erl`](alang_mnemonic_execution_tests.erl) —
   tests exact live identities, bounded requests, schedule order, replacement
   rules, Ollama decoding, and durable journal integrity without network use.
@@ -138,8 +142,9 @@ gated loopback adapter; normal builds and tests remain offline.
   complete ordered observations, token pairs, scores, safety outcomes, and
   byte-stable evidence digests without network or provider state.
 - [`alang_mnemonic_runner.erl`](alang_mnemonic_runner.erl) — advances only the
-  next registered cell and enforces pending-intent, request, disposition, and
-  one-replacement state.
+  next registered cell, enforces pending-intent, request, compute,
+  disposition, and one-replacement state, and reconstructs that state from a
+  validated journal.
 - [`alang_mnemonic_schedule.erl`](alang_mnemonic_schedule.erl) — materializes
   and validates the deterministic, opaque, balanced 1,536-cell P0/P1 schedule.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —

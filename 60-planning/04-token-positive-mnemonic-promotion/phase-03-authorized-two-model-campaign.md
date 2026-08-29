@@ -25,8 +25,9 @@ digest, model artifacts, prompt bytes, schedule cell, and bounded opt-in state.
 
 Implementation readiness is recorded in
 [Section 3.1 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-01-readiness-evidence.md).
-The completion box remains open because the exact Mixtral artifact and the
-registered explicit live opt-in were unavailable; no hosted call occurred.
+Both exact artifacts are now available and the durable campaign coordinator is
+implemented. The completion box remains open because the registered explicit
+live opt-in has not been supplied and no hosted call has occurred.
 
 - [ ] **Section 3.1 Complete**
 

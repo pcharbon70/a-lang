@@ -490,6 +490,7 @@ MNEMONIC_SECTION31_SOURCES := \
 	$(MNEMONIC_DIR)/alang_mnemonic_journal.erl \
 	$(MNEMONIC_DIR)/alang_mnemonic_runner.erl \
 	$(MNEMONIC_DIR)/alang_mnemonic_ollama.erl \
+	$(MNEMONIC_DIR)/alang_mnemonic_campaign.erl \
 	$(MNEMONIC_DIR)/alang_mnemonic_execution_tests.erl
 MNEMONIC_SECTION31_STAMP := $(MNEMONIC_PHASE3_BUILD)/.section-3-1-compiled
 MNEMONIC_SECTION32_SOURCES := \

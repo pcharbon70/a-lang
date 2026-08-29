@@ -29,23 +29,31 @@ machine advances exactly one registered cell after a definitive response,
 allows one replacement only after a proven not-submitted result, and makes an
 uncertain submission invalidate the campaign.
 
+The live campaign coordinator now connects those boundaries. It performs the
+registered loopback inventory probe, applies the campaign ceilings before the
+next request, writes the exact intent before invoking the sole transport
+adapter, records the result before advancing, and reconstructs the runner from
+the journal on resume. An unmatched durable intent is treated as an uncertain
+submission and writes an invalid-campaign disposition instead of retrying.
+
 ## Offline verification
 
 `make test-mnemonic-section-3-1` preserves the 52 Phase 1 and Phase 2 tests and
-adds four execution tests covering exact inventory authorization, profile and
+adds six execution tests covering exact inventory authorization, profile and
 opt-in drift, closed Ollama decoding, request construction, schedule order,
-replacement bounds, journal replay, and journal mutation detection. The tests
-exercise response fixtures only and issue no network request.
+replacement bounds, journal replay, journal mutation detection, coordinator
+resume, and durable replacement linking. The tests exercise injected response
+fixtures only and issue no network request.
 
 ## Live gate status
 
 This is readiness evidence, not hosted campaign evidence. At verification
-time, the registered Ornith artifact was present, but `mixtral:8x7b` with
-manifest digest
-`a3b6bef0f836ff29ddb576a80eeb1b7def43ec9b809466f62e96adb871fe8498`
-was absent and `ALANG_ALLOW_MNEMONIC_MODEL_CALLS=1` was not set. Section 3.1
-and its Phase 3 completion claims therefore remain unchecked. No model-visible
-request was sent and no substitution was made.
+time both registered artifacts were present with their exact manifest digests,
+including `mixtral:8x7b` at
+`a3b6bef0f836ff29ddb576a80eeb1b7def43ec9b809466f62e96adb871fe8498`.
+`ALANG_ALLOW_MNEMONIC_MODEL_CALLS=1` remained unset, so Section 3.1 and its
+hosted Phase 3 completion claims remain unchecked. No model-visible request was
+sent and no substitution was made.
 
 ## Connections
 

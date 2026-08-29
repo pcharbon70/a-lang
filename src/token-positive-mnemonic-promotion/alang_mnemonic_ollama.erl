@@ -46,11 +46,13 @@ submit(Token, Request) ->
                 [{timeout, Timeout}], [{body_format, binary}]),
             Latency = erlang:monotonic_time(millisecond) - Started,
             case Reply of
-                {ok, {{_, 200, _}, _, Response}} -> decode_response(Request, Response);
+                {ok, {{_, 200, _}, _, Response}} ->
+                    with_latency(decode_response(Request, Response), Latency);
                 {ok, {{_, Status, _}, _, _}} -> definitive_failure(Request,
                     <<"http-", (integer_to_binary(Status))/binary>>, Latency);
-                {error, timeout} -> not_submitted(Request, <<"timeout">>, Latency);
-                {error, Reason} -> not_submitted(Request,
+                {error, {failed_connect, _} = Reason} -> not_submitted(Request,
+                    unicode:characters_to_binary(io_lib:format("~tp", [Reason])), Latency);
+                {error, Reason} -> uncertain(Request,
                     unicode:characters_to_binary(io_lib:format("~tp", [Reason])), Latency)
             end
     end.
@@ -69,21 +71,26 @@ decode_response(Request, Bytes) ->
         true = is_integer(Output) andalso Output >= 0,
         {ok, result(Request, <<"definitive">>, Response,
             #{<<"estimated">> => false, <<"prompt_tokens">> => Input,
-              <<"output_tokens">> => Output, <<"total_tokens">> => Input + Output}, <<>>)}
+              <<"output_tokens">> => Output, <<"total_tokens">> => Input + Output}, <<>>, 0)}
     catch _:_ -> definitive_failure(Request, <<"malformed-provider-response">>, 0) end.
 
-result(Request, State, Response, Usage, Diagnostic) ->
+result(Request, State, Response, Usage, Diagnostic, Latency) ->
     #{<<"format">> => <<"alang-token-positive-provider-result-v1">>,
       <<"operation_id">> => maps:get(<<"operation_id">>, Request),
       <<"trial_id">> => maps:get(<<"trial_id">>, Request),
       <<"model_id">> => maps:get(<<"model_id">>, Request),
       <<"provider_state">> => State, <<"response">> => Response,
       <<"response_sha256">> => hex(crypto:hash(sha256, Response)),
-      <<"usage">> => Usage, <<"diagnostic">> => Diagnostic}.
-definitive_failure(Request, Diagnostic, _Latency) ->
-    {ok, result(Request, <<"definitive">>, <<>>, missing, Diagnostic)}.
-not_submitted(Request, Diagnostic, _Latency) ->
-    {ok, result(Request, <<"not_submitted">>, <<>>, missing, Diagnostic)}.
+      <<"usage">> => Usage, <<"diagnostic">> => Diagnostic,
+      <<"latency_ms">> => Latency}.
+definitive_failure(Request, Diagnostic, Latency) ->
+    {ok, result(Request, <<"definitive">>, <<>>, missing, Diagnostic, Latency)}.
+not_submitted(Request, Diagnostic, Latency) ->
+    {ok, result(Request, <<"not_submitted">>, <<>>, missing, Diagnostic, Latency)}.
+uncertain(Request, Diagnostic, Latency) ->
+    {ok, result(Request, <<"uncertain">>, <<>>, missing, Diagnostic, Latency)}.
+with_latency({ok, Result}, Latency) -> {ok, Result#{<<"latency_ms">> := Latency}};
+with_latency({error, _} = Error, _Latency) -> Error.
 
 preliminary_token(Token) -> maps:get(<<"authorized">>, Token, false) =:= true andalso
     maps:get(<<"scope">>, Token, undefined) =:= <<"phase-3-registered-runner-only">>.
