@@ -175,8 +175,9 @@ hosted campaign evidence.
 
 [Section 3.3 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-03-readiness-evidence.md)
 records the offline mutation, ceiling, network-isolation, residency, and
-digest tests. Hosted evidence publication and the section completion box remain
-open because no authorized campaign was run.
+digest tests. Explicit BEAM-resident preflight, resumable run, publication, and
+offline replay commands are implemented. Hosted evidence publication and the
+section completion box remain open because no authorized campaign was run.
 
 - [ ] **Section 3.3 Complete**
 

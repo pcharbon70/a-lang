@@ -500,6 +500,8 @@ MNEMONIC_SECTION32_SOURCES := \
 MNEMONIC_SECTION32_STAMP := $(MNEMONIC_PHASE3_BUILD)/.section-3-2-compiled
 MNEMONIC_SECTION33_SOURCES := \
 	$(MNEMONIC_DIR)/alang_mnemonic_limits.erl \
+	$(MNEMONIC_DIR)/alang_mnemonic_evidence.erl \
+	$(MNEMONIC_DIR)/alang_mnemonic_campaign_worker.erl \
 	$(MNEMONIC_DIR)/alang_mnemonic_phase3_mutation.erl \
 	$(MNEMONIC_DIR)/alang_mnemonic_phase3_residency.erl \
 	$(MNEMONIC_DIR)/alang_mnemonic_phase3_integration_tests.erl
@@ -508,7 +510,7 @@ MNEMONIC_SECTION33_STAMP := $(MNEMONIC_PHASE3_BUILD)/.section-3-3-compiled
 .PHONY: build-phase-1-artifact build-phase-2-artifact build-phase-3-evidence check-toolchain compare compile-phase-1-bootstrap compile-phase-1-runtime compile-phase-2-toolchain compile-phase-2-source compile-phase-2-runtime compile-phase-3-toolchain compile-phase-4-runtime compile-phase-5-runtime compile-phase-6-runtime compile-phase-7-validation compile-phase-8-release decide demo release-candidate run-phase-1 run-phase-2 test test-phase-1 test-phase-2 test-phase-3 test-phase-4 test-phase-5 test-phase-6 test-phase-7 test-phase-8 test-section-1-2 test-section-1-3 test-section-1-4 test-section-2-1 test-section-2-2 test-section-2-3 test-section-2-4 test-section-2-5 test-section-3-1 test-section-3-2 test-section-3-3 test-section-3-4 test-section-3-5 test-section-4-1 test-section-4-2 test-section-4-3 test-section-4-4 test-section-4-5 test-section-5-1 test-section-5-2 test-section-5-3 test-section-5-4 test-section-5-5 test-section-6-1 test-section-6-2 test-section-6-3 test-section-6-4 test-section-6-5 test-section-7-1 test-section-7-2 test-section-7-3 test-section-7-4 test-section-7-5 test-section-8-1 test-section-8-2 test-section-8-3 test-section-8-4
 .PHONY: build-fidelity-phase-1-evidence build-fidelity-phase-2-evidence build-fidelity-phase-3-evidence build-fidelity-phase-4-evidence build-fidelity-phase-4-reproduction build-fidelity-phase-5-offline-evidence compile-fidelity-phase-1 compile-fidelity-phase-2 compile-fidelity-phase-3 compile-fidelity-phase-4 compile-fidelity-phase-5 test-fidelity-phase-1 test-fidelity-phase-2 test-fidelity-phase-3 test-fidelity-phase-4 test-fidelity-phase-5 test-fidelity-section-1-1 test-fidelity-section-1-2 test-fidelity-section-1-3 test-fidelity-section-1-4 test-fidelity-section-2-1 test-fidelity-section-2-2 test-fidelity-section-2-3 test-fidelity-section-2-4 test-fidelity-section-3-1 test-fidelity-section-3-2 test-fidelity-section-3-3 test-fidelity-section-3-4 test-fidelity-section-4-1 test-fidelity-section-4-2 test-fidelity-section-4-3 test-fidelity-section-4-4 test-fidelity-section-5-1 test-fidelity-section-5-2 test-fidelity-section-5-3 test-fidelity-section-5-4
 .PHONY: build-compact-phase-1-evidence build-compact-phase-2-reproduction compile-compact-section-1-1 compile-compact-section-1-2 compile-compact-section-1-3 compile-compact-section-1-4 compile-compact-section-2-1 compile-compact-section-2-2 compile-compact-section-2-3 compile-compact-section-2-4 test-compact-phase-1 test-compact-phase-2 test-compact-section-1-1 test-compact-section-1-2 test-compact-section-1-3 test-compact-section-1-4 test-compact-section-2-1 test-compact-section-2-2 test-compact-section-2-3 test-compact-section-2-4
-.PHONY: build-mnemonic-phase-1-evidence build-mnemonic-phase-2-evidence build-mnemonic-phase-2-qualification compile-mnemonic-section-1-1 compile-mnemonic-section-1-2 compile-mnemonic-section-1-3 compile-mnemonic-section-2-1 compile-mnemonic-section-2-2 compile-mnemonic-section-2-3 compile-mnemonic-section-3-1 compile-mnemonic-section-3-2 compile-mnemonic-section-3-3 test-mnemonic-section-1-1 test-mnemonic-section-1-2 test-mnemonic-section-1-3 test-mnemonic-phase-1 test-mnemonic-phase-2 test-mnemonic-phase-3-readiness test-mnemonic-section-2-1 test-mnemonic-section-2-2 test-mnemonic-section-2-3 test-mnemonic-section-3-1 test-mnemonic-section-3-2 test-mnemonic-section-3-3
+.PHONY: build-mnemonic-phase-1-evidence build-mnemonic-phase-2-evidence build-mnemonic-phase-2-qualification compile-mnemonic-section-1-1 compile-mnemonic-section-1-2 compile-mnemonic-section-1-3 compile-mnemonic-section-2-1 compile-mnemonic-section-2-2 compile-mnemonic-section-2-3 compile-mnemonic-section-3-1 compile-mnemonic-section-3-2 compile-mnemonic-section-3-3 preflight-mnemonic-phase-3 replay-mnemonic-phase-3 run-mnemonic-phase-3 test-mnemonic-section-1-1 test-mnemonic-section-1-2 test-mnemonic-section-1-3 test-mnemonic-phase-1 test-mnemonic-phase-2 test-mnemonic-phase-3-readiness test-mnemonic-section-2-1 test-mnemonic-section-2-2 test-mnemonic-section-2-3 test-mnemonic-section-3-1 test-mnemonic-section-3-2 test-mnemonic-section-3-3
 
 compile-mnemonic-section-1-1: $(MNEMONIC_SECTION11_STAMP)
 
@@ -617,6 +619,18 @@ test-mnemonic-section-3-3: test-mnemonic-section-3-2 compile-mnemonic-section-3-
 	$(ERL) -noshell -pa $(MNEMONIC_PHASE3_BUILD) -pa $(MNEMONIC_PHASE2_BUILD) -pa $(MNEMONIC_BUILD) -eval 'case eunit:test(alang_mnemonic_phase3_integration_tests, [verbose]) of ok -> halt(0); error -> halt(1) end.'
 
 test-mnemonic-phase-3-readiness: test-mnemonic-section-3-3
+
+MNEMONIC_PHASE3_RUN_ROOT ?= build/token-positive-mnemonic-promotion/phase-03
+
+preflight-mnemonic-phase-3: compile-mnemonic-section-3-3
+	$(ERL) -noshell -pa $(MNEMONIC_PHASE3_BUILD) -pa $(MNEMONIC_PHASE2_BUILD) -pa $(MNEMONIC_BUILD) -s alang_mnemonic_campaign_worker main -extra preflight
+
+run-mnemonic-phase-3: compile-mnemonic-section-3-3
+	@test "$(ALANG_ALLOW_MNEMONIC_MODEL_CALLS)" = "1" || (echo "ALANG_ALLOW_MNEMONIC_MODEL_CALLS=1 is required" >&2; exit 1)
+	$(ERL) -noshell -pa $(MNEMONIC_PHASE3_BUILD) -pa $(MNEMONIC_PHASE2_BUILD) -pa $(MNEMONIC_BUILD) -s alang_mnemonic_campaign_worker main -extra run $(MNEMONIC_PHASE3_RUN_ROOT)
+
+replay-mnemonic-phase-3: compile-mnemonic-section-3-3
+	$(ERL) -noshell -pa $(MNEMONIC_PHASE3_BUILD) -pa $(MNEMONIC_PHASE2_BUILD) -pa $(MNEMONIC_BUILD) -s alang_mnemonic_campaign_worker main -extra replay $(MNEMONIC_PHASE3_RUN_ROOT)
 
 compile-compact-section-1-1: $(COMPACT_SECTION11_STAMP)
 

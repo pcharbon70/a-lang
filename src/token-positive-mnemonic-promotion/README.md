@@ -56,6 +56,12 @@ gated loopback adapter; normal builds and tests remain offline.
 - [`alang_mnemonic_execution_tests.erl`](alang_mnemonic_execution_tests.erl) —
   tests exact live identities, bounded requests, schedule order, replacement
   rules, Ollama decoding, and durable journal integrity without network use.
+- [`alang_mnemonic_evidence.erl`](alang_mnemonic_evidence.erl) — closes a
+  complete campaign into observation-only evidence, writes byte-stable retained
+  artifacts, and reproduces observations and replay digests offline.
+- [`alang_mnemonic_campaign_worker.erl`](alang_mnemonic_campaign_worker.erl) —
+  exposes explicit preflight, resumable live-run, and offline-replay commands
+  from a BEAM-resident entrypoint.
 - [`alang_mnemonic_journal.erl`](alang_mnemonic_journal.erl) — maintains a
   qualification- and schedule-bound append-only record chain around each
   transport attempt.
@@ -110,13 +116,14 @@ gated loopback adapter; normal builds and tests remain offline.
   — hashes the trusted source and BEAM closure and rejects foreign sources,
   ports, NIFs, shell commands, interpreted forms, and forbidden imports.
 - [`alang_mnemonic_phase3_integration_tests.erl`](alang_mnemonic_phase3_integration_tests.erl)
-  — verifies 19/19 fault mutations, every resource boundary, the frozen
-  qualification digest, zero observation claims, and trusted residency.
+  — verifies 21/21 fault mutations, every resource boundary, the frozen
+  qualification digest, observation-only evidence closure, zero hosted
+  observation claims, and trusted residency.
 - [`alang_mnemonic_phase3_mutation.erl`](alang_mnemonic_phase3_mutation.erl) —
   seeds identity, submission, usage, pairing, response, scoring, safety,
-  replay, ceiling, and replacement defects.
+  replay, latency, ceiling, and replacement defects.
 - [`alang_mnemonic_phase3_residency.erl`](alang_mnemonic_phase3_residency.erl) —
-  audits the nine-module Phase 3 BEAM closure and confines HTTP imports to the
+  audits the twelve-module Phase 3 BEAM closure and confines HTTP imports to the
   scoped Ollama adapter.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.

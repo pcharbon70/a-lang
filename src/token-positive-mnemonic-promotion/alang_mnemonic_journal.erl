@@ -2,7 +2,7 @@
 
 -export([append/4, append_file/4, load/2, new/2, validate/3]).
 
--define(MAX_RECORDS, 6146).
+-define(MAX_RECORDS, 8192).
 -define(MAX_RECORD_BYTES, 65536).
 -define(ZERO, <<"0000000000000000000000000000000000000000000000000000000000000000">>).
 
@@ -155,7 +155,8 @@ record_path(Root, Sequence) ->
 records_directory(Root0) ->
     Root = filename:absname(Root0),
     Owned = filename:absname("build/token-positive-mnemonic-promotion/phase-03"),
-    true = lists:prefix(Owned ++ "/", Root), filename:join(Root, "records").
+    true = Root =:= Owned orelse lists:prefix(Owned ++ "/", Root),
+    filename:join(Root, "records").
 valid_digest(Value) when is_binary(Value), byte_size(Value) =:= 64 ->
     re:run(Value, <<"^[0-9a-f]{64}$">>, [{capture, none}]) =:= match;
 valid_digest(_) -> false.

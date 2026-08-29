@@ -15,11 +15,12 @@ aliases: []
 
 ## Fault and mutation coverage
 
-The Section 3.3 campaign detects 19 named defects: qualification and model-
+The Section 3.3 campaign detects 21 named defects: qualification and model-
 manifest drift, duplicate and ambiguous submissions, missing, estimated, and
-inconsistent usage, swapped pairing, altered response bytes, score drift,
-safety omission, replay gaps, input- and response-byte excess, output-token
-excess, timeout excess, request and compute excess, and a second replacement.
+inconsistent usage, negative latency, swapped pairing, altered response bytes,
+score drift, safety omission, replay gaps, a result without an intent, input-
+and response-byte excess, output-token excess, timeout excess, request and
+compute excess, and a second replacement.
 
 Boundary tests admit the last registered request at exact byte, token, time,
 and compute bounds and reject the first excess before transport. The frozen
@@ -28,7 +29,7 @@ the registered 6,400-minute campaign ceiling.
 
 ## Trusted residency and network isolation
 
-The Phase 3 trusted closure contains nine deterministic BEAM modules. Its
+The Phase 3 trusted closure contains twelve deterministic BEAM modules. Its
 source and BEAM identities are recorded by the residency audit; all sources
 are Erlang, and no module imports a port, NIF, shell command, or interpreted-
 form evaluator. Only `alang_mnemonic_ollama` imports the ERTS HTTP client, and
@@ -37,19 +38,29 @@ endpoint.
 
 Normal compilation, unit tests, mutation tests, scoring, and replay use
 fixtures and make no network request. `make test-mnemonic-phase-3-readiness`
-runs all 65 tests across Phases 1 through 3, including two clean Phase 1 and
+runs all 69 tests across Phases 1 through 3, including two clean Phase 1 and
 Phase 2 evidence reproductions and a fresh qualification rebuild that retains
 digest
 `e00fe1b40807d052523a2999fc3584d9a4e5cf6736766cc4f0565f9c09c7417f`.
 
 ## Publication boundary
 
-No Phase 3 observation report is published because the registered Mixtral
-artifact and explicit opt-in are absent. Consequently, request accounting,
-provider usage, response and score digests, replacements, and two clean full-
-campaign replays do not yet exist. No Phase 4 decision was computed or
-narrated. Section 3.3 and Phase 3 completion remain unchecked so readiness
-fixtures cannot be mistaken for hosted evidence.
+`make preflight-mnemonic-phase-3` rebuilds the qualification and checks the
+full manifests at the registered loopback endpoint. `make
+run-mnemonic-phase-3` refuses before ERTS unless the exact opt-in is supplied,
+then starts or resumes the durable schedule. After a complete run it writes
+canonical observation, replay, and Phase 3 evidence files. `make
+replay-mnemonic-phase-3` reconstructs the first two solely from the journal and
+requires byte identity.
+
+The authorized inventory-only preflight passed with both registered model
+manifests. No Phase 3 observation report is published because the live run was
+not invoked. Consequently, hosted request accounting, provider usage,
+response and score digests, replacements, and two clean full-campaign replays
+do not yet exist. The publisher explicitly records `observations_only: true`
+and `decision_applied: false`; no Phase 4 decision was computed or narrated.
+Section 3.3 and Phase 3 completion remain unchecked so readiness fixtures
+cannot be mistaken for hosted evidence.
 
 ## Connections
 

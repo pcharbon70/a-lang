@@ -47,7 +47,7 @@ start(Root, RunRoot, Environment, Inventory) ->
     end.
 
 -spec resume(file:filename(), file:filename(), map(), [map()]) ->
-    {ok, map()} | {error, term()}.
+    {ok, map()} | {error, term()} | {error, term(), map()}.
 resume(Root, RunRoot, Environment, Inventory) ->
     try
         {ok, Qualification} = checked(alang_mnemonic_qualification:build(Root)),
@@ -173,10 +173,11 @@ apply_result(State, Result) ->
     case alang_mnemonic_runner:record_result(maps:get(runner, State), Result) of
         {ok, Runner} ->
             Updated = State#{runner := Runner},
-            case maps:get(<<"provider_state">>, Result) of
-                <<"uncertain">> -> invalidate(Updated, uncertain_submission);
-                <<"not_submitted">> -> {ok, Result, Updated};
-                <<"definitive">> -> observe(Updated, Result)
+            case {maps:get(invalid, Runner), maps:get(<<"provider_state">>, Result)} of
+                {true, <<"uncertain">>} -> invalidate(Updated, uncertain_submission);
+                {true, _} -> invalidate(Updated, replacement_failed);
+                {false, <<"not_submitted">>} -> {ok, Result, Updated};
+                {false, <<"definitive">>} -> observe(Updated, Result)
             end;
         {error, Reason} -> invalidate(State, Reason)
     end.

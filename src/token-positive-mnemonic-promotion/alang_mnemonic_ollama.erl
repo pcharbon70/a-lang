@@ -23,11 +23,12 @@ probe(Preauthorization, Endpoint) ->
 request_body(Request) ->
     try
         Parameters = maps:get(<<"parameters">>, Request),
-        Options = Parameters#{<<"seed">> => maps:get(<<"seed">>, Request)},
+        Options = (maps:without([<<"stream">>], Parameters))#{
+            <<"seed">> => maps:get(<<"seed">>, Request)},
         Body = #{<<"model">> => maps:get(<<"model_id">>, Request),
             <<"messages">> => [#{<<"role">> => <<"user">>,
                 <<"content">> => maps:get(<<"prompt">>, Request)}],
-            <<"stream">> => false, <<"options">> => Options},
+            <<"stream">> => maps:get(<<"stream">>, Parameters), <<"options">> => Options},
         alang_fidelity_json:encode_canonical(Body)
     catch error:{badkey, Key} -> {error, {missing_request_field, Key}} end.
 

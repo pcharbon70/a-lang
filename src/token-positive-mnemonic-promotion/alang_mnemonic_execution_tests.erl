@@ -29,6 +29,12 @@ ollama_inventory_and_response_are_closed() ->
         <<",\"done\":true,\"message\":{\"content\":\"{}\"},\"prompt_eval_count\":11,\"eval_count\":3}">>]),
     {ok, Result} = alang_mnemonic_ollama:decode_response(Request, Response),
     ?assertEqual(14, maps:get(<<"total_tokens">>, maps:get(<<"usage">>, Result))),
+    {ok, RequestBytes} = alang_mnemonic_ollama:request_body(Request),
+    {ok, RequestValue} = alang_fidelity_json:decode(RequestBytes),
+    ?assertEqual(false, maps:get(<<"stream">>, RequestValue)),
+    Options = maps:get(<<"options">>, RequestValue),
+    ?assertEqual(false, maps:is_key(<<"stream">>, Options)),
+    ?assertEqual(maps:get(<<"seed">>, Request), maps:get(<<"seed">>, Options)),
     ?assertMatch({error, submission_not_authorized}, alang_mnemonic_ollama:submit(#{}, Request)).
 
 runner_preserves_order_and_replacement_rule_test_() ->
