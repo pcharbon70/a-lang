@@ -18,6 +18,7 @@ run(Root) ->
                 #{pending => #{request => pending}}))),
             item(<<"ambiguous-transport">>, ambiguous_transport()),
             item(<<"missing-usage">>, is_error(alang_mnemonic_observation:validate_usage(missing))),
+            item(<<"negative-latency">>, negative_latency(Case, Oracle, Root)),
             item(<<"estimated-usage">>, is_error(alang_mnemonic_observation:validate_usage(
                 (usage(10, 2))#{<<"estimated">> := true}))),
             item(<<"inconsistent-usage">>, is_error(alang_mnemonic_observation:validate_usage(
@@ -28,6 +29,7 @@ run(Root) ->
             item(<<"safety-omission">>, replay_drift(P0, P1, <<"safety">>)),
             item(<<"replay-gap">>, is_error(alang_mnemonic_replay:build([P0],
                 [maps:get(<<"cell">>, P0), maps:get(<<"cell">>, P1)]))),
+            item(<<"result-without-intent">>, result_without_intent()),
             item(<<"input-byte-ceiling">>, limit_excess(Policy, input_bytes)),
             item(<<"response-byte-ceiling">>, limit_excess(Policy, response_bytes)),
             item(<<"output-token-ceiling">>, limit_excess(Policy, output_tokens)),
@@ -59,9 +61,10 @@ ambiguous_transport() ->
     Request = #{<<"operation_id">> => zeros(), <<"cell_index">> => 0,
         <<"trial_id">> => <<"trial">>},
     State = #{pending => Request, dispositions => #{}, cursor => 0,
-        replacements => #{}, invalid => false},
+        replacements => #{}, compute_ms => 0, invalid => false},
     {ok, Mutant} = alang_mnemonic_runner:record_result(State,
-        #{<<"operation_id">> => zeros(), <<"provider_state">> => <<"uncertain">>}),
+        #{<<"operation_id">> => zeros(), <<"provider_state">> => <<"uncertain">>,
+          <<"latency_ms">> => 1}),
     maps:get(invalid, Mutant).
 altered_response(Case, Oracle, Root) ->
     Cell = cell(Case, <<"P0">>, 0, <<"trial-p0">>), Request = request(Cell),
@@ -69,6 +72,18 @@ altered_response(Case, Oracle, Root) ->
     Result = result(Request, Response, usage(10, 2)),
     is_error(alang_mnemonic_observation:normalize(Cell, Request,
         Result#{<<"response_sha256">> := zeros()}, Oracle, Root)).
+negative_latency(Case, Oracle, Root) ->
+    Cell = cell(Case, <<"P0">>, 0, <<"trial-p0">>), Request = request(Cell),
+    Response = alang_mnemonic_protocol:oracle_response(<<"comprehension">>, <<"P0">>, Oracle),
+    Result = result(Request, Response, usage(10, 2)),
+    is_error(alang_mnemonic_observation:normalize(Cell, Request,
+        Result#{<<"latency_ms">> := -1}, Oracle, Root)).
+result_without_intent() ->
+    Result = result(#{<<"operation_id">> => zeros(), <<"trial_id">> => <<"trial">>,
+        <<"model_id">> => <<"mixtral:8x7b">>}, <<"{}">>, usage(1, 1)),
+    Record = #{kind => trial_result, payload => #{result => Result,
+        result_digest => alang_fidelity_json:digest(Result)}},
+    is_error(alang_mnemonic_replay:from_records([Record], ".")).
 replay_drift(P0, P1, Key) ->
     Mutant = P0#{Key := #{}}, Cells = [maps:get(<<"cell">>, P0), maps:get(<<"cell">>, P1)],
     is_error(alang_mnemonic_replay:build([Mutant, P1], Cells)).
@@ -105,7 +120,7 @@ result(Request, Response, Usage) -> #{<<"format">> =>
     <<"model_id">> => maps:get(<<"model_id">>, Request),
     <<"provider_state">> => <<"definitive">>, <<"response">> => Response,
     <<"response_sha256">> => hex(crypto:hash(sha256, Response)),
-    <<"usage">> => Usage, <<"diagnostic">> => <<>>}.
+    <<"usage">> => Usage, <<"diagnostic">> => <<>>, <<"latency_ms">> => 1}.
 usage(I, O) -> #{<<"estimated">> => false, <<"prompt_tokens">> => I,
     <<"output_tokens">> => O, <<"total_tokens">> => I + O}.
 fixture(Root) ->

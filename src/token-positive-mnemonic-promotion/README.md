@@ -49,9 +49,19 @@ gated loopback adapter; normal builds and tests remain offline.
 - [`alang_mnemonic_authorization_tests.erl`](alang_mnemonic_authorization_tests.erl)
   — tests the exact handshake and fail-closed digest, opt-in, and contract
   behavior without performing a request.
+- [`alang_mnemonic_campaign.erl`](alang_mnemonic_campaign.erl) — performs exact
+  live preflight, advances one authorized schedule cell at a time, writes
+  intent and result records synchronously, links the single permitted
+  replacement, and resumes only from an unambiguous journal.
 - [`alang_mnemonic_execution_tests.erl`](alang_mnemonic_execution_tests.erl) —
   tests exact live identities, bounded requests, schedule order, replacement
   rules, Ollama decoding, and durable journal integrity without network use.
+- [`alang_mnemonic_evidence.erl`](alang_mnemonic_evidence.erl) — closes a
+  complete campaign into observation-only evidence, writes byte-stable retained
+  artifacts, and reproduces observations and replay digests offline.
+- [`alang_mnemonic_campaign_worker.erl`](alang_mnemonic_campaign_worker.erl) —
+  exposes explicit preflight, resumable live-run, and offline-replay commands
+  from a BEAM-resident entrypoint.
 - [`alang_mnemonic_journal.erl`](alang_mnemonic_journal.erl) — maintains a
   qualification- and schedule-bound append-only record chain around each
   transport attempt.
@@ -83,7 +93,7 @@ gated loopback adapter; normal builds and tests remain offline.
   profile, prompt, and inference defects.
 - [`alang_mnemonic_observation.erl`](alang_mnemonic_observation.erl) — closes
   provider usage, first-response scores, normalized semantics, paired token
-  records, and candidate-only safety classifications.
+  records, latency evidence, and candidate-only safety classifications.
 - [`alang_mnemonic_observation_tests.erl`](alang_mnemonic_observation_tests.erl)
   — tests exact and invalid usage, deterministic scores, safety widening,
   pairing, replay ordering, gaps, and duplicates.
@@ -106,13 +116,14 @@ gated loopback adapter; normal builds and tests remain offline.
   — hashes the trusted source and BEAM closure and rejects foreign sources,
   ports, NIFs, shell commands, interpreted forms, and forbidden imports.
 - [`alang_mnemonic_phase3_integration_tests.erl`](alang_mnemonic_phase3_integration_tests.erl)
-  — verifies 19/19 fault mutations, every resource boundary, the frozen
-  qualification digest, zero observation claims, and trusted residency.
+  — verifies 21/21 fault mutations, every resource boundary, the frozen
+  qualification digest, observation-only evidence closure, zero hosted
+  observation claims, and trusted residency.
 - [`alang_mnemonic_phase3_mutation.erl`](alang_mnemonic_phase3_mutation.erl) —
   seeds identity, submission, usage, pairing, response, scoring, safety,
-  replay, ceiling, and replacement defects.
+  replay, latency, ceiling, and replacement defects.
 - [`alang_mnemonic_phase3_residency.erl`](alang_mnemonic_phase3_residency.erl) —
-  audits the nine-module Phase 3 BEAM closure and confines HTTP imports to the
+  audits the twelve-module Phase 3 BEAM closure and confines HTTP imports to the
   scoped Ollama adapter.
 - [`alang_mnemonic_power.erl`](alang_mnemonic_power.erl) — applies the frozen
   paired case-cluster audit and prevents selection below the 48-case minimum.
@@ -135,11 +146,13 @@ gated loopback adapter; normal builds and tests remain offline.
   validates exact model/tokenizer profiles, prompt bytes, offline defaults,
   request ceilings, replacement, retention, and zero-call state.
 - [`alang_mnemonic_replay.erl`](alang_mnemonic_replay.erl) — reconstructs
-  complete ordered observations, token pairs, scores, safety outcomes, and
+  definitive observations directly from retained intent/result records, then
+  reproduces complete ordering, token pairs, scores, safety outcomes, and
   byte-stable evidence digests without network or provider state.
 - [`alang_mnemonic_runner.erl`](alang_mnemonic_runner.erl) — advances only the
-  next registered cell and enforces pending-intent, request, disposition, and
-  one-replacement state.
+  next registered cell, enforces pending-intent, request, compute,
+  disposition, and one-replacement state, and reconstructs that state from a
+  validated journal.
 - [`alang_mnemonic_schedule.erl`](alang_mnemonic_schedule.erl) — materializes
   and validates the deterministic, opaque, balanced 1,536-cell P0/P1 schedule.
 - [Section 1.1 integration evidence](section-01-01-integration-evidence.md) —

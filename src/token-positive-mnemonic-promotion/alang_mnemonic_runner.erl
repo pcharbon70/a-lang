@@ -1,6 +1,7 @@
 -module(alang_mnemonic_runner).
 
--export([new/4, next/1, prepare/5, record_result/2, replacement/2]).
+-export([attempt/1, new/4, next/1, prepare/5, record_result/2, replacement/2,
+    replay/2, snapshot/1]).
 
 -define(CAMPAIGN, "assets/token-positive-mnemonic-promotion/campaign").
 -define(CORPUS, "assets/token-positive-mnemonic-promotion/corpus/confirmatory-corpus-v1.json").
@@ -16,7 +17,8 @@ new(Root, Evidence, Environment, Inventory) ->
             qualification_digest => maps:get(<<"qualification_digest">>, Token),
             schedule_digest => maps:get(<<"schedule_digest">>, Schedule),
             cells => maps:get(<<"cells">>, Schedule), cursor => 0, pending => none,
-            calls => 0, replacements => #{}, dispositions => #{}, invalid => false}}
+            calls => 0, compute_ms => 0, replacements => #{}, dispositions => #{},
+            invalid => false}}
     catch throw:{mnemonic_runner_error, Reason} -> {error, {mnemonic_runner_error, Reason}} end.
 
 -spec next(map()) -> {ok, map()} | {done, map()} | {error, term()}.
@@ -24,6 +26,21 @@ next(#{invalid := true}) -> {error, invalid_campaign};
 next(#{pending := Pending}) when Pending =/= none -> {error, submission_pending};
 next(#{cursor := Cursor, cells := Cells} = State) when Cursor >= length(Cells) -> {done, State};
 next(#{cursor := Cursor, cells := Cells}) -> {ok, lists:nth(Cursor + 1, Cells)}.
+
+-spec attempt(map()) -> primary | replacement | {error, term()}.
+attempt(#{pending := none, invalid := false} = State) ->
+    case next(State) of
+        {ok, Cell} ->
+            TrialId = maps:get(<<"trial_id">>, Cell),
+            case maps:get(TrialId, maps:get(replacements, State), 0) of
+                0 -> primary;
+                1 -> replacement;
+                _ -> {error, replacement_ceiling}
+            end;
+        {done, _} -> {error, campaign_complete};
+        {error, _} = Error -> Error
+    end;
+attempt(_) -> {error, invalid_campaign}.
 
 -spec prepare(map(), map(), map(), [map()], primary | replacement) ->
     {ok, map(), map()} | {error, term()}.
@@ -56,6 +73,8 @@ record_result(#{pending := Request} = State, Result) ->
         exact(maps:get(<<"operation_id">>, Result), maps:get(<<"operation_id">>, Request),
             operation_id),
         ProviderState = maps:get(<<"provider_state">>, Result),
+        Latency = maps:get(<<"latency_ms">>, Result),
+        ensure(is_integer(Latency) andalso Latency >= 0, invalid_latency),
         ensure(lists:member(ProviderState,
             [<<"definitive">>, <<"not_submitted">>, <<"uncertain">>]), provider_state),
         CellIndex = maps:get(<<"cell_index">>, Request),
@@ -63,15 +82,19 @@ record_result(#{pending := Request} = State, Result) ->
         case ProviderState of
             <<"definitive">> ->
                 {ok, State#{pending := none, cursor := maps:get(cursor, State) + 1,
+                    compute_ms := maps:get(compute_ms, State) + Latency,
                     dispositions := (maps:get(dispositions, State))#{CellIndex => definitive}}};
             <<"uncertain">> -> {ok, State#{pending := none, invalid := true,
+                compute_ms := maps:get(compute_ms, State) + Latency,
                 dispositions := (maps:get(dispositions, State))#{CellIndex => uncertain}}};
             <<"not_submitted">> ->
                 Replacements = maps:get(replacements, State),
                 case maps:get(TrialId, Replacements, 0) of
                     0 -> {ok, State#{pending := none,
+                        compute_ms := maps:get(compute_ms, State) + Latency,
                         replacements := Replacements#{TrialId => 1}}};
                     _ -> {ok, State#{pending := none, invalid := true,
+                        compute_ms := maps:get(compute_ms, State) + Latency,
                         dispositions := (maps:get(dispositions, State))#{CellIndex => replacement_failed}}}
                 end
         end
@@ -88,6 +111,42 @@ replacement(State, TrialId) ->
             reason => no_definitive_response}};
         _ -> {error, replacement_not_authorized}
     end.
+
+-spec replay(map(), [map()]) -> {ok, map()} | {error, term()}.
+replay(State, Records) -> replay_records(Records, State).
+
+-spec snapshot(map()) -> map().
+snapshot(State) -> maps:without([cells, root], State).
+
+replay_records([], State) -> {ok, State};
+replay_records([#{kind := trial_intent, payload := Payload} | Rest], State) ->
+    try
+        Attempt = maps:get(attempt, Payload), Cell = maps:get(cell, Payload),
+        Request = maps:get(request, Payload), Calls = maps:get(calls, State),
+        {ok, ExpectedCell} = checked(next(State)),
+        exact(Cell, ExpectedCell, replay_cell),
+        exact(Attempt, attempt(State), replay_attempt),
+        TrialId = maps:get(<<"trial_id">>, Cell),
+        exact(maps:get(<<"trial_id">>, Request), TrialId, replay_trial),
+        exact(maps:get(<<"cell_index">>, Request), maps:get(<<"index">>, Cell),
+            replay_index),
+        exact(maps:get(<<"operation_id">>, Request),
+            alang_fidelity_json:digest({TrialId, Attempt, Calls}), replay_operation),
+        replay_records(Rest, State#{pending := Request, calls := Calls + 1})
+    catch throw:{mnemonic_runner_error, Reason} ->
+        {error, {mnemonic_runner_error, Reason}}
+    end;
+replay_records([#{kind := trial_result, payload := Payload} | Rest], State) ->
+    case record_result(State, maps:get(result, Payload)) of
+        {ok, Updated} -> replay_records(Rest, Updated);
+        {error, _} = Error -> Error
+    end;
+replay_records([#{kind := invalid_campaign} | Rest], State) ->
+    replay_records(Rest, State#{invalid := true});
+replay_records([#{kind := Kind} | Rest], State)
+  when Kind =:= replacement_link; Kind =:= campaign_closed ->
+    replay_records(Rest, State);
+replay_records([_ | _], _State) -> {error, unsupported_journal_record}.
 
 case_oracle(Root, Cell) ->
     Corpus = decode(filename:join(Root, ?CORPUS)),

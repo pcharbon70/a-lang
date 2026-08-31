@@ -45,6 +45,21 @@ offline_replay_is_deterministic_and_rejects_gaps_test() ->
     ?assertMatch({error, _}, alang_mnemonic_replay:build([P0], Cells)),
     ?assertMatch({error, _}, alang_mnemonic_replay:build([P0, P0], Cells)).
 
+journal_replay_reconstructs_byte_identical_observations_test() ->
+    {Case, Oracle} = fixture(),
+    P0 = observation(Case, Oracle, <<"P0">>, 0, <<"trial-p0">>, Oracle, 100, 20),
+    P1 = observation(Case, Oracle, <<"P1">>, 1, <<"trial-p1">>, Oracle, 90, 20),
+    {ok, J0} = alang_mnemonic_journal:new(zeros(), zeros()),
+    J1 = journal_observation(J0, P0, 1),
+    J2 = journal_observation(J1, P1, 3),
+    Records = maps:get(records, J2),
+    {ok, Reconstructed} = alang_mnemonic_replay:from_records(Records, "."),
+    ?assertEqual([P0, P1], Reconstructed),
+    Cells = [maps:get(<<"cell">>, P0), maps:get(<<"cell">>, P1)],
+    {ok, Direct} = alang_mnemonic_replay:build([P0, P1], Cells),
+    ?assertEqual({ok, Direct}, alang_mnemonic_replay:build_from_records(
+        Records, Cells, ".")).
+
 observation(Case, Oracle, Condition, Index, Trial, Value, Input, Output) ->
     Cell = cell(Case, Condition, Index, Trial), Request = request(Cell),
     Response = alang_mnemonic_protocol:oracle_response(<<"comprehension">>, Condition, Value),
@@ -66,10 +81,22 @@ result(Request, Response, Usage) -> #{
     <<"model_id">> => maps:get(<<"model_id">>, Request),
     <<"provider_state">> => <<"definitive">>, <<"response">> => Response,
     <<"response_sha256">> => alang_fidelity_json:hex(crypto:hash(sha256, Response)),
-    <<"usage">> => Usage, <<"diagnostic">> => <<>>}.
+    <<"usage">> => Usage, <<"diagnostic">> => <<>>, <<"latency_ms">> => 1}.
 usage(Input, Output) -> #{<<"estimated">> => false, <<"prompt_tokens">> => Input,
     <<"output_tokens">> => Output, <<"total_tokens">> => Input + Output}.
 fixture() ->
     {ok, Corpus} = alang_fidelity_json:decode_file(
         "assets/token-positive-mnemonic-promotion/corpus/confirmatory-corpus-v1.json"),
     Case = hd(maps:get(<<"cases">>, Corpus)), {Case, alang_mnemonic_corpus:oracle(Case)}.
+journal_observation(Journal, Observation, Timestamp) ->
+    Cell = maps:get(<<"cell">>, Observation), Request = request(Cell),
+    Result = result(Request, maps:get(<<"response">>, Observation),
+        maps:get(<<"usage">>, Observation)),
+    Intent = #{attempt => primary, cell => Cell, request => Request,
+        request_digest => alang_fidelity_json:digest(Request)},
+    {ok, _, J1} = alang_mnemonic_journal:append(
+        Journal, trial_intent, Intent, Timestamp),
+    Payload = #{result => Result, result_digest => alang_fidelity_json:digest(Result)},
+    {ok, _, J2} = alang_mnemonic_journal:append(
+        J1, trial_result, Payload, Timestamp + 1), J2.
+zeros() -> <<"0000000000000000000000000000000000000000000000000000000000000000">>.

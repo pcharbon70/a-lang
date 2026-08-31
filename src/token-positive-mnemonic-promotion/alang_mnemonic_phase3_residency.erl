@@ -48,9 +48,12 @@ module_sources() -> [
     {alang_mnemonic_journal, "src/token-positive-mnemonic-promotion/alang_mnemonic_journal.erl"},
     {alang_mnemonic_runner, "src/token-positive-mnemonic-promotion/alang_mnemonic_runner.erl"},
     {alang_mnemonic_ollama, "src/token-positive-mnemonic-promotion/alang_mnemonic_ollama.erl"},
+    {alang_mnemonic_campaign, "src/token-positive-mnemonic-promotion/alang_mnemonic_campaign.erl"},
     {alang_mnemonic_observation, "src/token-positive-mnemonic-promotion/alang_mnemonic_observation.erl"},
     {alang_mnemonic_replay, "src/token-positive-mnemonic-promotion/alang_mnemonic_replay.erl"},
     {alang_mnemonic_limits, "src/token-positive-mnemonic-promotion/alang_mnemonic_limits.erl"},
+    {alang_mnemonic_evidence, "src/token-positive-mnemonic-promotion/alang_mnemonic_evidence.erl"},
+    {alang_mnemonic_campaign_worker, "src/token-positive-mnemonic-promotion/alang_mnemonic_campaign_worker.erl"},
     {alang_mnemonic_phase3_mutation, "src/token-positive-mnemonic-promotion/alang_mnemonic_phase3_mutation.erl"},
     {alang_mnemonic_phase3_residency, "src/token-positive-mnemonic-promotion/alang_mnemonic_phase3_residency.erl"}].
 import_name(M, F, A) -> <<(atom_to_binary(M))/binary, ":", (atom_to_binary(F))/binary,

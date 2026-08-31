@@ -227,8 +227,9 @@ or manual override:
 - **Preregistration status:** Phase 2 qualified under one reproducible 50-file
   registration and explicit digest-bound live-authorization contract.
 - **Implementation status:** Phase 3 runner, scorer, replay, and fault-test
-  readiness are implemented. Hosted execution is blocked by the absent exact
-  Mixtral artifact and unset registered opt-in, so Phase 3 remains incomplete.
+  readiness are implemented, both exact model artifacts are available, and the
+  durable live coordinator is implemented. Hosted execution remains disabled
+  because the registered opt-in is unset, so Phase 3 remains incomplete.
 - Every implementation and evidence checkbox begins unchecked.
 - No model call may occur until Phase 2 publishes and verifies one canonical
   preregistration and qualification digest containing every candidate byte,

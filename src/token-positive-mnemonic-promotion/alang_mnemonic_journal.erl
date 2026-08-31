@@ -2,7 +2,7 @@
 
 -export([append/4, append_file/4, load/2, new/2, validate/3]).
 
--define(MAX_RECORDS, 6146).
+-define(MAX_RECORDS, 8192).
 -define(MAX_RECORD_BYTES, 65536).
 -define(ZERO, <<"0000000000000000000000000000000000000000000000000000000000000000">>).
 
@@ -98,15 +98,22 @@ replay([Record | Rest], Journal) ->
     catch throw:{mnemonic_journal_error, Reason} -> {error, Reason} end.
 
 validate_payload(trial_intent, P) ->
-    closed(P, [attempt, cell, model_id, operation_id, parameters_digest,
-        prompt, prompt_sha256, request_digest]),
+    closed(P, [attempt, cell, request, request_digest]),
     ensure(lists:member(maps:get(attempt, P), [primary, replacement]), invalid_attempt),
-    digests(P, [operation_id, parameters_digest, prompt_sha256, request_digest]);
+    ensure(is_map(maps:get(cell, P)) andalso is_map(maps:get(request, P)),
+        invalid_intent_maps),
+    digests(P, [request_digest]),
+    ensure(alang_fidelity_json:digest(maps:get(request, P)) =:=
+        maps:get(request_digest, P), request_digest_mismatch);
 validate_payload(trial_result, P) ->
-    closed(P, [operation_id, provider_state, response, response_sha256, usage]),
-    ensure(lists:member(maps:get(provider_state, P),
-        [definitive, not_submitted, uncertain]), invalid_provider_state),
-    digests(P, [operation_id, response_sha256]);
+    closed(P, [result, result_digest]),
+    Result = maps:get(result, P), ensure(is_map(Result), invalid_result),
+    ensure(lists:member(maps:get(<<"provider_state">>, Result),
+        [<<"definitive">>, <<"not_submitted">>, <<"uncertain">>]),
+        invalid_provider_state),
+    digests(P, [result_digest]),
+    ensure(alang_fidelity_json:digest(Result) =:= maps:get(result_digest, P),
+        result_digest_mismatch);
 validate_payload(replacement_link, P) ->
     closed(P, [operation_id, parent_operation_id, reason, trial_id]),
     ensure(lists:member(maps:get(reason, P), [transport_failure_before_response,
@@ -148,7 +155,8 @@ record_path(Root, Sequence) ->
 records_directory(Root0) ->
     Root = filename:absname(Root0),
     Owned = filename:absname("build/token-positive-mnemonic-promotion/phase-03"),
-    true = lists:prefix(Owned ++ "/", Root), filename:join(Root, "records").
+    true = Root =:= Owned orelse lists:prefix(Owned ++ "/", Root),
+    filename:join(Root, "records").
 valid_digest(Value) when is_binary(Value), byte_size(Value) =:= 64 ->
     re:run(Value, <<"^[0-9a-f]{64}$">>, [{capture, none}]) =:= match;
 valid_digest(_) -> false.

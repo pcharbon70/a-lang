@@ -25,8 +25,9 @@ digest, model artifacts, prompt bytes, schedule cell, and bounded opt-in state.
 
 Implementation readiness is recorded in
 [Section 3.1 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-01-readiness-evidence.md).
-The completion box remains open because the exact Mixtral artifact and the
-registered explicit live opt-in were unavailable; no hosted call occurred.
+Both exact artifacts are now available and the durable campaign coordinator is
+implemented. The completion box remains open because the registered explicit
+live opt-in has not been supplied and no hosted call has occurred.
 
 - [ ] **Section 3.1 Complete**
 
@@ -174,8 +175,9 @@ hosted campaign evidence.
 
 [Section 3.3 readiness evidence](../../src/token-positive-mnemonic-promotion/section-03-03-readiness-evidence.md)
 records the offline mutation, ceiling, network-isolation, residency, and
-digest tests. Hosted evidence publication and the section completion box remain
-open because no authorized campaign was run.
+digest tests. Explicit BEAM-resident preflight, resumable run, publication, and
+offline replay commands are implemented. Hosted evidence publication and the
+section completion box remain open because no authorized campaign was run.
 
 - [ ] **Section 3.3 Complete**
 

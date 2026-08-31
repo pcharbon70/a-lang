@@ -10,7 +10,7 @@
     {ok, map()} | {error, term()}.
 normalize(Cell, Request, Result, Oracle, Root) ->
     try
-        closed(Result, [<<"diagnostic">>, <<"format">>, <<"model_id">>,
+        closed(Result, [<<"diagnostic">>, <<"format">>, <<"latency_ms">>, <<"model_id">>,
             <<"operation_id">>, <<"provider_state">>, <<"response">>,
             <<"response_sha256">>, <<"trial_id">>, <<"usage">>], result_fields),
         exact(maps:get(<<"format">>, Result),
@@ -20,6 +20,7 @@ normalize(Cell, Request, Result, Oracle, Root) ->
         lists:foreach(fun(Key) -> exact(maps:get(Key, Result), maps:get(Key, Request),
             {request_binding, Key}) end, [<<"operation_id">>, <<"trial_id">>, <<"model_id">>]),
         Response = maps:get(<<"response">>, Result),
+        Latency = nonnegative(maps:get(<<"latency_ms">>, Result), latency_ms),
         ensure(is_binary(Response) andalso byte_size(Response) =< 8192, response_bytes),
         exact(maps:get(<<"response_sha256">>, Result), hex(crypto:hash(sha256, Response)),
             response_digest),
@@ -37,7 +38,7 @@ normalize(Cell, Request, Result, Oracle, Root) ->
             <<"response">> => Response,
             <<"response_sha256">> => maps:get(<<"response_sha256">>, Result),
             <<"normalized_response">> => Normalized,
-            <<"usage">> => Usage, <<"score">> => Score,
+            <<"usage">> => Usage, <<"latency_ms">> => Latency, <<"score">> => Score,
             <<"outcome">> => outcome(Response, Score, maps:get(<<"diagnostic">>, Result)),
             <<"safety">> => Safety, <<"first_response_preserved">> => true},
         {ok, Body#{<<"observation_digest">> => alang_fidelity_json:digest(Body)}}

@@ -1,6 +1,36 @@
 -module(alang_mnemonic_replay).
 
--export([build/2, validate/2]).
+-export([build/2, build_from_records/3, from_records/2, validate/2]).
+
+-spec build_from_records([map()], [map()], file:filename()) ->
+    {ok, map()} | {error, term()}.
+build_from_records(Records, Cells, Root) ->
+    case from_records(Records, Root) of
+        {ok, Observations} -> build(Observations, Cells);
+        {error, _} = Error -> Error
+    end.
+
+-spec from_records([map()], file:filename()) -> {ok, [map()]} | {error, term()}.
+from_records(Records, Root) ->
+    try
+        Intents = [maps:get(payload, R) || R <- Records,
+            maps:get(kind, R) =:= trial_intent],
+        Results = [maps:get(result, maps:get(payload, R)) || R <- Records,
+            maps:get(kind, R) =:= trial_result],
+        IntentIds = [maps:get(<<"operation_id">>, maps:get(request, I)) || I <- Intents],
+        ResultIds = [maps:get(<<"operation_id">>, R) || R <- Results],
+        ensure(unique(IntentIds), duplicate_intent_operation),
+        ensure(unique(ResultIds), duplicate_result_operation),
+        ensure(lists:all(fun(Id) -> lists:member(Id, IntentIds) end, ResultIds),
+            result_without_intent),
+        Observations = [observation(Result, Intents, Root) || Result <- Results,
+            maps:get(<<"provider_state">>, Result) =:= <<"definitive">>],
+        {ok, lists:sort(fun(A, B) -> index(A) < index(B) end, Observations)}
+    catch
+        error:{badkey, Key} -> {error, {mnemonic_replay_error, {missing_field, Key}}};
+        throw:{mnemonic_replay_error, Reason} ->
+            {error, {mnemonic_replay_error, Reason}}
+    end.
 
 -spec build([map()], [map()]) -> {ok, map()} | {error, term()}.
 build(Observations, Cells) ->
@@ -57,6 +87,23 @@ pair_key(Cell) -> {maps:get(<<"case_id">>, Cell), maps:get(<<"model_family">>, C
 identity(Cell) -> maps:with([<<"index">>, <<"trial_id">>, <<"case_id">>,
     <<"model_family">>, <<"protocol">>, <<"condition">>, <<"repetition">>], Cell).
 index(O) -> maps:get(<<"index">>, maps:get(<<"cell">>, O)).
+observation(Result, Intents, Root) ->
+    Operation = maps:get(<<"operation_id">>, Result),
+    Matches = [I || I <- Intents,
+        maps:get(<<"operation_id">>, maps:get(request, I)) =:= Operation],
+    ensure(length(Matches) =:= 1, intent_result_pairing),
+    Intent = hd(Matches), Cell = maps:get(cell, Intent), Request = maps:get(request, Intent),
+    Oracle = oracle(Cell, Root),
+    {ok, Observation} = checked(alang_mnemonic_observation:normalize(
+        Cell, Request, Result, Oracle, Root)), Observation.
+oracle(Cell, Root) ->
+    {ok, Corpus} = checked(alang_fidelity_json:decode_file(filename:join([Root,
+        "assets", "token-positive-mnemonic-promotion", "corpus",
+        "confirmatory-corpus-v1.json"]))),
+    [Case] = [C || C <- maps:get(<<"cases">>, Corpus),
+        maps:get(<<"id">>, C) =:= maps:get(<<"case_id">>, Cell)],
+    alang_mnemonic_corpus:oracle(Case).
+unique(Values) -> length(Values) =:= length(lists:usort(Values)).
 checked(ok) -> ok;
 checked({ok, _} = Result) -> Result;
 checked({error, Reason}) -> fail(Reason).
